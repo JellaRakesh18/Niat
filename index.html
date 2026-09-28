@@ -139,7 +139,7 @@
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-black tracking-tight text-white">Mazdoor <span class="text-orange-500">Mitra</span></h1>
-          <p class="text-[10px] text-slate-400 font-medium hidden sm:block">National Skilled Labour & Safety Network</p>
+          <p class="text-[10px] text-slate-400 font-medium hidden sm:block" data-i18n="authBrandSub">జాతీయ నైపుణ్య కార్మిక & భద్రతా నెట్‌వర్క్</p>
         </div>
       </div>
 
@@ -148,31 +148,46 @@
         <!-- 108 Ambulance -->
         <a href="tel:108" class="bg-red-600 hover:bg-red-700 text-white px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center space-x-1 shadow-sm active:scale-95" title="Direct Dial 108 Ambulance">
           <i class="fa-solid fa-truck-medical text-yellow-300"></i>
-          <span class="hidden sm:inline">108 Ambulance</span>
+          <span class="hidden sm:inline" data-i18n="ambulance108">108 ఆంబులెన్స్</span>
           <span class="sm:hidden">108</span>
         </a>
 
         <!-- 112 SOS -->
         <a href="tel:112" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center space-x-1 shadow-sm active:scale-95" title="Direct Dial 112 Police/SOS">
           <i class="fa-solid fa-shield-halved text-cyan-300"></i>
-          <span class="hidden sm:inline">112 SOS</span>
+          <span class="hidden sm:inline" data-i18n="emergency112">112 SOS</span>
           <span class="sm:hidden">112</span>
         </a>
 
-        <!-- Auth Language Switcher -->
-        <select id="authLanguageSelect" onchange="handleLanguageChange(this.value)" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs font-bold rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer">
-          <option value="en">English (EN)</option>
-          <option value="hi">हिंदी (Hindi)</option>
-          <option value="te">తెలుగు (Telugu)</option>
-          <option value="ta">தமிழ் (Tamil)</option>
-          <option value="kn">ಕನ್ನಡ (Kannada)</option>
-          <option value="ml">മലയാളം (Malayalam)</option>
-          <option value="mr">मराठी (Marathi)</option>
-          <option value="bn">বাংলা (Bengali)</option>
-          <option value="gu">ગુજરાતી (Gujarati)</option>
-          <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
-          <option value="or">ଓଡ଼ିଆ (Odia)</option>
-        </select>
+        <!-- Auth Language Switcher: 22 Scheduled Indian Languages + English -->
+        <div class="relative flex items-center">
+          <i class="fa-solid fa-globe text-orange-400 absolute left-2.5 text-xs pointer-events-none"></i>
+          <select id="authLanguageSelect" onchange="handleLanguageChange(this.value)" aria-label="Select Application Language" class="bg-slate-900 border border-slate-700 text-slate-100 text-xs font-bold rounded-xl pl-7 pr-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer shadow-sm">
+            <option value="te" selected>తెలుగు (Telugu)</option>
+            <option value="en">English (EN)</option>
+            <option value="hi">हिंदी (Hindi)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            <option value="ml">മലയാളം (Malayalam)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="bn">বাংলা (Bengali)</option>
+            <option value="gu">ગુજરાતી (Gujarati)</option>
+            <option value="or">ଓଡ଼ିଆ (Odia)</option>
+            <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+            <option value="as">অসমীয়া (Assamese)</option>
+            <option value="ur">اردو (Urdu)</option>
+            <option value="sa">संस्कृतम् (Sanskrit)</option>
+            <option value="ks">كٲشُر (Kashmiri)</option>
+            <option value="kok">कोंकणी (Konkani)</option>
+            <option value="mai">मैथिली (Maithili)</option>
+            <option value="mni">মৈতৈলোন্ (Manipuri)</option>
+            <option value="ne">नेपाली (Nepali)</option>
+            <option value="brx">बड़ो (Bodo)</option>
+            <option value="doi">डोगरी (Dogri)</option>
+            <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ (Santali)</option>
+            <option value="sd">سنڌي (Sindhi)</option>
+          </select>
+        </div>
       </div>
     </header>
 
@@ -184,19 +199,19 @@
         <div class="text-center space-y-1.5">
           <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-[11px] font-extrabold uppercase tracking-wide">
             <i class="fa-solid fa-lock text-orange-600"></i>
-            <span>Verified Secure Access</span>
+            <span data-i18n="authSecurityBadge">ధృవీకరించబడిన సురక్షిత ప్రవేశం</span>
           </div>
-          <h2 id="authHeadingTitle" class="text-2xl font-black text-slate-900 tracking-tight">Welcome to Mazdoor Mitra</h2>
-          <p id="authHeadingSub" class="text-xs text-slate-500">Sign in to search jobs, record attendance & access emergency aid</p>
+          <h2 id="authHeadingTitle" data-i18n="authHeadingLogin" class="text-2xl font-black text-slate-900 tracking-tight">మజ్దూర్ మిత్రకు స్వాగతం</h2>
+          <p id="authHeadingSub" data-i18n="authSubLogin" class="text-xs text-slate-500">ఉద్యోగాల శోధన, హాజరు నమోదు & అత్యవసర సహాయం కొరకు లాగిన్ అవ్వండి</p>
         </div>
 
         <!-- Mode Toggle Tabs (Login vs Register) -->
         <div class="flex p-1 bg-slate-100 rounded-2xl border border-slate-200">
           <button type="button" id="tabBtnLogin" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl text-xs font-black transition text-slate-900 bg-white shadow-xs cursor-pointer">
-            <i class="fa-solid fa-right-to-bracket mr-1.5 text-orange-600"></i> Log In
+            <i class="fa-solid fa-right-to-bracket mr-1.5 text-orange-600"></i> <span data-i18n="authTabLogin">లాగిన్</span>
           </button>
           <button type="button" id="tabBtnRegister" onclick="switchAuthTab('register')" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer">
-            <i class="fa-solid fa-user-plus mr-1.5 text-blue-600"></i> Sign Up
+            <i class="fa-solid fa-user-plus mr-1.5 text-blue-600"></i> <span data-i18n="authTabRegister">సైన్ అప్</span>
           </button>
         </div>
 
@@ -207,10 +222,10 @@
           <!-- Dual Method Tabs: Mobile OTP vs Email/Password -->
           <div class="flex items-center justify-center space-x-2 border-b border-slate-200 pb-3">
             <button type="button" id="loginMethodPhoneBtn" onclick="switchLoginMethod('phone')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-orange-500 text-white shadow-xs cursor-pointer">
-              <i class="fa-solid fa-mobile-screen-button mr-1.5"></i> Mobile & OTP
+              <i class="fa-solid fa-mobile-screen-button mr-1.5"></i> <span data-i18n="authMethodPhone">మొబైల్ & OTP</span>
             </button>
             <button type="button" id="loginMethodEmailBtn" onclick="switchLoginMethod('email')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">
-              <i class="fa-solid fa-envelope mr-1.5"></i> Email & Password
+              <i class="fa-solid fa-envelope mr-1.5"></i> <span data-i18n="authMethodEmail">ఈమెయిల్ & పాస్‌వర్డ్</span>
             </button>
           </div>
 
@@ -218,30 +233,30 @@
           <div id="loginPhoneMethodView" class="space-y-3.5">
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">
-                Mobile Number (मोबाइल नंबर / మొబైల్ నంబర్) <span class="text-red-500">*</span>
+                <span data-i18n="authMobileLabel">మొబైల్ నంబర్</span> <span class="text-red-500">*</span>
               </label>
               <div class="relative flex rounded-xl border border-slate-300 focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-500/20 bg-slate-50">
                 <span class="inline-flex items-center px-3 rounded-l-xl border-r border-slate-300 text-slate-600 font-bold text-xs bg-slate-100">
                   🇮🇳 +91
                 </span>
-                <input type="tel" id="loginPhoneInput" maxlength="10" placeholder="e.g. 9848012345" class="w-full bg-transparent px-3 py-2.5 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
+                <input type="tel" id="loginPhoneInput" maxlength="10" placeholder="ఉదా: 9848012345" data-i18n-placeholder="authMobilePlaceholder" class="w-full bg-transparent px-3 py-2.5 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
               </div>
-              <p id="loginPhoneError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Please enter a valid 10-digit mobile number starting with 6-9.</p>
+              <p id="loginPhoneError" data-i18n="authMobileError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి 6-9 తో ప్రారంభమయ్యే చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి.</p>
             </div>
 
             <!-- OTP Request Button -->
             <div id="otpRequestContainer">
               <button type="button" onclick="handleSendOTP()" id="btnSendOtp" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
                 <i class="fa-solid fa-paper-plane"></i>
-                <span>Get OTP on Mobile (ओटीपी प्राप्त करें)</span>
+                <span data-i18n="authBtnGetOtp">మొబైల్‌లో OTP పొందండి</span>
               </button>
             </div>
 
             <!-- OTP Input Section (Revealed after OTP sent) -->
             <div id="otpVerifySection" class="hidden space-y-3 p-3.5 rounded-2xl bg-orange-50/70 border border-orange-200">
               <div class="flex items-center justify-between text-xs">
-                <span class="font-bold text-orange-950">Enter 6-Digit OTP:</span>
-                <span id="otpTimerDisplay" class="font-mono text-orange-700 font-bold text-[11px]">Resend in 30s</span>
+                <span class="font-bold text-orange-950" data-i18n="authOtpLabel">6 అంకెల OTP నమోదు చేయండి:</span>
+                <span id="otpTimerDisplay" class="font-mono text-orange-700 font-bold text-[11px]">మళ్ళీ పంపండి 30s</span>
               </div>
               
               <div class="relative">
@@ -250,16 +265,16 @@
 
               <div class="flex items-center justify-between gap-2">
                 <button type="button" onclick="autoFillDemoOTP()" class="text-[11px] font-bold text-orange-700 hover:text-orange-900 underline cursor-pointer">
-                  ⚡ Auto-Fill Demo OTP (123456)
+                  <span data-i18n="authBtnAutoOtp">⚡ డెమో OTP పూరించండి (123456)</span>
                 </button>
                 <button type="button" id="btnResendOtp" onclick="handleSendOTP(true)" disabled class="text-[11px] font-bold text-slate-400 cursor-not-allowed">
-                  Resend OTP
+                  <span data-i18n="authBtnResendOtp">మళ్ళీ OTP పంపండి</span>
                 </button>
               </div>
 
               <button type="button" onclick="handleVerifyPhoneOTP()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
                 <i class="fa-solid fa-circle-check"></i>
-                <span>Verify & Enter Dashboard</span>
+                <span data-i18n="authBtnVerify">ధృవీకరించి డాష్‌బోర్డ్‌లోకి వెళ్ళండి</span>
               </button>
             </div>
           </div>
@@ -267,16 +282,20 @@
           <!-- Method 2: Email + Password -->
           <div id="loginEmailMethodView" class="hidden space-y-3.5">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Email Address <span class="text-red-500">*</span></label>
+              <label class="block text-xs font-bold text-slate-700 mb-1">
+                <span data-i18n="authEmailLabel">ఈమెయిల్ చిరునామా</span> <span class="text-red-500">*</span>
+              </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-envelope absolute left-3 text-slate-400 text-xs"></i>
-                <input type="email" id="loginEmailInput" placeholder="name@example.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20">
+                <input type="email" id="loginEmailInput" placeholder="name@example.com" data-i18n-placeholder="authEmailPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20">
               </div>
-              <p id="loginEmailError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Please enter a valid email address.</p>
+              <p id="loginEmailError" data-i18n="authEmailError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి సరైన ఈమెయిల్ చిరునామాను నమోదు చేయండి.</p>
             </div>
 
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Password <span class="text-red-500">*</span></label>
+              <label class="block text-xs font-bold text-slate-700 mb-1">
+                <span data-i18n="authPasswordLabel">పాస్‌వర్డ్</span> <span class="text-red-500">*</span>
+              </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-lock absolute left-3 text-slate-400 text-xs"></i>
                 <input type="password" id="loginPasswordInput" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20">
@@ -284,34 +303,34 @@
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
-              <p id="loginPasswordError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Password must be at least 6 characters.</p>
+              <p id="loginPasswordError" data-i18n="authPasswordError" class="hidden text-[11px] text-red-600 font-semibold mt-1">పాస్‌వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి.</p>
             </div>
 
             <div class="flex items-center justify-between text-xs pt-1">
               <label class="flex items-center space-x-2 cursor-pointer text-slate-600">
                 <input type="checkbox" id="loginRememberMe" checked class="rounded text-orange-600 focus:ring-orange-500 border-slate-300">
-                <span>Remember Me</span>
+                <span data-i18n="authRememberMe">నన్ను గుర్తుంచుకో</span>
               </label>
               <button type="button" onclick="openModal('forgotPasswordModal')" class="text-orange-600 hover:text-orange-700 font-bold hover:underline cursor-pointer">
-                Forgot Password?
+                <span data-i18n="authForgotPassword">పాస్‌వర్డ్ మర్చిపోయారా?</span>
               </button>
             </div>
 
             <button type="button" onclick="handleEmailPasswordLogin()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
               <i class="fa-solid fa-right-to-bracket"></i>
-              <span>Sign In to Dashboard</span>
+              <span data-i18n="authBtnSignIn">డాష్‌బోర్డ్‌కి లాగిన్ అవ్వండి</span>
             </button>
           </div>
 
           <!-- Quick Test Demo Buttons -->
           <div class="pt-3 border-t border-slate-100 space-y-2">
-            <span class="block text-[10px] text-slate-400 font-bold text-center uppercase tracking-wider">Instant 1-Tap Demo Testing</span>
+            <span class="block text-[10px] text-slate-400 font-bold text-center uppercase tracking-wider" data-i18n="authDemoTitle">తక్షణ 1-ట్యాప్ డెమో లాగిన్</span>
             <div class="grid grid-cols-2 gap-2">
               <button type="button" onclick="quickDemoLogin('worker')" class="bg-orange-50 hover:bg-orange-100 text-orange-900 border border-orange-200 py-2 px-2.5 rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer">
-                <span>👷 Worker Demo</span>
+                <span data-i18n="authDemoWorker">👷 కార్మికుడు డెమో</span>
               </button>
               <button type="button" onclick="quickDemoLogin('contractor')" class="bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 py-2 px-2.5 rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer">
-                <span>🏗️ Contractor Demo</span>
+                <span data-i18n="authDemoContractor">🏗️ కాంట్రాక్టర్ డెమో</span>
               </button>
             </div>
           </div>
@@ -323,19 +342,30 @@
         <div id="authRegisterForm" class="hidden space-y-3.5">
           <!-- Role Selection Pills -->
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1.5">Select Your Role (आपकी भूमिका) <span class="text-red-500">*</span></label>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">
+              <span data-i18n="authSelectRole">మీ పాత్రను ఎంచుకోండి</span> <span class="text-red-500">*</span>
+            </label>
             <div class="grid grid-cols-3 gap-1.5">
               <button type="button" onclick="selectRegisterRole('worker')" id="regRoleWorkerBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-orange-500 text-white border-orange-500 shadow-xs cursor-pointer">
                 <div class="text-base mb-0.5">👷</div>
-                <div class="text-[11px] leading-tight">Worker<br><span class="text-[9px] opacity-80">कारीगर</span></div>
+                <div class="text-[11px] leading-tight">
+                  <span data-i18n="roleWorker" class="block font-black">కార్మికుడు</span>
+                  <span data-i18n="roleWorkerSub" class="text-[9px] opacity-80 block">నైపుణ్య కార్మికుడు</span>
+                </div>
               </button>
               <button type="button" onclick="selectRegisterRole('contractor')" id="regRoleContractorBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
                 <div class="text-base mb-0.5">🏗️</div>
-                <div class="text-[11px] leading-tight">Contractor<br><span class="text-[9px] opacity-80">ठेकेदार</span></div>
+                <div class="text-[11px] leading-tight">
+                  <span data-i18n="roleContractor" class="block font-black">కాంట్రాక్టర్</span>
+                  <span data-i18n="roleContractorSub" class="text-[9px] opacity-80 block">మేస్త్రీ / కాంట్రాక్టర్</span>
+                </div>
               </button>
               <button type="button" onclick="selectRegisterRole('employer')" id="regRoleEmployerBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
                 <div class="text-base mb-0.5">🏢</div>
-                <div class="text-[11px] leading-tight">Employer<br><span class="text-[9px] opacity-80">साइट मालिक</span></div>
+                <div class="text-[11px] leading-tight">
+                  <span data-i18n="roleEmployer" class="block font-black">యజమాని</span>
+                  <span data-i18n="roleEmployerSub" class="text-[9px] opacity-80 block">సైట్ యజమాని</span>
+                </div>
               </button>
             </div>
             <input type="hidden" id="regSelectedRole" value="worker">
@@ -343,50 +373,56 @@
 
           <!-- Full Name -->
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Full Name (पूरा नाम) <span class="text-red-500">*</span></label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">
+              <span data-i18n="authFullNameLabel">పూర్తి పేరు</span> <span class="text-red-500">*</span>
+            </label>
             <div class="relative flex items-center">
               <i class="fa-solid fa-user absolute left-3 text-slate-400 text-xs"></i>
-              <input type="text" id="regNameInput" placeholder="e.g. Ramesh Kumar" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+              <input type="text" id="regNameInput" placeholder="ఉదా: రమేష్ కుమార్" data-i18n-placeholder="authFullNamePlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
             </div>
-            <p id="regNameError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Please enter your full name.</p>
+            <p id="regNameError" data-i18n="authFullNameError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి మీ పూర్తి పేరును నమోదు చేయండి.</p>
           </div>
 
           <!-- Trade / Profession -->
           <div id="regTradeContainer">
-            <label class="block text-xs font-bold text-slate-700 mb-1">Primary Trade / Skill (काम का प्रकार) <span class="text-red-500">*</span></label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">
+              <span data-i18n="authTradeLabel">ప్రధాన వృత్తి / నైపుణ్యం</span> <span class="text-red-500">*</span>
+            </label>
             <select id="regTradeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-orange-500">
-              <option value="Masonry / Rajmistri">Masonry / Rajmistri (राजमिस्त्री)</option>
-              <option value="Electrical & Solar Installation">Electrician / Wireman (बिजली मिस्त्री)</option>
-              <option value="Plumbing & Pipe Laying">Plumber / Pipe Fitter (नलसाज)</option>
-              <option value="Carpentry & Woodwork">Carpenter (बढ़ई)</option>
-              <option value="Painting & Wall Finishing">Painter (पेंटर)</option>
-              <option value="Welding & Structural Fabrication">Welder / Fabricator (वेल्डर)</option>
-              <option value="Bar Bending / Steel Fixing">Bar Bender / Steel Mat Tier</option>
-              <option value="General Construction Helper">General Helper / Labour (हेल्पर / मजदूर)</option>
-              <option value="Civil Contracting Firm">Civil Contractor / Builder</option>
+              <option value="Masonry / Rajmistri" data-i18n="tradeMasonry">రాతిపని / రాజ్మిస్త్రీ</option>
+              <option value="Electrical & Solar Installation" data-i18n="tradeElectrician">ఎలక్ట్రీషియన్ / వైర్‌మ్యాన్</option>
+              <option value="Plumbing & Pipe Laying" data-i18n="tradePlumber">ప్లంబర్ / పైపు ఫిట్టర్</option>
+              <option value="Carpentry & Woodwork" data-i18n="tradeCarpenter">వడ్రంగి (కార్పెంటర్)</option>
+              <option value="Painting & Wall Finishing" data-i18n="tradePainter">పెయింటర్</option>
+              <option value="Welding & Structural Fabrication" data-i18n="tradeWelder">వెల్డర్ / ఫ్యాబ్రికేటర్</option>
+              <option value="Bar Bending / Steel Fixing" data-i18n="tradeBarBender">బార్ బెండర్ / స్టీల్ ఫిక్సర్</option>
+              <option value="General Construction Helper" data-i18n="tradeHelper">సాధారణ హెల్పర్ / కార్మికుడు</option>
+              <option value="Civil Contracting Firm" data-i18n="tradeContractor">సివిల్ కాంట్రాక్టర్ / బిల్డర్</option>
             </select>
           </div>
 
           <!-- Mobile Number -->
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number (मोबाइल नंबर) <span class="text-red-500">*</span></label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">
+              <span data-i18n="authMobileLabel">మొబైల్ నంబర్</span> <span class="text-red-500">*</span>
+            </label>
             <div class="relative flex rounded-xl border border-slate-300 bg-slate-50">
               <span class="inline-flex items-center px-3 rounded-l-xl border-r border-slate-300 text-slate-600 font-bold text-xs bg-slate-100">🇮🇳 +91</span>
-              <input type="tel" id="regPhoneInput" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-transparent px-3 py-2 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
+              <input type="tel" id="regPhoneInput" maxlength="10" placeholder="10 అంకెల మొబైల్ నంబర్" data-i18n-placeholder="authMobilePlaceholder" class="w-full bg-transparent px-3 py-2 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
             </div>
-            <p id="regPhoneError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Enter a valid 10-digit mobile number.</p>
+            <p id="regPhoneError" data-i18n="authMobileError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి 6-9 తో ప్రారంభమయ్యే చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి.</p>
           </div>
 
           <!-- State & City -->
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">State</label>
+              <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="authStateLabel">రాష్ట్రం</label>
               <select id="regStateSelect" onchange="handleRegStateChange(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-orange-500">
                 <!-- Dynamically populated from INDIA_REGIONS -->
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">District / City</label>
+              <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="authDistrictLabel">జిల్లా / నగరం</label>
               <select id="regDistrictSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-orange-500">
                 <!-- Dynamically populated based on state -->
               </select>
@@ -396,10 +432,12 @@
           <!-- Password & Confirm Password -->
           <div class="space-y-2">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Create Password <span class="text-red-500">*</span></label>
+              <label class="block text-xs font-bold text-slate-700 mb-1">
+                <span data-i18n="authCreatePasswordLabel">పాస్‌వర్డ్ సృష్టించండి</span> <span class="text-red-500">*</span>
+              </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-lock absolute left-3 text-slate-400 text-xs"></i>
-                <input type="password" id="regPasswordInput" oninput="checkPasswordStrength(this.value)" placeholder="At least 6 characters" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+                <input type="password" id="regPasswordInput" oninput="checkPasswordStrength(this.value)" placeholder="కనీసం 6 అక్షరాలు" data-i18n-placeholder="authCreatePasswordPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
                 <button type="button" onclick="togglePasswordVisibility('regPasswordInput', this)" class="absolute right-3 text-slate-400 hover:text-slate-600 text-xs p-1 cursor-pointer">
                   <i class="fa-solid fa-eye"></i>
                 </button>
@@ -408,33 +446,35 @@
                 <div id="pwdStrengthBar1" class="h-1 flex-1 rounded-full bg-slate-200"></div>
                 <div id="pwdStrengthBar2" class="h-1 flex-1 rounded-full bg-slate-200"></div>
                 <div id="pwdStrengthBar3" class="h-1 flex-1 rounded-full bg-slate-200"></div>
-                <span id="pwdStrengthText" class="text-[10px] text-slate-400 font-bold ml-1">Weak</span>
+                <span id="pwdStrengthText" data-i18n="pwdStrengthWeak" class="text-[10px] text-slate-400 font-bold ml-1">బలహీనమైనది</span>
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Confirm Password <span class="text-red-500">*</span></label>
+              <label class="block text-xs font-bold text-slate-700 mb-1">
+                <span data-i18n="authConfirmPasswordLabel">పాస్‌వర్డ్ నిర్ధారించండి</span> <span class="text-red-500">*</span>
+              </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-shield-halved absolute left-3 text-slate-400 text-xs"></i>
-                <input type="password" id="regConfirmPasswordInput" placeholder="Repeat your password" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+                <input type="password" id="regConfirmPasswordInput" placeholder="పాస్‌వర్డ్‌ను మళ్ళీ నమోదు చేయండి" data-i18n-placeholder="authConfirmPasswordPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
                 <button type="button" onclick="togglePasswordVisibility('regConfirmPasswordInput', this)" class="absolute right-3 text-slate-400 hover:text-slate-600 text-xs p-1 cursor-pointer">
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
-              <p id="regPasswordMismatchError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Passwords do not match.</p>
+              <p id="regPasswordMismatchError" data-i18n="authPasswordMismatchError" class="hidden text-[11px] text-red-600 font-semibold mt-1">పాస్‌వర్డ్‌లు సరిపోలడం లేదు.</p>
             </div>
           </div>
 
           <!-- Terms & Safety Pledge -->
           <label class="flex items-start space-x-2 text-[11px] text-slate-600 cursor-pointer pt-1">
             <input type="checkbox" id="regTermsCheckbox" checked class="mt-0.5 rounded text-orange-600 focus:ring-orange-500 border-slate-300">
-            <span>I agree to statutory DBOCW fair wages, safety protocols, and National Labour Terms.</span>
+            <span data-i18n="authTermsPledge">నేను DBOCW న్యాయమైన వేతనాలు, భద్రతా నిబంధనలు మరియు జాతీయ కార్మిక నిబంధనలకు అంగీకరిస్తున్నాను.</span>
           </label>
 
           <!-- Register Submit Button -->
           <button type="button" onclick="handleRegisterSubmit()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-md active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
             <i class="fa-solid fa-user-check"></i>
-            <span>Create Account & Launch Dashboard</span>
+            <span data-i18n="authBtnRegisterSubmit">ఖాతా సృష్టించి డాష్‌బోర్డ్ తెరవండి</span>
           </button>
         </div>
 
@@ -444,12 +484,12 @@
     <!-- Bottom Government & Trust Footer -->
     <footer class="relative z-10 max-w-6xl w-full mx-auto px-4 py-3.5 text-center text-xs text-slate-400 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2">
       <div class="flex items-center space-x-2 text-[11px]">
-        <span class="text-emerald-400 font-bold"><i class="fa-solid fa-shield-check mr-1"></i> DBOCW & e-Shram Compliant</span>
+        <span class="text-emerald-400 font-bold"><i class="fa-solid fa-shield-check mr-1"></i> <span data-i18n="authCompliance1">DBOCW & e-Shram ధృవీకృతం</span></span>
         <span>•</span>
-        <span>Payment of Wages Act 1936</span>
+        <span data-i18n="authCompliance2">వేతన చెల్లింపుల చట్టం 1936</span>
       </div>
       <div class="text-[11px]">
-        Official Toll-Free Labour Helpline: <a href="tel:14434" class="text-orange-400 font-bold hover:underline">14434</a>
+        <span data-i18n="authHelplineText">అధికారిక కార్మిక టోల్-ఫ్రీ హెల్ప్‌లైన్:</span> <a href="tel:14434" class="text-orange-400 font-bold hover:underline">14434</a>
       </div>
     </footer>
   </div>
@@ -575,12 +615,12 @@
           <span id="supabaseStatusText" class="font-extrabold">Supabase</span>
         </button>
 
-        <!-- Global Language Dropdown (11 Supported Indian Languages) -->
+        <!-- Global Language Dropdown (22 Scheduled Indian Languages + English) -->
         <div class="relative flex items-center">
           <i class="fa-solid fa-globe text-slate-400 absolute left-2.5 text-xs pointer-events-none"></i>
-          <select id="globalLanguageSelect" onchange="handleLanguageChange(this.value)" class="bg-slate-50 border border-slate-300 rounded-xl pl-7 pr-3 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer shadow-2xs">
-            <option value="en" selected>English (Default)</option>
-            <option value="te">తెలుగు (Telugu)</option>
+          <select id="globalLanguageSelect" onchange="handleLanguageChange(this.value)" aria-label="Select Application Language" class="bg-slate-50 border border-slate-300 rounded-xl pl-7 pr-3 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer shadow-2xs">
+            <option value="te" selected>తెలుగు (Telugu)</option>
+            <option value="en">English (EN)</option>
             <option value="hi">हिंदी (Hindi)</option>
             <option value="ta">தமிழ் (Tamil)</option>
             <option value="kn">ಕನ್ನಡ (Kannada)</option>
@@ -588,8 +628,20 @@
             <option value="mr">मराठी (Marathi)</option>
             <option value="bn">বাংলা (Bengali)</option>
             <option value="gu">ગુજરાતી (Gujarati)</option>
-            <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
             <option value="or">ଓଡ଼ିଆ (Odia)</option>
+            <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+            <option value="as">অসমীয়া (Assamese)</option>
+            <option value="ur">اردو (Urdu)</option>
+            <option value="sa">संस्कृतम् (Sanskrit)</option>
+            <option value="ks">كٲشُر (Kashmiri)</option>
+            <option value="kok">कोंकणी (Konkani)</option>
+            <option value="mai">मैथिली (Maithili)</option>
+            <option value="mni">মৈতৈলোন্ (Manipuri)</option>
+            <option value="ne">नेपाली (Nepali)</option>
+            <option value="brx">बड़ो (Bodo)</option>
+            <option value="doi">डोगरी (Dogri)</option>
+            <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ (Santali)</option>
+            <option value="sd">سنڌي (Sindhi)</option>
           </select>
         </div>
 
@@ -2007,8 +2059,8 @@
             <i class="fa-solid fa-key"></i>
           </div>
           <div>
-            <h3 class="font-black text-slate-900 text-base">Reset Your Password</h3>
-            <p class="text-[11px] text-slate-500 font-medium">OTP Verification & Credential Recovery</p>
+            <h3 class="font-black text-slate-900 text-base" data-i18n="fpTitle">పాస్‌వర్డ్ రీసెట్ చేయండి</h3>
+            <p class="text-[11px] text-slate-500 font-medium" data-i18n="fpSub">OTP ధృవీకరణ & ఖాతా పునరుద్ధరణ</p>
           </div>
         </div>
         <button onclick="closeModal('forgotPasswordModal')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition cursor-pointer">
@@ -2016,21 +2068,21 @@
         </button>
       </div>
 
-      <p class="text-xs text-slate-600 leading-relaxed">
-        Enter your registered 10-digit mobile number or email address. We will dispatch a 6-digit recovery code to verify your identity.
+      <p class="text-xs text-slate-600 leading-relaxed" data-i18n="fpDesc">
+        నమోదైన 10-అంకెల మొబైల్ లేదా ఈమెయిల్ నమోదు చేయండి. 6 అంకెల రికవరీ కోడ్ పంపబడుతుంది.
       </p>
 
       <div>
-        <label class="block text-xs font-bold text-slate-700 mb-1">Mobile or Email Address</label>
+        <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="fpInputLabel">మొబైల్ లేదా ఈమెయిల్ చిరునామా</label>
         <div class="relative flex items-center">
           <i class="fa-solid fa-id-badge absolute left-3 text-slate-400 text-xs"></i>
-          <input type="text" id="forgotInput" placeholder="e.g. 9848012345 or user@example.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+          <input type="text" id="forgotInput" placeholder="ఉదా: 9848012345 లేదా user@example.com" data-i18n-placeholder="fpPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
         </div>
       </div>
 
       <div class="flex items-center justify-end space-x-2 pt-2 border-t">
-        <button type="button" onclick="closeModal('forgotPasswordModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition cursor-pointer">Cancel</button>
-        <button type="button" onclick="handleForgotPasswordSubmit()" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">Send Reset Code</button>
+        <button type="button" onclick="closeModal('forgotPasswordModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition cursor-pointer" data-i18n="fpCancelBtn">రద్దు చేయండి</button>
+        <button type="button" onclick="handleForgotPasswordSubmit()" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer" data-i18n="fpSubmitBtn">రీసెట్ కోడ్ పంపండి</button>
       </div>
     </div>
   </div>
@@ -2878,7 +2930,7 @@
       populateGlobalStates();
       populateRegStatesAndDistricts();
       initSpeechRecognition();
-      const savedLang = localStorage.getItem("MM_V3_LANG") || "en";
+      const savedLang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
       handleLanguageChange(savedLang, false);
       renderAllViews();
       setupEventListeners();
@@ -2953,20 +3005,23 @@
       const headingTitle = document.getElementById('authHeadingTitle');
       const headingSub = document.getElementById('authHeadingSub');
 
+      const currentLang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
+      const dict = getActiveTranslationDict(currentLang);
+
       if (tab === 'login') {
         btnLogin.className = 'flex-1 py-2.5 rounded-xl text-xs font-black transition text-slate-900 bg-white shadow-xs cursor-pointer';
         btnRegister.className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer';
         formLogin.classList.remove('hidden');
         formRegister.classList.add('hidden');
-        headingTitle.innerText = 'Welcome to Mazdoor Mitra';
-        headingSub.innerText = 'Sign in to search jobs, record attendance & access emergency aid';
+        headingTitle.innerText = dict.authHeadingLogin || 'మజ్దూర్ మిత్రకు స్వాగతం';
+        headingSub.innerText = dict.authSubLogin || 'ఉద్యోగాల శోధన, హాజరు నమోదు & అత్యవసర సహాయం కొరకు లాగిన్ అవ్వండి';
       } else {
         btnRegister.className = 'flex-1 py-2.5 rounded-xl text-xs font-black transition text-slate-900 bg-white shadow-xs cursor-pointer';
         btnLogin.className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer';
         formRegister.classList.remove('hidden');
         formLogin.classList.add('hidden');
-        headingTitle.innerText = 'Join Mazdoor Mitra Network';
-        headingSub.innerText = 'Register as Worker, Contractor, or Employer across all 28 States & 8 UTs';
+        headingTitle.innerText = dict.authHeadingRegister || 'మజ్దూర్ మిత్ర నెట్‌వర్క్‌లో చేరండి';
+        headingSub.innerText = dict.authSubRegister || '28 రాష్ట్రాలు & 8 కేంద్రపాలిత ప్రాంతాలలో కార్మికుడు, కాంట్రాక్టర్ లేదా యజమానిగా నమోదు చేసుకోండి';
         populateRegStatesAndDistricts();
       }
     }
@@ -3047,14 +3102,17 @@
         resendBtn.className = 'text-[11px] font-bold text-slate-400 cursor-not-allowed';
       }
 
+      const currentLang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
+      const dict = getActiveTranslationDict(currentLang);
+
       otpCountdownTimer = setInterval(() => {
         otpRemainingSeconds--;
         if (timerDisplay) {
-          timerDisplay.innerText = `Resend in ${otpRemainingSeconds}s`;
+          timerDisplay.innerText = `${dict.authResendIn || 'మళ్ళీ పంపండి'} ${otpRemainingSeconds}s`;
         }
         if (otpRemainingSeconds <= 0) {
           clearInterval(otpCountdownTimer);
-          if (timerDisplay) timerDisplay.innerText = 'Code expired';
+          if (timerDisplay) timerDisplay.innerText = dict.authCodeExpired || 'కోడ్ గడువు ముగిసింది';
           if (resendBtn) {
             resendBtn.disabled = false;
             resendBtn.className = 'text-[11px] font-bold text-orange-600 hover:text-orange-800 underline cursor-pointer';
@@ -3173,11 +3231,14 @@
       const b3 = document.getElementById('pwdStrengthBar3');
       const text = document.getElementById('pwdStrengthText');
 
+      const currentLang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
+      const dict = getActiveTranslationDict(currentLang);
+
       if (!val) {
         b1.className = 'h-1 flex-1 rounded-full bg-slate-200';
         b2.className = 'h-1 flex-1 rounded-full bg-slate-200';
         b3.className = 'h-1 flex-1 rounded-full bg-slate-200';
-        text.innerText = 'Weak';
+        text.innerText = dict.pwdStrengthWeak || 'బలహీనమైనది';
         text.className = 'text-[10px] text-slate-400 font-bold ml-1';
         return;
       }
@@ -3186,19 +3247,19 @@
         b1.className = 'h-1 flex-1 rounded-full bg-red-500';
         b2.className = 'h-1 flex-1 rounded-full bg-slate-200';
         b3.className = 'h-1 flex-1 rounded-full bg-slate-200';
-        text.innerText = 'Too short';
+        text.innerText = dict.pwdStrengthTooShort || 'చాలా చిన్నది';
         text.className = 'text-[10px] text-red-500 font-bold ml-1';
       } else if (val.length < 9) {
         b1.className = 'h-1 flex-1 rounded-full bg-amber-500';
         b2.className = 'h-1 flex-1 rounded-full bg-amber-500';
         b3.className = 'h-1 flex-1 rounded-full bg-slate-200';
-        text.innerText = 'Good';
+        text.innerText = dict.pwdStrengthGood || 'మంచిది';
         text.className = 'text-[10px] text-amber-500 font-bold ml-1';
       } else {
         b1.className = 'h-1 flex-1 rounded-full bg-emerald-500';
         b2.className = 'h-1 flex-1 rounded-full bg-emerald-500';
         b3.className = 'h-1 flex-1 rounded-full bg-emerald-500';
-        text.innerText = 'Strong';
+        text.innerText = dict.pwdStrengthStrong || 'బలమైనది';
         text.className = 'text-[10px] text-emerald-600 font-bold ml-1';
       }
     }
@@ -3207,7 +3268,10 @@
       const stateSelect = document.getElementById('regStateSelect');
       if (!stateSelect || stateSelect.children.length > 1) return;
 
-      let opts = '<option value="">Select State</option>';
+      const currentLang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
+      const dict = getActiveTranslationDict(currentLang);
+
+      let opts = `<option value="">${dict.authSelectState || "రాష్ట్రాన్ని ఎంచుకోండి"}</option>`;
       Object.keys(INDIA_REGIONS).sort().forEach(st => {
         opts += `<option value="${st}">${st}</option>`;
       });
@@ -3220,8 +3284,11 @@
       const distSelect = document.getElementById('regDistrictSelect');
       if (!distSelect) return;
 
+      const currentLang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
+      const dict = getActiveTranslationDict(currentLang);
+
       if (!selectedState || !INDIA_REGIONS[selectedState]) {
-        distSelect.innerHTML = '<option value="">Select District</option>';
+        distSelect.innerHTML = `<option value="">${dict.authSelectDistrict || "జిల్లాను ఎంచుకోండి"}</option>`;
         return;
       }
 
@@ -5196,7 +5263,1890 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       }
     }
 
-    // --- W. MULTILINGUAL DICTIONARY (11 INDIAN LANGUAGES) ---
+    // =========================================================
+    // ALL-INDIA 22 SCHEDULED OFFICIAL LANGUAGES + ENGLISH I18N
+    // =========================================================
+    const INDIAN_LANGUAGES = [
+      { code: "te", label: "తెలుగు (Telugu)" },
+      { code: "en", label: "English (EN)" },
+      { code: "hi", label: "हिंदी (Hindi)" },
+      { code: "ta", label: "தமிழ் (Tamil)" },
+      { code: "kn", label: "ಕನ್ನಡ (Kannada)" },
+      { code: "ml", label: "മലയാളം (Malayalam)" },
+      { code: "mr", label: "मराठी (Marathi)" },
+      { code: "bn", label: "বাংলা (Bengali)" },
+      { code: "gu", label: "ગુજરાતી (Gujarati)" },
+      { code: "or", label: "ଓଡ଼ିଆ (Odia)" },
+      { code: "pa", label: "ਪੰਜਾਬੀ (Punjabi)" },
+      { code: "as", label: "অসমীয়া (Assamese)" },
+      { code: "ur", label: "اردو (Urdu)" },
+      { code: "sa", label: "संस्कृतम् (Sanskrit)" },
+      { code: "ks", label: "كٲشُر (Kashmiri)" },
+      { code: "kok", label: "कोंकणी (Konkani)" },
+      { code: "mai", label: "मैथिली (Maithili)" },
+      { code: "mni", label: "মৈতৈলোন্ (Manipuri)" },
+      { code: "ne", label: "नेपाली (Nepali)" },
+      { code: "brx", label: "बड़ो (Bodo)" },
+      { code: "doi", label: "डोगरी (Dogri)" },
+      { code: "sat", label: "ᱥᱟᱱᱛᱟᱲᱤ (Santali)" },
+      { code: "sd", label: "سنڌي (Sindhi)" }
+    ];
+
+    const AUTH_I18N = {
+      te: {
+        authBrandSub: "జాతీయ నైపుణ్య కార్మిక & భద్రతా నెట్‌వర్క్",
+        authSecurityBadge: "ధృవీకరించబడిన సురక్షిత ప్రవేశం",
+        authHeadingLogin: "మజ్దూర్ మిత్రకు స్వాగతం",
+        authSubLogin: "ఉద్యోగాల శోధన, హాజరు నమోదు & అత్యవసర సహాయం కొరకు లాగిన్ అవ్వండి",
+        authHeadingRegister: "మజ్దూర్ మిత్ర నెట్‌వర్క్‌లో చేరండి",
+        authSubRegister: "28 రాష్ట్రాలు & 8 కేంద్రపాలిత ప్రాంతాలలో కార్మికుడు, కాంట్రాక్టర్ లేదా యజమానిగా నమోదు చేసుకోండి",
+        authTabLogin: "లాగిన్",
+        authTabRegister: "సైన్ అప్",
+        authMethodPhone: "మొబైల్ & OTP",
+        authMethodEmail: "ఈమెయిల్ & పాస్‌వర్డ్",
+        authMobileLabel: "మొబైల్ నంబర్",
+        authMobilePlaceholder: "ఉదా: 9848012345",
+        authMobileError: "దయచేసి 6-9 తో ప్రారంభమయ్యే చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి.",
+        authBtnGetOtp: "మొబైల్‌లో OTP పొందండి",
+        authOtpLabel: "6 అంకెల OTP నమోదు చేయండి:",
+        authBtnAutoOtp: "⚡ డెమో OTP పూరించండి (123456)",
+        authBtnResendOtp: "మళ్ళీ OTP పంపండి",
+        authBtnVerify: "ధృవీకరించి డాష్‌బోర్డ్‌లోకి వెళ్ళండి",
+        authEmailLabel: "ఈమెయిల్ చిరునామా",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "దయచేసి సరైన ఈమెయిల్ చిరునామాను నమోదు చేయండి.",
+        authPasswordLabel: "పాస్‌వర్డ్",
+        authPasswordError: "పాస్‌వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి.",
+        authRememberMe: "నన్ను గుర్తుంచుకో",
+        authForgotPassword: "పాస్‌వర్డ్ మర్చిపోయారా?",
+        authBtnSignIn: "డాష్‌బోర్డ్‌కి లాగిన్ అవ్వండి",
+        authDemoTitle: "తక్షణ 1-ట్యాప్ డెమో లాగిన్",
+        authDemoWorker: "👷 కార్మికుడు డెమో",
+        authDemoContractor: "🏗️ కాంట్రాక్టర్ డెమో",
+        authSelectRole: "మీ పాత్రను ఎంచుకోండి",
+        roleWorker: "కార్మికుడు",
+        roleWorkerSub: "నైపుణ్య కార్మికుడు",
+        roleContractor: "కాంట్రాక్టర్",
+        roleContractorSub: "మేస్త్రీ / కాంట్రాక్టర్",
+        roleEmployer: "యజమాని",
+        roleEmployerSub: "సైట్ యజమాని",
+        authFullNameLabel: "పూర్తి పేరు",
+        authFullNamePlaceholder: "ఉదా: రమేష్ కుమార్",
+        authFullNameError: "దయచేసి మీ పూర్తి పేరును నమోదు చేయండి.",
+        authTradeLabel: "ప్రధాన వృత్తి / నైపుణ్యం",
+        authStateLabel: "రాష్ట్రం",
+        authDistrictLabel: "జిల్లా / నగరం",
+        authSelectState: "రాష్ట్రాన్ని ఎంచుకోండి",
+        authSelectDistrict: "జిల్లాను ఎంచుకోండి",
+        authCreatePasswordLabel: "పాస్‌వర్డ్ సృష్టించండి",
+        authCreatePasswordPlaceholder: "కనీసం 6 అక్షరాలు",
+        authConfirmPasswordLabel: "పాస్‌వర్డ్ నిర్ధారించండి",
+        authConfirmPasswordPlaceholder: "పాస్‌వర్డ్‌ను మళ్ళీ నమోదు చేయండి",
+        authPasswordMismatchError: "పాస్‌వర్డ్‌లు సరిపోలడం లేదు.",
+        authTermsPledge: "నేను DBOCW న్యాయమైన వేతనాలు, భద్రతా నిబంధనలు మరియు జాతీయ కార్మిక నిబంధనలకు అంగీకరిస్తున్నాను.",
+        authBtnRegisterSubmit: "ఖాతా సృష్టించి డాష్‌బోర్డ్ తెరవండి",
+        authCompliance1: "DBOCW & e-Shram ధృవీకృతం",
+        authCompliance2: "వేతన చెల్లింపుల చట్టం 1936",
+        authHelplineText: "అధికారిక కార్మిక టోల్-ఫ్రీ హెల్ప్‌లైన్:",
+        tradeMasonry: "రాతిపని / రాజ్మిస్త్రీ",
+        tradeElectrician: "ఎలక్ట్రీషియన్ / వైర్‌మ్యాన్",
+        tradePlumber: "ప్లంబర్ / పైపు ఫిట్టర్",
+        tradeCarpenter: "వడ్రంగి (కార్పెంటర్)",
+        tradePainter: "పెయింటర్",
+        tradeWelder: "వెల్డర్ / ఫ్యాబ్రికేటర్",
+        tradeBarBender: "బార్ బెండర్ / స్టీల్ ఫిక్సర్",
+        tradeHelper: "సాధారణ హెల్పర్ / కార్మికుడు",
+        tradeContractor: "సివిల్ కాంట్రాక్టర్ / బిల్డర్",
+        pwdStrengthWeak: "బలహీనమైనది",
+        pwdStrengthTooShort: "చాలా చిన్నది",
+        pwdStrengthGood: "మంచిది",
+        pwdStrengthStrong: "బలమైనది",
+        authResendIn: "మళ్ళీ పంపండి",
+        authCodeExpired: "కోడ్ గడువు ముగిసింది",
+        toastLangSwitched: "భాష మార్చబడింది",
+        toastDisplayUpdated: "భాష దీనికి నవీకరించబడింది:",
+        fpTitle: "పాస్‌వర్డ్ రీసెట్ చేయండి",
+        fpSub: "OTP ధృవీకరణ & ఖాతా పునరుద్ధరణ",
+        fpDesc: "నమోదైన 10-అంకెల మొబైల్ లేదా ఈమెయిల్ నమోదు చేయండి. 6 అంకెల రికవరీ కోడ్ పంపబడుతుంది.",
+        fpInputLabel: "మొబైల్ లేదా ఈమెయిల్ చిరునామా",
+        fpPlaceholder: "ఉదా: 9848012345 లేదా user@example.com",
+        fpCancelBtn: "రద్దు చేయండి",
+        fpSubmitBtn: "రీసెట్ కోడ్ పంపండి"
+      },
+      en: {
+        authBrandSub: "National Skilled Labour & Safety Network",
+        authSecurityBadge: "Verified Secure Access",
+        authHeadingLogin: "Welcome to Mazdoor Mitra",
+        authSubLogin: "Sign in to search jobs, record attendance & access emergency aid",
+        authHeadingRegister: "Join Mazdoor Mitra Network",
+        authSubRegister: "Register as Worker, Contractor, or Employer across all 28 States & 8 UTs",
+        authTabLogin: "Log In",
+        authTabRegister: "Sign Up",
+        authMethodPhone: "Mobile & OTP",
+        authMethodEmail: "Email & Password",
+        authMobileLabel: "Mobile Number",
+        authMobilePlaceholder: "e.g. 9848012345",
+        authMobileError: "Please enter a valid 10-digit mobile number starting with 6-9.",
+        authBtnGetOtp: "Get OTP on Mobile",
+        authOtpLabel: "Enter 6-Digit OTP:",
+        authBtnAutoOtp: "⚡ Auto-Fill Demo OTP (123456)",
+        authBtnResendOtp: "Resend OTP",
+        authBtnVerify: "Verify & Enter Dashboard",
+        authEmailLabel: "Email Address",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "Please enter a valid email address.",
+        authPasswordLabel: "Password",
+        authPasswordError: "Password must be at least 6 characters.",
+        authRememberMe: "Remember Me",
+        authForgotPassword: "Forgot Password?",
+        authBtnSignIn: "Sign In to Dashboard",
+        authDemoTitle: "Instant 1-Tap Demo Testing",
+        authDemoWorker: "👷 Worker Demo",
+        authDemoContractor: "🏗️ Contractor Demo",
+        authSelectRole: "Select Your Role",
+        roleWorker: "Worker",
+        roleWorkerSub: "Skilled Artisan",
+        roleContractor: "Contractor",
+        roleContractorSub: "Site Contractor",
+        roleEmployer: "Employer",
+        roleEmployerSub: "Site Owner",
+        authFullNameLabel: "Full Name",
+        authFullNamePlaceholder: "e.g. Ramesh Kumar",
+        authFullNameError: "Please enter your full name.",
+        authTradeLabel: "Primary Trade / Skill",
+        authStateLabel: "State",
+        authDistrictLabel: "District / City",
+        authSelectState: "Select State",
+        authSelectDistrict: "Select District",
+        authCreatePasswordLabel: "Create Password",
+        authCreatePasswordPlaceholder: "At least 6 characters",
+        authConfirmPasswordLabel: "Confirm Password",
+        authConfirmPasswordPlaceholder: "Repeat your password",
+        authPasswordMismatchError: "Passwords do not match.",
+        authTermsPledge: "I agree to statutory DBOCW fair wages, safety protocols, and National Labour Terms.",
+        authBtnRegisterSubmit: "Create Account & Launch Dashboard",
+        authCompliance1: "DBOCW & e-Shram Compliant",
+        authCompliance2: "Payment of Wages Act 1936",
+        authHelplineText: "Official Toll-Free Labour Helpline:",
+        tradeMasonry: "Masonry / Rajmistri",
+        tradeElectrician: "Electrician / Wireman",
+        tradePlumber: "Plumber / Pipe Fitter",
+        tradeCarpenter: "Carpenter",
+        tradePainter: "Painter",
+        tradeWelder: "Welder / Fabricator",
+        tradeBarBender: "Bar Bender / Steel Mat Tier",
+        tradeHelper: "General Helper / Labour",
+        tradeContractor: "Civil Contractor / Builder",
+        pwdStrengthWeak: "Weak",
+        pwdStrengthTooShort: "Too short",
+        pwdStrengthGood: "Good",
+        pwdStrengthStrong: "Strong",
+        authResendIn: "Resend in",
+        authCodeExpired: "Code expired",
+        toastLangSwitched: "Language Switched",
+        toastDisplayUpdated: "Display updated to",
+        fpTitle: "Reset Your Password",
+        fpSub: "OTP Verification & Credential Recovery",
+        fpDesc: "Enter your registered 10-digit mobile number or email address. We will dispatch a 6-digit recovery code to verify your identity.",
+        fpInputLabel: "Mobile or Email Address",
+        fpPlaceholder: "e.g. 9848012345 or user@example.com",
+        fpCancelBtn: "Cancel",
+        fpSubmitBtn: "Send Reset Code"
+      },
+      hi: {
+        authBrandSub: "राष्ट्रीय कुशल श्रमिक बाज़ार एवं कार्यस्थल सुरक्षा नेटवर्क",
+        authSecurityBadge: "सत्यापित सुरक्षित प्रवेश",
+        authHeadingLogin: "मज़दूर मित्र में आपका स्वागत है",
+        authSubLogin: "काम खोजने, हाजिरी लगाने और आपातकालीन सहायता के लिए लॉगिन करें",
+        authHeadingRegister: "मज़दूर मित्र नेटवर्क से जुड़ें",
+        authSubRegister: "सभी 28 राज्यों और 8 केंद्र शासित प्रदेशों में कारीगर, ठेकेदार या नियोक्ता के रूप में पंजीकरण करें",
+        authTabLogin: "लॉग इन",
+        authTabRegister: "साइन अप",
+        authMethodPhone: "मोबाइल और ओटीपी",
+        authMethodEmail: "ईमेल और पासवर्ड",
+        authMobileLabel: "मोबाइल नंबर",
+        authMobilePlaceholder: "उदा. 9848012345",
+        authMobileError: "कृपया 6-9 से शुरू होने वाला मान्य 10-अंकीय मोबाइल नंबर दर्ज करें।",
+        authBtnGetOtp: "मोबाइल पर ओटीपी प्राप्त करें",
+        authOtpLabel: "6-अंकीय ओटीपी दर्ज करें:",
+        authBtnAutoOtp: "⚡ ऑटो-फिल डेमो ओटीपी (123456)",
+        authBtnResendOtp: "ओटीपी पुनः भेजें",
+        authBtnVerify: "सत्यापित करें और डैशबोर्ड खोलें",
+        authEmailLabel: "ईमेल पता",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "कृपया एक मान्य ईमेल पता दर्ज करें।",
+        authPasswordLabel: "पासवर्ड",
+        authPasswordError: "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
+        authRememberMe: "मुझे याद रखें",
+        authForgotPassword: "पासवर्ड भूल गए?",
+        authBtnSignIn: "डैशबोर्ड में साइन इन करें",
+        authDemoTitle: "त्वरित 1-टैप डेमो परीक्षण",
+        authDemoWorker: "👷 कारीगर डेमो",
+        authDemoContractor: "🏗️ ठेकेदार डेमो",
+        authSelectRole: "अपनी भूमिका चुनें",
+        roleWorker: "कारीगर",
+        roleWorkerSub: "कुशल कामगार",
+        roleContractor: "ठेकेदार",
+        roleContractorSub: "पेटी / मुख्य ठेकेदार",
+        roleEmployer: "नियोक्ता",
+        roleEmployerSub: "साइट मालिक",
+        authFullNameLabel: "पूरा नाम",
+        authFullNamePlaceholder: "उदा. रमेश कुमार",
+        authFullNameError: "कृपया अपना पूरा नाम दर्ज करें।",
+        authTradeLabel: "मुख्य कौशल / पेशा",
+        authStateLabel: "राज्य",
+        authDistrictLabel: "जिला / शहर",
+        authSelectState: "राज्य चुनें",
+        authSelectDistrict: "जिला चुनें",
+        authCreatePasswordLabel: "पासवर्ड बनाएं",
+        authCreatePasswordPlaceholder: "कम से कम 6 अक्षर",
+        authConfirmPasswordLabel: "पासवर्ड की पुष्टि करें",
+        authConfirmPasswordPlaceholder: "अपना पासवर्ड दोबारा दर्ज करें",
+        authPasswordMismatchError: "पासवर्ड मेल नहीं खा रहे हैं।",
+        authTermsPledge: "मैं वैधानिक डीबीओसीडब्ल्यू निष्पक्ष मजदूरी, सुरक्षा प्रोटोकॉल और राष्ट्रीय श्रम शर्तों से सहमत हूं।",
+        authBtnRegisterSubmit: "खाता बनाएं और डैशबोर्ड खोलें",
+        authCompliance1: "DBOCW और e-Shram अनुरूप",
+        authCompliance2: "मजदूरी भुगतान अधिनियम 1936",
+        authHelplineText: "आधिकारिक टोल-फ्री श्रम हेल्पलाइन:",
+        tradeMasonry: "राजमिस्त्री (Mason)",
+        tradeElectrician: "बिजली मिस्त्री (Electrician)",
+        tradePlumber: "नलसाज (Plumber)",
+        tradeCarpenter: "बढ़ई (Carpenter)",
+        tradePainter: "पेंटर (Painter)",
+        tradeWelder: "वेल्डर / फैब्रिकेटर",
+        tradeBarBender: "बार बेंडर / स्टील फिक्सर",
+        tradeHelper: "हेल्पर / सामान्य मजदूर",
+        tradeContractor: "सिविल ठेकेदार / बिल्डर",
+        pwdStrengthWeak: "कमज़ोर",
+        pwdStrengthTooShort: "बहुत छोटा",
+        pwdStrengthGood: "अच्छा",
+        pwdStrengthStrong: "मजबूत",
+        authResendIn: "पुनः भेजें",
+        authCodeExpired: "कोड समाप्त हो गया",
+        toastLangSwitched: "भाषा बदली गई",
+        toastDisplayUpdated: "भाषा बदलकर यह की गई:",
+        fpTitle: "पासवर्ड रीसेट करें",
+        fpSub: "ओटीपी सत्यापन और क्रेडेंशियल रिकवरी",
+        fpDesc: "अपना पंजीकृत 10-अंकीय मोबाइल नंबर या ईमेल पता दर्ज करें।",
+        fpInputLabel: "मोबाइल या ईमेल पता",
+        fpPlaceholder: "उदा. 9848012345",
+        fpCancelBtn: "रद्द करें",
+        fpSubmitBtn: "रीसेट कोड भेजें"
+      },
+      ta: {
+        authBrandSub: "தேசிய திறன்மிக்க தொழிலாளர் மற்றும் பாதுகாப்பு தளம்",
+        authSecurityBadge: "சரிபார்க்கப்பட்ட பாதுகாப்பான அணுகல்",
+        authHeadingLogin: "மஜ்தூர் மித்ராவிற்கு நல்வரவு",
+        authSubLogin: "வேலைகள் தேட, வருகை பதிவு செய்ய & அவசர உதவி பெற உள்நுழையவும்",
+        authHeadingRegister: "மஜ்தூர் மித்ரா நெட்வொர்க்கில் இணையுங்கள்",
+        authSubRegister: "28 மாநிலங்கள் & 8 ஒன்றியப் பகுதிகளில் தொழிலாளி, ஒப்பந்ததாரர் அல்லது முதலாளியாகப் பதிவு செய்க",
+        authTabLogin: "உள்நுழை",
+        authTabRegister: "பதிவு செய்",
+        authMethodPhone: "மொபைல் & OTP",
+        authMethodEmail: "மின்னஞ்சல் & கடவுச்சொல்",
+        authMobileLabel: "மொபைல் எண்",
+        authMobilePlaceholder: "எ.கா. 9848012345",
+        authMobileError: "6-9 இல் தொடங்கும் செல்லுபடியாகும் 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்.",
+        authBtnGetOtp: "மொபைலில் OTP பெறவும்",
+        authOtpLabel: "6 இலக்க OTP-ஐ உள்ளிடவும்:",
+        authBtnAutoOtp: "⚡ டெமோ OTP நிரப்புக (123456)",
+        authBtnResendOtp: "மீண்டும் OTP அனுப்புக",
+        authBtnVerify: "சரிபார்த்து டாஷ்போர்டுக்குள் நுழையவும்",
+        authEmailLabel: "மின்னஞ்சல் முகவரி",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "செல்லுபடியாகும் மின்னஞ்சல் முகவரியை உள்ளிடவும்.",
+        authPasswordLabel: "கடவுச்சொல்",
+        authPasswordError: "கடவுச்சொல் குறைந்தபட்சம் 6 எழுத்துகள் இருக்க வேண்டும்.",
+        authRememberMe: "என்னை நினைவில் கொள்",
+        authForgotPassword: "கடவுச்சொல் மறந்துவிட்டதா?",
+        authBtnSignIn: "டாஷ்போர்டில் உள்நுழையவும்",
+        authDemoTitle: "உடனடி 1-தட்டு டெமோ சோதனை",
+        authDemoWorker: "👷 தொழிலாளி டெமோ",
+        authDemoContractor: "🏗️ ஒப்பந்ததாரர் டெமோ",
+        authSelectRole: "உங்கள் பங்கைத் தேர்ந்தெடுக்கவும்",
+        roleWorker: "தொழிலாளி",
+        roleWorkerSub: "திறன்மிக்க தொழிலாளி",
+        roleContractor: "ஒப்பந்ததாரர்",
+        roleContractorSub: "மேஸ்திரி / ஒப்பந்ததாரர்",
+        roleEmployer: "முதலாளி",
+        roleEmployerSub: "தள உரிமையாளர்",
+        authFullNameLabel: "முழு பெயர்",
+        authFullNamePlaceholder: "எ.கா. ரமேஷ் குமார்",
+        authFullNameError: "தயவுசெய்து உங்கள் முழு பெயரை உள்ளிடவும்.",
+        authTradeLabel: "முக்கிய தொழில் / திறன்",
+        authStateLabel: "மாநிலம்",
+        authDistrictLabel: "மாவட்டம் / நகரம்",
+        authSelectState: "மாநிலத்தைத் தேர்ந்தெடுக்கவும்",
+        authSelectDistrict: "மாவட்டத்தைத் தேர்ந்தெடுக்கவும்",
+        authCreatePasswordLabel: "கடவுச்சொல்லை உருவாக்கவும்",
+        authCreatePasswordPlaceholder: "குறைந்தபட்சம் 6 எழுத்துகள்",
+        authConfirmPasswordLabel: "கடவுச்சொல்லை உறுதிப்படுத்தவும்",
+        authConfirmPasswordPlaceholder: "கடவுச்சொல்லை மீண்டும் உள்ளிடவும்",
+        authPasswordMismatchError: "கடவுச்சொற்கள் பொருந்தவில்லை.",
+        authTermsPledge: "நான் DBOCW நியாயமான ஊதியம், பாதுகாப்பு விதிமுறைகள் மற்றும் தேசிய தொழிலாளர் விதிகளுக்கு உடன்படுகிறேன்.",
+        authBtnRegisterSubmit: "கணக்கை உருவாக்கி டாஷ்போர்டைத் தொடங்கவும்",
+        authCompliance1: "DBOCW & e-Shram இணக்கமானது",
+        authCompliance2: "ஊதியக் கொடுப்பனவுச் சட்டம் 1936",
+        authHelplineText: "அதிகாரப்பூர்வ கட்டணமில்லா தொழிலாளர் உதவி எண்:",
+        tradeMasonry: "கொத்தனார் (Masonry)",
+        tradeElectrician: "எலக்ட்ரீஷியன் / வயர்மேன்",
+        tradePlumber: "பிளம்பர் / பைப் ஃபிட்டர்",
+        tradeCarpenter: "தச்சர் (Carpenter)",
+        tradePainter: "பெயிண்டர்",
+        tradeWelder: "வெல்டர் / ஃபேப்ரிகேட்டர்",
+        tradeBarBender: "பார் பெண்டர் / ஸ்டீல் ஃபிக்சர்",
+        tradeHelper: "உதவியாளர் / பொதுத் தொழிலாளி",
+        tradeContractor: "சிவில் ஒப்பந்ததாரர் / பில்டர்",
+        pwdStrengthWeak: "பலவீனமானது",
+        pwdStrengthTooShort: "மிகக் குறுகியது",
+        pwdStrengthGood: "நன்று",
+        pwdStrengthStrong: "வலுவானது",
+        authResendIn: "மீண்டும் அனுப்ப",
+        authCodeExpired: "காலாவதியானது",
+        toastLangSwitched: "மொழி மாற்றப்பட்டது",
+        toastDisplayUpdated: "காட்சி இதற்கு மாற்றப்பட்டது:",
+        fpTitle: "கடவுச்சொல்லை மீட்டமைக்கவும்",
+        fpSub: "OTP சரிபார்ப்பு & கணக்கு மீட்பு",
+        fpDesc: "பதிவுசெய்யப்பட்ட 10 இலக்க மொபைல் எண் அல்லது மின்னஞ்சலை உள்ளிடவும்.",
+        fpInputLabel: "மொபைல் அல்லது மின்னஞ்சல்",
+        fpPlaceholder: "எ.கா. 9848012345",
+        fpCancelBtn: "ரத்து செய்",
+        fpSubmitBtn: "குறியீடு அனுப்பு"
+      },
+      kn: {
+        authBrandSub: "ರಾಷ್ಟ್ರೀಯ ನುರಿತ ಕಾರ್ಮಿಕ ಮತ್ತು ಸುರಕ್ಷತಾ ಜಾಲ",
+        authSecurityBadge: "ಪರಿಶೀಲಿತ ಸುರಕ್ಷಿತ ಪ್ರವೇಶ",
+        authHeadingLogin: "ಮಜ್ದೂರ್ ಮಿತ್ರಕ್ಕೆ ಸುಸ್ವಾಗತ",
+        authSubLogin: "ಕೆಲಸ ಹುಡುಕಲು, ಹಾಜರಾತಿ ದಾಖಲಿಸಲು & ತುರ್ತು ಸಹಾಯ ಪಡೆಯಲು ಲಾಗಿನ್ ಮಾಡಿ",
+        authHeadingRegister: "ಮಜ್ದೂರ್ ಮಿತ್ರ ನೆಟ್‌ವರ್ಕ್‌ಗೆ ಸೇರಿ",
+        authSubRegister: "28 ರಾಜ್ಯಗಳು & 8 ಕೇಂದ್ರಾಡಳಿತ ಪ್ರದೇಶಗಳಲ್ಲಿ ಕಾರ್ಮಿಕ, ಗುತ್ತಿಗೆದಾರ ಅಥವಾ ಮಾಲೀಕರಾಗಿ ನೋಂದಾಯಿಸಿ",
+        authTabLogin: "ಲಾಗಿನ್",
+        authTabRegister: "ಸೈನ್ ಅಪ್",
+        authMethodPhone: "ಮೊಬೈಲ್ & OTP",
+        authMethodEmail: "ಇಮೇಲ್ & ಪಾಸ್‌ವರ್ಡ್",
+        authMobileLabel: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+        authMobilePlaceholder: "ಉದಾ: 9848012345",
+        authMobileError: "ದಯವಿಟ್ಟು 6-9 ರಿಂದ ಪ್ರಾರಂಭವಾಗುವ 10 ಅಂಕಿಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.",
+        authBtnGetOtp: "ಮೊಬೈಲ್‌ನಲ್ಲಿ OTP ಪಡೆಯಿರಿ",
+        authOtpLabel: "6 ಅಂಕಿಯ OTP ನಮೂದಿಸಿ:",
+        authBtnAutoOtp: "⚡ ಡೆಮೊ OTP ಭರ್ತಿ ಮಾಡಿ (123456)",
+        authBtnResendOtp: "ಮತ್ತೆ OTP ಕಳುಹಿಸಿ",
+        authBtnVerify: "ದೃಢೀಕರಿಸಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಪ್ರವೇಶಿಸಿ",
+        authEmailLabel: "ಇಮೇಲ್ ವಿಳಾಸ",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "ಮಾನ್ಯ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ.",
+        authPasswordLabel: "ಪಾಸ್‌ವರ್ಡ್",
+        authPasswordError: "ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳಿರಬೇಕು.",
+        authRememberMe: "ನನ್ನನ್ನು ನೆನಪಿಡಿ",
+        authForgotPassword: "ಪಾಸ್‌ವರ್ಡ್ ಮರೆತಿರಾ?",
+        authBtnSignIn: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಲಾಗಿನ್ ಮಾಡಿ",
+        authDemoTitle: "ತ್ವರಿತ 1-ಟ್ಯಾಪ್ ಡೆಮೊ ಲಾಗಿನ್",
+        authDemoWorker: "👷 ಕಾರ್ಮಿಕ ಡೆಮೊ",
+        authDemoContractor: "🏗️ ಗುತ್ತಿಗೆದಾರ ಡೆಮೊ",
+        authSelectRole: "ನಿಮ್ಮ ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+        roleWorker: "ಕಾರ್ಮಿಕ",
+        roleWorkerSub: "ನುರಿತ ಕಾರ್ಮಿಕ",
+        roleContractor: "ಗುತ್ತಿಗೆದಾರ",
+        roleContractorSub: "ಮೇಸ್ತ್ರಿ / ಕಂಟ್ರಾಕ್ಟರ್",
+        roleEmployer: "ಮಾಲೀಕ",
+        roleEmployerSub: "ಸೈಟ್ ಮಾಲೀಕ",
+        authFullNameLabel: "ಪೂರ್ಣ ಹೆಸರು",
+        authFullNamePlaceholder: "ಉದಾ: ರಮೇಶ್ ಕುಮಾರ್",
+        authFullNameError: "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.",
+        authTradeLabel: "ಮುಖ್ಯ ಕೌಶಲ್ಯ / ವೃತ್ತಿ",
+        authStateLabel: "ರಾಜ್ಯ",
+        authDistrictLabel: "ಜಿಲ್ಲೆ / ನಗರ",
+        authSelectState: "ರಾಜ್ಯ ಆಯ್ಕೆಮಾಡಿ",
+        authSelectDistrict: "ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ",
+        authCreatePasswordLabel: "ಪಾಸ್‌ವರ್ಡ್ ರಚಿಸಿ",
+        authCreatePasswordPlaceholder: "ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳು",
+        authConfirmPasswordLabel: "ಪಾಸ್‌ವರ್ಡ್ ದೃಢೀಕರಿಸಿ",
+        authConfirmPasswordPlaceholder: "ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಪುನರಾವರ್ತಿಸಿ",
+        authPasswordMismatchError: "ಪಾಸ್‌ವರ್ಡ್‌ಗಳು ಹೊಂದಾಣಿಕೆಯಾಗುತ್ತಿಲ್ಲ.",
+        authTermsPledge: "ನಾನು DBOCW ನ್ಯಾಯಯುತ ವೇತನ, ಸುರಕ್ಷತಾ ನಿಯಮಗಳು ಮತ್ತು ರಾಷ್ಟ್ರೀಯ ಕಾರ್ಮಿಕ ಷರತ್ತುಗಳಿಗೆ ಒಪ್ಪುತ್ತೇನೆ.",
+        authBtnRegisterSubmit: "ಖಾತೆ ರಚಿಸಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ತೆರೆಯಿರಿ",
+        authCompliance1: "DBOCW & e-Shram ಅನುಸರಣೆ",
+        authCompliance2: "ವೇತನ ಪಾವತಿ ಕಾಯ್ದೆ 1936",
+        authHelplineText: "ಅಧಿಕೃತ ಉಚಿತ ಕಾರ್ಮಿಕ ಸಹಾಯವಾಣಿ:",
+        tradeMasonry: "ಗಾರೆ ಕೆಲಸಗಾರ (Masonry)",
+        tradeElectrician: "ಎಲೆಕ್ಟ್ರಿಷಿಯನ್ / ವೈರ್‌ಮ್ಯಾನ್",
+        tradePlumber: "ಪ್ಲಂಬರ್ / ಪೈಪ್ ಫಿಟ್ಟರ್",
+        tradeCarpenter: "ಬಡಗಿ (Carpenter)",
+        tradePainter: "ಪೇಂಟರ್",
+        tradeWelder: "ವೆಲ್ಡರ್ / ಫ್ಯಾಬ್ರಿಕೇಟರ್",
+        tradeBarBender: "ಬಾರ್ ಬೆಂಡರ್ / ಸ್ಟೀಲ್ ಫಿಕ್ಸರ್",
+        tradeHelper: "ಸಹಾಯಕ / ಸಾಮಾನ್ಯ ಕಾರ್ಮಿಕ",
+        tradeContractor: "ಸಿವಿಲ್ ಕಂಟ್ರಾಕ್ಟರ್ / ಬಿಲ್ಡರ್",
+        pwdStrengthWeak: "ದುರ್ಬಲ",
+        pwdStrengthTooShort: "ತುಂಬಾ ಚಿಕ್ಕದು",
+        pwdStrengthGood: "ಉತ್ತಮ",
+        pwdStrengthStrong: "ಬಲವಾದ",
+        authResendIn: "ಮತ್ತೆ ಕಳುಹಿಸಿ",
+        authCodeExpired: "ಅವಧಿ ಮೀರಿದೆ",
+        toastLangSwitched: "ಭಾಷೆ ಬದಲಾಯಿಸಲಾಗಿದೆ",
+        toastDisplayUpdated: "ಭಾಷೆ ನವೀಕರಿಸಲಾಗಿದೆ:",
+        fpTitle: "ಪಾಸ್‌ವರ್ಡ್ ಮರುಹೊಂದಿಸಿ",
+        fpSub: "OTP ಪರಿಶೀಲನೆ & ಖಾತೆ ಮರುಪಡೆಯುವಿಕೆ",
+        fpDesc: "ನೋಂದಾಯಿತ 10-ಅಂಕಿಯ ಮೊಬೈಲ್ ಅಥವಾ ಇಮೇಲ್ ನಮೂದಿಸಿ.",
+        fpInputLabel: "ಮೊಬೈಲ್ ಅಥವಾ ಇಮೇಲ್",
+        fpPlaceholder: "ಉದಾ: 9848012345",
+        fpCancelBtn: "ರದ್ದುಮಾಡಿ",
+        fpSubmitBtn: "ಕೋಡ್ ಕಳುಹಿಸಿ"
+      },
+      ml: {
+        authBrandSub: "ദേശീയ വിദഗ്ദ്ധ തൊഴിലാളി സുരക്ഷാ ശൃംഖല",
+        authSecurityBadge: "പരിശോധിച്ചുറപ്പിച്ച സുരക്ഷിത പ്രവേശനം",
+        authHeadingLogin: "മസ്ദൂർ മിത്രയിലേക്ക് സ്വാഗതം",
+        authSubLogin: "ജോലികൾ കണ്ടെത്താനും ഹാജർ രേഖപ്പെടുത്താനും ലോഗിൻ ചെയ്യുക",
+        authHeadingRegister: "മസ്ദൂർ മിത്ര നെറ്റ്‌വർക്കിൽ ചേരുക",
+        authSubRegister: "തൊഴിലാളി, കരാറുകാരൻ അല്ലെങ്കിൽ തൊഴിലുടമയായി രജിസ്റ്റർ ചെയ്യുക",
+        authTabLogin: "ലോഗിൻ",
+        authTabRegister: "സൈൻ അപ്പ്",
+        authMethodPhone: "മൊബൈൽ & OTP",
+        authMethodEmail: "ഇമെയിൽ & പാസ്‌വേഡ്",
+        authMobileLabel: "മൊബൈൽ നമ്പർ",
+        authMobilePlaceholder: "ഉദാ: 9848012345",
+        authMobileError: "6-9 ൽ ആരംഭിക്കുന്ന സാധുവായ 10 അക്ക മൊബൈൽ നമ്പർ നൽകുക.",
+        authBtnGetOtp: "മൊബൈലിൽ OTP നേടുക",
+        authOtpLabel: "6 അക്ക OTP നൽകുക:",
+        authBtnAutoOtp: "⚡ ഡെമോ OTP നൽകുക (123456)",
+        authBtnResendOtp: "OTP വീണ്ടും അയയ്ക്കുക",
+        authBtnVerify: "സ്ഥിരീകരിച്ച് ഡാഷ്‌ബോർഡിൽ പ്രവേശിക്കുക",
+        authEmailLabel: "ഇമെയിൽ വിലാസം",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "സാധുവായ ഇമെയിൽ നൽകുക.",
+        authPasswordLabel: "പാസ്‌വേഡ്",
+        authPasswordError: "പാസ്‌വേഡിന് കുറഞ്ഞത് 6 അക്ഷരങ്ങൾ വേണം.",
+        authRememberMe: "എന്നെ ഓർക്കുക",
+        authForgotPassword: "പാസ്‌വേഡ് മറന്നോ?",
+        authBtnSignIn: "ഡാഷ്‌ബോർഡിൽ പ്രവേശിക്കുക",
+        authDemoTitle: "തത്സമയ 1-ടാപ്പ് ഡെമോ",
+        authDemoWorker: "👷 തൊഴിലാളി ഡെമോ",
+        authDemoContractor: "🏗️ കരാറുകാരൻ ഡെമോ",
+        authSelectRole: "നിങ്ങളുടെ റോൾ തിരഞ്ഞെടുക്കുക",
+        roleWorker: "തൊഴിലാളി",
+        roleWorkerSub: "വിദഗ്ദ്ധ തൊഴിലാളി",
+        roleContractor: "കരാറുകാരൻ",
+        roleContractorSub: "മേസ്തിരി / കോൺട്രാക്ടർ",
+        roleEmployer: "തൊഴിലുടമ",
+        roleEmployerSub: "സൈറ്റ് ഉടമ",
+        authFullNameLabel: "പൂർണ്ണമായ പേര്",
+        authFullNamePlaceholder: "ഉദാ: രമേഷ് കുമാർ",
+        authFullNameError: "ദയവായി പൂർണ്ണ നാമം നൽകുക.",
+        authTradeLabel: "പ്രധാന ജോലി / വൈദഗ്ധ്യം",
+        authStateLabel: "സംസ്ഥാനം",
+        authDistrictLabel: "ജില്ല / നഗരം",
+        authSelectState: "സംസ്ഥാനം തിരഞ്ഞെടുക്കുക",
+        authSelectDistrict: "ജില്ല തിരഞ്ഞെടുക്കുക",
+        authCreatePasswordLabel: "പാസ്‌വേഡ് സൃഷ്ടിക്കുക",
+        authCreatePasswordPlaceholder: "കുറഞ്ഞത് 6 അക്ഷരങ്ങൾ",
+        authConfirmPasswordLabel: "പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക",
+        authConfirmPasswordPlaceholder: "പാസ്‌വേഡ് വീണ്ടും നൽകുക",
+        authPasswordMismatchError: "പാസ്‌വേഡുകൾ പൊരുത്തപ്പെടുന്നില്ല.",
+        authTermsPledge: "ഞാൻ DBOCW ന്യായവേതന വ്യവസ്ഥകളും ദേശീയ തൊഴിൽ നിയമങ്ങളും അംഗീകരിക്കുന്നു.",
+        authBtnRegisterSubmit: "അക്കൗണ്ട് സൃഷ്ടിച്ച് ഡാഷ്‌ബോർഡ് തുറക്കുക",
+        authCompliance1: "DBOCW & e-Shram അംഗീകൃത",
+        authCompliance2: "വേതന വിതരണ നിയമം 1936",
+        authHelplineText: "ഔദ്യോഗിക സൗജന്യ തൊഴിൽ ഹെൽപ്പ്‌ലൈൻ:",
+        tradeMasonry: "മേസ്തിരി (Masonry)",
+        tradeElectrician: "ഇലക്ട്രീഷ്യൻ / വയർമാൻ",
+        tradePlumber: "പ്ലംബർ / പൈപ്പ് ഫിറ്റർ",
+        tradeCarpenter: "ആശാരി (Carpenter)",
+        tradePainter: "പെയിന്റർ",
+        tradeWelder: "വെൽഡർ / ഫാബ്രിക്കേറ്റർ",
+        tradeBarBender: "ബാർ ബെൻഡർ",
+        tradeHelper: "ഹെൽപ്പർ / സാധാരണ തൊഴിലാളി",
+        tradeContractor: "സിവിൽ കരാറുകാരൻ",
+        pwdStrengthWeak: "ദുർബലം",
+        pwdStrengthTooShort: "വളരെ ചെറുത്",
+        pwdStrengthGood: "നല്ലത്",
+        pwdStrengthStrong: "ശക്തം",
+        authResendIn: "വീണ്ടും അയയ്ക്കുക",
+        authCodeExpired: "കാലഹരണപ്പെട്ടു",
+        toastLangSwitched: "ഭാഷ മാറ്റി",
+        toastDisplayUpdated: "ഭാഷ മാറ്റിയത്:",
+        fpTitle: "പാസ്‌വേഡ് പുനഃക്രമീകരിക്കുക",
+        fpSub: "OTP സ്ഥിരീകരണവും അക്കൗണ്ട് വീണ്ടെടുക്കലും",
+        fpDesc: "രജിസ്റ്റർ ചെയ്ത 10 അക്ക മൊബൈൽ നമ്പറോ ഇമെയിലോ നൽകുക.",
+        fpInputLabel: "മൊബൈൽ അല്ലെങ്കിൽ ഇമെയിൽ",
+        fpPlaceholder: "ഉദാ: 9848012345",
+        fpCancelBtn: "റദ്ദാക്കുക",
+        fpSubmitBtn: "കോഡ് അയയ്ക്കുക"
+      },
+      mr: {
+        authBrandSub: "राष्ट्रीय कुशल कामगार आणि कार्यस्थळ सुरक्षा नेटवर्क",
+        authSecurityBadge: "पडताळणीकृत सुरक्षित प्रवेश",
+        authHeadingLogin: "मजदूर मित्र मध्ये आपले स्वागत आहे",
+        authSubLogin: "कामे शोधण्यासाठी, हजेरी नोंदवण्यासाठी आणि आपत्कालीन मदतीसाठी लॉगिन करा",
+        authHeadingRegister: "मजदूर मित्र नेटवर्कमध्ये सामील व्हा",
+        authSubRegister: "सर्व २८ राज्ये आणि ८ केंद्रशासित प्रदेशांमध्ये कामगार, कंत्राटदार किंवा मालक म्हणून नोंदणी करा",
+        authTabLogin: "लॉग इन",
+        authTabRegister: "साइन अप",
+        authMethodPhone: "मोबाईल आणि OTP",
+        authMethodEmail: "ईमेल आणि पासवर्ड",
+        authMobileLabel: "मोबाईल नंबर",
+        authMobilePlaceholder: "उदा. 9848012345",
+        authMobileError: "कृपया ६-९ ने सुरू होणारा वैध १०-अंकी मोबाईल नंबर प्रविष्ट करा.",
+        authBtnGetOtp: "मोबाईलवर OTP मिळवा",
+        authOtpLabel: "६-अंकी OTP प्रविष्ट करा:",
+        authBtnAutoOtp: "⚡ ऑटो-फिल डेमो OTP (123456)",
+        authBtnResendOtp: "OTP पुन्हा पाठवा",
+        authBtnVerify: "सत्यापित करा आणि डॅशबोर्ड उघडा",
+        authEmailLabel: "ईमेल पत्ता",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "कृपया वैध ईमेल पत्ता प्रविष्ट करा.",
+        authPasswordLabel: "पासवर्ड",
+        authPasswordError: "पासवर्ड किमान ६ वर्णांचा असावा.",
+        authRememberMe: "मला लक्षात ठेवा",
+        authForgotPassword: "पासवर्ड विसरलात?",
+        authBtnSignIn: "डॅशबोर्डमध्ये साइन इन करा",
+        authDemoTitle: "झटपट १-टॅप डेमो चाचणी",
+        authDemoWorker: "👷 कामगार डेमो",
+        authDemoContractor: "🏗️ कंत्राटदार डेमो",
+        authSelectRole: "तुमची भूमिका निवडा",
+        roleWorker: "कामगार",
+        roleWorkerSub: "कुशल कारागीर",
+        roleContractor: "कंत्राटदार",
+        roleContractorSub: "पेटी / मुख्य कंत्राटदार",
+        roleEmployer: "मालक",
+        roleEmployerSub: "साइट मालक",
+        authFullNameLabel: "पूर्ण नाव",
+        authFullNamePlaceholder: "उदा. रमेश कुमार",
+        authFullNameError: "कृपया आपले पूर्ण नाव प्रविष्ट करा.",
+        authTradeLabel: "प्राथमिक कौशल्य / व्यवसाय",
+        authStateLabel: "राज्य",
+        authDistrictLabel: "जिल्हा / शहर",
+        authSelectState: "राज्य निवडा",
+        authSelectDistrict: "जिल्हा निवडा",
+        authCreatePasswordLabel: "पासवर्ड तयार करा",
+        authCreatePasswordPlaceholder: "किमान ६ वर्ण",
+        authConfirmPasswordLabel: "पासवर्डची पुष्टी करा",
+        authConfirmPasswordPlaceholder: "आपला पासवर्ड पुन्हा टाका",
+        authPasswordMismatchError: "पासवर्ड जुळत नाहीत.",
+        authTermsPledge: "मी वैधानिक DBOCW योग्य मजुरी, सुरक्षा नियम आणि राष्ट्रीय कामगार अटी मान्य करतो.",
+        authBtnRegisterSubmit: "खाते तयार करा आणि डॅशबोर्ड उघडा",
+        authCompliance1: "DBOCW आणि e-Shram सुसंगत",
+        authCompliance2: "मजुरी देणे कायदा १९३६",
+        authHelplineText: "अधिकृत टोल-फ्री कामगार हेल्पलाइन:",
+        tradeMasonry: "गवंडी (Masonry)",
+        tradeElectrician: "इलेक्ट्रिशियन / वायरमन",
+        tradePlumber: "प्लंबर / पाईप फिटर",
+        tradeCarpenter: "सुतार (Carpenter)",
+        tradePainter: "पेंटर",
+        tradeWelder: "वेल्डर / फॅब्रिकेटर",
+        tradeBarBender: "बार बेंडर / स्टील फिक्सर",
+        tradeHelper: "हेल्पर / सामान्य कामगार",
+        tradeContractor: "सिव्हिल कंत्राटदार / बिल्डर",
+        pwdStrengthWeak: "कमकुवत",
+        pwdStrengthTooShort: "खूप लहान",
+        pwdStrengthGood: "चांगला",
+        pwdStrengthStrong: "मजबूत",
+        authResendIn: "पुन्हा पाठवा",
+        authCodeExpired: "कोड कालबाह्य झाला",
+        toastLangSwitched: "भाषा बदलली",
+        toastDisplayUpdated: "भाषा यात बदलली:",
+        fpTitle: "पासवर्ड रीसेट करा",
+        fpSub: "OTP पडताळणी आणि खाते पुनर्प्राप्ती",
+        fpDesc: "आपला नोंदणीकृत १०-अंकी मोबाईल नंबर किंवा ईमेल प्रविष्ट करा.",
+        fpInputLabel: "मोबाईल किंवा ईमेल पत्ता",
+        fpPlaceholder: "उदा. 9848012345",
+        fpCancelBtn: "रद्द करा",
+        fpSubmitBtn: "रीसेट कोड पाठवा"
+      },
+      bn: {
+        authBrandSub: "জাতীয় দক্ষ শ্রমিক বাজার এবং সুরক্ষা নেটওয়ার্ক",
+        authSecurityBadge: "যাচাইকৃত নিরাপদ প্রবেশ",
+        authHeadingLogin: "মজদুর মিত্রে স্বাগতম",
+        authSubLogin: "কাজ খুঁজতে, হাজিরা দিতে ও জরুরি সহায়তার জন্য লগইন করুন",
+        authHeadingRegister: "মজদুর মিত্র নেটওয়ার্কে যোগ দিন",
+        authSubRegister: "২৮টি রাজ্য ও ৮টি কেন্দ্রশাসিত অঞ্চলে শ্রমিক, ঠিকাদার বা নিয়োগকারী হিসেবে নিবন্ধন করুন",
+        authTabLogin: "লগ ইন",
+        authTabRegister: "সাইন আপ",
+        authMethodPhone: "মোবাইল ও OTP",
+        authMethodEmail: "ইমেল ও পাসওয়ার্ড",
+        authMobileLabel: "মোবাইল নম্বর",
+        authMobilePlaceholder: "उदा. 9848012345",
+        authMobileError: "অনুগ্রহ করে ৬-৯ দিয়ে শুরু হওয়া ১০ সংখ্যার বৈধ মোবাইল নম্বর লিখুন।",
+        authBtnGetOtp: "মোবাইলে OTP পান",
+        authOtpLabel: "৬ সংখ্যার OTP লিখুন:",
+        authBtnAutoOtp: "⚡ অটো-ফিল ডেমো OTP (123456)",
+        authBtnResendOtp: "OTP পুনরায় পাঠান",
+        authBtnVerify: "যাচাই করুন এবং ড্যাশবোর্ডে প্রবেশ করুন",
+        authEmailLabel: "ইমেল ঠিকানা",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "অনুগ্রহ করে একটি বৈধ ইমেল ঠিকানা লিখুন।",
+        authPasswordLabel: "পাসওয়ার্ড",
+        authPasswordError: "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।",
+        authRememberMe: "আমাকে মনে রাখুন",
+        authForgotPassword: "পাসওয়ার্ড ভুলে গেছেন?",
+        authBtnSignIn: "ড্যাশবোর্ডে সাইন ইন করুন",
+        authDemoTitle: "তাত্ক্ষণিক ১-ট্যাপ ডেমো পরীক্ষা",
+        authDemoWorker: "👷 শ্রমিক ডেমো",
+        authDemoContractor: "🏗️ ঠিকাদার ডেমো",
+        authSelectRole: "আপনার ভূমিকা বেছে নিন",
+        roleWorker: "শ্রমিক",
+        roleWorkerSub: "দক্ষ কারিগর",
+        roleContractor: "ঠিকাদার",
+        roleContractorSub: "পেটি / মূল ঠিকাদার",
+        roleEmployer: "নিয়োগকারী",
+        roleEmployerSub: "সাইট মালিক",
+        authFullNameLabel: "সম্পূর্ণ নাম",
+        authFullNamePlaceholder: "उदा. রমেশ কুমার",
+        authFullNameError: "অনুগ্রহ করে আপনার সম্পূর্ণ নাম লিখুন।",
+        authTradeLabel: "প্রধান দক্ষতা / পেশা",
+        authStateLabel: "রাজ্য",
+        authDistrictLabel: "জেলা / শহর",
+        authSelectState: "রাজ্য নির্বাচন করুন",
+        authSelectDistrict: "জেলা নির্বাচন করুন",
+        authCreatePasswordLabel: "পাসওয়ার্ড তৈরি করুন",
+        authCreatePasswordPlaceholder: "কমপক্ষে ৬ অক্ষর",
+        authConfirmPasswordLabel: "পাসওয়ার্ড নিশ্চিত করুন",
+        authConfirmPasswordPlaceholder: "পাসওয়ার্ড পুনরায় লিখুন",
+        authPasswordMismatchError: "পাসওয়ার্ড দুটি মেলেনি।",
+        authTermsPledge: "আমি DBOCW ন্যায্য মজুরি, সুরক্ষা প্রোটোকল ও জাতীয় শ্রম শর্তাবলীতে সম্মত।",
+        authBtnRegisterSubmit: "অ্যাকাউন্ট তৈরি করুন ও ড্যাশবোর্ড খুলুন",
+        authCompliance1: "DBOCW এবং e-Shram অনুবর্তী",
+        authCompliance2: "মজুরি প্রদান আইন ১৯৩৬",
+        authHelplineText: "অফিসিয়াল টোল-ফ্রি শ্রম হেল্পলাইন:",
+        tradeMasonry: "রাজমিস্ত্রি (Masonry)",
+        tradeElectrician: "ইলেকট্রিশিয়ান / ওয়্যারম্যান",
+        tradePlumber: "প্লাম্বার / পাইপ ফিটার",
+        tradeCarpenter: "ছুতোর / কাঠমিস্ত্রি",
+        tradePainter: "পেইন্টার / রংমিস্ত্রি",
+        tradeWelder: "ওয়েল্ডার / ফেব্রিকেটর",
+        tradeBarBender: "রড মিস্ত্রি (Bar Bender)",
+        tradeHelper: "হেল্পার / সাধারণ শ্রমিক",
+        tradeContractor: "সিভিল ঠিকাদার / বিল্ডার",
+        pwdStrengthWeak: "দুর্বল",
+        pwdStrengthTooShort: "খুব ছোট",
+        pwdStrengthGood: "ভালো",
+        pwdStrengthStrong: "শক্তিশালী",
+        authResendIn: "পুনরায় পাঠান",
+        authCodeExpired: "কোডের মেয়াদ শেষ",
+        toastLangSwitched: "ভাষা পরিবর্তিত হয়েছে",
+        toastDisplayUpdated: "ভাষা এতে পরিবর্তিত:",
+        fpTitle: "পাসওয়ার্ড রিসেট করুন",
+        fpSub: "OTP যাচাইকরণ ও অ্যাকাউন্ট পুনরুদ্ধার",
+        fpDesc: "আপনার নিবন্ধিত ১০ সংখ্যার মোবাইল বা ইমেল লিখুন।",
+        fpInputLabel: "মোবাইল বা ইমেল ঠিকানা",
+        fpPlaceholder: "उदा. 9848012345",
+        fpCancelBtn: "বাতিল করুন",
+        fpSubmitBtn: "রিসেট কোড পাঠান"
+      },
+      gu: {
+        authBrandSub: "રાષ્ટ્રીય કુશળ શ્રમિક અને કાર્યસ્થળ સુરક્ષા નેટવર્ક",
+        authSecurityBadge: "ચકાસાયેલ સુરક્ષિત પ્રવેશ",
+        authHeadingLogin: "મઝદૂર મિત્રમાં આપનું સ્વાગત છે",
+        authSubLogin: "કામ શોધવા, હાજરી નોંધવા અને કટોકટી સહાય માટે લૉગિન કરો",
+        authHeadingRegister: "મઝદૂર મિત્ર નેટવર્ક સાથે જોડાઓ",
+        authSubRegister: "તમામ ૨૮ રાજ્યો અને ૮ કેન્દ્રશાસિત પ્રદેશોમાં શ્રમિક, કોન્ટ્રાક્ટર કે માલિક તરીકે નોંધણી કરો",
+        authTabLogin: "લૉગ ઇન",
+        authTabRegister: "સાઇન અપ",
+        authMethodPhone: "મોબાઇલ અને OTP",
+        authMethodEmail: "ઇમેઇલ અને પાસવર્ડ",
+        authMobileLabel: "મોબાઇલ નંબર",
+        authMobilePlaceholder: "દા.ત. 9848012345",
+        authMobileError: "કૃપા કરીને ૬-૯ થી શરૂ થતો માન્ય ૧૦-અંકનો મોબાઇલ નંબર દાખલ કરો.",
+        authBtnGetOtp: "મોબાઇલ પર OTP મેળવો",
+        authOtpLabel: "૬-અંકનો OTP દાખલ કરો:",
+        authBtnAutoOtp: "⚡ ડેમો OTP ભરો (123456)",
+        authBtnResendOtp: "OTP ફરી મોકલો",
+        authBtnVerify: "ચકાસો અને ડેશબોર્ડ ખોલો",
+        authEmailLabel: "ઇમેઇલ સરનામું",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "કૃપા કરીને માન્ય ઇમેઇલ દાખલ કરો.",
+        authPasswordLabel: "પાસવર્ડ",
+        authPasswordError: "પાસવર્ડ ઓછામાં ઓછા ૬ અક્ષરોનો હોવો જોઈએ.",
+        authRememberMe: "મને યાદ રાખો",
+        authForgotPassword: "પાસવર્ડ ભૂલી ગયા?",
+        authBtnSignIn: "ડેશબોર્ડમાં સાઇન ઇન કરો",
+        authDemoTitle: "ત્વરિત ૧-ટેપ ડેમો",
+        authDemoWorker: "👷 શ્રમિક ડેમો",
+        authDemoContractor: "🏗️ કોન્ટ્રાક્ટર ડેમો",
+        authSelectRole: "તમારી ભૂમિકા પસંદ કરો",
+        roleWorker: "શ્રમિક",
+        roleWorkerSub: "કુશળ કારીગર",
+        roleContractor: "કોન્ટ્રાક્ટર",
+        roleContractorSub: "મુકાદમ / કોન્ટ્રાક્ટર",
+        roleEmployer: "માલિક",
+        roleEmployerSub: "સાઇટ માલિક",
+        authFullNameLabel: "પૂરું નામ",
+        authFullNamePlaceholder: "દા.ત. રમેશ કુમાર",
+        authFullNameError: "કૃપા કરીને તમારું પૂરું નામ દાખલ કરો.",
+        authTradeLabel: "મુખ્ય કૌશલ્ય / વ્યવસાય",
+        authStateLabel: "રાજ્ય",
+        authDistrictLabel: "જિલ્લો / શહેર",
+        authSelectState: "રાજ્ય પસંદ કરો",
+        authSelectDistrict: "જિલ્લો પસંદ કરો",
+        authCreatePasswordLabel: "પાસવર્ડ બનાવો",
+        authCreatePasswordPlaceholder: "ઓછામાં ઓછા ૬ અક્ષરો",
+        authConfirmPasswordLabel: "પાસવર્ડ કન્ફર્મ કરો",
+        authConfirmPasswordPlaceholder: "પાસવર્ડ ફરીથી દાખલ કરો",
+        authPasswordMismatchError: "પાસવર્ડ મેળ ખાતા નથી.",
+        authTermsPledge: "હું DBOCW વાજબી વેતન, સુરક્ષા નિયમો અને રાષ્ટ્રીય શ્રમ શરતો સ્વીકારું છું.",
+        authBtnRegisterSubmit: "ખાતું બનાવો અને ડેશબોર્ડ શરૂ કરો",
+        authCompliance1: "DBOCW અને e-Shram સુસંગત",
+        authCompliance2: "વેતન ચૂકવણી અધિનિયમ ૧૯૩૬",
+        authHelplineText: "સત્તાવાર ટોલ-ફ્રી લેબર હેલ્પલાઇન:",
+        tradeMasonry: "કડીયો (Masonry)",
+        tradeElectrician: "ઇલેક્ટ્રિશિયન / વાયરમેન",
+        tradePlumber: "પ્લમ્બર / પાઇપ ફિટર",
+        tradeCarpenter: "સુથાર (Carpenter)",
+        tradePainter: "કલર કામ / પેઇન્ટર",
+        tradeWelder: "વેલ્ડર / ફેબ્રિકેટર",
+        tradeBarBender: "સળિયા કામ (Bar Bender)",
+        tradeHelper: "મજૂર / હેલ્પર",
+        tradeContractor: "સિવિલ કોન્ટ્રાક્ટર",
+        pwdStrengthWeak: "નબળો",
+        pwdStrengthTooShort: "ખૂબ નાનો",
+        pwdStrengthGood: "સારો",
+        pwdStrengthStrong: "મજબૂત",
+        authResendIn: "ફરી મોકલો",
+        authCodeExpired: "સમાપ્ત થયો",
+        toastLangSwitched: "ભાષા બદલાઈ",
+        toastDisplayUpdated: "ભાષા બદલીને આ કરવામાં આવી:",
+        fpTitle: "પાસવર્ડ રીસેટ કરો",
+        fpSub: "OTP ચકાસણી અને ખાતું પુનઃપ્રાપ્તિ",
+        fpDesc: "તમારો નોંધાયેલ ૧૦-અંકનો મોબાઇલ નંબર અથવા ઇમેઇલ દાખલ કરો.",
+        fpInputLabel: "મોબાઇલ અથવા ઇમેઇલ",
+        fpPlaceholder: "દા.ત. 9848012345",
+        fpCancelBtn: "રદ કરો",
+        fpSubmitBtn: "રીસેટ કોડ મોકલો"
+      },
+      or: {
+        authBrandSub: "ଜାତୀୟ ଦକ୍ଷ ଶ୍ରମିକ ଓ କର୍ମକ୍ଷେତ୍ର ସୁରକ୍ଷା ନେଟୱାର୍କ",
+        authSecurityBadge: "ଯାଞ୍ଚ ହୋଇଥିବା ସୁରକ୍ଷିତ ପ୍ରବେଶ",
+        authHeadingLogin: "ମଜଦୁର ମିତ୍ରକୁ ସ୍ୱାଗତ",
+        authSubLogin: "କାମ ଖୋଜିବା, ଉପସ୍ଥିତି ଦେବା ଏବଂ ଜରୁରୀ ସହାୟତା ପାଇଁ ଲଗଇନ୍ କରନ୍ତୁ",
+        authHeadingRegister: "ମଜଦୁର ମିତ୍ର ନେଟୱାର୍କରେ ଯୋଗ ଦିଅନ୍ତୁ",
+        authSubRegister: "୨୮ଟି ରାଜ୍ୟ ଓ ୮ଟି କେନ୍ଦ୍ରଶାସିତ ଅଞ୍ଚଳରେ ଶ୍ରମିକ, ଠିକାଦାର କିମ୍ବା ମାଲିକ ଭାବରେ ପଞ୍ଜୀକରଣ କରନ୍ତୁ",
+        authTabLogin: "ଲଗ୍ ଇନ୍",
+        authTabRegister: "ସାଇନ୍ ଅପ୍",
+        authMethodPhone: "ମୋବାଇଲ୍ ଓ OTP",
+        authMethodEmail: "ଇମେଲ୍ ଓ ପାସୱାର୍ଡ",
+        authMobileLabel: "ମୋବାଇଲ୍ ନମ୍ବର",
+        authMobilePlaceholder: "ଯଥା: 9848012345",
+        authMobileError: "ଦୟାକରି ୬-୯ ରୁ ଆରମ୍ଭ ହେଉଥିବା ୧୦-ଅଙ୍କ ବିଶିଷ୍ଟ ବୈଧ ମୋବାଇଲ୍ ନମ୍ବର ଦିଅନ୍ତୁ।",
+        authBtnGetOtp: "ମୋବାଇଲରେ OTP ପାଆନ୍ତୁ",
+        authOtpLabel: "୬-ଅଙ୍କ ବିଶିଷ୍ଟ OTP ଦିଅନ୍ତୁ:",
+        authBtnAutoOtp: "⚡ ଡେମୋ OTP ଭରନ୍ତୁ (123456)",
+        authBtnResendOtp: "OTP ପୁଣି ପଠାନ୍ତୁ",
+        authBtnVerify: "ଯାଞ୍ଚ କରନ୍ତୁ ଏବଂ ଡ୍ୟାସବୋର୍ଡ ଖୋଲନ୍ତୁ",
+        authEmailLabel: "ଇମେଲ୍ ଠିକଣା",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "ଦୟାକରି ଏକ ବୈଧ ଇମେଲ୍ ଦିଅନ୍ତୁ।",
+        authPasswordLabel: "ପାସୱାର୍ଡ",
+        authPasswordError: "ପାସୱାର୍ଡ ଅତି କମରେ ୬ଟି ଅକ୍ଷର ହେବା ଉଚିତ।",
+        authRememberMe: "ମୋତେ ମନେ ରଖନ୍ତୁ",
+        authForgotPassword: "ପାସୱାର୍ଡ ଭୁଲିଗଲେ କି?",
+        authBtnSignIn: "ଡ୍ୟାସବୋର୍ଡରେ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ",
+        authDemoTitle: "ତୁରନ୍ତ ୧-ଟ୍ୟାପ୍ ଡେମୋ",
+        authDemoWorker: "👷 ଶ୍ରମିକ ଡେମୋ",
+        authDemoContractor: "🏗️ ଠିକାଦାର ଡେମୋ",
+        authSelectRole: "ଆପଣଙ୍କର ଭୂମିକା ଚୟନ କରନ୍ତୁ",
+        roleWorker: "ଶ୍ରମିକ",
+        roleWorkerSub: "ଦକ୍ଷ କାରିଗର",
+        roleContractor: "ଠିକାଦାର",
+        roleContractorSub: "ପେଟି / ମୁଖ୍ୟ ଠିକାଦାର",
+        roleEmployer: "ମାଲିକ",
+        roleEmployerSub: "ସାଇଟ୍ ମାଲିକ",
+        authFullNameLabel: "ପୂରା ନାମ",
+        authFullNamePlaceholder: "ଯଥା: ରମେଶ କୁମାର",
+        authFullNameError: "ଦୟାକରି ଆପଣଙ୍କର ପୂରା ନାମ ଦିଅନ୍ତୁ।",
+        authTradeLabel: "ମୁଖ୍ୟ କାର୍ଯ୍ୟ ଦକ୍ଷତା",
+        authStateLabel: "ରାଜ୍ୟ",
+        authDistrictLabel: "ଜିଲ୍ଲା / ସହର",
+        authSelectState: "ରାଜ୍ୟ ଚୟନ କରନ୍ତୁ",
+        authSelectDistrict: "ଜିଲ୍ଲା ଚୟନ କରନ୍ତୁ",
+        authCreatePasswordLabel: "ପାସୱାର୍ଡ ତିଆରି କରନ୍ତୁ",
+        authCreatePasswordPlaceholder: "ଅତି କମରେ ୬ଟି ଅକ୍ଷର",
+        authConfirmPasswordLabel: "ପାସୱାର୍ଡ ନିଶ୍ଚିତ କରନ୍ତୁ",
+        authConfirmPasswordPlaceholder: "ପାସୱାର୍ଡ ପୁନର୍ବାର ଦିଅନ୍ତୁ",
+        authPasswordMismatchError: "ପାସୱାର୍ଡ ମେଳ ଖାଉନାହିଁ।",
+        authTermsPledge: "ମୁଁ DBOCW ଉଚିତ ମଜୁରୀ, ସୁରକ୍ଷା ନିୟମାବଳୀ ଓ ଜାତୀୟ ଶ୍ରମ ସର୍ତ୍ତରେ ସହମତ।",
+        authBtnRegisterSubmit: "ଖାତା ତିଆରି କରନ୍ତୁ ଓ ଡ୍ୟାସବୋର୍ଡ ଖୋଲନ୍ତୁ",
+        authCompliance1: "DBOCW ଏବଂ e-Shram ଅନୁମୋଦିତ",
+        authCompliance2: "ମଜୁରୀ ପରିଶୋଧ ଅଧିନିୟମ ୧୯୩୬",
+        authHelplineText: "ଅଫିସିଆଲ୍ ଟୋଲ୍-ଫ୍ରି ଶ୍ରମ ହେଲ୍ପଲାଇନ୍:",
+        tradeMasonry: "ରାଜମିସ୍ତ୍ରୀ (Masonry)",
+        tradeElectrician: "ଇଲେକ୍ଟ୍ରିସିଆନ୍ / ତାର ମିସ୍ତ୍ରୀ",
+        tradePlumber: "ପ୍ଲମ୍ବର / ପାଇପ୍ ମିସ୍ତ୍ରୀ",
+        tradeCarpenter: "ବଢ଼େଇ (Carpenter)",
+        tradePainter: "ରଙ୍ଗ ମିସ୍ତ୍ରୀ (Painter)",
+        tradeWelder: "ୱେଲଡର / ଫ୍ୟାବ୍ରିକେଟର",
+        tradeBarBender: "ରଡ୍ ବାଇଣ୍ଡର (Bar Bender)",
+        tradeHelper: "ହେଲପର / ସାଧାରଣ ଶ୍ରମିକ",
+        tradeContractor: "ସିଭିଲ୍ ଠିକାଦାର / ବିଲ୍ଡର",
+        pwdStrengthWeak: "ଦୁର୍ବଳ",
+        pwdStrengthTooShort: "ବହୁତ ଛୋଟ",
+        pwdStrengthGood: "ଭଲ",
+        pwdStrengthStrong: "ଶକ୍ତିଶାଳୀ",
+        authResendIn: "ପୁଣି ପଠାନ୍ତୁ",
+        authCodeExpired: "ସମୟ ସରିଗଲା",
+        toastLangSwitched: "ଭାଷା ବଦଳାଗଲା",
+        toastDisplayUpdated: "ଭାଷା ଏହାକୁ ପରିବର୍ତ୍ତିତ:",
+        fpTitle: "ପାସୱାର୍ଡ ରିସେଟ୍ କରନ୍ତୁ",
+        fpSub: "OTP ଯାଞ୍ଚ ଓ ଆକାଉଣ୍ଟ ପୁନରୁଦ୍ଧାର",
+        fpDesc: "ପଞ୍ଜୀକୃତ ୧୦-ଅଙ୍କର ମୋବାଇଲ୍ ବା ଇମେଲ୍ ଦିଅନ୍ତୁ।",
+        fpInputLabel: "ମୋବାଇଲ୍ ବା ଇମେଲ୍",
+        fpPlaceholder: "ଯଥା: 9848012345",
+        fpCancelBtn: "ବାତିଲ୍",
+        fpSubmitBtn: "କୋଡ୍ ପଠାନ୍ତୁ"
+      },
+      pa: {
+        authBrandSub: "ਰਾਸ਼ਟਰੀ ਹੁਨਰਮੰਦ ਮਜ਼ਦੂਰ ਅਤੇ ਸੁਰੱਖਿਆ ਨੈੱਟਵਰਕ",
+        authSecurityBadge: "ਪ੍ਰਮਾਣਿਤ ਸੁਰੱਖਿਅਤ ਪਹੁੰਚ",
+        authHeadingLogin: "ਮਜ਼ਦੂਰ ਮਿੱਤਰ ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ",
+        authSubLogin: "ਕੰਮ ਲੱਭਣ, ਹਾਜ਼ਰੀ ਦਰਜ ਕਰਨ ਅਤੇ ਐਮਰਜੈਂਸੀ ਸਹਾਇਤਾ ਲਈ ਲੌਗਇਨ ਕਰੋ",
+        authHeadingRegister: "ਮਜ਼ਦੂਰ ਮਿੱਤਰ ਨੈੱਟਵਰਕ ਨਾਲ ਜੁੜੋ",
+        authSubRegister: "ਸਾਰੇ 28 ਰਾਜਾਂ ਅਤੇ 8 ਕੇਂਦਰ ਸ਼ਾਸਤ ਪ੍ਰਦੇਸ਼ਾਂ ਵਿੱਚ ਕਾਰੀਗਰ, ਠੇਕੇਦਾਰ ਜਾਂ ਮਾਲਕ ਵਜੋਂ ਰਜਿਸਟਰ ਕਰੋ",
+        authTabLogin: "ਲੌਗ ਇਨ",
+        authTabRegister: "ਸਾਈਨ ਅੱਪ",
+        authMethodPhone: "ਮੋਬਾਈਲ ਅਤੇ OTP",
+        authMethodEmail: "ਈਮੇਲ ਅਤੇ ਪਾਸਵਰਡ",
+        authMobileLabel: "ਮੋਬਾਈਲ ਨੰਬਰ",
+        authMobilePlaceholder: "ਉਦਾ. 9848012345",
+        authMobileError: "ਕਿਰਪਾ ਕਰਕੇ 6-9 ਨਾਲ ਸ਼ੁਰੂ ਹੋਣ ਵਾਲਾ 10-ਅੰਕਾਂ ਵਾਲਾ ਮੋਬਾਈਲ ਨੰਬਰ ਦਰਜ ਕਰੋ।",
+        authBtnGetOtp: "ਮੋਬਾਈਲ 'ਤੇ OTP ਪ੍ਰਾਪਤ ਕਰੋ",
+        authOtpLabel: "6-ਅੰਕਾਂ ਵਾਲਾ OTP ਦਰਜ ਕਰੋ:",
+        authBtnAutoOtp: "⚡ ਡੈਮੋ OTP ਭਰੋ (123456)",
+        authBtnResendOtp: "OTP ਮੁੜ ਭੇਜੋ",
+        authBtnVerify: "ਪੁਸ਼ਟੀ ਕਰੋ ਅਤੇ ਡੈਸ਼ਬੋਰਡ ਖੋਲ੍ਹੋ",
+        authEmailLabel: "ਈਮੇਲ ਪਤਾ",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਵੈਧ ਈਮੇਲ ਪਤਾ ਦਰਜ ਕਰੋ।",
+        authPasswordLabel: "ਪਾਸਵਰਡ",
+        authPasswordError: "ਪਾਸਵਰਡ ਘੱਟੋ-ਘੱਟ 6 ਅੱਖਰਾਂ ਦਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।",
+        authRememberMe: "ਮੈਨੂੰ ਯਾਦ ਰੱਖੋ",
+        authForgotPassword: "ਪਾਸਵਰਡ ਭੁੱਲ ਗਏ?",
+        authBtnSignIn: "ਡੈਸ਼ਬੋਰਡ ਵਿੱਚ ਸਾਈਨ ਇਨ ਕਰੋ",
+        authDemoTitle: "ਤੁਰੰਤ 1-ਟੈਪ ਡੈਮੋ ਟੈਸਟਿੰਗ",
+        authDemoWorker: "👷 ਕਾਰੀਗਰ ਡੈਮੋ",
+        authDemoContractor: "🏗️ ਠੇਕੇਦਾਰ ਡੈਮੋ",
+        authSelectRole: "ਆਪਣੀ ਭੂਮਿਕਾ ਚੁਣੋ",
+        roleWorker: "ਕਾਰੀਗਰ",
+        roleWorkerSub: "ਹੁਨਰਮੰਦ ਮਜ਼ਦੂਰ",
+        roleContractor: "ਠੇਕੇਦਾਰ",
+        roleContractorSub: "ਸਾਈਟ ਠੇਕੇਦਾਰ",
+        roleEmployer: "ਮਾਲਕ",
+        roleEmployerSub: "ਸਾਈਟ ਮਾਲਕ",
+        authFullNameLabel: "ਪੂਰਾ ਨਾਮ",
+        authFullNamePlaceholder: "ਉਦਾ. ਰਮੇਸ਼ ਕੁਮਾਰ",
+        authFullNameError: "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਪੂਰਾ ਨਾਮ ਦਰਜ ਕਰੋ।",
+        authTradeLabel: "ਮੁੱਖ ਹੁਨਰ / ਪੇਸ਼ਾ",
+        authStateLabel: "ਰਾਜ",
+        authDistrictLabel: "ਜ਼ਿਲ੍ਹਾ / ਸ਼ਹਿਰ",
+        authSelectState: "ਰਾਜ ਚੁਣੋ",
+        authSelectDistrict: "ਜ਼ਿਲ੍ਹਾ ਚੁਣੋ",
+        authCreatePasswordLabel: "ਪਾਸਵਰਡ ਬਣਾਓ",
+        authCreatePasswordPlaceholder: "ਘੱਟੋ-ਘੱਟ 6 ਅੱਖਰ",
+        authConfirmPasswordLabel: "ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+        authConfirmPasswordPlaceholder: "ਆਪਣਾ ਪਾਸਵਰਡ ਦੁਬਾਰਾ ਦਰਜ ਕਰੋ",
+        authPasswordMismatchError: "ਪਾਸਵਰਡ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ।",
+        authTermsPledge: "ਮੈਂ DBOCW ਉਚਿਤ ਉਜਰਤਾਂ, ਸੁਰੱਖਿਆ ਪ੍ਰੋਟੋਕੋਲ ਅਤੇ ਰਾਸ਼ਟਰੀ ਕਿਰਤ ਸ਼ਰਤਾਂ ਨਾਲ ਸਹਿਮਤ ਹਾਂ।",
+        authBtnRegisterSubmit: "ਖਾਤਾ ਬਣਾਓ ਅਤੇ ਡੈਸ਼ਬੋਰਡ ਲਾਂਚ ਕਰੋ",
+        authCompliance1: "DBOCW ਅਤੇ e-Shram ਅਨੁਸਾਰੀ",
+        authCompliance2: "ਉਜਰਤ ਭੁਗਤਾਨ ਐਕਟ 1936",
+        authHelplineText: "ਸਰਕਾਰੀ ਟੋਲ-ਫ੍ਰੀ ਲੇਬਰ ਹੈਲਪਲਾਈਨ:",
+        tradeMasonry: "ਰਾਜਮਿਸਤਰੀ (Masonry)",
+        tradeElectrician: "ਇਲੈਕਟ੍ਰੀਸ਼ੀਅਨ / ਵਾਇਰਮੈਨ",
+        tradePlumber: "ਪਲੰਬਰ / ਪਾਈਪ ਫਿਟਰ",
+        tradeCarpenter: "ਤਰਖਾਣ (Carpenter)",
+        tradePainter: "ਪੇਂਟਰ (Painter)",
+        tradeWelder: "ਵੈਲਡਰ / ਫੈਬਰੀਕੇਟਰ",
+        tradeBarBender: "ਸਰੀਆ ਮਿਸਤਰੀ (Bar Bender)",
+        tradeHelper: "ਹੈਲਪਰ / ਆਮ ਮਜ਼ਦੂਰ",
+        tradeContractor: "ਸਿਵਲ ਠੇਕੇਦਾਰ / ਬਿਲਡਰ",
+        pwdStrengthWeak: "ਕਮਜ਼ੋਰ",
+        pwdStrengthTooShort: "ਬਹੁਤ ਛੋਟਾ",
+        pwdStrengthGood: "ਚੰਗਾ",
+        pwdStrengthStrong: "ਮਜ਼ਬੂਤ",
+        authResendIn: "ਮੁੜ ਭੇਜੋ",
+        authCodeExpired: "ਕੋਡ ਦੀ ਮਿਆਦ ਪੁੱਗੀ",
+        toastLangSwitched: "ਭਾਸ਼ਾ ਬਦਲੀ ਗਈ",
+        toastDisplayUpdated: "ਭਾਸ਼ਾ ਅੱਪਡੇਟ ਕੀਤੀ ਗਈ:",
+        fpTitle: "ਪਾਸਵਰਡ ਰੀਸੈੱਟ ਕਰੋ",
+        fpSub: "OTP ਪੁਸ਼ਟੀਕਰਨ ਅਤੇ ਖਾਤਾ ਰਿਕਵਰੀ",
+        fpDesc: "ਆਪਣਾ ਰਜਿਸਟਰਡ 10-ਅੰਕਾਂ ਵਾਲਾ ਮੋਬਾਈਲ ਜਾਂ ਈਮੇਲ ਦਰਜ ਕਰੋ।",
+        fpInputLabel: "ਮੋਬਾਈਲ ਜਾਂ ਈਮੇਲ ਪਤਾ",
+        fpPlaceholder: "ਉਦਾ. 9848012345",
+        fpCancelBtn: "ਰੱਦ ਕਰੋ",
+        fpSubmitBtn: "ਕੋਡ ਭੇਜੋ"
+      },
+      as: {
+        authBrandSub: "ৰাষ্ট্ৰীয় দক্ষ শ্ৰমিক আৰু সুৰক্ষা নেটৱৰ্ক",
+        authSecurityBadge: "যাচাইকৃত সুৰক্ষিত প্ৰৱেশ",
+        authHeadingLogin: "মজদুৰ মিত্ৰলৈ স্বাগতম",
+        authSubLogin: "কাম বিচাৰিবলৈ, উপস্থিতি পঞ্জীয়ন কৰিবলৈ আৰু জৰুৰীকালীন সহায়ৰ বাবে লগইন কৰক",
+        authHeadingRegister: "মজদুৰ মিত্ৰ নেটৱৰ্কত যোগদান কৰক",
+        authSubRegister: "২৮খন ৰাজ্য আৰু ৮খন কেন্দ্ৰীয় শাসিত অঞ্চলত শ্ৰমিক, ঠিকাদাৰ বা নিয়োগকৰ্তা হিচাপে পঞ্জীয়ন কৰক",
+        authTabLogin: "লগ ইন",
+        authTabRegister: "ছাইন আপ",
+        authMethodPhone: "মোবাইল আৰু OTP",
+        authMethodEmail: "ইমেইল আৰু পাছৱৰ্ড",
+        authMobileLabel: "মোবাইল নম্বৰ",
+        authMobilePlaceholder: "যেনে: 9848012345",
+        authMobileError: "অনুগ্ৰহ কৰি ৬-৯ ৰে আৰম্ভ হোৱা ১০টা সংখ্যাৰ বৈধ মোবাইল নম্বৰ দিয়ক।",
+        authBtnGetOtp: "মোবাইলত OTP লাভ কৰক",
+        authOtpLabel: "৬টা সংখ্যাৰ OTP দিয়ক:",
+        authBtnAutoOtp: "⚡ ডেমো OTP পূৰণ কৰক (123456)",
+        authBtnResendOtp: "OTP পুনৰ প্ৰেৰণ কৰক",
+        authBtnVerify: "যাচাই কৰক আৰু ডেচবৰ্ড খোলক",
+        authEmailLabel: "ইমেইল ঠিকনা",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "অনুগ্ৰহ কৰি এটা বৈধ ইমেইল ঠিকনা দিয়ক।",
+        authPasswordLabel: "পাছৱৰ্ড",
+        authPasswordError: "পাছৱৰ্ড কমেও ৬টা আখৰৰ হ'ব লাগিব।",
+        authRememberMe: "মোক মনত ৰাখক",
+        authForgotPassword: "পাছৱৰ্ড পাহৰিলে নেকি?",
+        authBtnSignIn: "ডেচবৰ্ডত ছাইন ইন কৰক",
+        authDemoTitle: "দ্ৰুত ১-টেপ ডেমো",
+        authDemoWorker: "👷 শ্ৰমিক ডেমো",
+        authDemoContractor: "🏗️ ঠিকাদাৰ ডেমো",
+        authSelectRole: "আপোনাৰ ভূমিকা বাছক",
+        roleWorker: "শ্ৰমিক",
+        roleWorkerSub: "দক্ষ শ্ৰমিক",
+        roleContractor: "ঠিকাদাৰ",
+        roleContractorSub: "পেটি / ঠিকাদাৰ",
+        roleEmployer: "নিয়োগকৰ্তা",
+        roleEmployerSub: "ছাইটৰ মালিক",
+        authFullNameLabel: "সম্পূৰ্ণ নাম",
+        authFullNamePlaceholder: "যেনে: ৰমেশ কুমাৰ",
+        authFullNameError: "অনুগ্ৰহ কৰি আপোনাৰ সম্পূৰ্ণ নাম দিয়ক।",
+        authTradeLabel: "প্ৰাথমিক দক্ষতা / বৃত্তি",
+        authStateLabel: "ৰাজ্য",
+        authDistrictLabel: "জিলা / চহৰ",
+        authSelectState: "ৰাজ্য বাছক",
+        authSelectDistrict: "জিলা বাছক",
+        authCreatePasswordLabel: "পাছৱৰ্ড সৃষ্টি কৰক",
+        authCreatePasswordPlaceholder: "কমেও ৬টা আখৰ",
+        authConfirmPasswordLabel: "পাছৱৰ্ড নিশ্চিত কৰক",
+        authConfirmPasswordPlaceholder: "পাছৱৰ্ড পুনৰ দিয়ক",
+        authPasswordMismatchError: "পাছৱৰ্ড দুটা মিল খোৱা নাই।",
+        authTermsPledge: "মই DBOCW ন্যায্য মজুৰি, সুৰক্ষা নিয়ম আৰু ৰাষ্ট্ৰীয় শ্ৰম চৰ্তাৱলী মানি লৈছো।",
+        authBtnRegisterSubmit: "একাউণ্ট সৃষ্টি কৰক আৰু ডেচবৰ্ড খোলক",
+        authCompliance1: "DBOCW আৰু e-Shram অনুগত",
+        authCompliance2: "মজুৰি পৰিশোধ আইন ১৯৩৬",
+        authHelplineText: "চৰকাৰী টোল-ফ্ৰী শ্ৰমিক হেল্পলাইন:",
+        tradeMasonry: "ৰাজমিস্ত্ৰী (Masonry)",
+        tradeElectrician: "ইলেকট্ৰিচিয়ান / ৱায়াৰমেন",
+        tradePlumber: "প্লাম্বাৰ / পাইপ ফিটাৰ",
+        tradeCarpenter: "বাঢ়ৈ (Carpenter)",
+        tradePainter: "পেইণ্টাৰ",
+        tradeWelder: "ৱেল্ডাৰ / ফেব্ৰিকেটৰ",
+        tradeBarBender: "ৰড বাইণ্ডাৰ (Bar Bender)",
+        tradeHelper: "সহায়ক / সাধাৰণ শ্ৰমিক",
+        tradeContractor: "চিভিল ঠিকাদাৰ / বিল্ডাৰ",
+        pwdStrengthWeak: "দুৰ্বল",
+        pwdStrengthTooShort: "অতি চুটি",
+        pwdStrengthGood: "ভাল",
+        pwdStrengthStrong: "শক্তিশালী",
+        authResendIn: "পুনৰ প্ৰেৰণ",
+        authCodeExpired: "ম্যাদ উকলিল",
+        toastLangSwitched: "ভাষা সলনি কৰা হৈছে",
+        toastDisplayUpdated: "ভাষা ইয়ালৈ সলনি কৰা হৈছে:",
+        fpTitle: "পাছৱৰ্ড ৰিছেট কৰক",
+        fpSub: "OTP সত্যাপন আৰু একাউণ্ট পুনৰুদ্ধাৰ",
+        fpDesc: "আপোনাৰ পঞ্জীয়নভুক্ত ১০টা সংখ্যাৰ মোবাইল বা ইমেইল দিয়ক।",
+        fpInputLabel: "মোবাইল বা ইমেইল ঠিকনা",
+        fpPlaceholder: "যেনে: 9848012345",
+        fpCancelBtn: "বাতিল",
+        fpSubmitBtn: "কোড পঠাওক"
+      },
+      ur: {
+        authBrandSub: "قومی ہنرمند مزدور اور کام کی جگہ کا حفاظتی نیٹ ورک",
+        authSecurityBadge: "تصدیق شدہ محفوظ رسائی",
+        authHeadingLogin: "مزدور مترا میں خوش آمدید",
+        authSubLogin: "کام تلاش کرنے، حاضری لگانے اور ہنگامی امداد کے لیے لاگ ان کریں",
+        authHeadingRegister: "مزدور مترا نیٹ ورک میں شامل ہوں",
+        authSubRegister: "تمام 28 ریاستوں میں مزدور، ٹھیکیدار یا آجر کے طور پر رجسٹر کریں",
+        authTabLogin: "لاگ ان",
+        authTabRegister: "سائن اپ",
+        authMethodPhone: "موبائل اور OTP",
+        authMethodEmail: "ای میل اور پاس ورڈ",
+        authMobileLabel: "موبائل نمبر",
+        authMobilePlaceholder: "مثال: 9848012345",
+        authMobileError: "براہ کرم 6-9 سے شروع ہونے والا 10 ہندسوں کا درست موبائل نمبر درج کریں۔",
+        authBtnGetOtp: "موبائل پر OTP حاصل کریں",
+        authOtpLabel: "6 ہندسوں کا OTP درج کریں:",
+        authBtnAutoOtp: "⚡ ڈیمو OTP خودکار بھریں (123456)",
+        authBtnResendOtp: "OTP دوبارہ بھیجیں",
+        authBtnVerify: "تصدیق کریں اور ڈیش بورڈ کھولیں",
+        authEmailLabel: "ای میل پتہ",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "براہ کرم درست ای میل پتہ درج کریں۔",
+        authPasswordLabel: "پاس ورڈ",
+        authPasswordError: "پاس ورڈ کم از کم 6 حروف پر مشتمل ہونا چاہیے۔",
+        authRememberMe: "مجھے یاد رکھیں",
+        authForgotPassword: "پاس ورڈ بھول گئے؟",
+        authBtnSignIn: "ڈیش بورڈ میں سائن ان کریں",
+        authDemoTitle: "فوری 1-ٹیپ ڈیمو ٹیسٹنگ",
+        authDemoWorker: "👷 مزدور ڈیمو",
+        authDemoContractor: "🏗️ ٹھیکیدار ڈیمو",
+        authSelectRole: "اپنا کردار منتخب کریں",
+        roleWorker: "مزدور / کاریگر",
+        roleWorkerSub: "ہنرمند کاریگر",
+        roleContractor: "ٹھیکیدار",
+        roleContractorSub: "سائٹ ٹھیکیدار",
+        roleEmployer: "آجر / مالک",
+        roleEmployerSub: "سائٹ مالک",
+        authFullNameLabel: "پورا نام",
+        authFullNamePlaceholder: "مثال: رمیش کمار",
+        authFullNameError: "براہ کرم اپنا پورا نام درج کریں۔",
+        authTradeLabel: "بنیادی ہنر / پیشہ",
+        authStateLabel: "ریاست",
+        authDistrictLabel: "ضلع / شہر",
+        authSelectState: "ریاست منتخب کریں",
+        authSelectDistrict: "ضلع منتخب کریں",
+        authCreatePasswordLabel: "پاس ورڈ بنائیں",
+        authCreatePasswordPlaceholder: "کم از کم 6 حروف",
+        authConfirmPasswordLabel: "پاس ورڈ کی تصدیق کریں",
+        authConfirmPasswordPlaceholder: "اپنا پاس ورڈ دوبارہ درج کریں",
+        authPasswordMismatchError: "پاس ورڈ مماثل نہیں ہیں۔",
+        authTermsPledge: "میں قانونی DBOCW منصفانہ اجرت اور حفاظتی قواعد سے اتفاق کرتا ہوں۔",
+        authBtnRegisterSubmit: "اکاؤنٹ بنائیں اور ڈیش بورڈ شروع کریں",
+        authCompliance1: "DBOCW اور e-Shram کے مطابق",
+        authCompliance2: "اجرت کی ادائیگی کا ایکٹ 1936",
+        authHelplineText: "سرکاری ٹول فری لیبر ہیلپ لائن:",
+        tradeMasonry: "راج مستری (Masonry)",
+        tradeElectrician: "الیکٹریشن / وائر مین",
+        tradePlumber: "پلمبر / پائپ فٹر",
+        tradeCarpenter: "بڑھئی (Carpenter)",
+        tradePainter: "پینٹر (Painter)",
+        tradeWelder: "ویلڈر / فیبریکیٹر",
+        tradeBarBender: "بار بینڈر / اسٹیل فکسر",
+        tradeHelper: "مددگار / عام مزدور",
+        tradeContractor: "سول ٹھیکیدار / بلڈر",
+        pwdStrengthWeak: "کمزور",
+        pwdStrengthTooShort: "بہت چھوٹا",
+        pwdStrengthGood: "اچھا",
+        pwdStrengthStrong: "مضبوط",
+        authResendIn: "دوبارہ بھیجیں",
+        authCodeExpired: "کوڈ ختم ہو گیا",
+        toastLangSwitched: "زبان تبدیل ہو گئی",
+        toastDisplayUpdated: "زبان اس پر اپ ڈیٹ کی گئی:",
+        fpTitle: "پاس ورڈ دوبارہ ترتیب دیں",
+        fpSub: "OTP تصدیق اور اکاؤنٹ کی بحالی",
+        fpDesc: "اپنا رجسٹرڈ 10 ہندسوں کا موبائل یا ای میل درج کریں۔",
+        fpInputLabel: "موبائل یا ای میل پتہ",
+        fpPlaceholder: "مثال: 9848012345",
+        fpCancelBtn: "منسوخ",
+        fpSubmitBtn: "کوڈ بھیجیں"
+      },
+      sa: {
+        authBrandSub: "राष्ट्रीया कुशलश्रमिक-सुरक्षाजालम्",
+        authSecurityBadge: "प्रमाणितं सुरक्षितप्रवेशः",
+        authHeadingLogin: "मजदूर-मित्रे स्वागतम्",
+        authSubLogin: "कार्यम् अन्वेष्टुम्, उपस्थितिं पञ्जीकर्तुं च प्रवेशं कुर्वन्तु",
+        authHeadingRegister: "मजदूर-मित्र-जाले सम्मिलन्तु",
+        authSubRegister: "अष्टाविंशति-राज्येषु श्रमिकः, ठेकेदारः वा स्वामीरूपेण पञ्जीकरणं कुर्वन्तु",
+        authTabLogin: "प्रवेशः (Log In)",
+        authTabRegister: "पञ्जीकरणम् (Sign Up)",
+        authMethodPhone: "चलदूरभाषः एवं OTP",
+        authMethodEmail: "ईमेल एवं गुप्तपदम्",
+        authMobileLabel: "चलदूरभाष-सङ्ख्या",
+        authMobilePlaceholder: "उदा. 9848012345",
+        authMobileError: "कृपया ६-९ इत्यनेन आरभ्यमाणां १० अङ्कीयां वैधानिक-सङ्ख्यां लिखन्तु।",
+        authBtnGetOtp: "चलदूरभाषे OTP प्राप्नुवन्तु",
+        authOtpLabel: "६ अङ्कीयं OTP लिखन्तु:",
+        authBtnAutoOtp: "⚡ स्वयं-पूरकम् OTP (123456)",
+        authBtnResendOtp: "पुनः प्रेषयतु",
+        authBtnVerify: "प्रमाणीकृत्य फलकं प्रविशतु",
+        authEmailLabel: "ईमेल-सङ्केतः",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "कृपया वैधानिकं ईमेल-सङ्केतं लिखन्तु।",
+        authPasswordLabel: "गुप्तपदम् (Password)",
+        authPasswordError: "गुप्तपदं न्यूनातिन्यूनं षडक्षरात्मकं भवेत्।",
+        authRememberMe: "मां स्मरतु",
+        authForgotPassword: "गुप्तपदं विस्मृतम्?",
+        authBtnSignIn: "फलके प्रवेशं कुर्वन्तु",
+        authDemoTitle: "सद्यः १-स्पर्श डेमो",
+        authDemoWorker: "👷 श्रमिक डेमो",
+        authDemoContractor: "🏗️ ठेकेदार डेमो",
+        authSelectRole: "भवतः भूमिकां चिनोतु",
+        roleWorker: "श्रमिकः",
+        roleWorkerSub: "कुशलशिल्पी",
+        roleContractor: "ठेकेदारः",
+        roleContractorSub: "निर्माणकारः",
+        roleEmployer: "स्वामी",
+        roleEmployerSub: "कार्यस्वामी",
+        authFullNameLabel: "पूर्णं नाम",
+        authFullNamePlaceholder: "उदा. रमेश कुमारः",
+        authFullNameError: "कृपया भवतः पूर्णं नाम लिखन्तु।",
+        authTradeLabel: "प्रधान-कौशलम् / व्यवसायः",
+        authStateLabel: "राज्यम्",
+        authDistrictLabel: "मण्डलम् / नगरम्",
+        authSelectState: "राज्यं चिनोतु",
+        authSelectDistrict: "मण्डलं चिनोतु",
+        authCreatePasswordLabel: "गुप्तपदं रचयतु",
+        authCreatePasswordPlaceholder: "न्यूनातिन्यूनं ६ अक्षराणि",
+        authConfirmPasswordLabel: "गुप्तपदं दृढीकरोतु",
+        authConfirmPasswordPlaceholder: "गुप्तपदं पुनः लिखतु",
+        authPasswordMismatchError: "गुप्तपदे परस्परं न मिलतः।",
+        authTermsPledge: "अहं DBOCW नियमान्, सुरक्षा-नियमावलीं च स्वीकरोमि।",
+        authBtnRegisterSubmit: "खातां रचयित्वा फलकं उद्घाटयतु",
+        authCompliance1: "DBOCW एवं e-Shram प्रमाणितम्",
+        authCompliance2: "वेतन-दान-अधिनियमः १९३६",
+        authHelplineText: "श्रमिक-सहायता-सङ्ख्या:",
+        tradeMasonry: "राजमिस्त्री (Masonry)",
+        tradeElectrician: "विद्युत्कर्मी (Electrician)",
+        tradePlumber: "नलकर्मी (Plumber)",
+        tradeCarpenter: "तक्षा (Carpenter)",
+        tradePainter: "वर्णकः (Painter)",
+        tradeWelder: "सन्धानकः (Welder)",
+        tradeBarBender: "लौहबन्धकः (Bar Bender)",
+        tradeHelper: "सहायकः (Helper)",
+        tradeContractor: "निर्माण-ठेकेदारः",
+        pwdStrengthWeak: "दुर्बलम्",
+        pwdStrengthTooShort: "अतिलघु",
+        pwdStrengthGood: "उत्तमम्",
+        pwdStrengthStrong: "दृढम्",
+        authResendIn: "पुनः प्रेषणं",
+        authCodeExpired: "कालावधिः समाप्ता",
+        toastLangSwitched: "भाषा परिवर्तिता",
+        toastDisplayUpdated: "भाषा अद्यतनीकृता:",
+        fpTitle: "गुप्तपदं पुनः स्थापयतु",
+        fpSub: "OTP प्रमाणीकरणं च खाता-पुनर्लाभः",
+        fpDesc: "पञ्जीकृतं १० अङ्कीयं दूरभाषं वा ईमेल लिखन्तु।",
+        fpInputLabel: "दूरभाषः वा ईमेल",
+        fpPlaceholder: "उदा. 9848012345",
+        fpCancelBtn: "निरस्यताम्",
+        fpSubmitBtn: "सङ्केतं प्रेषयतु"
+      },
+      ks: {
+        authBrandSub: "قومی ہُنر مند مزدور تہٕ حفاظتی نیٹ ورک",
+        authSecurityBadge: "تصدیق شدہ مَحفوظ دٲخِلہٕ",
+        authHeadingLogin: "مَزدور مِترا مَنٛز خۄش آمدید",
+        authSubLogin: "کٲم ژھارنہٕ تہٕ اِمداد خٲطرٕ لاگ اِن کٔرِو",
+        authHeadingRegister: "مَزدور مِترا نیٹ ورکَس مَنٛز شٲمِل گژھِو",
+        authSubRegister: "مزدور، ٹھیکیدار یا مالِک پٲٹھۍ رَجِسٹَر کٔرِو",
+        authTabLogin: "لاگ اِن",
+        authTabRegister: "سائن اَپ",
+        authMethodPhone: "موبائل تہٕ OTP",
+        authMethodEmail: "ای میل تہٕ پاس ورڈ",
+        authMobileLabel: "موبائل نمبر",
+        authMobilePlaceholder: "مثال: 9848012345",
+        authMobileError: "مہربٲنی کٔرِتھ دؠو ۱۰ ہِندسَن ہُنٛد صٔحیح موبائل نمبر۔",
+        authBtnGetOtp: "موبائلَس پؠٹھ OTP مَنٛگٲوِو",
+        authOtpLabel: "۶ ہِندسَن ہُنٛد OTP دؠو:",
+        authBtnAutoOtp: "⚡ ڈیمو OTP بٔرِو (123456)",
+        authBtnResendOtp: "دوبارٕ سوزِو",
+        authBtnVerify: "تَصدیٖق کٔرِو تہٕ ڈیش بورڈ کھولِو",
+        authEmailLabel: "ای میل پتہ",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "صٔحیح ای میل درج کٔرِو۔",
+        authPasswordLabel: "پاس ورڈ",
+        authPasswordError: "پاس ورڈ گژھہِ کم از کم ۶ حرفَن پؠٹھ آسُن۔",
+        authRememberMe: "مےٚ یاد تھٲوِو",
+        authForgotPassword: "پاس ورڈ مشِتھ گوو؟",
+        authBtnSignIn: "ڈیش بورڈَس مَنٛز دٲخِل گژھِو",
+        authDemoTitle: "فوری ۱-ٹَیپ ڈیمو",
+        authDemoWorker: "👷 مزدور ڈیمو",
+        authDemoContractor: "🏗️ ٹھیکیدار ڈیمو",
+        authSelectRole: "پَنُن کِردار ژارِو",
+        roleWorker: "مزدور",
+        roleWorkerSub: "ہُنرمند مزدور",
+        roleContractor: "ਠੀਕیدار",
+        roleContractorSub: "سائٹ ٹھیکیدار",
+        roleEmployer: "مالک",
+        roleEmployerSub: "سائٹ مالک",
+        authFullNameLabel: "پورا ناو",
+        authFullNamePlaceholder: "مثال: رمیش کمار",
+        authFullNameError: "مہربٲنی کٔرِتھ لؠکِھو پَنُن پورا ناو۔",
+        authTradeLabel: "بُنیادی ہُنر",
+        authStateLabel: "ریاست",
+        authDistrictLabel: "ضلع / شہر",
+        authSelectState: "ریاست ژارِو",
+        authSelectDistrict: "ضلع ژارِو",
+        authCreatePasswordLabel: "پاس ورڈ بناوِو",
+        authCreatePasswordPlaceholder: "کم از کم ۶ حرف",
+        authConfirmPasswordLabel: "پاس ورڈ تَصدیٖق کٔرِو",
+        authConfirmPasswordPlaceholder: "پاس ورڈ دوبارہ دؠو",
+        authPasswordMismatchError: "پاس ورڈ رَلان چھِ نہٕ۔",
+        authTermsPledge: "بہٕ چھُس DBOCW اجرت تہٕ حِفاظتی شَرطَن مَنظوٗر کَران۔",
+        authBtnRegisterSubmit: "کھاتہٕ بناوِو تہٕ ڈیش بورڈ کھولِو",
+        authCompliance1: "DBOCW تہٕ e-Shram تَصدیق شُدٕ",
+        authCompliance2: "اجرت اَدایگی قانوٗن ۱۹۳۶",
+        authHelplineText: "مفت لیبر ہیلپ لائن:",
+        tradeMasonry: "دَسی (Masonry)",
+        tradeElectrician: "بجلی کار (Electrician)",
+        tradePlumber: "نَلکار (Plumber)",
+        tradeCarpenter: "ਛਾਨ (Carpenter)",
+        tradePainter: "رَنٛگ ساز (Painter)",
+        tradeWelder: "ویلڈر (Welder)",
+        tradeBarBender: "سریہٕ کار (Bar Bender)",
+        tradeHelper: "مددگار / مزدور",
+        tradeContractor: "سِول ٹھیکیدار",
+        pwdStrengthWeak: "کمزور",
+        pwdStrengthTooShort: "واریاہ لۄکُٹ",
+        pwdStrengthGood: "جان",
+        pwdStrengthStrong: "مَضبوط",
+        authResendIn: "دوبارٕ سوزِو",
+        authCodeExpired: "وَقٕت ختم",
+        toastLangSwitched: "زَبان بدلاونہٕ آیہِ",
+        toastDisplayUpdated: "زبان اپ ڈیٹ سپز:",
+        fpTitle: "پاس ورڈ بدلاوِو",
+        fpSub: "OTP تصدیق تہٕ ریکوری",
+        fpDesc: "پَنُن موبائل یا ای میل دؠو۔",
+        fpInputLabel: "موبائل یا ای میل",
+        fpPlaceholder: "مثال: 9848012345",
+        fpCancelBtn: "مَنسوخ",
+        fpSubmitBtn: "کوڈ سوزِو"
+      },
+      kok: {
+        authBrandSub: "राष्ट्रीय कुशल कामगार आनी सुरक्षा नेटवर्क",
+        authSecurityBadge: "तपासणी केल्लो सुरक्षित प्रवेश",
+        authHeadingLogin: "मजदूर मित्रांत येवकार",
+        authSubLogin: "काम सोदपाक, हाजिरी नोंदवपाक आनी आपत्कालीन मजती खातीर लॉगिन करात",
+        authHeadingRegister: "मजदूर मित्र नेटवर्कांत सामील जायात",
+        authSubRegister: "कामगार, कोन्त्राक्तदार वा मालक म्हूण नोंदणी करात",
+        authTabLogin: "लॉग इन",
+        authTabRegister: "साइन अप",
+        authMethodPhone: "मोबाईल आनी OTP",
+        authMethodEmail: "ईमेल आनी पासवर्ड",
+        authMobileLabel: "मोबाईल नंबर",
+        authMobilePlaceholder: "उदा: 9848012345",
+        authMobileError: "उपकार करून ६-९ न सुरू जावपी १० आंकडी नंबर दियात.",
+        authBtnGetOtp: "मोबायलाcher OTP मेळयात",
+        authOtpLabel: "६ आंकडी OTP दियात:",
+        authBtnAutoOtp: "⚡ डेमो OTP भरा (123456)",
+        authBtnResendOtp: "OTP परत धाडा",
+        authBtnVerify: "तपासा आनी डॅशबोर्ड उक्तो करा",
+        authEmailLabel: "ईमेल पत्तो",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "वैध ईमेल पत्तो दियात.",
+        authPasswordLabel: "पासवर्ड",
+        authPasswordError: "पासवर्ड उण्यांत उणे ६ अक्षरांचो आसचो.",
+        authRememberMe: "म्हाका याद दवरात",
+        authForgotPassword: "पासवर्ड विसरल्यात?",
+        authBtnSignIn: "डॅशबोर्डांत साइन इन करात",
+        authDemoTitle: "रोखडो १-टॅप डेमो",
+        authDemoWorker: "👷 कामगार डेमो",
+        authDemoContractor: "🏗️ कोन्त्राक्तदार डेमो",
+        authSelectRole: "तुमची भूमिका वेचात",
+        roleWorker: "कामगार",
+        roleWorkerSub: "कुशल कामगार",
+        roleContractor: "कोन्त्राक्तदार",
+        roleContractorSub: "साईट कोन्त्राक्तदार",
+        roleEmployer: "मालक",
+        roleEmployerSub: "साईट मालक",
+        authFullNameLabel: "पूर्ण नांव",
+        authFullNamePlaceholder: "उदा: रमेश कुमार",
+        authFullNameError: "उपकार करून तुमचें पूर्ण नांव दियात.",
+        authTradeLabel: "मुखेल कौशल्य / वेवसाय",
+        authStateLabel: "राज्य",
+        authDistrictLabel: "जिल्हो / शार",
+        authSelectState: "राज्य वेचात",
+        authSelectDistrict: "जिल्हो वेचात",
+        authCreatePasswordLabel: "पासवर्ड तयार करात",
+        authCreatePasswordPlaceholder: "उण्यांत उणे ६ अक्षरां",
+        authConfirmPasswordLabel: "पासवर्डाची खात्री करात",
+        authConfirmPasswordPlaceholder: "पासवर्ड परत घालात",
+        authPasswordMismatchError: "पासवर्ड जुळनात.",
+        authTermsPledge: "हांव DBOCW योग्य मजुरी आनी सुरक्षा नेमां मान्य करतां.",
+        authBtnRegisterSubmit: "खातें तयार करात आनी डॅशबोर्ड सुरू करात",
+        authCompliance1: "DBOCW आनी e-Shram मान्य",
+        authCompliance2: "वेतन फारीकणी कायदा १९३६",
+        authHelplineText: "अधिकृत फुकट कामगार हेल्पलाईन:",
+        tradeMasonry: "गंवडी (Masonry)",
+        tradeElectrician: "इलेक्ट्रिशियन (Electrician)",
+        tradePlumber: "प्लंबर (Plumber)",
+        tradeCarpenter: "सुतार (Carpenter)",
+        tradePainter: "पेंटर (Painter)",
+        tradeWelder: "वेल्डर (Welder)",
+        tradeBarBender: "बार बेंडर",
+        tradeHelper: "हेल्पर / कामगार",
+        tradeContractor: "सिव्हिल कोन्त्राक्तदार",
+        pwdStrengthWeak: "अशक्त",
+        pwdStrengthTooShort: "खूब ल्हान",
+        pwdStrengthGood: "बरो",
+        pwdStrengthStrong: "मजबूत",
+        authResendIn: "परत धाडा",
+        authCodeExpired: "काळ सोंपलो",
+        toastLangSwitched: "भास बदल्ली",
+        toastDisplayUpdated: "भास अद्ययावत केली:",
+        fpTitle: "पासवर्ड परत सेट करात",
+        fpSub: "OTP तपासणी आनी खातें परतून मेळोवप",
+        fpDesc: "नोंदणी केल्लो मोबाईल वा ईमेल घालात.",
+        fpInputLabel: "मोबाईल वा ईमेल",
+        fpPlaceholder: "उदा: 9848012345",
+        fpCancelBtn: "रद्द करात",
+        fpSubmitBtn: "कोड धाडात"
+      },
+      mai: {
+        authBrandSub: "राष्ट्रीय कुशल श्रमिक आ सुरक्षा नेटवर्क",
+        authSecurityBadge: "सत्यापित सुरक्षित प्रवेश",
+        authHeadingLogin: "मजदूर मित्र मे अहाँक स्वागत अछि",
+        authSubLogin: "काज खोजय, हाजिरी दर्ज करय आ आपातकालीन सहायता लेल लॉगिन करू",
+        authHeadingRegister: "मजदूर मित्र नेटवर्क सं जुड़ू",
+        authSubRegister: "श्रमिक, ठेकेदार वा मालिक रूप मे पंजीकरण करू",
+        authTabLogin: "लॉग इन",
+        authTabRegister: "साइन अप",
+        authMethodPhone: "मोबाइल आ OTP",
+        authMethodEmail: "ईमेल आ पासवर्ड",
+        authMobileLabel: "मोबाइल नंबर",
+        authMobilePlaceholder: "उदा: 9848012345",
+        authMobileError: "कृपया ६-९ सं शुरू होमय बला १०-अंकी मोबाइल नंबर भरू।",
+        authBtnGetOtp: "मोबाइल पर OTP प्राप्त करू",
+        authOtpLabel: "६-अंकी OTP दर्ज करू:",
+        authBtnAutoOtp: "⚡ स्वतः डेमो OTP भरू (123456)",
+        authBtnResendOtp: "OTP पुनः पठाउ",
+        authBtnVerify: "सत्यापित करू आ डैशबोर्ड खोलू",
+        authEmailLabel: "ईमेल पता",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "मान्य ईमेल पता भरू।",
+        authPasswordLabel: "पासवर्ड",
+        authPasswordError: "पासवर्ड कम सं कम ६ अक्षर क होबय चाही।",
+        authRememberMe: "हमरा मोन राखू",
+        authForgotPassword: "पासवर्ड बिसरि गेलाह?",
+        authBtnSignIn: "डैशबोर्ड मे साइन इन करू",
+        authDemoTitle: "तुरंत १-टैप डेमो",
+        authDemoWorker: "👷 श्रमिक डेमो",
+        authDemoContractor: "🏗️ ठेकेदार डेमो",
+        authSelectRole: "अपन भूमिका चुनू",
+        roleWorker: "श्रमिक",
+        roleWorkerSub: "कुशल कारीगर",
+        roleContractor: "ठेकेदार",
+        roleContractorSub: "साइट ठेकेदार",
+        roleEmployer: "मालिक",
+        roleEmployerSub: "साइट मालिक",
+        authFullNameLabel: "पूरा नाम",
+        authFullNamePlaceholder: "उदा: रमेश कुमार",
+        authFullNameError: "कृपया अपन पूरा नाम दर्ज करू।",
+        authTradeLabel: "मुख्य हुनर / पेशा",
+        authStateLabel: "राज्य",
+        authDistrictLabel: "जिला / शहर",
+        authSelectState: "राज्य चुनू",
+        authSelectDistrict: "जिला चुनू",
+        authCreatePasswordLabel: "पासवर्ड बनाउ",
+        authCreatePasswordPlaceholder: "कम सं कम ६ अक्षर",
+        authConfirmPasswordLabel: "पासवर्ड पुष्टि करू",
+        authConfirmPasswordPlaceholder: "पासवर्ड दोबारा भरू",
+        authPasswordMismatchError: "पासवर्ड मेल नहि खा रहल अछि।",
+        authTermsPledge: "हम DBOCW निष्पक्ष मजदूरी आ सुरक्षा शर्त स्वीकार करैत छी।",
+        authBtnRegisterSubmit: "खाता बनाउ आ डैशबोर्ड खोलू",
+        authCompliance1: "DBOCW आ e-Shram अनुरूप",
+        authCompliance2: "मजदूरी भुगतान अधिनियम १९३६",
+        authHelplineText: "टोल-फ्री लेबर हेल्पलाइन:",
+        tradeMasonry: "राजमिस्त्री (Masonry)",
+        tradeElectrician: "बिजली मिस्त्री (Electrician)",
+        tradePlumber: "नल मिस्त्री (Plumber)",
+        tradeCarpenter: "बढ़ई (Carpenter)",
+        tradePainter: "पेंटर (Painter)",
+        tradeWelder: "वेल्डर (Welder)",
+        tradeBarBender: "छड़ मिस्त्री (Bar Bender)",
+        tradeHelper: "हेल्पर / सामान्य मजदूर",
+        tradeContractor: "सिविल ठेकेदार",
+        pwdStrengthWeak: "कमजोर",
+        pwdStrengthTooShort: "बहुत छोट",
+        pwdStrengthGood: "बढ़िया",
+        pwdStrengthStrong: "मजबूत",
+        authResendIn: "पुनः पठाउ",
+        authCodeExpired: "समय समाप्त",
+        toastLangSwitched: "भाषा बदलल गेल",
+        toastDisplayUpdated: "भाषा अपडेट भेल:",
+        fpTitle: "पासवर्ड रीसेट करू",
+        fpSub: "OTP सत्यापन आ खाता रिकवरी",
+        fpDesc: "पंजीकृत १०-अंक क मोबाइल वा ईमेल भरू।",
+        fpInputLabel: "मोबाइल वा ईमेल",
+        fpPlaceholder: "उदा: 9848012345",
+        fpCancelBtn: "रद्द करू",
+        fpSubmitBtn: "कोड पठाउ"
+      },
+      mni: {
+        authBrandSub: "লৈবাক্কী শিন্মী অমসুং ঙাক-শেলগী নেটৱার্ক",
+        authSecurityBadge: "চেক তৌজরবা ঙাক-শেলগী চঙফম",
+        authHeadingLogin: "মজদুর মিত্রদা তরাম্না ওকচরি",
+        authSubLogin: "থবক থিবা, হাজিরা অমসুং তেংবাংগীদমক লোগইন তৌবিয়ু",
+        authHeadingRegister: "মজদুর মিত্র নেটৱার্কতা য়াওবিয়ু",
+        authSubRegister: "শিন্মী, ঠিকাদার নত্রগা মপুগী মওংদা রেজিষ্টর তৌবিয়ু",
+        authTabLogin: "লোগ ইন",
+        authTabRegister: "সাইন অপ",
+        authMethodPhone: "মোবাইল অমসুং OTP",
+        authMethodEmail: "ইমেল অমসুং পাসৱার্দ",
+        authMobileLabel: "মোবাইল নম্বর",
+        authMobilePlaceholder: "খুদম: 9848012345",
+        authMobileError: "৬-৯ ননা হৌবা অকক্নবা নম্বর ১০ চনবীরকউ।",
+        authBtnGetOtp: "মোবাইলদা OTP ফংবিয়ু",
+        authOtpLabel: "মীকোই ৬ কী OTP হাপচিল্লু:",
+        authBtnAutoOtp: "⚡ দেমো OTP মেনশিল্লু (123456)",
+        authBtnResendOtp: "OTP অমুক হন্না থারকউ",
+        authBtnVerify: "চেক তৌরগা দেসবোর্দ হাংদোকউ",
+        authEmailLabel: "ইমেল এদ্রেস",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "চুম্বা ইমেল চনবীরকউ।",
+        authPasswordLabel: "পাসৱার্দ",
+        authPasswordError: "পাসৱার্দ ময়েক ৬ তাগী হন্থরোইদবনি।",
+        authRememberMe: "ঐহাকপু নিংশিংবীরকউ",
+        authForgotPassword: "পাসৱার্দ কাওথোকখ্রবা?",
+        authBtnSignIn: "দেসবোর্দতা সাইন ইন তৌবিয়ু",
+        authDemoTitle: "অয়ুক ১-তেপ দেমো",
+        authDemoWorker: "👷 শিন্মী দেমো",
+        authDemoContractor: "🏗️ ঠিকাদার দেমো",
+        authSelectRole: "নহাক্কী থৌদাং খনবিয়ু",
+        roleWorker: "শিন্মী",
+        roleWorkerSub: "হেকপদা লৈরবা শিন্মী",
+        roleContractor: "ঠিকাদার",
+        roleContractorSub: "সাইত ঠিকাদার",
+        roleEmployer: "মপু",
+        roleEmployerSub: "সাইত মপু",
+        authFullNameLabel: "অপুম্বা মিং",
+        authFullNamePlaceholder: "খুদম: রমেশ কুমার",
+        authFullNameError: "নহাক্কী অপুম্বা মিং হাপচিল্লু।",
+        authTradeLabel: "মরুওইবা থবক / হুনর",
+        authStateLabel: "ষ্টেট",
+        authDistrictLabel: "জিলা / সহর",
+        authSelectState: "ষ্টেট খনবিয়ু",
+        authSelectDistrict: "জিলা খনবিয়ু",
+        authCreatePasswordLabel: "পাসৱার্দ শেম্বিয়ু",
+        authCreatePasswordPlaceholder: "ময়েক ৬ তাগী হন্থদবা",
+        authConfirmPasswordLabel: "পাসৱার্দ চুম্না থম্লু",
+        authConfirmPasswordPlaceholder: "পাসৱার্দ অমুক হন্না চনবীরকউ",
+        authPasswordMismatchError: "পাসৱার্দ অনি মান্নদে।",
+        authTermsPledge: "ঐহাক DBOCW অচুম্বা খুমান অমসুং ঙাক-শেলগী নিয়ম য়ানরি।",
+        authBtnRegisterSubmit: "একান্ত শেম্লগা দেসবোর্দ হাংদোকউ",
+        authCompliance1: "DBOCW অমসুং e-Shram তৌবা",
+        authCompliance2: "তলব পীবগী আইন ১৯৩৬",
+        authHelplineText: "শিন্মী হেল্পলাইন:",
+        tradeMasonry: "য়ুমশাবা (Masonry)",
+        tradeElectrician: "মৈগী মিস্ত্রি (Electrician)",
+        tradePlumber: "ঈশিং পাইপ মিস্ত্রি (Plumber)",
+        tradeCarpenter: "উশাবা (Carpenter)",
+        tradePainter: "মচু তেংবা (Painter)",
+        tradeWelder: "ৱেল্দর (Welder)",
+        tradeBarBender: "য়োৎ পুংশিনবা",
+        tradeHelper: "তেংবাংবা / শিন্মী",
+        tradeContractor: "সিভিল ঠিকাদার",
+        pwdStrengthWeak: "শোন্থা",
+        pwdStrengthTooShort: "য়াম্না তেনবা",
+        pwdStrengthGood: "ফৈ",
+        pwdStrengthStrong: "কনবা",
+        authResendIn: "অমুক হন্না",
+        authCodeExpired: "মত্ম লোইরে",
+        toastLangSwitched: "লোন হোংদোক্লে",
+        toastDisplayUpdated: "লোন অসিদা অওনবা পুরক্লে:",
+        fpTitle: "পাসৱার্দ অমুক শেম্লু",
+        fpSub: "OTP চেক তৌবা অমসুং রিকভরি",
+        fpDesc: "রেজিষ্টর তৌরবা মোবাইল নত্রগা ইমেল চনবীরকউ।",
+        fpInputLabel: "মোবাইল নত্রগা ইমেল",
+        fpPlaceholder: "খুদম: 9848012345",
+        fpCancelBtn: "তৌদবা",
+        fpSubmitBtn: "কোদ থারকউ"
+      },
+      ne: {
+        authBrandSub: "राष्ट्रिय दक्ष श्रमिक तथा कार्यस्थल सुरक्षा सञ्जाल",
+        authSecurityBadge: "प्रमाणित सुरक्षित पहुँच",
+        authHeadingLogin: "मजदूर मित्रमा स्वागत छ",
+        authSubLogin: "काम खोज्न, हाजिरी राख्न र आपतकालीन सहायताका लागि लगइन गर्नुहोस्",
+        authHeadingRegister: "मजदूर मित्र सञ्जालमा जोडिनुहोस्",
+        authSubRegister: "श्रमिक, ठेकेदार वा रोजगारदाताको रूपमा दर्ता गर्नुहोस्",
+        authTabLogin: "लग इन",
+        authTabRegister: "साइन अप",
+        authMethodPhone: "मोबाइल र OTP",
+        authMethodEmail: "इमेल र पासवर्ड",
+        authMobileLabel: "मोबाइल नम्बर",
+        authMobilePlaceholder: "उदा: 9848012345",
+        authMobileError: "कृपया ६-९ बाट सुरु हुने १० अंकको वैध मोबाइल नम्बर प्रविष्ट गर्नुहोस्।",
+        authBtnGetOtp: "मोबाइलमा OTP प्राप्त गर्नुहोस्",
+        authOtpLabel: "६ अंकको OTP प्रविष्ट गर्नुहोस्:",
+        authBtnAutoOtp: "⚡ स्वत: डेमो OTP भर्नुहोस् (123456)",
+        authBtnResendOtp: "OTP पुन: पठाउनुहोस्",
+        authBtnVerify: "प्रमाणित गर्नुहोस् र ड्यासबोर्ड खोल्नुहोस्",
+        authEmailLabel: "इमेल ठेगाना",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "कृपया मान्य इमेल ठेगाना प्रविष्ट गर्नुहोस्।",
+        authPasswordLabel: "पासवर्ड",
+        authPasswordError: "पासवर्ड कम्तीमा ६ अक्षरको हुनुपर्छ।",
+        authRememberMe: "मलाई सम्झनुहोस्",
+        authForgotPassword: "पासवर्ड बिर्सनुभयो?",
+        authBtnSignIn: "ड्यासबोर्डमा साइन इन गर्नुहोस्",
+        authDemoTitle: "तत्काल १-ट्याप डेमो",
+        authDemoWorker: "👷 श्रमिक डेमो",
+        authDemoContractor: "🏗️ ठेकेदार डेमो",
+        authSelectRole: "आफ्नो भूमिका छान्नुहोस्",
+        roleWorker: "श्रमिक",
+        roleWorkerSub: "दक्ष कामदार",
+        roleContractor: "ठेकेदार",
+        roleContractorSub: "साइट ठेकेदार",
+        roleEmployer: "रोजगारदाता",
+        roleEmployerSub: "साइट मालिक",
+        authFullNameLabel: "पूरा नाम",
+        authFullNamePlaceholder: "उदा: रमेश कुमार",
+        authFullNameError: "कृपया आफ्नो पूरा नाम प्रविष्ट गर्नुहोस्।",
+        authTradeLabel: "मुख्य सीप / पेशा",
+        authStateLabel: "राज्य",
+        authDistrictLabel: "जिल्ला / सहर",
+        authSelectState: "राज्य छान्नुहोस्",
+        authSelectDistrict: "जिल्ला छान्नुहोस्",
+        authCreatePasswordLabel: "पासवर्ड सिर्जना गर्नुहोस्",
+        authCreatePasswordPlaceholder: "कम्तीमा ६ अक्षर",
+        authConfirmPasswordLabel: "पासवर्ड पुष्टि गर्नुहोस्",
+        authConfirmPasswordPlaceholder: "पासवर्ड पुन: प्रविष्ट गर्नुहोस्",
+        authPasswordMismatchError: "पासवर्डहरू मेल खाएनन्।",
+        authTermsPledge: "म DBOCW उचित ज्याला, सुरक्षा नियम र राष्ट्रिय श्रम सर्तहरू स्वीकार गर्दछु।",
+        authBtnRegisterSubmit: "खाता बनाउनुहोस् र ड्यासबोर्ड खोल्नुहोस्",
+        authCompliance1: "DBOCW र e-Shram अनुरूप",
+        authCompliance2: "ज्याला भुक्तानी ऐन १९३६",
+        authHelplineText: "टोल-फ्री श्रमिक हेल्पलाइन:",
+        tradeMasonry: "डकर्मी (Masonry)",
+        tradeElectrician: "इलेक्ट्रीशियन (Electrician)",
+        tradePlumber: "प्लम्बर (Plumber)",
+        tradeCarpenter: "सिकर्मी (Carpenter)",
+        tradePainter: "पेन्टर (Painter)",
+        tradeWelder: "वेल्डर (Welder)",
+        tradeBarBender: "रड वाइन्डर (Bar Bender)",
+        tradeHelper: "हेल्पर / साधारण श्रमिक",
+        tradeContractor: "सिभिल ठेकेदार",
+        pwdStrengthWeak: "कमजोर",
+        pwdStrengthTooShort: "धेरै छोटो",
+        pwdStrengthGood: "राम्रो",
+        pwdStrengthStrong: "बलियो",
+        authResendIn: "पुन: पठाउनुहोस्",
+        authCodeExpired: "म्याद सकियो",
+        toastLangSwitched: "भाषा परिवर्तन भयो",
+        toastDisplayUpdated: "भाषा यसमा अद्यावधिक भयो:",
+        fpTitle: "पासवर्ड रिसेट गर्नुहोस्",
+        fpSub: "OTP प्रमाणीकरण र खाता पुन: प्राप्ति",
+        fpDesc: "आफ्नो दर्ता गरिएको १० अंकको मोबाइल वा इमेल प्रविष्ट गर्नुहोस्।",
+        fpInputLabel: "मोबाइल वा इमेल ठेगाना",
+        fpPlaceholder: "उदा: 9848012345",
+        fpCancelBtn: "रद्द गर्नुहोस्",
+        fpSubmitBtn: "कोड पठाउनुहोस्"
+      },
+      brx: {
+        authBrandSub: "हादरनि रोखोंगोनां मावथिफोर आरो रैखाथि नेटवार्क",
+        authSecurityBadge: "आनजाद खालामनाय रैखाथि हाबनाय",
+        authHeadingLogin: "मजदूर मित्रआव बरायबाय",
+        authSubLogin: "हाब्रु नागिरनो, हाजिरि होनाय आरो आफादनि हेफाजाबनि थाखाय लगइन खालाम",
+        authHeadingRegister: "मजदूर मित्र नेटवार्कआव जइन जा",
+        authSubRegister: "मावथि, ठेकादार एबा मालिक महरै मुं थिसन",
+        authTabLogin: "लग इन",
+        authTabRegister: "साइन आप",
+        authMethodPhone: "मोबाइल आरो OTP",
+        authMethodEmail: "इमेल आरो पासवर्ड",
+        authMobileLabel: "मोबाइल नम्बर",
+        authMobilePlaceholder: "उदा: 9848012345",
+        authMobileError: "अननानै ६-९ जों जागायनाय १० अनजिमानि मोबाइल नम्बर हो।",
+        authBtnGetOtp: "मोबाइलआव OTP मोन",
+        authOtpLabel: "६ अनजिमानि OTP सोनाव:",
+        authBtnAutoOtp: "⚡ गावआरि देमो OTP आपलोड (123456)",
+        authBtnResendOtp: "OTP फिन दैथायहर",
+        authBtnVerify: "आनजाद खालाम आरो डेशबर्ड खेव",
+        authEmailLabel: "इमेल थं",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "थार इमेल थं सोनाव।",
+        authPasswordLabel: "पासवर्ड",
+        authPasswordError: "पासवर्डआ खमसेखम ६ हांखोनि जानो नांगोन।",
+        authRememberMe: "आंखौ गोसोआव लाखि",
+        authForgotPassword: "पासवर्ड बावगारबाय?",
+        authBtnSignIn: "डेशबर्डआव हाब",
+        authDemoTitle: "थोब १-थेप देमो आनजाद",
+        authDemoWorker: "👷 मावथि देमो",
+        authDemoContractor: "🏗️ ठेकादार देमो",
+        authSelectRole: "नोंथांनि बिबानखौ सायख'",
+        roleWorker: "मावथि",
+        roleWorkerSub: "रोखोंगोनां मावथि",
+        roleContractor: "ठेकादार",
+        roleContractorSub: "साइट ठेकादार",
+        roleEmployer: "मालिक",
+        roleEmployerSub: "साइट मालिक",
+        authFullNameLabel: "आबुं मुं",
+        authFullNamePlaceholder: "उदा: रमेश कुमार",
+        authFullNameError: "अननानै नोंथांनि आबुं मुंखौ सोनाव।",
+        authTradeLabel: "गाहाय रोखों / हुनर",
+        authStateLabel: "रायजो",
+        authDistrictLabel: "जिल्ला / सहर",
+        authSelectState: "रायजो सायख'",
+        authSelectDistrict: "जिल्ला सायख'",
+        authCreatePasswordLabel: "पासवर्ड बानाय",
+        authCreatePasswordPlaceholder: "खमसेखम ६ हांखो",
+        authConfirmPasswordLabel: "पासवर्ड थार खालाम",
+        authConfirmPasswordPlaceholder: "पासवर्ड फिन सोनाव",
+        authPasswordMismatchError: "पासवर्डआ गोरोबथारियाखै।",
+        authTermsPledge: "आं DBOCW बेतन आरो रैखाथि नेमसोरखौ मानियो।",
+        authBtnRegisterSubmit: "खाता बानाय आरो डेशबर्ड खेव",
+        authCompliance1: "DBOCW आरो e-Shram मानिनाय",
+        authCompliance2: "बेतन होनाय आइन १९३६",
+        authHelplineText: "मावथिफोरनि हेफाजाब नम्बर:",
+        tradeMasonry: "राजमिस्त्री (Masonry)",
+        tradeElectrician: "बिजुलि मिस्त्री (Electrician)",
+        tradePlumber: "प्लम्बर (Plumber)",
+        tradeCarpenter: "बायदि मिस्त्री (Carpenter)",
+        tradePainter: "गाब होनाय (Painter)",
+        tradeWelder: "वेल्डर (Welder)",
+        tradeBarBender: "रड बाइंडार (Bar Bender)",
+        tradeHelper: "हेल्पर / साधारन मावथि",
+        tradeContractor: "सिभिल ठेकादार",
+        pwdStrengthWeak: "लोरबां",
+        pwdStrengthTooShort: "जोबोद गुसुं",
+        pwdStrengthGood: "मोजां",
+        pwdStrengthStrong: "गोख्रों",
+        authResendIn: "फिन दैथाय",
+        authCodeExpired: "सम जोबबाय",
+        toastLangSwitched: "राव सोलायबाय",
+        toastDisplayUpdated: "राव सोलायनाय जाबाय:",
+        fpTitle: "पासवर्ड फिन बानाय",
+        fpSub: "OTP आनजाद आरो खाता मोनफिननाय",
+        fpDesc: "मुं थिसननाय १० अनजिमानि मोबाइल एबा इमेल सोनाव।",
+        fpInputLabel: "मोबाइल एबा इमेल",
+        fpPlaceholder: "उदा: 9848012345",
+        fpCancelBtn: "नेवसि",
+        fpSubmitBtn: "कड दैथायहर"
+      },
+      doi: {
+        authBrandSub: "राष्ट्रीय हुनरमंद मजदूर ते सुरक्षा नेटवर्क",
+        authSecurityBadge: "प्रमाणित सुरक्षित प्रवेश",
+        authHeadingLogin: "मजदूर मित्र च तुंदा स्वागत ऐ",
+        authSubLogin: "कम लब्भने, हाजरी लाने ते मदद लेई लॉगिन करो",
+        authHeadingRegister: "मजदूर मित्र नेटवर्क कन्ने जुड़ो",
+        authSubRegister: "मजदूर, ठेकेदार या मालिक दे रूप च पंजीकरण करो",
+        authTabLogin: "लॉग इन",
+        authTabRegister: "साइन अप",
+        authMethodPhone: "मोबाइल ते OTP",
+        authMethodEmail: "ईमेल ते पासवर्ड",
+        authMobileLabel: "मोबाइल नंबर",
+        authMobilePlaceholder: "उदा: 9848012345",
+        authMobileError: "कृपया ६-९ कन्नै शुरू होने आला १०-अंकें दा मोबाइल नंबर पाओ।",
+        authBtnGetOtp: "मोबाइल पर OTP पाओ",
+        authOtpLabel: "६-अंकें दा OTP पाओ:",
+        authBtnAutoOtp: "⚡ डेमो OTP भरो (123456)",
+        authBtnResendOtp: "OTP परत भेजो",
+        authBtnVerify: "प्रमाणित करो ते डैशबोर्ड खोल्लो",
+        authEmailLabel: "ईमेल पता",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "कृपया सही ईमेल पाओ।",
+        authPasswordLabel: "पासवर्ड",
+        authPasswordError: "पासवर्ड घट-घट ६ अक्षरें दा होना लोड़दा।",
+        authRememberMe: "मिगी याद रक्खो",
+        authForgotPassword: "पासवर्ड भुल्ली गेआ?",
+        authBtnSignIn: "डैशबोर्ड च साइन इन करो",
+        authDemoTitle: "झटपट १-टैप डेमो",
+        authDemoWorker: "👷 मजदूर डेमो",
+        authDemoContractor: "🏗️ ठेकेदार डेमो",
+        authSelectRole: "अपनी भूमिका चुनो",
+        roleWorker: "मजदूर",
+        roleWorkerSub: "कारीगर",
+        roleContractor: "ठेकेदार",
+        roleContractorSub: "साइट ठेकेदार",
+        roleEmployer: "मालिक",
+        roleEmployerSub: "साइट मालिक",
+        authFullNameLabel: "पूरा नां",
+        authFullNamePlaceholder: "उदा: रमेश कुमार",
+        authFullNameError: "कृपया अपना पूरा नां पाओ।",
+        authTradeLabel: "मुक्ख पेशा / हुनर",
+        authStateLabel: "राज्य",
+        authDistrictLabel: "जिला / शैहर",
+        authSelectState: "राज्य चुनो",
+        authSelectDistrict: "जिला चुनो",
+        authCreatePasswordLabel: "पासवर्ड बनाओ",
+        authCreatePasswordPlaceholder: "घट-घट ६ अक्षर",
+        authConfirmPasswordLabel: "पासवर्ड पक्का करो",
+        authConfirmPasswordPlaceholder: "पासवर्ड परत पाओ",
+        authPasswordMismatchError: "पासवर्ड रलदे नेईं न।",
+        authTermsPledge: "औं DBOCW मजदूरी ते सुरक्षा नियम मन्ने दा आं।",
+        authBtnRegisterSubmit: "खाता बनाओ ते डैशबोर्ड खोल्लो",
+        authCompliance1: "DBOCW ते e-Shram अनुरूप",
+        authCompliance2: "मजदूरी भुगतान अधिनियम १९३६",
+        authHelplineText: "टोल-फ्री मजदूर हेल्पलाइन:",
+        tradeMasonry: "राजमिस्त्री (Masonry)",
+        tradeElectrician: "बिजली मिस्त्री (Electrician)",
+        tradePlumber: "नल मिस्त्री (Plumber)",
+        tradeCarpenter: "तरखाण (Carpenter)",
+        tradePainter: "पेंटर (Painter)",
+        tradeWelder: "वेल्डर (Welder)",
+        tradeBarBender: "सरिया मिस्त्री (Bar Bender)",
+        tradeHelper: "हेल्पर / मजदूर",
+        tradeContractor: "सिविल ठेकेदार",
+        pwdStrengthWeak: "कमजोर",
+        pwdStrengthTooShort: "बड़ा निक्का",
+        pwdStrengthGood: "चंग्गा",
+        pwdStrengthStrong: "तगड़ा",
+        authResendIn: "परत भेजो",
+        authCodeExpired: "समाप्त",
+        toastLangSwitched: "बोली बदली गेई",
+        toastDisplayUpdated: "बोली च बदलाव:",
+        fpTitle: "पासवर्ड दोबारा बनाओ",
+        fpSub: "OTP पुष्टि ते खाता रिकवरी",
+        fpDesc: "पंजीकृत १०-अंकें दा मोबाइल या ईमेल पाओ।",
+        fpInputLabel: "मोबाइल या ईमेल",
+        fpPlaceholder: "उदा: 9848012345",
+        fpCancelBtn: "रद्द करो",
+        fpSubmitBtn: "कोड भेजो"
+      },
+      sat: {
+        authBrandSub: "ᱫᱤᱥᱚᱢ ᱨᱤᱱ ᱠᱟᱹᱢᱤᱭᱟᱹ ᱟᱨ ᱨᱩᱠᱷᱤᱭᱟᱹ ᱱᱮᱴᱣᱟᱨᱠ",
+        authSecurityBadge: "ᱯᱚᱨᱚᱠ ᱟᱠᱟᱱ ᱨᱩᱠᱷᱤᱭᱟᱹ ᱵᱚᱞᱚᱱ",
+        authHeadingLogin: "ᱢᱚᱡᱽᱫᱩᱨ ᱢᱤᱛᱨᱚ ᱨᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ",
+        authSubLogin: "ᱠᱟᱹᱢᱤ ᱯᱟᱱᱛᱮ, ᱦᱟᱡᱤᱨᱤ ᱟᱨ ᱜᱚᱲᱚ ᱞᱟᱹᱜᱤᱫ ᱞᱚᱜᱤᱱ ᱢᱮ",
+        authHeadingRegister: "ᱢᱚᱡᱽᱫᱩᱨ ᱢᱤᱛᱨᱚ ᱱᱮᱴᱣᱟᱨᱠ ᱨᱮ ᱥᱮᱞᱮᱫᱚᱜ ᱢᱮ",
+        authSubRegister: "ᱠᱟᱹᱢᱤᱭᱟᱹ, ᱴᱷᱤᱠᱟᱹᱫᱟᱨ ᱥᱮ ᱢᱟᱹᱞᱤᱠ ᱞᱮᱠᱟᱛᱮ ᱧᱩᱛᱩᱢ ᱚᱞ ᱢᱮ",
+        authTabLogin: "ᱞᱚᱜᱽ ᱤᱱ",
+        authTabRegister: "ᱥᱟᱭᱤᱱ ᱟᱯ",
+        authMethodPhone: "ᱢᱚᱵᱟᱭᱤᱞ ᱟᱨ OTP",
+        authMethodEmail: "ᱤᱢᱮᱞ ᱟᱨ ᱯᱟᱥᱣᱟᱨᱰ",
+        authMobileLabel: "ᱢᱚᱵᱟᱭᱤᱞ ᱮᱞ",
+        authMobilePlaceholder: "ᱡᱮᱞᱮᱠᱟ: 9848012345",
+        authMobileError: "ᱫᱟᱭᱟᱠᱟᱛᱮ ᱖-᱙ ᱛᱮ ᱮᱛᱚᱦᱚᱵ ᱑᱐ ᱮᱞ ᱨᱮᱱᱟᱜ ᱢᱚᱵᱟᱭᱤᱞ ᱮᱞ ᱮᱢ ᱢᱮ᱾",
+        authBtnGetOtp: "ᱢᱚᱵᱟᱭᱤᱞ ᱨᱮ OTP ᱧᱟᱢ ᱢᱮ",
+        authOtpLabel: "᱖ ᱮᱞ ᱨᱮᱱᱟᱜ OTP ᱮᱢ ᱢᱮ:",
+        authBtnAutoOtp: "⚡ ᱰᱮᱢᱚ OTP ᱯᱮᱨᱮᱡ ᱢᱮ (123456)",
+        authBtnResendOtp: "OTP ᱟᱨᱦᱚᱸ ᱠᱩᱞ ᱢᱮ",
+        authBtnVerify: "ᱯᱚᱨᱚᱠ ᱢᱮ ᱟᱨ ᱰᱮᱥᱵᱚᱨᱰ ᱡᱷᱤᱡ ᱢᱮ",
+        authEmailLabel: "ᱤᱢᱮᱞ ᱴᱷᱤᱠᱬᱟᱹ",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "ᱥᱟᱹᱨᱤ ᱤᱢᱮᱞ ᱴᱷᱤᱠᱬᱟᱹ ᱮᱢ ᱢᱮ᱾",
+        authPasswordLabel: "ᱯᱟᱥᱣᱟᱨᱰ",
+        authPasswordError: "ᱯᱟᱥᱣᱟᱨᱰ ᱠᱚᱢ ᱠᱷᱚᱱ ᱠᱚᱢ ᱖ ᱪᱤᱠᱤ ᱦᱩᱭᱩᱜ ᱞᱟᱹᱠᱛᱤ᱾",
+        authRememberMe: "ᱤᱧ ᱩᱭᱦᱟᱹᱨ ᱠᱟᱹᱧ ᱢᱮ",
+        authForgotPassword: "ᱯᱟᱥᱣᱟᱨᱰ ᱮᱢ ᱦᱤᱲᱤᱧ ᱠᱮᱫᱟ?",
+        authBtnSignIn: "ᱰᱮᱥᱵᱚᱨᱰ ᱨᱮ ᱥᱟᱭᱤᱱ ᱤᱱ ᱢᱮ",
+        authDemoTitle: "ᱞᱚᱜᱚᱱ ᱑-ᱴᱮᱯ ᱰᱮᱢᱚ",
+        authDemoWorker: "👷 ᱠᱟᱹᱢᱤᱭᱟᱹ ᱰᱮᱢᱚ",
+        authDemoContractor: "🏗️ ᱴᱷᱤᱠᱟᱹᱫᱟᱨ ᱰᱮᱢᱚ",
+        authSelectRole: "ᱟᱢᱟᱜ ᱴᱷᱟᱶ ᱵᱟᱪᱷᱟᱣ ᱢᱮ",
+        roleWorker: "ᱠᱟᱹᱢᱤᱭᱟᱹ",
+        roleWorkerSub: "ᱦᱩᱱᱟᱹᱨᱟᱱ ᱠᱟᱹᱢᱤᱭᱟᱹ",
+        roleContractor: "ᱴᱷᱤᱠᱟᱹᱫᱟᱨ",
+        roleContractorSub: "ᱥᱟᱭᱤᱴ ᱴᱷᱤᱠᱟᱹᱫᱟᱨ",
+        roleEmployer: "ᱢᱟᱹᱞᱤᱠ",
+        roleEmployerSub: "ᱥᱟᱭᱤᱴ ᱢᱟᱹᱞᱤᱠ",
+        authFullNameLabel: "ᱯᱩᱨᱟᱹ ᱧᱩᱛᱩᱢ",
+        authFullNamePlaceholder: "ᱡᱮᱞᱮᱠᱟ: ᱨᱚᱢᱮᱥ ᱠᱩᱢᱟᱨ",
+        authFullNameError: "ᱫᱟᱭᱟᱠᱟᱛᱮ ᱟᱢᱟᱜ ᱯᱩᱨᱟᱹ ᱧᱩᱛᱩᱢ ᱚᱞ ᱢᱮ᱾",
+        authTradeLabel: "ᱢᱩᱬᱩᱛ ᱦᱩᱱᱟᱹᱨ / ᱠᱟᱹᱢᱤ",
+        authStateLabel: "ᱯᱚᱱᱚᱛ",
+        authDistrictLabel: "ᱡᱤᱞᱟᱹ / ᱵᱟᱡᱟᱨ",
+        authSelectState: "ᱯᱚᱱᱚᱛ ᱵᱟᱪᱷᱟᱣ ᱢᱮ",
+        authSelectDistrict: "ᱡᱤᱞᱟᱹ ᱵᱟᱪᱷᱟᱣ ᱢᱮ",
+        authCreatePasswordLabel: "ᱯᱟᱥᱣᱟᱨᱰ ᱵᱮᱱᱟᱣ ᱢᱮ",
+        authCreatePasswordPlaceholder: "ᱠᱚᱢ ᱠᱷᱚᱱ ᱠᱚᱢ ᱖ ᱪᱤᱠᱤ",
+        authConfirmPasswordLabel: "ᱯᱟᱥᱣᱟᱨᱰ ᱴᱷᱟᱹᱣᱠᱟᱹᱭ ᱢᱮ",
+        authConfirmPasswordPlaceholder: "ᱯᱟᱥᱣᱟᱨᱰ ᱟᱨᱦᱚᱸ ᱮᱢ ᱢᱮ",
+        authPasswordMismatchError: "ᱯᱟᱥᱣᱟᱨᱰ ᱵᱟᱝ ᱢᱤᱞᱟᱹᱣ ᱞᱮᱱᱟ᱾",
+        authTermsPledge: "ᱤᱧ DBOCW ᱠᱩᱲᱟᱹᱭ ᱟᱨ ᱨᱩᱠᱷᱤᱭᱟᱹ ᱱᱤᱭᱟᱹᱢ ᱤᱧ ᱵᱟᱛᱟᱣ ᱮᱫᱟ᱾",
+        authBtnRegisterSubmit: "ᱠᱷᱟᱛᱟ ᱵᱮᱱᱟᱣ ᱢᱮ ᱟᱨ ᱰᱮᱥᱵᱚᱨᱰ ᱡᱷᱤᱡ ᱢᱮ",
+        authCompliance1: "DBOCW ᱟᱨ e-Shram ᱢᱟᱱᱟᱣ",
+        authCompliance2: "ᱠᱩᱲᱟᱹᱭ ᱮᱢ ᱟᱹᱭᱤᱱ ᱑᱙᱓᱖",
+        authHelplineText: "ᱠᱟᱹᱢᱤᱭᱟᱹ ᱦᱮᱞᱯᱞᱟᱭᱤᱱ:",
+        tradeMasonry: "ᱨᱟᱡᱽᱢᱤᱥᱛᱨᱤ (Masonry)",
+        tradeElectrician: "ᱵᱤᱡᱽᱞᱤ ᱢᱤᱥᱛᱨᱤ (Electrician)",
+        tradePlumber: "ᱱᱚᱞ ᱢᱤᱥᱛᱨᱤ (Plumber)",
+        tradeCarpenter: "ᱵᱟᱹᱰᱷᱟᱹᱭ (Carpenter)",
+        tradePainter: "ᱨᱚᱝ ᱢᱤᱥᱛᱨᱤ (Painter)",
+        tradeWelder: "ᱣᱮᱞᱰᱟᱨ (Welder)",
+        tradeBarBender: "ᱨᱚᱰ ᱢᱤᱥᱛᱨᱤ (Bar Bender)",
+        tradeHelper: "ᱜᱚᱲᱚᱭᱤᱡ / ᱠᱟᱹᱢᱤᱭᱟᱹ",
+        tradeContractor: "ᱥᱤᱵᱷᱤᱞ ᱴᱷᱤᱠᱟᱹᱫᱟᱨ",
+        pwdStrengthWeak: "ᱞᱟᱹᱲᱫᱷᱩ",
+        pwdStrengthTooShort: "ᱟᱹᱰᱤ ᱠᱷᱟᱴᱚ",
+        pwdStrengthGood: "ᱵᱷᱟᱹᱜᱤ",
+        pwdStrengthStrong: "ᱠᱮᱴᱮᱡ",
+        authResendIn: "ᱟᱨᱦᱚᱸ ᱠᱩᱞ",
+        authCodeExpired: "ᱚᱠᱛᱚ ᱪᱟᱵᱟᱭᱮᱱᱟ",
+        toastLangSwitched: "ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞᱮᱱᱟ",
+        toastDisplayUpdated: "ᱯᱟᱹᱨᱥᱤ ᱱᱚᱣᱟ ᱛᱮ ᱵᱚᱫᱚᱞᱮᱱᱟ:",
+        fpTitle: "ᱯᱟᱥᱣᱟᱨᱰ ᱵᱚᱫᱚᱞ ᱢᱮ",
+        fpSub: "OTP ᱯᱚᱨᱚᱠ ᱟᱨ ᱠᱷᱟᱛᱟ ᱨᱩᱣᱟᱹᱲ",
+        fpDesc: "ᱧᱩᱛᱩᱢ ᱚᱞ ᱟᱠᱟᱱ ᱑᱐ ᱮᱞ ᱨᱮᱱᱟᱜ ᱢᱚᱵᱟᱭᱤᱞ ᱥᱮ ᱤᱢᱮᱞ ᱮᱢ ᱢᱮ᱾",
+        fpInputLabel: "ᱢᱚᱵᱟᱭᱤᱞ ᱥᱮ ᱤᱢᱮᱞ",
+        fpPlaceholder: "ᱡᱮᱞᱮᱠᱟ: 9848012345",
+        fpCancelBtn: "ᱵᱟᱹᱜᱤ",
+        fpSubmitBtn: "ᱠᱳᱰ ᱠᱩᱞ ᱢᱮ"
+      },
+      sd: {
+        authBrandSub: "قومي ماهر مزدور ۽ حفاظت نيٽ ورڪ",
+        authSecurityBadge: "تصديق ٿيل محفوظ داخلا",
+        authHeadingLogin: "مزدور مِترا ۾ ڀلي ڪري آيا",
+        authSubLogin: "ڪم ڳولڻ، حاضري لڳائڻ ۽ هنگامي مدد لاءِ لاگ ان ٿيو",
+        authHeadingRegister: "مزدور مِترا نيٽ ورڪ ۾ شامل ٿيو",
+        authSubRegister: "مزدور، ٺيڪيدار يا مالڪ طور رجسٽر ٿيو",
+        authTabLogin: "لاگ ان",
+        authTabRegister: "سائن اپ",
+        authMethodPhone: "موبائل ۽ OTP",
+        authMethodEmail: "اي ميل ۽ پاسورڊ",
+        authMobileLabel: "موبائل نمبر",
+        authMobilePlaceholder: "مثال: 9848012345",
+        authMobileError: "مهرباني ڪري 6-9 سان شروع ٿيندڙ 10 انگن جو موبائل نمبر داخل ڪريو.",
+        authBtnGetOtp: "موبائل تي OTP حاصل ڪريو",
+        authOtpLabel: "6 انگن جو OTP داخل ڪريو:",
+        authBtnAutoOtp: "⚡ پاڻمرادو ڊيمو OTP (123456)",
+        authBtnResendOtp: "OTP ٻيهر موڪليو",
+        authBtnVerify: "تصديق ڪريو ۽ ڊيش بورڊ کوليو",
+        authEmailLabel: "اي ميل پتو",
+        authEmailPlaceholder: "name@example.com",
+        authEmailError: "مهرباني ڪري درست اي ميل لکو.",
+        authPasswordLabel: "پاسورڊ",
+        authPasswordError: "پاسورڊ گھٽ ۾ گھٽ 6 اکرن جو هجي.",
+        authRememberMe: "مون کي ياد رکو",
+        authForgotPassword: "پاسورڊ وسري ويو؟",
+        authBtnSignIn: "ڊيش بورڊ ۾ سائن ان ٿيو",
+        authDemoTitle: "فوري 1-ٽيپ ڊيمو",
+        authDemoWorker: "👷 مزدور ڊيمو",
+        authDemoContractor: "🏗️ ٺيڪيدار ڊيمو",
+        authSelectRole: "پنهنجو ڪردار چونڊيو",
+        roleWorker: "مزدور",
+        roleWorkerSub: "ماهر مزدور",
+        roleContractor: "ٺيڪيدار",
+        roleContractorSub: "سائيٽ ٺيڪيدار",
+        roleEmployer: "مالڪ",
+        roleEmployerSub: "سائيٽ مالڪ",
+        authFullNameLabel: "پورو نالو",
+        authFullNamePlaceholder: "مثال: رميش ڪمار",
+        authFullNameError: "مهرباني ڪري پورو نالو داخل ڪريو.",
+        authTradeLabel: "بنيادي هنر / پيشو",
+        authStateLabel: "ریاست",
+        authDistrictLabel: "ضلعو / شهر",
+        authSelectState: "ریاست چونڊيو",
+        authSelectDistrict: "ضلعو چونڊيو",
+        authCreatePasswordLabel: "پاسورڊ ٺاهيو",
+        authCreatePasswordPlaceholder: "گھٽ ۾ گھٽ 6 اکر",
+        authConfirmPasswordLabel: "پاسورڊ جي تصديق ڪريو",
+        authConfirmPasswordPlaceholder: "پاسورڊ ٻيهر لکو",
+        authPasswordMismatchError: "پاسورڊ برابر نه آهن.",
+        authTermsPledge: "آئون DBOCW اجرت ۽ حفاظت جي شرطن سان متفق آهيان.",
+        authBtnRegisterSubmit: "کاتو ٺاهيو ۽ ڊيش بورڊ شروع ڪريو",
+        authCompliance1: "DBOCW ۽ e-Shram تصديق ٿيل",
+        authCompliance2: "اجرت جي ادائيگي جو ايڪٽ 1936",
+        authHelplineText: "مفت ليبر هيلپ لائين:",
+        tradeMasonry: "راڄو (Masonry)",
+        tradeElectrician: "بجلي وارو (Electrician)",
+        tradePlumber: "پلبر (Plumber)",
+        tradeCarpenter: "واڍو (Carpenter)",
+        tradePainter: "رنگ وارو (Painter)",
+        tradeWelder: "ويلڊر (Welder)",
+        tradeBarBender: "سرئي وارو (Bar Bender)",
+        tradeHelper: "مددگار / مزدور",
+        tradeContractor: "سول ٺيڪيدار",
+        pwdStrengthWeak: "ڪمزور",
+        pwdStrengthTooShort: "تمام ننڍو",
+        pwdStrengthGood: "ٺيڪ",
+        pwdStrengthStrong: "م मजबूत",
+        authResendIn: "ٻيهر موڪليو",
+        authCodeExpired: "وقت ختم",
+        toastLangSwitched: "ٻولي تبديل ٿي وئي",
+        toastDisplayUpdated: "ٻولي هن تي تبديل ٿي:",
+        fpTitle: "پاسورڊ ٻيهر ترتيب ڏيو",
+        fpSub: "OTP تصديق ۽ اڪائونٽ واپس حاصل ڪرڻ",
+        fpDesc: "پنهنجو رجسٽرڊ 10 انگن جو موبائل يا اي ميل داخل ڪريو.",
+        fpInputLabel: "موبائل يا اي ميل",
+        fpPlaceholder: "مثال: 9848012345",
+        fpCancelBtn: "رد ڪريو",
+        fpSubmitBtn: "ڪوڊ موڪليو"
+      }
+    };
+
+    function getActiveTranslationDict(lang) {
+      if (!lang) lang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
+      const baseEn = (typeof I18N_DICT !== 'undefined' && I18N_DICT.en) ? I18N_DICT.en : {};
+      const baseTe = (typeof I18N_DICT !== 'undefined' && I18N_DICT.te) ? I18N_DICT.te : {};
+      const mainLang = (typeof I18N_DICT !== 'undefined' && I18N_DICT[lang]) ? I18N_DICT[lang] : {};
+      const authEn = (typeof AUTH_I18N !== 'undefined' && AUTH_I18N.en) ? AUTH_I18N.en : {};
+      const authTe = (typeof AUTH_I18N !== 'undefined' && AUTH_I18N.te) ? AUTH_I18N.te : {};
+      const authLang = (typeof AUTH_I18N !== 'undefined' && AUTH_I18N[lang]) ? AUTH_I18N[lang] : {};
+      return Object.assign({}, baseEn, baseTe, mainLang, authEn, authTe, authLang);
+    }
+
+    // --- W. MULTILINGUAL DICTIONARY (ALL-INDIA 22 LANGUAGES + ENGLISH) ---
     const I18N_DICT = {
       en: {
         applyNowBtn: "Apply Now",
@@ -5806,7 +7756,8 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
     };
 
     function handleLanguageChange(lang, showNotification = true) {
-      if (!lang) lang = "en";
+      if (!lang) lang = "te";
+      localStorage.setItem("mazdoor_lang", lang);
       localStorage.setItem("MM_V3_LANG", lang);
 
       // Sync selector if global selector exists
@@ -5819,8 +7770,9 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       const legacySelect = document.getElementById("languageSelect");
       if (legacySelect && legacySelect.value !== lang) legacySelect.value = lang;
 
-      const dict = I18N_DICT[lang] || I18N_DICT.en;
+      const dict = getActiveTranslationDict(lang);
 
+      // 1. Translate all text elements with data-i18n
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (dict[key]) {
@@ -5828,7 +7780,35 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
         }
       });
 
-      // Update dynamic input placeholders
+      // 2. Translate all input placeholders with data-i18n-placeholder
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (dict[key]) {
+          el.placeholder = dict[key];
+        }
+      });
+
+      // 3. Dynamically update auth card titles according to active auth mode tab
+      const headingTitle = document.getElementById('authHeadingTitle');
+      const headingSub = document.getElementById('authHeadingSub');
+      if (headingTitle && headingSub) {
+        if (typeof currentAuthTab !== 'undefined' && currentAuthTab === 'login') {
+          headingTitle.innerText = dict.authHeadingLogin || 'మజ్దూర్ మిత్రకు స్వాగతం';
+          headingSub.innerText = dict.authSubLogin || 'ఉద్యోగాల శోధన, హాజరు నమోదు & అత్యవసర సహాయం కొరకు లాగిన్ అవ్వండి';
+        } else {
+          headingTitle.innerText = dict.authHeadingRegister || 'మజ్దూర్ మిత్ర నెట్‌వర్క్‌లో చేరండి';
+          headingSub.innerText = dict.authSubRegister || '28 రాష్ట్రాలు & 8 కేంద్రపాలిత ప్రాంతాలలో కార్మికుడు, కాంట్రాక్టర్ లేదా యజమానిగా నమోదు చేసుకోండి';
+        }
+      }
+
+      // 4. Update password strength text if input is empty
+      const pwdText = document.getElementById('pwdStrengthText');
+      const pwdInput = document.getElementById('regPasswordInput');
+      if (pwdText && (!pwdInput || !pwdInput.value)) {
+        pwdText.innerText = dict.pwdStrengthWeak || 'బలహీనమైనది';
+      }
+
+      // 5. Update dynamic input placeholders in dashboard
       const searchInput = document.getElementById("jobSearchInput");
       if (searchInput && dict.jobSearchPlaceholder) {
         searchInput.placeholder = dict.jobSearchPlaceholder;
@@ -5840,40 +7820,52 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       renderWorkers();
       renderHospitals();
 
-      // Update Speech Synthesis & Recognition language locales
+      // Update Speech Synthesis & Recognition language locales (22 Indian Scheduled + English)
       const langSpeechMap = {
+        te: 'te-IN',
         en: 'en-IN',
         hi: 'hi-IN',
-        te: 'te-IN',
         ta: 'ta-IN',
         kn: 'kn-IN',
         ml: 'ml-IN',
         mr: 'mr-IN',
         bn: 'bn-IN',
         gu: 'gu-IN',
+        or: 'or-IN',
         pa: 'pa-IN',
-        or: 'or-IN'
+        as: 'as-IN',
+        ur: 'ur-IN',
+        sa: 'sa-IN',
+        ks: 'ks-IN',
+        kok: 'kok-IN',
+        mai: 'mai-IN',
+        mni: 'mni-IN',
+        ne: 'ne-NP',
+        brx: 'brx-IN',
+        doi: 'doi-IN',
+        sat: 'sat-IN',
+        sd: 'sd-IN'
       };
 
       if (speechRecognition) {
-        speechRecognition.lang = langSpeechMap[lang] || 'en-IN';
+        speechRecognition.lang = langSpeechMap[lang] || 'te-IN';
       }
 
       updateRoleDisplayUI();
       if (showNotification) {
-        showToast("Language Switched", `Display updated to ${getLanguageName(lang)}.`);
+        showToast(dict.toastLangSwitched || "Language Switched", `${dict.toastDisplayUpdated || "Display updated to"} ${getLanguageName(lang)}.`);
       }
     }
 
     function changeLanguage() {
-      const sel = document.getElementById("globalLanguageSelect") || document.getElementById("languageSelect");
-      handleLanguageChange(sel ? sel.value : "en");
+      const sel = document.getElementById("globalLanguageSelect") || document.getElementById("authLanguageSelect") || document.getElementById("languageSelect");
+      handleLanguageChange(sel ? sel.value : "te");
     }
 
     function getLanguageName(code) {
       const names = {
-        en: "English",
         te: "తెలుగు (Telugu)",
+        en: "English (EN)",
         hi: "हिंदी (Hindi)",
         ta: "தமிழ் (Tamil)",
         kn: "ಕನ್ನಡ (Kannada)",
@@ -5881,8 +7873,20 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
         mr: "मराठी (Marathi)",
         bn: "বাংলা (Bengali)",
         gu: "ગુજરાતી (Gujarati)",
+        or: "ଓଡ଼ିଆ (Odia)",
         pa: "ਪੰਜਾਬੀ (Punjabi)",
-        or: "ଓଡ଼ିଆ (Odia)"
+        as: "অসমীয়া (Assamese)",
+        ur: "اردو (Urdu)",
+        sa: "संस्कृतम् (Sanskrit)",
+        ks: "كٲشُر (Kashmiri)",
+        kok: "कोंकणी (Konkani)",
+        mai: "मैथिली (Maithili)",
+        mni: "মৈতৈলোন্ (Manipuri)",
+        ne: "नेपाली (Nepali)",
+        brx: "बड़ो (Bodo)",
+        doi: "डोगरी (Dogri)",
+        sat: "ᱥᱟᱱᱛᱟᱲᱤ (Santali)",
+        sd: "سنڌي (Sindhi)"
       };
       return names[code] || code;
     }
