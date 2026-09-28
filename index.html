@@ -191,7 +191,7 @@
         <div>
           <div class="flex items-center space-x-1.5">
             <span class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Mazdoor <span class="text-orange-600">Mitra</span></span>
-            <span class="bg-orange-100 text-orange-800 text-[10px] font-extrabold px-1.5 py-0.5 rounded-md border border-orange-200" data-i18n="versionTag">All-India V3</span>
+            <span class="bg-orange-100 text-orange-800 text-[10px] font-extrabold px-2 py-0.5 rounded-md border border-orange-200 uppercase tracking-wide" data-i18n="versionTag">All-India</span>
           </div>
           <p class="text-[11px] text-slate-500 font-medium hidden sm:block" data-i18n="appTagline">National Skilled Labour Marketplace & Safety Network</p>
         </div>
@@ -239,18 +239,25 @@
           </select>
         </div>
 
-        <!-- Tactile Emergency Box Cards on Header (Matching Voice AI size) -->
-        <div class="flex items-center space-x-1.5">
-          <a href="tel:108" class="bg-red-600 hover:bg-red-700 text-white px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center space-x-1 shadow-xs active:scale-95 shrink-0" title="108 Ambulance (Direct Dial)">
-            <i class="fa-solid fa-truck-medical text-yellow-300"></i>
-            <span>108</span>
+        <!-- Tactile Emergency Box Cards (Prominent rounded box dial buttons matching Voice AI button) -->
+        <div class="flex items-center space-x-1.5 sm:space-x-2">
+          <!-- 108 Ambulance -->
+          <a href="tel:108" class="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0 border border-red-500" title="108 Ambulance (Direct Dial)">
+            <i class="fa-solid fa-truck-medical text-yellow-300 text-sm"></i>
+            <span class="hidden sm:inline" data-i18n="ambulance108">108 Ambulance</span>
+            <span class="sm:hidden">108</span>
           </a>
-          <a href="tel:112" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center space-x-1 shadow-xs active:scale-95 shrink-0" title="112 Emergency (Direct Dial)">
-            <i class="fa-solid fa-shield-halved text-cyan-300"></i>
-            <span>112</span>
+
+          <!-- 112 Emergency -->
+          <a href="tel:112" class="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0 border border-blue-500" title="112 Emergency (Direct Dial)">
+            <i class="fa-solid fa-shield-halved text-cyan-300 text-sm"></i>
+            <span class="hidden sm:inline" data-i18n="emergency112">112 Emergency</span>
+            <span class="sm:hidden">112</span>
           </a>
-          <a href="tel:01123382363" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition items-center space-x-1 shadow-xs active:scale-95 shrink-0 hidden md:flex" title="Labour Board Helpline 011-23382363 (Direct Dial)">
-            <i class="fa-solid fa-phone-volume text-emerald-400"></i>
+
+          <!-- Labour Board Helpline -->
+          <a href="tel:01123382363" class="bg-slate-900 hover:bg-slate-800 text-emerald-400 border border-slate-700 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0 hidden lg:flex" title="Labour Board Helpline 011-23382363 (Direct Dial)">
+            <i class="fa-solid fa-phone-volume text-emerald-400 text-sm"></i>
             <span data-i18n="labourBoard">Labour Board</span>
           </a>
         </div>
@@ -268,7 +275,7 @@
         </div>
 
         <!-- Voice Assistant Quick Launch -->
-        <button onclick="openModal('voiceProfileWizardModal')" title="Build profile with Voice AI" class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shadow-xs shrink-0">
+        <button onclick="openModal('voiceProfileWizardModal')" title="Build profile with Voice AI" class="bg-purple-600 hover:bg-purple-700 text-white px-3 sm:px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0 border border-purple-500">
           <i class="fa-solid fa-microphone-lines text-yellow-300"></i>
           <span>Voice AI</span>
         </button>
@@ -1828,18 +1835,7 @@
           "Diu": ["Diu Town", "Ghoghla"]
         }
       },
-      "Delhi": {
-        districts: {
-          "New Delhi": ["Connaught Place", "Barakhamba", "Chanakyapuri", "Lodhi Road"],
-          "South Delhi": ["Saket", "Hauz Khas", "Okhla Industrial Phase 1 & 2", "Mehrauli", "Greater Kailash"],
-          "North Delhi": ["Civil Lines", "Kashmere Gate", "Narela Industrial Area", "Model Town", "Burari"],
-          "West Delhi": ["Rajouri Garden", "Janakpuri", "Punjabi Bagh", "Tilak Nagar", "Kirti Nagar Industrial"],
-          "Central Delhi": ["Karol Bagh", "Paharganj", "Daryaganj", "Jhandewalan"],
-          "East Delhi": ["Laxmi Nagar", "Mayur Vihar", "Patparganj Industrial Area", "Preet Vihar"],
-          "North West Delhi": ["Rohini", "Pitampura", "Mangolpuri Industrial Area", "Badli Industrial"],
-          "South West Delhi": ["Dwarka", "Najafgarh", "Vasant Kunj", "Palam"]
-        }
-      },
+
       "Delhi (NCT)": {
         districts: {
           "New Delhi": ["Connaught Place", "Barakhamba", "Chanakyapuri", "Lodhi Road"],
@@ -2411,7 +2407,7 @@
       if (stored) {
         try {
           appState = JSON.parse(stored);
-          if (!appState.jobs || appState.jobs.length === 0 || !appState.jobs.some(j => j.employer.includes("Larsen"))) {
+          if (!appState.jobs || appState.jobs.length === 0 || !appState.jobs.some(j => j.title === "Painter needed")) {
             appState.jobs = JSON.parse(JSON.stringify(DEFAULT_SEED_DATA.jobs));
           }
           if (!appState.hospitals || appState.hospitals.length === 0) {
@@ -2897,10 +2893,11 @@
       // AI Response Knowledge Engine
       setTimeout(() => {
         const q = query.toLowerCase();
+        const currentLang = localStorage.getItem("MM_V3_LANG") || "en";
         let htmlAnswer = "";
         let voiceSummary = "";
 
-        if (q.includes("wage") || q.includes("salary") || q.includes("rate") || q.includes("paisa") || q.includes("kamai") || q.includes("minimum")) {
+        if (q.includes("wage") || q.includes("salary") || q.includes("rate") || q.includes("paisa") || q.includes("kamai") || q.includes("minimum") || q.includes("\u092E\u091C\u0926\u0942\u0930\u0940") || q.includes("\u0935\u0947\u0924\u0928") || q.includes("\u0926\u093F\u0939\u093E\u0921\u093C\u0940") || q.includes("\u0C15\u0C42\u0C32\u0C40") || q.includes("\u0C1C\u0C40\u0C24\u0C02") || q.includes("\u0C35\u0C47\u0C24\u0C28\u0C02") || q.includes("\u0B95\u0BC2\u0BB2\u0BBF") || q.includes("\u0BA4\u0BBF\u0BA9\u0B95\u0BC2\u0BB2\u0BBF") || q.includes("\u0CB5\u0CC7\u0CA4\u0CA8") || q.includes("\u0D15\u0D42\u0D32\u0D3F") || q.includes("\u092E\u091C\u0941\u0930\u0940") || q.includes("\u09AE\u099C\u09C1\u09B0\u09BF") || q.includes("\u0A26\u0A3F\u0A39\u0A3E\u0A5Call") || q.includes("\u0B2E\u0B1C\u0B41\u0B30\u0B40")) {
           htmlAnswer = `
             <div class="space-y-1.5 text-xs text-slate-800">
               <div class="font-bold text-purple-900 flex items-center"><i class="fa-solid fa-coins text-amber-500 mr-1.5"></i> All-India Fair Wage Benchmarks (Per Day / 8 Hours):</div>
@@ -2915,8 +2912,16 @@
               </p>
             </div>
           `;
-          voiceSummary = "Fair daily minimum wage benchmarks are: Unskilled 500 to 650 rupees, Semi-skilled 650 to 800 rupees, and Skilled craftsmen 850 to 1200 rupees per day for an 8 hour shift. Overtime is payable at double rate.";
-        } else if (q.includes("heat") || q.includes("heatwave") || q.includes("sun") || q.includes("summer") || q.includes("dhup") || q.includes("dhoop") || q.includes("temperature") || q.includes("hydration") || q.includes("ors")) {
+          if (currentLang === 'hi') {
+            voiceSummary = "दैनिक उचित मजदूरी: अकुशल मजदूर 500 से 650 रुपये, अर्ध-कुशल 650 से 800 रुपये, और कुशल कारीगर 850 से 1200 रुपये प्रतिदिन। 8 घंटे से अधिक काम करने पर दोगुना वेतन अनिवार्य है।";
+          } else if (currentLang === 'te') {
+            voiceSummary = "రోజువారీ న్యాయమైన వేతనం: నైపుణ్యం లేని కార్మికులకు 500 నుండి 650 రూపాయలు, సెమీ-స్కిల్డ్ 650 నుండి 800, నైపుణ్యం కలిగిన వారికి 850 నుండి 1200 రూపాయలు. ఓవర్‌టైమ్‌కు డబుల్ పేమెంట్ ఇవ్వాలి.";
+          } else if (currentLang === 'ta') {
+            voiceSummary = "தினசரி நியாயமான கூலி: உதவியாளர்களுக்கு 500 முதல் 650 ரூபாய், கொத்தனாருக்கு 850 முதல் 1200 ரூபாய் வரை. கூடுதல் நேர வேலைக்கு இரட்டிப்பு கூலி சட்டம்.";
+          } else {
+            voiceSummary = "Fair daily minimum wage benchmarks are: Unskilled 500 to 650 rupees, Semi-skilled 650 to 800 rupees, and Skilled craftsmen 850 to 1200 rupees per day for an 8 hour shift. Overtime is payable at double rate.";
+          }
+        } else if (q.includes("heat") || q.includes("heatwave") || q.includes("sun") || q.includes("summer") || q.includes("dhup") || q.includes("dhoop") || q.includes("garmi") || q.includes("temperature") || q.includes("hydration") || q.includes("ors") || q.includes("\u0927\u0942\u092A") || q.includes("\u0917\u0930\u094D\u092E\u0940") || q.includes("\u0C0E\u0C02\u0C21") || q.includes("\u0BB5\u0BC6\u0BAF\u0BBF\u0BB2\u0BCD")) {
           htmlAnswer = `
             <div class="space-y-1.5 text-xs text-slate-800">
               <div class="font-bold text-orange-950 flex items-center"><i class="fa-solid fa-temperature-arrow-up text-orange-500 mr-1.5"></i> Heatwave Safety & 15-Minute Rest Mandate:</div>
@@ -2928,8 +2933,14 @@
               </ul>
             </div>
           `;
-          voiceSummary = "During heatwaves above 40 degrees Celsius, workers are entitled to mandatory 15-minute rest breaks in shade every 45 minutes, peak sun stoppage between 12 and 3 PM, and free ORS hydration.";
-        } else if (q.includes("safety") || q.includes("ppe") || q.includes("helmet") || q.includes("harness") || q.includes("boot") || q.includes("suraksha") || q.includes("shoes") || q.includes("gloves") || q.includes("goggle")) {
+          if (currentLang === 'hi') {
+            voiceSummary = "40 डिग्री से अधिक तापमान पर हर 45 से 60 मिनट में 15 मिनट की छाया में विश्राम और मुफ्त ओआरएस पानी अनिवार्य है। चक्कर आने पर तुरंत 108 डायल करें।";
+          } else if (currentLang === 'te') {
+            voiceSummary = "40 డిగ్రీల కంటే ఎక్కువ ఎండ ఉన్నప్పుడు ప్రతి గంటకు 15 నిమిషాల విశ్రాంతి మరియు ఓఆర్ఎస్ నీరు తప్పనిసరి. సమస్య ఉంటే 108 కి కాల్ చేయండి.";
+          } else {
+            voiceSummary = "During heatwaves above 40 degrees Celsius, workers are entitled to mandatory 15-minute rest breaks in shade every 45 minutes, peak sun stoppage between 12 and 3 PM, and free ORS hydration.";
+          }
+        } else if (q.includes("safety") || q.includes("ppe") || q.includes("helmet") || q.includes("harness") || q.includes("boot") || q.includes("suraksha") || q.includes("shoes") || q.includes("gloves") || q.includes("goggle") || q.includes("\u0938\u0941\u0930\u0915\u094D\u0937\u093E") || q.includes("\u0C30\u0C15\u0C4D\u0C37\u0C23") || q.includes("\u0BAA\u0BBE\u0BA4\u0BC1\u0B95\u0BBE\u0BAA\u0BCD\u0BAA\u0BC1")) {
           htmlAnswer = `
             <div class="space-y-1.5 text-xs text-slate-800">
               <div class="font-bold text-blue-950 flex items-center"><i class="fa-solid fa-vest text-brand-500 mr-1.5"></i> Mandatory Site Safety & PPE Guidelines:</div>
@@ -2942,8 +2953,14 @@
               </ul>
             </div>
           `;
-          voiceSummary = "Mandatory site PPE includes industrial hard hats, steel-toe boots, reflective vests, and full-body safety harnesses for any work above 2 meters height.";
-        } else if (q.includes("e-shram") || q.includes("eshram") || q.includes("shram card") || q.includes("uan")) {
+          if (currentLang === 'hi') {
+            voiceSummary = "साइट पर सुरक्षा हेलमेट, सेफ्टी जूते, रिफ्लेक्टिव जैकेट और 2 मीटर से ऊपर काम करने पर फुल-बॉडी सेफ्टी हार्नेस पहनना अनिवार्य है।";
+          } else if (currentLang === 'te') {
+            voiceSummary = "సైట్‌లో సేఫ్టీ హెల్మెట్, స్టీల్-టో బూట్లు మరియు 2 మీటర్ల కంటే ఎక్కువ ఎత్తులో పనిచేసేటప్పుడు సేఫ్టీ బెల్ట్ తప్పనిసరిగా ధరించాలి.";
+          } else {
+            voiceSummary = "Mandatory site PPE includes industrial hard hats, steel-toe boots, reflective vests, and full-body safety harnesses for any work above 2 meters height.";
+          }
+        } else if (q.includes("e-shram") || q.includes("eshram") || q.includes("shram card") || q.includes("uan") || q.includes("\u0936\u094D\u0930\u092E") || q.includes("\u0C36\u0C4D\u0C30\u0C2E\u0C4D")) {
           htmlAnswer = `
             <div class="space-y-1.5 text-xs text-slate-800">
               <div class="font-bold text-emerald-950 flex items-center"><i class="fa-solid fa-id-card text-emerald-600 mr-1.5"></i> e-Shram Card Government Benefits:</div>
@@ -2956,7 +2973,7 @@
             </div>
           `;
           voiceSummary = "e-Shram card provides 2 Lakh Rupees free accidental insurance under PMSBY, a nationwide portable 12-digit UAN card, and direct government aid during disaster relief.";
-        } else if (q.includes("vishwakarma") || q.includes("toolkit") || q.includes("tool grant") || q.includes("artisan")) {
+        } else if (q.includes("vishwakarma") || q.includes("toolkit") || q.includes("tool grant") || q.includes("artisan") || q.includes("\u0935\u093F\u0936\u094D\u0935\u0915\u0930\u094D\u092E\u093E") || q.includes("\u0C35\u0C3F\u0C36\u0C4D\u0C35\u0C15\u0C30\u0C4D\u0C2E")) {
           htmlAnswer = `
             <div class="space-y-1.5 text-xs text-slate-800">
               <div class="font-bold text-amber-950 flex items-center"><i class="fa-solid fa-screwdriver-wrench text-amber-600 mr-1.5"></i> PM Vishwakarma Artisan & Tool Scheme:</div>
@@ -2969,7 +2986,7 @@
             </div>
           `;
           voiceSummary = "PM Vishwakarma scheme offers a 15,000 rupees modern toolkit grant, free skill training with 500 rupees per day stipend, and collateral-free enterprise loans up to 3 Lakh rupees at 5 percent interest.";
-        } else if (q.includes("unpaid") || q.includes("not paying") || q.includes("dispute") || q.includes("claim") || q.includes("paisa nahi")) {
+        } else if (q.includes("unpaid") || q.includes("not paying") || q.includes("dispute") || q.includes("claim") || q.includes("paisa nahi") || q.includes("\u092A\u0948\u0938\u0947 \u0928\u0939\u0940\u0902") || q.includes("\u0C21\u0C2C\u0C4D\u0C2C\u0C41\u0C32\u0C41")) {
           htmlAnswer = `
             <div class="space-y-1.5 text-xs text-slate-800">
               <div class="font-bold text-red-950 flex items-center"><i class="fa-solid fa-scale-balanced text-red-600 mr-1.5"></i> Legal Action for Unpaid Wages:</div>
@@ -2983,8 +3000,8 @@
               </ul>
             </div>
           `;
-          voiceSummary = "Under the Payment of Wages Act, non-payment of wages is illegal. Log your site punch in the Daily Attendance tab to produce proof, and call Labour Welfare Helpline at 14434 or 011-23382363.";
-        } else if (q.includes("esic") || q.includes("hospital") || q.includes("accident") || q.includes("chot") || q.includes("injury") || q.includes("treatment")) {
+          voiceSummary = "Under the Payment of Wages Act, non-payment of wages is illegal. Log your site punch in Daily Attendance to produce proof, and call Labour Welfare Helpline at 14434 or 011-23382363.";
+        } else if (q.includes("esic") || q.includes("hospital") || q.includes("accident") || q.includes("chot") || q.includes("injury") || q.includes("treatment") || q.includes("\u091A\u094B\u091F") || q.includes("\u0907\u0932\u093E\u091C") || q.includes("\u0C17\u0C3E\u0C2F\u0C02")) {
           htmlAnswer = `
             <div class="space-y-1.5 text-xs text-slate-800">
               <div class="font-bold text-blue-950 flex items-center"><i class="fa-solid fa-hospital text-blue-600 mr-1.5"></i> ESIC Medical & Cashless Injury Cover:</div>
@@ -3020,7 +3037,13 @@
               </div>
             </div>
           `;
-          voiceSummary = "I have noted your question. For specific labor disputes, you can contact the National Labour Helpline at 14434, or tap any of the topic chips above.";
+          if (currentLang === 'hi') {
+            voiceSummary = "आपके सवाल के लिए आप ऊपर दिए गए सुझावों को छू सकते हैं या 14434 राष्ट्रीय श्रम हेल्पलाइन पर कॉल कर सकते हैं।";
+          } else if (currentLang === 'te') {
+            voiceSummary = "మీ ప్రశ్న కోసం పై బటన్లను నొక్కండి లేదా 14434 నేషనల్ లేబర్ హెల్ప్‌లైన్‌కు కాల్ చేయండి.";
+          } else {
+            voiceSummary = "I have noted your question. For specific labor disputes, you can contact the National Labour Helpline at 14434, or tap any of the topic chips above.";
+          }
         }
 
         container.innerHTML += `
@@ -3321,11 +3344,9 @@
                 <span class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-full font-medium flex items-center transition shadow-2xs">
                   ${escapeHTML(job.trade)}
                 </span>
-                <span class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-full font-medium flex items-center transition shadow-2xs">
-                  ðŸ“ ${escapeHTML(job.city)}, ${escapeHTML(job.district)}
+                <span class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-full font-medium flex items-center transition shadow-2xs"><i class="fa-solid fa-location-dot text-slate-400 mr-1.5 text-xs"></i>${escapeHTML(job.city)}, ${escapeHTML(job.district)}
                 </span>
-                <span class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-full font-medium flex items-center transition shadow-2xs">
-                  â± ${escapeHTML(shiftDuration)}
+                <span class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-full font-medium flex items-center transition shadow-2xs"><i class="fa-regular fa-clock text-slate-400 mr-1.5 text-xs"></i>${escapeHTML(shiftDuration)}
                 </span>
               </div>
 
@@ -3344,7 +3365,7 @@
                 <a href="tel:${escapeHTML(job.employerPhone)}" class="w-9 h-9 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 hover:text-emerald-600 transition shadow-2xs" title="Direct Call Employer">
                   <i class="fa-solid fa-phone text-xs"></i>
                 </a>
-                <a href="https://wa.me/91${escapeHTML(job.employerPhone)}?text=Hello%20${encodeURIComponent(job.employer)},%20I%20am%20applying%20for%20the%20${encodeURIComponent(job.title)}%20position%20on%20Mazdoor%20Mitra." target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 hover:text-emerald-600 transition shadow-2xs" title="Direct WhatsApp Chat">
+                <a href="https://wa.me/91${(job.employerPhone || '').replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(job.employer)},%20I%20am%20applying%20for%20the%20${encodeURIComponent(job.title)}%20position%20on%20Mazdoor%20Mitra." target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 hover:text-emerald-600 transition shadow-2xs active:scale-95" title="Direct WhatsApp Chat">
                   <i class="fa-brands fa-whatsapp text-sm text-emerald-600"></i>
                 </a>
                 <button onclick="speakText('${escapeHTML(job.title)}. Wage is ${job.wage} rupees per day in ${escapeHTML(job.city)}.')" title="Listen Job Terms" class="w-9 h-9 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-purple-50 text-slate-600 hover:text-purple-700 flex items-center justify-center transition shadow-2xs">
@@ -3369,7 +3390,7 @@
       // Footer: An "Explore all jobs →" button at the bottom of the feed
       container.innerHTML = cardsHtml + `
         <div class="col-span-full pt-4 pb-2 flex justify-center">
-          <button onclick="exploreAllJobs()" class="px-6 py-3 rounded-xl bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-800 text-xs font-bold shadow-xs hover:shadow transition flex items-center space-x-2">
+          <button onclick="exploreAllJobs()" class="px-6 py-3 rounded-xl bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-800 text-xs font-bold shadow-xs hover:shadow transition flex items-center space-x-2 active:scale-95">
             <span>${dict.exploreAllJobsBtn || 'Explore all jobs →'}</span>
           </button>
         </div>
@@ -3382,7 +3403,7 @@
       const trade = document.getElementById("jobTradeSelect");
       if (trade) trade.value = "";
       const slider = document.getElementById("wageSlider");
-      if (slider) slider.value = 300;
+      if (slider) slider.value = 500;
       updateWageDisplay();
       filterSavedOnly = false;
       filterSmartMatchOnly = false;
@@ -3390,6 +3411,7 @@
       if (savedBtn) savedBtn.classList.remove("bg-yellow-100", "border-yellow-300");
       const smartBtn = document.getElementById("smartMatchFilterBtn");
       if (smartBtn) smartBtn.classList.remove("bg-purple-100", "border-purple-300");
+      resetRegionFilter();
       renderJobs();
       showToast("All Jobs Displayed", "Viewing all available listings across all regions.");
     }
