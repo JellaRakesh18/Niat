@@ -117,6 +117,349 @@
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans pb-20 lg:pb-0">
 
   <!-- ========================================================= -->
+  <!-- 0. AUTHENTICATION GATEWAY (LOGIN & REGISTRATION)          -->
+  <!-- ========================================================= -->
+  <div id="authGateway" class="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between relative overflow-hidden">
+    
+    <!-- Background Atmospheric Glows -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-orange-600/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Top Accessibility & Emergency Header -->
+    <header class="relative z-10 max-w-6xl w-full mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between border-b border-slate-800/80">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center text-white shadow-lg">
+          <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 18h20"/>
+            <path d="M4 18v-4a8 8 0 0 1 16 0v4"/>
+            <path d="M12 2v4"/>
+            <circle cx="12" cy="13" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-black tracking-tight text-white">Mazdoor <span class="text-orange-500">Mitra</span></h1>
+          <p class="text-[10px] text-slate-400 font-medium hidden sm:block">National Skilled Labour & Safety Network</p>
+        </div>
+      </div>
+
+      <!-- Emergency Quick Dials & Language Selector -->
+      <div class="flex items-center space-x-2">
+        <!-- 108 Ambulance -->
+        <a href="tel:108" class="bg-red-600 hover:bg-red-700 text-white px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center space-x-1 shadow-sm active:scale-95" title="Direct Dial 108 Ambulance">
+          <i class="fa-solid fa-truck-medical text-yellow-300"></i>
+          <span class="hidden sm:inline">108 Ambulance</span>
+          <span class="sm:hidden">108</span>
+        </a>
+
+        <!-- 112 SOS -->
+        <a href="tel:112" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center space-x-1 shadow-sm active:scale-95" title="Direct Dial 112 Police/SOS">
+          <i class="fa-solid fa-shield-halved text-cyan-300"></i>
+          <span class="hidden sm:inline">112 SOS</span>
+          <span class="sm:hidden">112</span>
+        </a>
+
+        <!-- Auth Language Switcher -->
+        <select id="authLanguageSelect" onchange="handleLanguageChange(this.value)" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs font-bold rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer">
+          <option value="en">English (EN)</option>
+          <option value="hi">हिंदी (Hindi)</option>
+          <option value="te">తెలుగు (Telugu)</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="kn">ಕನ್ನಡ (Kannada)</option>
+          <option value="ml">മലയാളം (Malayalam)</option>
+          <option value="mr">मराठी (Marathi)</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="gu">ગુજરાતી (Gujarati)</option>
+          <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+          <option value="or">ଓଡ଼ିଆ (Odia)</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- Main Auth Card Container -->
+    <main class="relative z-10 flex-1 flex items-center justify-center px-4 py-8 sm:py-10">
+      <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 sm:p-8 text-slate-800 space-y-6">
+        
+        <!-- Header Text -->
+        <div class="text-center space-y-1.5">
+          <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-[11px] font-extrabold uppercase tracking-wide">
+            <i class="fa-solid fa-lock text-orange-600"></i>
+            <span>Verified Secure Access</span>
+          </div>
+          <h2 id="authHeadingTitle" class="text-2xl font-black text-slate-900 tracking-tight">Welcome to Mazdoor Mitra</h2>
+          <p id="authHeadingSub" class="text-xs text-slate-500">Sign in to search jobs, record attendance & access emergency aid</p>
+        </div>
+
+        <!-- Mode Toggle Tabs (Login vs Register) -->
+        <div class="flex p-1 bg-slate-100 rounded-2xl border border-slate-200">
+          <button type="button" id="tabBtnLogin" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl text-xs font-black transition text-slate-900 bg-white shadow-xs cursor-pointer">
+            <i class="fa-solid fa-right-to-bracket mr-1.5 text-orange-600"></i> Log In
+          </button>
+          <button type="button" id="tabBtnRegister" onclick="switchAuthTab('register')" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer">
+            <i class="fa-solid fa-user-plus mr-1.5 text-blue-600"></i> Sign Up
+          </button>
+        </div>
+
+        <!-- ======================= -->
+        <!-- FORM A: LOGIN SECTION   -->
+        <!-- ======================= -->
+        <div id="authLoginForm" class="space-y-4">
+          <!-- Dual Method Tabs: Mobile OTP vs Email/Password -->
+          <div class="flex items-center justify-center space-x-2 border-b border-slate-200 pb-3">
+            <button type="button" id="loginMethodPhoneBtn" onclick="switchLoginMethod('phone')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-orange-500 text-white shadow-xs cursor-pointer">
+              <i class="fa-solid fa-mobile-screen-button mr-1.5"></i> Mobile & OTP
+            </button>
+            <button type="button" id="loginMethodEmailBtn" onclick="switchLoginMethod('email')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">
+              <i class="fa-solid fa-envelope mr-1.5"></i> Email & Password
+            </button>
+          </div>
+
+          <!-- Method 1: Mobile + OTP -->
+          <div id="loginPhoneMethodView" class="space-y-3.5">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">
+                Mobile Number (मोबाइल नंबर / మొబైల్ నంబర్) <span class="text-red-500">*</span>
+              </label>
+              <div class="relative flex rounded-xl border border-slate-300 focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-500/20 bg-slate-50">
+                <span class="inline-flex items-center px-3 rounded-l-xl border-r border-slate-300 text-slate-600 font-bold text-xs bg-slate-100">
+                  🇮🇳 +91
+                </span>
+                <input type="tel" id="loginPhoneInput" maxlength="10" placeholder="e.g. 9848012345" class="w-full bg-transparent px-3 py-2.5 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
+              </div>
+              <p id="loginPhoneError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Please enter a valid 10-digit mobile number starting with 6-9.</p>
+            </div>
+
+            <!-- OTP Request Button -->
+            <div id="otpRequestContainer">
+              <button type="button" onclick="handleSendOTP()" id="btnSendOtp" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Get OTP on Mobile (ओटीपी प्राप्त करें)</span>
+              </button>
+            </div>
+
+            <!-- OTP Input Section (Revealed after OTP sent) -->
+            <div id="otpVerifySection" class="hidden space-y-3 p-3.5 rounded-2xl bg-orange-50/70 border border-orange-200">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-orange-950">Enter 6-Digit OTP:</span>
+                <span id="otpTimerDisplay" class="font-mono text-orange-700 font-bold text-[11px]">Resend in 30s</span>
+              </div>
+              
+              <div class="relative">
+                <input type="text" id="loginOtpInput" maxlength="6" placeholder="• • • • • •" class="w-full bg-white border border-orange-300 rounded-xl px-4 py-2.5 text-center text-lg font-black tracking-widest text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500">
+              </div>
+
+              <div class="flex items-center justify-between gap-2">
+                <button type="button" onclick="autoFillDemoOTP()" class="text-[11px] font-bold text-orange-700 hover:text-orange-900 underline cursor-pointer">
+                  ⚡ Auto-Fill Demo OTP (123456)
+                </button>
+                <button type="button" id="btnResendOtp" onclick="handleSendOTP(true)" disabled class="text-[11px] font-bold text-slate-400 cursor-not-allowed">
+                  Resend OTP
+                </button>
+              </div>
+
+              <button type="button" onclick="handleVerifyPhoneOTP()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Verify & Enter Dashboard</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Method 2: Email + Password -->
+          <div id="loginEmailMethodView" class="hidden space-y-3.5">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Email Address <span class="text-red-500">*</span></label>
+              <div class="relative flex items-center">
+                <i class="fa-solid fa-envelope absolute left-3 text-slate-400 text-xs"></i>
+                <input type="email" id="loginEmailInput" placeholder="name@example.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20">
+              </div>
+              <p id="loginEmailError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Please enter a valid email address.</p>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Password <span class="text-red-500">*</span></label>
+              <div class="relative flex items-center">
+                <i class="fa-solid fa-lock absolute left-3 text-slate-400 text-xs"></i>
+                <input type="password" id="loginPasswordInput" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20">
+                <button type="button" onclick="togglePasswordVisibility('loginPasswordInput', this)" class="absolute right-3 text-slate-400 hover:text-slate-600 text-xs p-1 cursor-pointer">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <p id="loginPasswordError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Password must be at least 6 characters.</p>
+            </div>
+
+            <div class="flex items-center justify-between text-xs pt-1">
+              <label class="flex items-center space-x-2 cursor-pointer text-slate-600">
+                <input type="checkbox" id="loginRememberMe" checked class="rounded text-orange-600 focus:ring-orange-500 border-slate-300">
+                <span>Remember Me</span>
+              </label>
+              <button type="button" onclick="openModal('forgotPasswordModal')" class="text-orange-600 hover:text-orange-700 font-bold hover:underline cursor-pointer">
+                Forgot Password?
+              </button>
+            </div>
+
+            <button type="button" onclick="handleEmailPasswordLogin()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              <span>Sign In to Dashboard</span>
+            </button>
+          </div>
+
+          <!-- Quick Test Demo Buttons -->
+          <div class="pt-3 border-t border-slate-100 space-y-2">
+            <span class="block text-[10px] text-slate-400 font-bold text-center uppercase tracking-wider">Instant 1-Tap Demo Testing</span>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="quickDemoLogin('worker')" class="bg-orange-50 hover:bg-orange-100 text-orange-900 border border-orange-200 py-2 px-2.5 rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer">
+                <span>👷 Worker Demo</span>
+              </button>
+              <button type="button" onclick="quickDemoLogin('contractor')" class="bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 py-2 px-2.5 rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer">
+                <span>🏗️ Contractor Demo</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================== -->
+        <!-- FORM B: SIGN UP SECTION    -->
+        <!-- ========================== -->
+        <div id="authRegisterForm" class="hidden space-y-3.5">
+          <!-- Role Selection Pills -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Select Your Role (आपकी भूमिका) <span class="text-red-500">*</span></label>
+            <div class="grid grid-cols-3 gap-1.5">
+              <button type="button" onclick="selectRegisterRole('worker')" id="regRoleWorkerBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-orange-500 text-white border-orange-500 shadow-xs cursor-pointer">
+                <div class="text-base mb-0.5">👷</div>
+                <div class="text-[11px] leading-tight">Worker<br><span class="text-[9px] opacity-80">कारीगर</span></div>
+              </button>
+              <button type="button" onclick="selectRegisterRole('contractor')" id="regRoleContractorBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
+                <div class="text-base mb-0.5">🏗️</div>
+                <div class="text-[11px] leading-tight">Contractor<br><span class="text-[9px] opacity-80">ठेकेदार</span></div>
+              </button>
+              <button type="button" onclick="selectRegisterRole('employer')" id="regRoleEmployerBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
+                <div class="text-base mb-0.5">🏢</div>
+                <div class="text-[11px] leading-tight">Employer<br><span class="text-[9px] opacity-80">साइट मालिक</span></div>
+              </button>
+            </div>
+            <input type="hidden" id="regSelectedRole" value="worker">
+          </div>
+
+          <!-- Full Name -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Full Name (पूरा नाम) <span class="text-red-500">*</span></label>
+            <div class="relative flex items-center">
+              <i class="fa-solid fa-user absolute left-3 text-slate-400 text-xs"></i>
+              <input type="text" id="regNameInput" placeholder="e.g. Ramesh Kumar" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+            </div>
+            <p id="regNameError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Please enter your full name.</p>
+          </div>
+
+          <!-- Trade / Profession -->
+          <div id="regTradeContainer">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Primary Trade / Skill (काम का प्रकार) <span class="text-red-500">*</span></label>
+            <select id="regTradeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-orange-500">
+              <option value="Masonry / Rajmistri">Masonry / Rajmistri (राजमिस्त्री)</option>
+              <option value="Electrical & Solar Installation">Electrician / Wireman (बिजली मिस्त्री)</option>
+              <option value="Plumbing & Pipe Laying">Plumber / Pipe Fitter (नलसाज)</option>
+              <option value="Carpentry & Woodwork">Carpenter (बढ़ई)</option>
+              <option value="Painting & Wall Finishing">Painter (पेंटर)</option>
+              <option value="Welding & Structural Fabrication">Welder / Fabricator (वेल्डर)</option>
+              <option value="Bar Bending / Steel Fixing">Bar Bender / Steel Mat Tier</option>
+              <option value="General Construction Helper">General Helper / Labour (हेल्पर / मजदूर)</option>
+              <option value="Civil Contracting Firm">Civil Contractor / Builder</option>
+            </select>
+          </div>
+
+          <!-- Mobile Number -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Mobile Number (मोबाइल नंबर) <span class="text-red-500">*</span></label>
+            <div class="relative flex rounded-xl border border-slate-300 bg-slate-50">
+              <span class="inline-flex items-center px-3 rounded-l-xl border-r border-slate-300 text-slate-600 font-bold text-xs bg-slate-100">🇮🇳 +91</span>
+              <input type="tel" id="regPhoneInput" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-transparent px-3 py-2 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
+            </div>
+            <p id="regPhoneError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Enter a valid 10-digit mobile number.</p>
+          </div>
+
+          <!-- State & City -->
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">State</label>
+              <select id="regStateSelect" onchange="handleRegStateChange(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-orange-500">
+                <!-- Dynamically populated from INDIA_REGIONS -->
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">District / City</label>
+              <select id="regDistrictSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-orange-500">
+                <!-- Dynamically populated based on state -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Password & Confirm Password -->
+          <div class="space-y-2">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Create Password <span class="text-red-500">*</span></label>
+              <div class="relative flex items-center">
+                <i class="fa-solid fa-lock absolute left-3 text-slate-400 text-xs"></i>
+                <input type="password" id="regPasswordInput" oninput="checkPasswordStrength(this.value)" placeholder="At least 6 characters" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+                <button type="button" onclick="togglePasswordVisibility('regPasswordInput', this)" class="absolute right-3 text-slate-400 hover:text-slate-600 text-xs p-1 cursor-pointer">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <div class="flex items-center space-x-1 mt-1">
+                <div id="pwdStrengthBar1" class="h-1 flex-1 rounded-full bg-slate-200"></div>
+                <div id="pwdStrengthBar2" class="h-1 flex-1 rounded-full bg-slate-200"></div>
+                <div id="pwdStrengthBar3" class="h-1 flex-1 rounded-full bg-slate-200"></div>
+                <span id="pwdStrengthText" class="text-[10px] text-slate-400 font-bold ml-1">Weak</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Confirm Password <span class="text-red-500">*</span></label>
+              <div class="relative flex items-center">
+                <i class="fa-solid fa-shield-halved absolute left-3 text-slate-400 text-xs"></i>
+                <input type="password" id="regConfirmPasswordInput" placeholder="Repeat your password" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+                <button type="button" onclick="togglePasswordVisibility('regConfirmPasswordInput', this)" class="absolute right-3 text-slate-400 hover:text-slate-600 text-xs p-1 cursor-pointer">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <p id="regPasswordMismatchError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Passwords do not match.</p>
+            </div>
+          </div>
+
+          <!-- Terms & Safety Pledge -->
+          <label class="flex items-start space-x-2 text-[11px] text-slate-600 cursor-pointer pt-1">
+            <input type="checkbox" id="regTermsCheckbox" checked class="mt-0.5 rounded text-orange-600 focus:ring-orange-500 border-slate-300">
+            <span>I agree to statutory DBOCW fair wages, safety protocols, and National Labour Terms.</span>
+          </label>
+
+          <!-- Register Submit Button -->
+          <button type="button" onclick="handleRegisterSubmit()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-md active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
+            <i class="fa-solid fa-user-check"></i>
+            <span>Create Account & Launch Dashboard</span>
+          </button>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Bottom Government & Trust Footer -->
+    <footer class="relative z-10 max-w-6xl w-full mx-auto px-4 py-3.5 text-center text-xs text-slate-400 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center space-x-2 text-[11px]">
+        <span class="text-emerald-400 font-bold"><i class="fa-solid fa-shield-check mr-1"></i> DBOCW & e-Shram Compliant</span>
+        <span>•</span>
+        <span>Payment of Wages Act 1936</span>
+      </div>
+      <div class="text-[11px]">
+        Official Toll-Free Labour Helpline: <a href="tel:14434" class="text-orange-400 font-bold hover:underline">14434</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MAIN APP WRAPPER (PROTECTED ROUTE: REVEALED UPON LOGIN)   -->
+  <!-- ========================================================= -->
+  <div id="mainAppWrapper" class="hidden flex flex-col min-h-screen">
+
+  <!-- ========================================================= -->
   <!-- 1. TOP HIGH-VISIBILITY EMERGENCY SOS QUICK BAR (FIXED)     -->
   <!-- ========================================================= -->
   <!-- ========================================================= -->
@@ -296,6 +639,20 @@
           <i class="fa-solid fa-download sm:mr-1.5"></i>
           <span class="hidden sm:inline">Save HTML</span>
         </button>
+
+        <!-- Logged-in User Badge & Logout Button -->
+        <div id="authHeaderUserBadge" class="flex items-center space-x-2 pl-2 border-l border-slate-200 shrink-0">
+          <div class="w-8 h-8 rounded-full bg-orange-600 text-white font-black text-xs flex items-center justify-center shadow-xs">
+            <span id="headerUserAvatar">JR</span>
+          </div>
+          <div class="hidden xl:block text-left text-xs leading-tight">
+            <div id="headerUserName" class="font-bold text-slate-800 truncate max-w-[110px]">Jella Rakesh</div>
+            <div id="headerUserRole" class="text-[10px] text-orange-600 font-bold uppercase tracking-wider">Worker</div>
+          </div>
+          <button onclick="handleLogout()" class="text-slate-500 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition cursor-pointer" title="Log Out of Mazdoor Mitra">
+            <i class="fa-solid fa-right-from-bracket text-sm"></i>
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -860,6 +1217,9 @@
             <button onclick="toggleRole()" class="bg-brand-500 hover:bg-brand-600 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow">
               <i class="fa-solid fa-arrows-rotate mr-1"></i> Switch Role
             </button>
+            <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow cursor-pointer" title="Log Out">
+              <i class="fa-solid fa-right-from-bracket mr-1"></i> <span>Log Out</span>
+            </button>
           </div>
         </div>
       </div>
@@ -992,6 +1352,8 @@
       <span>Profile</span>
     </button>
   </nav>
+
+  </div> <!-- /#mainAppWrapper -->
 
   <!-- ========================================================= -->
   <!-- 7. ADVANCED AI MODALS & INTERACTIVE TOOLS                 -->
@@ -1632,6 +1994,43 @@
         <button onclick="closeModal('supabaseModal')" class="px-5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs transition">
           Close
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Forgot Password -->
+  <div id="forgotPasswordModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-base shadow-xs">
+            <i class="fa-solid fa-key"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-slate-900 text-base">Reset Your Password</h3>
+            <p class="text-[11px] text-slate-500 font-medium">OTP Verification & Credential Recovery</p>
+          </div>
+        </div>
+        <button onclick="closeModal('forgotPasswordModal')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        Enter your registered 10-digit mobile number or email address. We will dispatch a 6-digit recovery code to verify your identity.
+      </p>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">Mobile or Email Address</label>
+        <div class="relative flex items-center">
+          <i class="fa-solid fa-id-badge absolute left-3 text-slate-400 text-xs"></i>
+          <input type="text" id="forgotInput" placeholder="e.g. 9848012345 or user@example.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end space-x-2 pt-2 border-t">
+        <button type="button" onclick="closeModal('forgotPasswordModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition cursor-pointer">Cancel</button>
+        <button type="button" onclick="handleForgotPasswordSubmit()" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">Send Reset Code</button>
       </div>
     </div>
   </div>
@@ -2477,6 +2876,7 @@
     function initApp() {
       loadStateFromStorage();
       populateGlobalStates();
+      populateRegStatesAndDistricts();
       initSpeechRecognition();
       const savedLang = localStorage.getItem("MM_V3_LANG") || "en";
       handleLanguageChange(savedLang, false);
@@ -2487,6 +2887,500 @@
       if (typeof initMazdoorSupabase === "function") {
         initMazdoorSupabase();
       }
+      checkAuthProtection();
+    }
+
+    // =========================================================
+    // AUTHENTICATION SYSTEM LOGIC & ROUTE PROTECTION
+    // =========================================================
+    let currentAuthTab = 'login';
+    let currentLoginMethod = 'phone';
+    let otpCountdownTimer = null;
+    let otpRemainingSeconds = 30;
+    let generatedDemoOTP = '123456';
+
+    function checkAuthProtection() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const authGateway = document.getElementById('authGateway');
+      const mainAppWrapper = document.getElementById('mainAppWrapper');
+
+      if (!isLoggedIn) {
+        if (authGateway) authGateway.classList.remove('hidden');
+        if (mainAppWrapper) mainAppWrapper.classList.add('hidden');
+      } else {
+        if (authGateway) authGateway.classList.add('hidden');
+        if (mainAppWrapper) mainAppWrapper.classList.remove('hidden');
+        loadAuthenticatedUserSession();
+      }
+    }
+
+    function loadAuthenticatedUserSession() {
+      try {
+        const storedUser = localStorage.getItem('MM_AUTH_USER');
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          if (appState) {
+            appState.currentUser = Object.assign({}, appState.currentUser, user);
+          }
+        }
+      } catch (e) {
+        console.warn('Error parsing auth session:', e);
+      }
+      updateAuthHeaderBadge();
+    }
+
+    function updateAuthHeaderBadge() {
+      if (!appState || !appState.currentUser) return;
+      const user = appState.currentUser;
+      const avatarEl = document.getElementById('headerUserAvatar');
+      const nameEl = document.getElementById('headerUserName');
+      const roleEl = document.getElementById('headerUserRole');
+
+      if (nameEl) nameEl.innerText = user.name || 'User';
+      if (roleEl) roleEl.innerText = user.role || 'Worker';
+      if (avatarEl) {
+        const initials = (user.name || 'U').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        avatarEl.innerText = initials;
+      }
+    }
+
+    function switchAuthTab(tab) {
+      currentAuthTab = tab;
+      const btnLogin = document.getElementById('tabBtnLogin');
+      const btnRegister = document.getElementById('tabBtnRegister');
+      const formLogin = document.getElementById('authLoginForm');
+      const formRegister = document.getElementById('authRegisterForm');
+      const headingTitle = document.getElementById('authHeadingTitle');
+      const headingSub = document.getElementById('authHeadingSub');
+
+      if (tab === 'login') {
+        btnLogin.className = 'flex-1 py-2.5 rounded-xl text-xs font-black transition text-slate-900 bg-white shadow-xs cursor-pointer';
+        btnRegister.className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer';
+        formLogin.classList.remove('hidden');
+        formRegister.classList.add('hidden');
+        headingTitle.innerText = 'Welcome to Mazdoor Mitra';
+        headingSub.innerText = 'Sign in to search jobs, record attendance & access emergency aid';
+      } else {
+        btnRegister.className = 'flex-1 py-2.5 rounded-xl text-xs font-black transition text-slate-900 bg-white shadow-xs cursor-pointer';
+        btnLogin.className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer';
+        formRegister.classList.remove('hidden');
+        formLogin.classList.add('hidden');
+        headingTitle.innerText = 'Join Mazdoor Mitra Network';
+        headingSub.innerText = 'Register as Worker, Contractor, or Employer across all 28 States & 8 UTs';
+        populateRegStatesAndDistricts();
+      }
+    }
+
+    function switchLoginMethod(method) {
+      currentLoginMethod = method;
+      const phoneBtn = document.getElementById('loginMethodPhoneBtn');
+      const emailBtn = document.getElementById('loginMethodEmailBtn');
+      const phoneView = document.getElementById('loginPhoneMethodView');
+      const emailView = document.getElementById('loginEmailMethodView');
+
+      if (method === 'phone') {
+        phoneBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-orange-500 text-white shadow-xs cursor-pointer';
+        emailBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer';
+        phoneView.classList.remove('hidden');
+        emailView.classList.add('hidden');
+      } else {
+        emailBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-orange-500 text-white shadow-xs cursor-pointer';
+        phoneBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer';
+        emailView.classList.remove('hidden');
+        phoneView.classList.add('hidden');
+      }
+    }
+
+    function togglePasswordVisibility(inputId, btnEl) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const icon = btnEl.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (icon) {
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        }
+      } else {
+        input.type = 'password';
+        if (icon) {
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      }
+    }
+
+    function handleSendOTP(isResend = false) {
+      const phoneInput = document.getElementById('loginPhoneInput');
+      const phoneError = document.getElementById('loginPhoneError');
+      const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+
+      // Validate 10-digit Indian mobile number
+      const phoneRegex = /^[6-9]\d{9}$/;
+      if (!phoneRegex.test(rawPhone)) {
+        if (phoneError) phoneError.classList.remove('hidden');
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+      if (phoneError) phoneError.classList.add('hidden');
+
+      // Set demo OTP
+      generatedDemoOTP = '123456';
+      
+      const otpVerifySection = document.getElementById('otpVerifySection');
+      if (otpVerifySection) otpVerifySection.classList.remove('hidden');
+
+      // Start Countdown Timer
+      startOTPCountdown();
+
+      showToast("OTP Sent Successfully!", `Verification code: 123456 sent to +91 ${rawPhone}`);
+      speakText(`Verification OTP sent to mobile number ending in ${rawPhone.slice(-4)}`);
+    }
+
+    function startOTPCountdown() {
+      clearInterval(otpCountdownTimer);
+      otpRemainingSeconds = 30;
+      const timerDisplay = document.getElementById('otpTimerDisplay');
+      const resendBtn = document.getElementById('btnResendOtp');
+      if (resendBtn) {
+        resendBtn.disabled = true;
+        resendBtn.className = 'text-[11px] font-bold text-slate-400 cursor-not-allowed';
+      }
+
+      otpCountdownTimer = setInterval(() => {
+        otpRemainingSeconds--;
+        if (timerDisplay) {
+          timerDisplay.innerText = `Resend in ${otpRemainingSeconds}s`;
+        }
+        if (otpRemainingSeconds <= 0) {
+          clearInterval(otpCountdownTimer);
+          if (timerDisplay) timerDisplay.innerText = 'Code expired';
+          if (resendBtn) {
+            resendBtn.disabled = false;
+            resendBtn.className = 'text-[11px] font-bold text-orange-600 hover:text-orange-800 underline cursor-pointer';
+          }
+        }
+      }, 1000);
+    }
+
+    function autoFillDemoOTP() {
+      const otpInput = document.getElementById('loginOtpInput');
+      if (otpInput) {
+        otpInput.value = '123456';
+        otpInput.focus();
+      }
+    }
+
+    function handleVerifyPhoneOTP() {
+      const phone = document.getElementById('loginPhoneInput').value.trim();
+      const otp = document.getElementById('loginOtpInput').value.trim();
+
+      if (otp.length !== 6) {
+        showToast("Invalid OTP", "Please enter the 6-digit verification code.");
+        return;
+      }
+
+      if (otp === generatedDemoOTP || otp === '123456') {
+        const authenticatedUser = {
+          id: 201,
+          name: "Sunil Sharma",
+          phone: phone,
+          trade: "Masonry / Rajmistri",
+          role: "worker",
+          wage: 950,
+          experience: 6,
+          state: "Telangana",
+          district: "Hyderabad",
+          city: "Gachibowli"
+        };
+        completeUserLogin(authenticatedUser);
+      } else {
+        showToast("Incorrect OTP", "The code entered is incorrect. Tap 'Auto-Fill Demo OTP' to test.");
+      }
+    }
+
+    function handleEmailPasswordLogin() {
+      const emailInput = document.getElementById('loginEmailInput');
+      const passwordInput = document.getElementById('loginPasswordInput');
+      const emailError = document.getElementById('loginEmailError');
+      const passwordError = document.getElementById('loginPasswordError');
+
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = passwordInput ? passwordInput.value : '';
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let hasError = false;
+
+      if (!emailRegex.test(email)) {
+        if (emailError) emailError.classList.remove('hidden');
+        hasError = true;
+      } else {
+        if (emailError) emailError.classList.add('hidden');
+      }
+
+      if (!password || password.length < 6) {
+        if (passwordError) passwordError.classList.remove('hidden');
+        hasError = true;
+      } else {
+        if (passwordError) passwordError.classList.add('hidden');
+      }
+
+      if (hasError) return;
+
+      const userName = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      const authenticatedUser = {
+        id: Date.now(),
+        name: userName || "Site Member",
+        email: email,
+        phone: "9876543210",
+        trade: "Civil Contracting Firm",
+        role: "employer",
+        state: "Delhi",
+        district: "South Delhi",
+        city: "Okhla Phase 3"
+      };
+
+      completeUserLogin(authenticatedUser);
+    }
+
+    function selectRegisterRole(role) {
+      document.getElementById('regSelectedRole').value = role;
+      const workerBtn = document.getElementById('regRoleWorkerBtn');
+      const contractorBtn = document.getElementById('regRoleContractorBtn');
+      const employerBtn = document.getElementById('regRoleEmployerBtn');
+
+      const activeClass = 'p-2 rounded-xl border text-center transition font-bold text-xs bg-orange-500 text-white border-orange-500 shadow-xs cursor-pointer';
+      const inactiveClass = 'p-2 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer';
+
+      if (role === 'worker') {
+        workerBtn.className = activeClass;
+        contractorBtn.className = inactiveClass;
+        employerBtn.className = inactiveClass;
+      } else if (role === 'contractor') {
+        workerBtn.className = inactiveClass;
+        contractorBtn.className = activeClass;
+        employerBtn.className = inactiveClass;
+      } else {
+        workerBtn.className = inactiveClass;
+        contractorBtn.className = inactiveClass;
+        employerBtn.className = activeClass;
+      }
+    }
+
+    function checkPasswordStrength(val) {
+      const b1 = document.getElementById('pwdStrengthBar1');
+      const b2 = document.getElementById('pwdStrengthBar2');
+      const b3 = document.getElementById('pwdStrengthBar3');
+      const text = document.getElementById('pwdStrengthText');
+
+      if (!val) {
+        b1.className = 'h-1 flex-1 rounded-full bg-slate-200';
+        b2.className = 'h-1 flex-1 rounded-full bg-slate-200';
+        b3.className = 'h-1 flex-1 rounded-full bg-slate-200';
+        text.innerText = 'Weak';
+        text.className = 'text-[10px] text-slate-400 font-bold ml-1';
+        return;
+      }
+
+      if (val.length < 6) {
+        b1.className = 'h-1 flex-1 rounded-full bg-red-500';
+        b2.className = 'h-1 flex-1 rounded-full bg-slate-200';
+        b3.className = 'h-1 flex-1 rounded-full bg-slate-200';
+        text.innerText = 'Too short';
+        text.className = 'text-[10px] text-red-500 font-bold ml-1';
+      } else if (val.length < 9) {
+        b1.className = 'h-1 flex-1 rounded-full bg-amber-500';
+        b2.className = 'h-1 flex-1 rounded-full bg-amber-500';
+        b3.className = 'h-1 flex-1 rounded-full bg-slate-200';
+        text.innerText = 'Good';
+        text.className = 'text-[10px] text-amber-500 font-bold ml-1';
+      } else {
+        b1.className = 'h-1 flex-1 rounded-full bg-emerald-500';
+        b2.className = 'h-1 flex-1 rounded-full bg-emerald-500';
+        b3.className = 'h-1 flex-1 rounded-full bg-emerald-500';
+        text.innerText = 'Strong';
+        text.className = 'text-[10px] text-emerald-600 font-bold ml-1';
+      }
+    }
+
+    function populateRegStatesAndDistricts() {
+      const stateSelect = document.getElementById('regStateSelect');
+      if (!stateSelect || stateSelect.children.length > 1) return;
+
+      let opts = '<option value="">Select State</option>';
+      Object.keys(INDIA_REGIONS).sort().forEach(st => {
+        opts += `<option value="${st}">${st}</option>`;
+      });
+      stateSelect.innerHTML = opts;
+      stateSelect.value = "Telangana";
+      handleRegStateChange("Telangana");
+    }
+
+    function handleRegStateChange(selectedState) {
+      const distSelect = document.getElementById('regDistrictSelect');
+      if (!distSelect) return;
+
+      if (!selectedState || !INDIA_REGIONS[selectedState]) {
+        distSelect.innerHTML = '<option value="">Select District</option>';
+        return;
+      }
+
+      const districts = Object.keys(INDIA_REGIONS[selectedState].districts || {});
+      let opts = '';
+      districts.forEach(d => {
+        opts += `<option value="${d}">${d}</option>`;
+      });
+      distSelect.innerHTML = opts || '<option value="Central">Central</option>';
+    }
+
+    function handleRegisterSubmit() {
+      const name = document.getElementById('regNameInput').value.trim();
+      const role = document.getElementById('regSelectedRole').value;
+      const trade = document.getElementById('regTradeSelect').value;
+      const phone = document.getElementById('regPhoneInput').value.trim();
+      const state = document.getElementById('regStateSelect').value || 'Telangana';
+      const district = document.getElementById('regDistrictSelect').value || 'Hyderabad';
+      const password = document.getElementById('regPasswordInput').value;
+      const confirmPassword = document.getElementById('regConfirmPasswordInput').value;
+
+      let hasError = false;
+
+      if (!name) {
+        document.getElementById('regNameError').classList.remove('hidden');
+        hasError = true;
+      } else {
+        document.getElementById('regNameError').classList.add('hidden');
+      }
+
+      const phoneRegex = /^[6-9]\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        document.getElementById('regPhoneError').classList.remove('hidden');
+        hasError = true;
+      } else {
+        document.getElementById('regPhoneError').classList.add('hidden');
+      }
+
+      if (!password || password.length < 6 || password !== confirmPassword) {
+        document.getElementById('regPasswordMismatchError').classList.remove('hidden');
+        hasError = true;
+      } else {
+        document.getElementById('regPasswordMismatchError').classList.add('hidden');
+      }
+
+      if (hasError) return;
+
+      const newUser = {
+        id: Date.now(),
+        name,
+        phone,
+        trade,
+        role,
+        state,
+        district,
+        city: district,
+        wage: 900,
+        experience: 3,
+        status: "Available",
+        verified: true,
+        photoSkillVerified: false
+      };
+
+      // Push worker to Supabase if worker
+      if (role === 'worker' && typeof pushWorkerToSupabase === 'function') {
+        pushWorkerToSupabase(newUser);
+      }
+
+      completeUserLogin(newUser);
+      showToast("Account Created!", `Welcome ${name}! Your profile is registered on Mazdoor Mitra.`);
+    }
+
+    function quickDemoLogin(role) {
+      if (role === 'worker') {
+        const workerUser = {
+          id: 201,
+          name: "Jella Rakesh",
+          phone: "9848012345",
+          trade: "Electrical & Solar Installation",
+          role: "worker",
+          wage: 950,
+          experience: 5,
+          state: "Telangana",
+          district: "Hyderabad",
+          city: "Gachibowli"
+        };
+        completeUserLogin(workerUser);
+      } else {
+        const contractorUser = {
+          id: 101,
+          name: "Apex Civil Infrastructure",
+          phone: "011-2334000",
+          trade: "Civil Contracting Firm",
+          role: "employer",
+          state: "Delhi",
+          district: "South Delhi",
+          city: "Okhla Phase 3"
+        };
+        completeUserLogin(contractorUser);
+      }
+    }
+
+    function completeUserLogin(user) {
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('MM_AUTH_USER', JSON.stringify(user));
+
+      if (appState) {
+        appState.currentUser = Object.assign({}, appState.currentUser, user);
+        saveStateToStorage();
+      }
+
+      // Hide Auth Gateway, Reveal Main App
+      const authGateway = document.getElementById('authGateway');
+      const mainAppWrapper = document.getElementById('mainAppWrapper');
+
+      if (authGateway) authGateway.classList.add('hidden');
+      if (mainAppWrapper) mainAppWrapper.classList.remove('hidden');
+
+      updateAuthHeaderBadge();
+      updateRoleDisplayUI();
+      renderAllViews();
+
+      showToast("Authentication Successful", `Welcome back, ${user.name}!`);
+      speakText(`Welcome ${user.name} to Mazdoor Mitra.`);
+    }
+
+    function handleLogout() {
+      if (confirm("Are you sure you want to log out of Mazdoor Mitra?")) {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('MM_AUTH_USER');
+
+        if (typeof mmSupabaseClient !== 'undefined' && mmSupabaseClient && mmSupabaseClient.auth) {
+          try { mmSupabaseClient.auth.signOut(); } catch(e){}
+        }
+
+        const authGateway = document.getElementById('authGateway');
+        const mainAppWrapper = document.getElementById('mainAppWrapper');
+
+        if (mainAppWrapper) mainAppWrapper.classList.add('hidden');
+        if (authGateway) authGateway.classList.remove('hidden');
+
+        // Reset input fields
+        const otpSection = document.getElementById('otpVerifySection');
+        if (otpSection) otpSection.classList.add('hidden');
+
+        showToast("Logged Out", "You have been safely signed out.");
+        speakText("You have been signed out.");
+      }
+    }
+
+    function handleForgotPasswordSubmit() {
+      const input = document.getElementById('forgotInput').value.trim();
+      if (!input) {
+        showToast("Required Field", "Please enter your mobile number or email.");
+        return;
+      }
+      closeModal('forgotPasswordModal');
+      showToast("Recovery Code Sent!", `Password recovery OTP dispatched to ${input}`);
+      speakText("Password recovery code has been dispatched.");
     }
 
     function copySupabaseSQLSetup() {
@@ -4919,6 +5813,9 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       const globalSelect = document.getElementById("globalLanguageSelect");
       if (globalSelect && globalSelect.value !== lang) globalSelect.value = lang;
 
+      const authSelect = document.getElementById("authLanguageSelect");
+      if (authSelect && authSelect.value !== lang) authSelect.value = lang;
+
       const legacySelect = document.getElementById("languageSelect");
       if (legacySelect && legacySelect.value !== lang) legacySelect.value = lang;
 
@@ -5037,7 +5934,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
     function setupEventListeners() {
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-          ['postJobModal', 'jobDetailsModal', 'reportInjuryModal', 'workerRegModal', 'profileEditModal', 'voiceProfileWizardModal', 'fairWageEstimatorModal', 'photoVerificationModal', 'aiSahayakModal', 'supabaseModal'].forEach(closeModal);
+          ['postJobModal', 'jobDetailsModal', 'reportInjuryModal', 'workerRegModal', 'profileEditModal', 'voiceProfileWizardModal', 'fairWageEstimatorModal', 'photoVerificationModal', 'aiSahayakModal', 'supabaseModal', 'forgotPasswordModal'].forEach(closeModal);
         }
       });
     }
