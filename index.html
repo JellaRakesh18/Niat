@@ -111,10 +111,320 @@
       from { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7); transform: scale(1); }
       to { box-shadow: 0 0 0 12px rgba(234, 88, 12, 0); transform: scale(1.08); }
     }
+
+    /* ========================================================= */
+    /* MAZDOOR MITRA ANIMATED LOGO & LIGHT RAY SPLASH STYLES     */
+    /* ========================================================= */
+
+    /* Pulsating Glowing Outline for Logo */
+    @keyframes mmLogoGlowPulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.65)) drop-shadow(0 0 25px rgba(245, 158, 11, 0.3));
+        transform: scale(1);
+      }
+      50% {
+        filter: drop-shadow(0 0 22px rgba(249, 115, 22, 0.95)) drop-shadow(0 0 45px rgba(251, 191, 36, 0.6));
+        transform: scale(1.03);
+      }
+    }
+
+    .mm-logo-pulse {
+      animation: mmLogoGlowPulse 2.8s ease-in-out infinite;
+      transform-origin: center;
+      will-change: transform, filter;
+    }
+
+    /* Rotating Gear Contour */
+    @keyframes mmGearSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .mm-logo-gear {
+      transform-origin: 50px 50px;
+      animation: mmGearSpin 24s linear infinite;
+    }
+
+    /* Supportive Hands Rhythmic Pulse */
+    @keyframes mmHandsPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    .mm-logo-hands {
+      transform-origin: 50px 65px;
+      animation: mmHandsPulse 2.8s ease-in-out infinite;
+    }
+
+    /* Star Badge Glint */
+    @keyframes mmStarGlint {
+      0%, 100% { opacity: 0.8; transform: scale(1) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.2) rotate(15deg); }
+    }
+    .mm-logo-star {
+      transform-origin: 50px 37px;
+      animation: mmStarGlint 2s ease-in-out infinite;
+    }
+
+    /* Radiating Light Rays for Welcome Splash */
+    .mm-light-rays {
+      position: absolute;
+      width: 250vmax;
+      height: 250vmax;
+      background: repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        rgba(249, 115, 22, 0.12) 0deg 10deg,
+        transparent 10deg 20deg,
+        rgba(234, 88, 12, 0.08) 20deg 30deg,
+        transparent 30deg 40deg
+      );
+      animation: mmRaysSpin 40s linear infinite;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    @keyframes mmRaysSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Central Light Burst / Nebula Glow */
+    .mm-light-burst {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.45) 0%, rgba(234, 88, 12, 0.18) 40%, transparent 70%);
+      animation: mmBurstPulse 3s ease-in-out infinite;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    @keyframes mmBurstPulse {
+      0%, 100% { transform: scale(0.85); opacity: 0.6; }
+      50% { transform: scale(1.15); opacity: 0.95; }
+    }
+
+    /* Splash Screen Logo Entry Zoom & Bounce */
+    .splash-logo-anim {
+      animation: splashLogoEntry 1s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                 splashLogoFloat 3s ease-in-out 1s infinite alternate;
+      will-change: transform, opacity, filter;
+    }
+
+    @keyframes splashLogoEntry {
+      0% {
+        opacity: 0;
+        transform: scale(0.25) rotate(-10deg);
+        filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0));
+      }
+      70% {
+        opacity: 1;
+        transform: scale(1.12) rotate(2deg);
+        filter: drop-shadow(0 0 38px rgba(249, 115, 22, 0.95));
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 24px rgba(249, 115, 22, 0.8));
+      }
+    }
+
+    @keyframes splashLogoFloat {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-8px) scale(1.02); }
+    }
+
+    /* Splash Screen Text Entry */
+    .splash-text-anim {
+      animation: splashTextFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    }
+
+    @keyframes splashTextFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Splash Loader Animation */
+    .splash-loader-anim {
+      animation: splashTextFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+    }
+
+    /* Brand Typography Glow */
+    .mm-brand-glow {
+      text-shadow: 0 0 20px rgba(249, 115, 22, 0.7), 0 0 45px rgba(245, 158, 11, 0.45);
+    }
+
+    /* Progress Bar Fill */
+    .splash-progress-fill {
+      width: 0%;
+      animation: splashProgressAnim 2.4s cubic-bezier(0.12, 0.8, 0.25, 1) forwards;
+      box-shadow: 0 0 12px rgba(249, 115, 22, 0.9);
+    }
+
+    @keyframes splashProgressAnim {
+      0% { width: 0%; }
+      35% { width: 40%; }
+      70% { width: 80%; }
+      100% { width: 100%; }
+    }
+
+    /* Smooth Splash Screen Fade Out */
+    .splash-fade-out {
+      animation: splashFadeOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+      pointer-events: none !important;
+    }
+
+    @keyframes splashFadeOut {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.05);
+        visibility: hidden;
+      }
+    }
   </style>
 </head>
 
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans pb-20 lg:pb-0">
+
+  <!-- ========================================================= -->
+  <!-- 00. WELCOME LIGHT RAY INTRO SPLASH SCREEN (ANIMATED)      -->
+  <!-- ========================================================= -->
+  <div id="splashScreen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-950 overflow-hidden select-none" style="background: radial-gradient(circle at center, #151122 0%, #0a0b12 50%, #030408 100%);">
+
+    <!-- Top Right Skip Button -->
+    <button type="button" 
+            id="splashSkipBtn"
+            onclick="dismissSplashScreen(true)" 
+            class="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 px-3.5 py-1.5 rounded-full bg-slate-900/85 hover:bg-slate-800 border border-orange-500/30 hover:border-orange-500 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xl active:scale-95 cursor-pointer backdrop-blur-md group">
+      <span class="group-hover:text-orange-400 transition-colors">దాటవేయి (Skip)</span>
+      <i class="fa-solid fa-forward text-orange-400 text-[10px] group-hover:translate-x-0.5 transition-transform"></i>
+    </button>
+
+    <!-- Radiating Light Rays & Atmospheric Shimmer Background -->
+    <div class="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
+      <div class="mm-light-rays"></div>
+      <div class="mm-light-burst"></div>
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at center, transparent 35%, #030509 90%);"></div>
+    </div>
+
+    <!-- Center Hero Section -->
+    <div class="relative z-10 flex flex-col items-center max-w-md px-6 text-center">
+
+      <!-- Hero Animated SVG Logo (Safety Helmet, Supportive Hands, Tools & Gear) -->
+      <div class="w-28 h-28 sm:w-36 sm:h-36 splash-logo-anim relative flex items-center justify-center cursor-pointer" onclick="dismissSplashScreen(true)" title="Mazdoor Mitra">
+        <svg class="w-full h-full mm-logo-pulse" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mmOrangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff9800" />
+              <stop offset="50%" stop-color="#f97316" />
+              <stop offset="100%" stop-color="#ea580c" />
+            </linearGradient>
+            <linearGradient id="mmGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fde047" />
+              <stop offset="50%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#d97706" />
+            </linearGradient>
+            <linearGradient id="mmWhiteGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="100%" stop-color="#e2e8f0" />
+            </linearGradient>
+            <filter id="mmGlowEffect" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          <!-- Outer Aura Rotating Gear Ring -->
+          <g class="mm-logo-gear" opacity="0.38">
+            <circle cx="50" cy="50" r="45" stroke="url(#mmOrangeGrad)" stroke-width="1.5" stroke-dasharray="6 4" />
+            <circle cx="50" cy="50" r="41" stroke="url(#mmGoldGrad)" stroke-width="1" stroke-dasharray="2 3" opacity="0.75" />
+          </g>
+
+          <!-- Supportive Protective Hands (Mitra - Friendship & Welfare) -->
+          <g class="mm-logo-hands">
+            <!-- Left Hand Wing -->
+            <path d="M 20 65 C 16 50 22 34 32 25 C 30 34 30 45 35 55 C 38 60 42 64 47 66 C 36 66 27 67 20 65 Z" fill="url(#mmOrangeGrad)" opacity="0.92" />
+            <!-- Right Hand Wing -->
+            <path d="M 80 65 C 84 50 78 34 68 25 C 70 34 70 45 65 55 C 62 60 58 64 53 66 C 64 66 73 67 80 65 Z" fill="url(#mmOrangeGrad)" opacity="0.92" />
+            <!-- Bottom Clasped Palm Arc -->
+            <path d="M 28 70 C 35 78 43 83 50 83 C 57 83 65 78 72 70 C 66 75 58 78 50 78 C 42 78 34 75 28 70 Z" fill="url(#mmGoldGrad)" />
+            <path d="M 36 77 C 41 83 46 86 50 86 C 54 86 59 83 64 77 C 59 81 55 83 50 83 C 45 83 41 81 36 77 Z" fill="url(#mmOrangeGrad)" />
+          </g>
+
+          <!-- Central Hardhat / Safety Helmet (Labour Dignity & Protection) -->
+          <path d="M 33 46 C 33 29 40 21 50 21 C 60 21 67 29 67 46 Z" fill="url(#mmOrangeGrad)" filter="url(#mmGlowEffect)" />
+          
+          <!-- Helmet Spine / Safety Ridge -->
+          <path d="M 48 21 C 48 21 49 33 49 46 L 51 46 C 51 33 52 21 52 21 Z" fill="url(#mmWhiteGrad)" />
+          <path d="M 42 25 C 42 29 43 37 44 46 L 45.5 46 C 44.5 37 43.5 29 43.5 25 Z" fill="#ffffff" opacity="0.45" />
+          <path d="M 58 25 C 58 29 57 37 56 46 L 54.5 46 C 55.5 37 56.5 29 56.5 25 Z" fill="#ffffff" opacity="0.45" />
+
+          <!-- Protective Visor / Brim -->
+          <path d="M 25 47 C 25 44 31 44 50 44 C 69 44 75 44 75 47 C 75 50 68 53 50 53 C 32 53 25 50 25 47 Z" fill="url(#mmGoldGrad)" />
+          <path d="M 29 48.5 C 35 51.5 43 52.5 50 52.5 C 57 52.5 65 51.5 71 48.5 C 65 50.5 57 51.5 50 51.5 C 43 51.5 35 50.5 29 48.5 Z" fill="#ffffff" opacity="0.65" />
+
+          <!-- Central Safety Star Badge -->
+          <circle cx="50" cy="37" r="5" fill="#ffffff" />
+          <path class="mm-logo-star" d="M 50 33 L 51.3 36 L 54.5 36.3 L 52 38.4 L 52.8 41.5 L 50 39.8 L 47.2 41.5 L 48 38.4 L 45.5 36.3 L 48.7 36 Z" fill="url(#mmOrangeGrad)" />
+
+          <!-- Crossed Artisans' Tools beneath Visor -->
+          <g opacity="0.95">
+            <path d="M 42 59 L 58 71 M 58 59 L 42 71" stroke="url(#mmWhiteGrad)" stroke-width="2.5" stroke-linecap="round" />
+            <circle cx="50" cy="65" r="3" fill="url(#mmGoldGrad)" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Welcoming Typography with Glow -->
+      <div class="splash-text-anim mt-5 space-y-2 text-center">
+        <!-- National Network Pill -->
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-inner">
+          <span class="w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
+          <span>National Labour & Safety Network</span>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white flex items-center justify-center gap-2">
+          <span>Mazdoor</span>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 mm-brand-glow">Mitra</span>
+        </h1>
+
+        <!-- Multilingual Greeting -->
+        <div class="space-y-1 pt-1">
+          <p class="text-base sm:text-lg font-bold text-orange-100 tracking-wide">
+            మజ్దూర్ మిత్రకు స్వాగతం
+          </p>
+          <p class="text-xs sm:text-sm text-slate-300 font-medium">
+            కార్మికుల భద్రత, ఉపాధి & సంక్షేమ వేదిక
+          </p>
+          <p class="text-[11px] text-amber-400/90 font-semibold tracking-wider">
+            🇮🇳 All-India 28 States & 8 UTs • DBOCW & e-Shram Compliant
+          </p>
+        </div>
+      </div>
+
+      <!-- Progress Loading Bar & Pulsing Status -->
+      <div class="splash-loader-anim mt-7 flex flex-col items-center space-y-2.5 w-64 max-w-xs">
+        <div class="w-full bg-slate-900/90 rounded-full h-1.5 overflow-hidden p-0.5 border border-slate-700/60 shadow-inner">
+          <div id="splashProgressBar" class="h-full bg-gradient-to-r from-orange-500 via-amber-400 to-orange-400 rounded-full splash-progress-fill"></div>
+        </div>
+        <div class="flex items-center space-x-2 text-[10px] text-slate-400 font-bold tracking-wider">
+          <i class="fa-solid fa-shield-halved text-orange-500 text-[11px]"></i>
+          <span>సిస్టమ్ సిద్ధమవుతోంది (Loading Platform)...</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <!-- ========================================================= -->
   <!-- 0. AUTHENTICATION GATEWAY (LOGIN & REGISTRATION)          -->
@@ -129,13 +439,38 @@
     <!-- Top Accessibility & Emergency Header -->
     <header class="relative z-10 max-w-6xl w-full mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between border-b border-slate-800/80">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center text-white shadow-lg">
-          <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 18h20"/>
-            <path d="M4 18v-4a8 8 0 0 1 16 0v4"/>
-            <path d="M12 2v4"/>
-            <circle cx="12" cy="13" r="2" fill="currentColor"/>
+        <div class="w-11 h-11 rounded-2xl bg-slate-900 border border-orange-500/30 p-1 flex items-center justify-center text-white shadow-lg relative group">
+          <!-- Animated SVG Logo -->
+          <svg class="w-full h-full mm-logo-pulse" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Aura Rotating Ring -->
+            <g class="mm-logo-gear" opacity="0.38">
+              <circle cx="50" cy="50" r="45" stroke="url(#mmOrangeGrad)" stroke-width="1.5" stroke-dasharray="6 4" />
+              <circle cx="50" cy="50" r="41" stroke="url(#mmGoldGrad)" stroke-width="1" stroke-dasharray="2 3" opacity="0.75" />
+            </g>
+            <!-- Supportive Hands -->
+            <g class="mm-logo-hands">
+              <path d="M 20 65 C 16 50 22 34 32 25 C 30 34 30 45 35 55 C 38 60 42 64 47 66 C 36 66 27 67 20 65 Z" fill="url(#mmOrangeGrad)" opacity="0.92" />
+              <path d="M 80 65 C 84 50 78 34 68 25 C 70 34 70 45 65 55 C 62 60 58 64 53 66 C 64 66 73 67 80 65 Z" fill="url(#mmOrangeGrad)" opacity="0.92" />
+              <path d="M 28 70 C 35 78 43 83 50 83 C 57 83 65 78 72 70 C 66 75 58 78 50 78 C 42 78 34 75 28 70 Z" fill="url(#mmGoldGrad)" />
+              <path d="M 36 77 C 41 83 46 86 50 86 C 54 86 59 83 64 77 C 59 81 55 83 50 83 C 45 83 41 81 36 77 Z" fill="url(#mmOrangeGrad)" />
+            </g>
+            <!-- Hardhat / Safety Helmet -->
+            <path d="M 33 46 C 33 29 40 21 50 21 C 60 21 67 29 67 46 Z" fill="url(#mmOrangeGrad)" filter="url(#mmGlowEffect)" />
+            <path d="M 48 21 C 48 21 49 33 49 46 L 51 46 C 51 33 52 21 52 21 Z" fill="url(#mmWhiteGrad)" />
+            <path d="M 42 25 C 42 29 43 37 44 46 L 45.5 46 C 44.5 37 43.5 29 43.5 25 Z" fill="#ffffff" opacity="0.45" />
+            <path d="M 58 25 C 58 29 57 37 56 46 L 54.5 46 C 55.5 37 56.5 29 56.5 25 Z" fill="#ffffff" opacity="0.45" />
+            <path d="M 25 47 C 25 44 31 44 50 44 C 69 44 75 44 75 47 C 75 50 68 53 50 53 C 32 53 25 50 25 47 Z" fill="url(#mmGoldGrad)" />
+            <path d="M 29 48.5 C 35 51.5 43 52.5 50 52.5 C 57 52.5 65 51.5 71 48.5 C 65 50.5 57 51.5 50 51.5 C 43 51.5 35 50.5 29 48.5 Z" fill="#ffffff" opacity="0.65" />
+            <!-- Star -->
+            <circle cx="50" cy="37" r="5" fill="#ffffff" />
+            <path class="mm-logo-star" d="M 50 33 L 51.3 36 L 54.5 36.3 L 52 38.4 L 52.8 41.5 L 50 39.8 L 47.2 41.5 L 48 38.4 L 45.5 36.3 L 48.7 36 Z" fill="url(#mmOrangeGrad)" />
+            <!-- Tools -->
+            <g opacity="0.95">
+              <path d="M 42 59 L 58 71 M 58 59 L 42 71" stroke="url(#mmWhiteGrad)" stroke-width="2.5" stroke-linecap="round" />
+              <circle cx="50" cy="65" r="3" fill="url(#mmGoldGrad)" />
+            </g>
           </svg>
+          <span class="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full" title="Active Network"></span>
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-black tracking-tight text-white">Mazdoor <span class="text-orange-500">Mitra</span></h1>
@@ -195,8 +530,47 @@
     <main class="relative z-10 flex-1 flex items-center justify-center px-4 py-8 sm:py-10">
       <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 sm:p-8 text-slate-800 space-y-6">
         
-        <!-- Header Text -->
-        <div class="text-center space-y-1.5">
+        <!-- Header with Animated Logo & Text -->
+        <div class="text-center space-y-2">
+          <!-- Animated Mini-Logo Display -->
+          <div class="flex justify-center mb-1">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-1.5 border border-orange-500/40 shadow-xl relative group">
+              <svg class="w-full h-full mm-logo-pulse" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Aura Rotating Ring -->
+                <g class="mm-logo-gear" opacity="0.38">
+                  <circle cx="50" cy="50" r="45" stroke="url(#mmOrangeGrad)" stroke-width="1.5" stroke-dasharray="6 4" />
+                  <circle cx="50" cy="50" r="41" stroke="url(#mmGoldGrad)" stroke-width="1" stroke-dasharray="2 3" opacity="0.75" />
+                </g>
+                <!-- Supportive Hands -->
+                <g class="mm-logo-hands">
+                  <path d="M 20 65 C 16 50 22 34 32 25 C 30 34 30 45 35 55 C 38 60 42 64 47 66 C 36 66 27 67 20 65 Z" fill="url(#mmOrangeGrad)" opacity="0.92" />
+                  <path d="M 80 65 C 84 50 78 34 68 25 C 70 34 70 45 65 55 C 62 60 58 64 53 66 C 64 66 73 67 80 65 Z" fill="url(#mmOrangeGrad)" opacity="0.92" />
+                  <path d="M 28 70 C 35 78 43 83 50 83 C 57 83 65 78 72 70 C 66 75 58 78 50 78 C 42 78 34 75 28 70 Z" fill="url(#mmGoldGrad)" />
+                  <path d="M 36 77 C 41 83 46 86 50 86 C 54 86 59 83 64 77 C 59 81 55 83 50 83 C 45 83 41 81 36 77 Z" fill="url(#mmOrangeGrad)" />
+                </g>
+                <!-- Hardhat / Safety Helmet -->
+                <path d="M 33 46 C 33 29 40 21 50 21 C 60 21 67 29 67 46 Z" fill="url(#mmOrangeGrad)" filter="url(#mmGlowEffect)" />
+                <path d="M 48 21 C 48 21 49 33 49 46 L 51 46 C 51 33 52 21 52 21 Z" fill="url(#mmWhiteGrad)" />
+                <path d="M 42 25 C 42 29 43 37 44 46 L 45.5 46 C 44.5 37 43.5 29 43.5 25 Z" fill="#ffffff" opacity="0.45" />
+                <path d="M 58 25 C 58 29 57 37 56 46 L 54.5 46 C 55.5 37 56.5 29 56.5 25 Z" fill="#ffffff" opacity="0.45" />
+                <!-- Brim -->
+                <path d="M 25 47 C 25 44 31 44 50 44 C 69 44 75 44 75 47 C 75 50 68 53 50 53 C 32 53 25 50 25 47 Z" fill="url(#mmGoldGrad)" />
+                <path d="M 29 48.5 C 35 51.5 43 52.5 50 52.5 C 57 52.5 65 51.5 71 48.5 C 65 50.5 57 51.5 50 51.5 C 43 51.5 35 50.5 29 48.5 Z" fill="#ffffff" opacity="0.65" />
+                <!-- Star -->
+                <circle cx="50" cy="37" r="5" fill="#ffffff" />
+                <path class="mm-logo-star" d="M 50 33 L 51.3 36 L 54.5 36.3 L 52 38.4 L 52.8 41.5 L 50 39.8 L 47.2 41.5 L 48 38.4 L 45.5 36.3 L 48.7 36 Z" fill="url(#mmOrangeGrad)" />
+                <!-- Tools -->
+                <g opacity="0.95">
+                  <path d="M 42 59 L 58 71 M 58 59 L 42 71" stroke="url(#mmWhiteGrad)" stroke-width="2.5" stroke-linecap="round" />
+                  <circle cx="50" cy="65" r="3" fill="url(#mmGoldGrad)" />
+                </g>
+              </svg>
+              <div class="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full border-2 border-white flex items-center justify-center">
+                <i class="fa-solid fa-shield-halved text-[8px] text-white"></i>
+              </div>
+            </div>
+          </div>
+
           <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-[11px] font-extrabold uppercase tracking-wide">
             <i class="fa-solid fa-lock text-orange-600"></i>
             <span data-i18n="authSecurityBadge">ధృవీకరించబడిన సురక్షిత ప్రవేశం</span>
@@ -730,12 +1104,30 @@
     <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between">
       <!-- Brand Logo Concept: Protective Emblem & Collaborative Network -->
       <div class="flex items-center space-x-3 cursor-pointer group shrink-0" onclick="switchTab('jobs')">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700/50 flex items-center justify-center text-white shadow-md relative group-hover:scale-105 transition">
-          <svg class="w-6 h-6 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 18h20"/>
-            <path d="M4 18v-4a8 8 0 0 1 16 0v4"/>
-            <path d="M12 2v4"/>
-            <circle cx="12" cy="13" r="2" fill="currentColor"/>
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 border border-orange-500/30 p-1 flex items-center justify-center text-white shadow-md relative group-hover:scale-105 transition">
+          <svg class="w-full h-full mm-logo-pulse" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g class="mm-logo-gear" opacity="0.38">
+              <circle cx="50" cy="50" r="45" stroke="url(#mmOrangeGrad)" stroke-width="1.5" stroke-dasharray="6 4" />
+              <circle cx="50" cy="50" r="41" stroke="url(#mmGoldGrad)" stroke-width="1" stroke-dasharray="2 3" opacity="0.75" />
+            </g>
+            <g class="mm-logo-hands">
+              <path d="M 20 65 C 16 50 22 34 32 25 C 30 34 30 45 35 55 C 38 60 42 64 47 66 C 36 66 27 67 20 65 Z" fill="url(#mmOrangeGrad)" opacity="0.92" />
+              <path d="M 80 65 C 84 50 78 34 68 25 C 70 34 70 45 65 55 C 62 60 58 64 53 66 C 64 66 73 67 80 65 Z" fill="url(#mmOrangeGrad)" opacity="0.92" />
+              <path d="M 28 70 C 35 78 43 83 50 83 C 57 83 65 78 72 70 C 66 75 58 78 50 78 C 42 78 34 75 28 70 Z" fill="url(#mmGoldGrad)" />
+              <path d="M 36 77 C 41 83 46 86 50 86 C 54 86 59 83 64 77 C 59 81 55 83 50 83 C 45 83 41 81 36 77 Z" fill="url(#mmOrangeGrad)" />
+            </g>
+            <path d="M 33 46 C 33 29 40 21 50 21 C 60 21 67 29 67 46 Z" fill="url(#mmOrangeGrad)" filter="url(#mmGlowEffect)" />
+            <path d="M 48 21 C 48 21 49 33 49 46 L 51 46 C 51 33 52 21 52 21 Z" fill="url(#mmWhiteGrad)" />
+            <path d="M 42 25 C 42 29 43 37 44 46 L 45.5 46 C 44.5 37 43.5 29 43.5 25 Z" fill="#ffffff" opacity="0.45" />
+            <path d="M 58 25 C 58 29 57 37 56 46 L 54.5 46 C 55.5 37 56.5 29 56.5 25 Z" fill="#ffffff" opacity="0.45" />
+            <path d="M 25 47 C 25 44 31 44 50 44 C 69 44 75 44 75 47 C 75 50 68 53 50 53 C 32 53 25 50 25 47 Z" fill="url(#mmGoldGrad)" />
+            <path d="M 29 48.5 C 35 51.5 43 52.5 50 52.5 C 57 52.5 65 51.5 71 48.5 C 65 50.5 57 51.5 50 51.5 C 43 51.5 35 50.5 29 48.5 Z" fill="#ffffff" opacity="0.65" />
+            <circle cx="50" cy="37" r="5" fill="#ffffff" />
+            <path class="mm-logo-star" d="M 50 33 L 51.3 36 L 54.5 36.3 L 52 38.4 L 52.8 41.5 L 50 39.8 L 47.2 41.5 L 48 38.4 L 45.5 36.3 L 48.7 36 Z" fill="url(#mmOrangeGrad)" />
+            <g opacity="0.95">
+              <path d="M 42 59 L 58 71 M 58 59 L 42 71" stroke="url(#mmWhiteGrad)" stroke-width="2.5" stroke-linecap="round" />
+              <circle cx="50" cy="65" r="3" fill="url(#mmGoldGrad)" />
+            </g>
           </svg>
           <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full" title="Verified Network Live"></span>
         </div>
@@ -3088,8 +3480,60 @@
     let tradeDemandChartInstance = null;
     let stateDistChartInstance = null;
 
+    // =========================================================
+    // WELCOME LIGHT RAY INTRO SPLASH SCREEN CONTROLLER
+    // =========================================================
+    let splashDismissTimer = null;
+
+    function initSplashScreen() {
+      const splash = document.getElementById('splashScreen');
+      if (!splash) return;
+
+      // Auto-dismiss after 2.8 seconds
+      splashDismissTimer = setTimeout(() => {
+        dismissSplashScreen(false);
+      }, 2800);
+
+      // Dismiss on keydown (Escape, Space, Enter)
+      window.addEventListener('keydown', handleSplashKeydown);
+    }
+
+    function handleSplashKeydown(e) {
+      if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') {
+        dismissSplashScreen(true);
+        window.removeEventListener('keydown', handleSplashKeydown);
+      }
+    }
+
+    function dismissSplashScreen(immediate = false) {
+      const splash = document.getElementById('splashScreen');
+      if (!splash || splash.classList.contains('splash-fade-out')) return;
+
+      if (splashDismissTimer) {
+        clearTimeout(splashDismissTimer);
+        splashDismissTimer = null;
+      }
+      window.removeEventListener('keydown', handleSplashKeydown);
+
+      if (immediate) {
+        splash.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
+        splash.style.opacity = '0';
+        splash.style.transform = 'scale(1.04)';
+        splash.style.pointerEvents = 'none';
+        setTimeout(() => {
+          if (splash.parentNode) splash.parentNode.removeChild(splash);
+        }, 220);
+      } else {
+        splash.classList.add('splash-fade-out');
+        setTimeout(() => {
+          if (splash.parentNode) splash.parentNode.removeChild(splash);
+        }, 550);
+      }
+    }
+
     // --- D. INITIALIZATION ---
     function initApp() {
+      initSplashScreen();
       loadStateFromStorage();
       populateGlobalStates();
       populateRegStatesAndDistricts();
