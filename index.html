@@ -383,22 +383,186 @@
             <p id="regNameError" data-i18n="authFullNameError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి మీ పూర్తి పేరును నమోదు చేయండి.</p>
           </div>
 
-          <!-- Trade / Profession -->
-          <div id="regTradeContainer">
-            <label class="block text-xs font-bold text-slate-700 mb-1">
-              <span data-i18n="authTradeLabel">ప్రధాన వృత్తి / నైపుణ్యం</span> <span class="text-red-500">*</span>
-            </label>
-            <select id="regTradeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-orange-500">
-              <option value="Masonry / Rajmistri" data-i18n="tradeMasonry">రాతిపని / రాజ్మిస్త్రీ</option>
-              <option value="Electrical & Solar Installation" data-i18n="tradeElectrician">ఎలక్ట్రీషియన్ / వైర్‌మ్యాన్</option>
-              <option value="Plumbing & Pipe Laying" data-i18n="tradePlumber">ప్లంబర్ / పైపు ఫిట్టర్</option>
-              <option value="Carpentry & Woodwork" data-i18n="tradeCarpenter">వడ్రంగి (కార్పెంటర్)</option>
-              <option value="Painting & Wall Finishing" data-i18n="tradePainter">పెయింటర్</option>
-              <option value="Welding & Structural Fabrication" data-i18n="tradeWelder">వెల్డర్ / ఫ్యాబ్రికేటర్</option>
-              <option value="Bar Bending / Steel Fixing" data-i18n="tradeBarBender">బార్ బెండర్ / స్టీల్ ఫిక్సర్</option>
-              <option value="General Construction Helper" data-i18n="tradeHelper">సాధారణ హెల్పర్ / కార్మికుడు</option>
-              <option value="Civil Contracting Firm" data-i18n="tradeContractor">సివిల్ కాంట్రాక్టర్ / బిల్డర్</option>
-            </select>
+          <!-- Trade / Skills Multi-Select -->
+          <div id="regTradeContainer" class="relative">
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-bold text-slate-700">
+                <span data-i18n="authTradeLabel">ప్రధాన వృత్తులు / నైపుణ్యాలు</span> <span class="text-red-500">*</span>
+              </label>
+              <span class="text-[10px] font-bold text-orange-700 bg-orange-100/80 px-2 py-0.5 rounded-full border border-orange-200">
+                <i class="fa-solid fa-list-check mr-1"></i>Multi-Select
+              </span>
+            </div>
+
+            <!-- Legacy compatibility hidden input -->
+            <input type="hidden" id="regTradeSelect" value="">
+
+            <!-- Custom Multi-Select Trigger Button -->
+            <button type="button" 
+                    id="regTradeDropdownBtn" 
+                    onclick="toggleTradeDropdown(event)" 
+                    class="w-full bg-slate-50 hover:bg-slate-100/90 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-left font-semibold text-slate-800 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition flex items-center justify-between shadow-2xs cursor-pointer group">
+              <div class="flex items-center gap-2 overflow-hidden flex-1 mr-2">
+                <i class="fa-solid fa-screwdriver-wrench text-orange-500 text-xs shrink-0"></i>
+                <div id="regTradeDisplay" class="flex flex-wrap items-center gap-1.5 overflow-hidden">
+                  <span id="regTradePlaceholder" class="text-slate-400 font-medium text-xs truncate" data-i18n="tradeSelectPlaceholder">నైపుణ్యాలను ఎంచుకోండి (కనీసం 1)</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span id="regTradeCountBadge" class="hidden px-1.5 py-0.5 rounded-full bg-orange-500 text-white text-[10px] font-black leading-none">0</span>
+                <i id="regTradeCaret" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200 group-hover:text-slate-600"></i>
+              </div>
+            </button>
+
+            <!-- Dropdown Menu Card -->
+            <div id="regTradeDropdownMenu" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 overflow-hidden transition-all duration-200 divide-y divide-slate-100">
+              
+              <!-- "Select All" / "All of These" Header -->
+              <div class="p-2.5 bg-gradient-to-r from-orange-50/90 to-amber-50/90 hover:from-orange-100/90 hover:to-amber-100/90 transition">
+                <label class="flex items-center cursor-pointer select-none">
+                  <input type="checkbox" 
+                         id="regTradeSelectAll" 
+                         onchange="handleSelectAllTrades(this.checked)" 
+                         class="w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <div class="ml-2.5 flex items-center justify-between flex-1">
+                    <span class="font-extrabold text-xs text-orange-950 flex items-center gap-1.5">
+                      <i class="fa-solid fa-check-double text-orange-500 text-xs"></i>
+                      <span data-i18n="tradeSelectAll">అన్ని నైపుణ్యాలు ఎంచుకోండి (అన్ని పనులు)</span>
+                    </span>
+                    <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-orange-200/80 text-orange-900 border border-orange-300">
+                      9 SKILLS
+                    </span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Scrollable Checkbox List -->
+              <div class="max-h-56 overflow-y-auto p-1.5 space-y-0.5 custom-scrollbar" id="regTradeList">
+                
+                <!-- 1. Masonry -->
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Masonry / Rajmistri" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                    <span class="flex items-center gap-2">
+                      <span class="text-sm">🧱</span>
+                      <span data-i18n="tradeMasonry">రాతిపని / రాజ్మిస్త్రీ</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Rajmistri</span>
+                  </span>
+                </label>
+
+                <!-- 2. Electrical -->
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Electrical & Solar Installation" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                    <span class="flex items-center gap-2">
+                      <span class="text-sm">⚡</span>
+                      <span data-i18n="tradeElectrician">ఎలక్ట్రీషియన్ / వైర్‌మ్యాన్</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Electrician</span>
+                  </span>
+                </label>
+
+                <!-- 3. Plumbing -->
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Plumbing & Pipe Laying" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                    <span class="flex items-center gap-2">
+                      <span class="text-sm">🔧</span>
+                      <span data-i18n="tradePlumber">ప్లంబర్ / పైపు ఫిట్టర్</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Plumber</span>
+                  </span>
+                </label>
+
+                <!-- 4. Carpentry -->
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Carpentry & Woodwork" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                    <span class="flex items-center gap-2">
+                      <span class="text-sm">🪚</span>
+                      <span data-i18n="tradeCarpenter">వడ్రంగి (కార్పెంటర్)</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Carpenter</span>
+                  </span>
+                </label>
+
+                <!-- 5. Painting -->
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Painting & Wall Finishing" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                    <span class="flex items-center gap-2">
+                      <span class="text-sm">🎨</span>
+                      <span data-i18n="tradePainter">పెయింటర్</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Painter</span>
+                  </span>
+                </label>
+
+                <!-- 6. Welding -->
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Welding & Structural Fabrication" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                    <span class="flex items-center gap-2">
+                      <span class="text-sm">🔥</span>
+                      <span data-i18n="tradeWelder">వెల్డర్ / ఫ్యాబ్రికేటర్</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Welder</span>
+                  </span>
+                </label>
+
+                <!-- 7. Bar Bending -->
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Bar Bending / Steel Fixing" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                    <span class="flex items-center gap-2">
+                      <span class="text-sm">🏗️</span>
+                      <span data-i18n="tradeBarBender">బార్ బెండర్ / స్టీల్ ఫిక్సర్</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Bar Bender</span>
+                  </span>
+                </label>
+
+                <!-- 8. Helper -->
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="General Construction Helper" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                    <span class="flex items-center gap-2">
+                      <span class="text-sm">👷</span>
+                      <span data-i18n="tradeHelper">సాధారణ హెల్పర్ / కార్మికుడు</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Helper</span>
+                  </span>
+                </label>
+
+                <!-- 9. Contractor -->
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Civil Contracting Firm" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                    <span class="flex items-center gap-2">
+                      <span class="text-sm">🏢</span>
+                      <span data-i18n="tradeContractor">సివిల్ కాంట్రాక్టర్ / బిల్డర్</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Contractor</span>
+                  </span>
+                </label>
+
+              </div>
+
+              <!-- Footer with Done button & quick counter -->
+              <div class="p-2 bg-slate-50 flex items-center justify-between border-t border-slate-100">
+                <span id="regTradeCounterText" class="text-[11px] font-bold text-slate-500">0 ఎంచుకోబడ్డాయి (0 selected)</span>
+                <button type="button" 
+                        onclick="closeTradeDropdown()" 
+                        class="px-3.5 py-1.5 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white rounded-lg text-xs font-bold transition shadow-2xs cursor-pointer">
+                  పూర్తయింది (Done) ✓
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Validation error message -->
+            <p id="regTradeError" data-i18n="tradeRequiredError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి కనీసం ఒక వృత్తి / నైపుణ్యాన్ని ఎంచుకోండి.</p>
           </div>
 
           <!-- Mobile Number -->
@@ -2929,6 +3093,7 @@
       loadStateFromStorage();
       populateGlobalStates();
       populateRegStatesAndDistricts();
+      if (typeof updateTradeDropdownDisplay === 'function') updateTradeDropdownDisplay();
       initSpeechRecognition();
       const savedLang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
       handleLanguageChange(savedLang, false);
@@ -3023,6 +3188,7 @@
         headingTitle.innerText = dict.authHeadingRegister || 'మజ్దూర్ మిత్ర నెట్‌వర్క్‌లో చేరండి';
         headingSub.innerText = dict.authSubRegister || '28 రాష్ట్రాలు & 8 కేంద్రపాలిత ప్రాంతాలలో కార్మికుడు, కాంట్రాక్టర్ లేదా యజమానిగా నమోదు చేసుకోండి';
         populateRegStatesAndDistricts();
+        if (typeof updateTradeDropdownDisplay === 'function') updateTradeDropdownDisplay();
       }
     }
 
@@ -3300,10 +3466,155 @@
       distSelect.innerHTML = opts || '<option value="Central">Central</option>';
     }
 
+    // --- MULTI-SELECT TRADE COMPONENT CONTROLLER ---
+    function toggleTradeDropdown(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const menu = document.getElementById('regTradeDropdownMenu');
+      const caret = document.getElementById('regTradeCaret');
+      if (!menu) return;
+      const isHidden = menu.classList.contains('hidden');
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        if (caret) caret.classList.add('rotate-180');
+      } else {
+        menu.classList.add('hidden');
+        if (caret) caret.classList.remove('rotate-180');
+      }
+    }
+
+    function closeTradeDropdown() {
+      const menu = document.getElementById('regTradeDropdownMenu');
+      const caret = document.getElementById('regTradeCaret');
+      if (menu) menu.classList.add('hidden');
+      if (caret) caret.classList.remove('rotate-180');
+    }
+
+    function handleSelectAllTrades(checked) {
+      const checkboxes = document.querySelectorAll('#regTradeList input[name="regTrades"]');
+      checkboxes.forEach(cb => {
+        cb.checked = checked;
+      });
+      const selectAll = document.getElementById('regTradeSelectAll');
+      if (selectAll) {
+        selectAll.checked = checked;
+        selectAll.indeterminate = false;
+      }
+      updateTradeDropdownDisplay();
+    }
+
+    function handleTradeCheckboxChange() {
+      const checkboxes = Array.from(document.querySelectorAll('#regTradeList input[name="regTrades"]'));
+      const total = checkboxes.length;
+      const checkedCount = checkboxes.filter(cb => cb.checked).length;
+      const selectAll = document.getElementById('regTradeSelectAll');
+
+      if (selectAll) {
+        if (checkedCount === total && total > 0) {
+          selectAll.checked = true;
+          selectAll.indeterminate = false;
+        } else if (checkedCount === 0) {
+          selectAll.checked = false;
+          selectAll.indeterminate = false;
+        } else {
+          selectAll.checked = false;
+          selectAll.indeterminate = true;
+        }
+      }
+
+      updateTradeDropdownDisplay();
+    }
+
+    function getSelectedRegisterTrades() {
+      const checkboxes = Array.from(document.querySelectorAll('#regTradeList input[name="regTrades"]:checked'));
+      return checkboxes.map(cb => cb.value);
+    }
+
+    function updateTradeDropdownDisplay() {
+      const display = document.getElementById('regTradeDisplay');
+      const countBadge = document.getElementById('regTradeCountBadge');
+      const counterText = document.getElementById('regTradeCounterText');
+      const hiddenInput = document.getElementById('regTradeSelect');
+      const tradeError = document.getElementById('regTradeError');
+      if (!display) return;
+
+      const currentLang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
+      const dict = typeof getActiveTranslationDict === 'function' ? getActiveTranslationDict(currentLang) : {};
+
+      const checkedBoxes = Array.from(document.querySelectorAll('#regTradeList input[name="regTrades"]:checked'));
+      const allBoxes = Array.from(document.querySelectorAll('#regTradeList input[name="regTrades"]'));
+      const count = checkedBoxes.length;
+      const total = allBoxes.length;
+
+      // Update legacy hidden input
+      if (hiddenInput) {
+        hiddenInput.value = checkedBoxes.map(cb => cb.value).join(', ');
+      }
+
+      if (count > 0 && tradeError) {
+        tradeError.classList.add('hidden');
+      }
+
+      // Update count badge
+      if (countBadge) {
+        if (count > 0) {
+          countBadge.innerText = count;
+          countBadge.classList.remove('hidden');
+        } else {
+          countBadge.classList.add('hidden');
+        }
+      }
+
+      // Update dropdown bottom counter text
+      if (counterText) {
+        const unitText = dict.tradeSkillsSelected || "నైపుణ్యాలు ఎంచుకోబడ్డాయి";
+        counterText.innerText = `${count}/${total} ${unitText} (${count} selected)`;
+      }
+
+      const tradeKeyMap = {
+        "Masonry / Rajmistri": "tradeMasonry",
+        "Electrical & Solar Installation": "tradeElectrician",
+        "Plumbing & Pipe Laying": "tradePlumber",
+        "Carpentry & Woodwork": "tradeCarpenter",
+        "Painting & Wall Finishing": "tradePainter",
+        "Welding & Structural Fabrication": "tradeWelder",
+        "Bar Bending / Steel Fixing": "tradeBarBender",
+        "General Construction Helper": "tradeHelper",
+        "Civil Contracting Firm": "tradeContractor"
+      };
+
+      const getLabel = (val) => {
+        const key = tradeKeyMap[val];
+        return (key && dict[key]) ? dict[key] : val;
+      };
+
+      const escapeFn = typeof escapeHTML === 'function' ? escapeHTML : (s) => String(s);
+
+      if (count === 0) {
+        display.innerHTML = `<span id="regTradePlaceholder" class="text-slate-400 font-medium text-xs truncate" data-i18n="tradeSelectPlaceholder">${dict.tradeSelectPlaceholder || 'నైపుణ్యాలను ఎంచుకోండి (కనీసం 1)'}</span>`;
+      } else if (count === total && total > 0) {
+        display.innerHTML = `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-black bg-orange-100 text-orange-900 border border-orange-300 shadow-2xs"><i class="fa-solid fa-check-double mr-1.5 text-orange-600 text-[10px]"></i><span data-i18n="tradeAllSelected">${dict.tradeAllSelected || 'అన్ని నైపుణ్యాలు ఎంచుకోబడ్డాయి'}</span> (${total})</span>`;
+      } else if (count <= 2) {
+        display.innerHTML = checkedBoxes.map(cb => {
+          const lbl = getLabel(cb.value);
+          return `<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-orange-100 text-orange-900 border border-orange-200 truncate max-w-[140px]">${escapeFn(lbl)}</span>`;
+        }).join('');
+      } else {
+        const firstLabel = getLabel(checkedBoxes[0].value);
+        const remaining = count - 1;
+        display.innerHTML = `
+          <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-orange-100 text-orange-900 border border-orange-200 truncate max-w-[130px]">${escapeFn(firstLabel)}</span>
+          <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-extrabold bg-slate-200 text-slate-800 border border-slate-300 shadow-2xs">+${remaining} more</span>
+        `;
+      }
+    }
+
     function handleRegisterSubmit() {
       const name = document.getElementById('regNameInput').value.trim();
       const role = document.getElementById('regSelectedRole').value;
-      const trade = document.getElementById('regTradeSelect').value;
+      const selectedTrades = getSelectedRegisterTrades();
       const phone = document.getElementById('regPhoneInput').value.trim();
       const state = document.getElementById('regStateSelect').value || 'Telangana';
       const district = document.getElementById('regDistrictSelect').value || 'Hyderabad';
@@ -3317,6 +3628,13 @@
         hasError = true;
       } else {
         document.getElementById('regNameError').classList.add('hidden');
+      }
+
+      if (selectedTrades.length === 0) {
+        document.getElementById('regTradeError').classList.remove('hidden');
+        hasError = true;
+      } else {
+        document.getElementById('regTradeError').classList.add('hidden');
       }
 
       const phoneRegex = /^[6-9]\d{9}$/;
@@ -3340,7 +3658,8 @@
         id: Date.now(),
         name,
         phone,
-        trade,
+        trade: selectedTrades.join(', '),
+        trades: selectedTrades,
         role,
         state,
         district,
@@ -3909,7 +4228,10 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
     // --- H. SMART SKILL & LOCATION MATCHER ---
     function calculateMatchScore(job, worker) {
       let score = 50;
-      if (job.trade === worker.trade) score += 35;
+      const isTradeMatch = job.trade === worker.trade || 
+        (Array.isArray(worker.trades) && worker.trades.includes(job.trade)) || 
+        (worker.trade && worker.trade.includes(job.trade));
+      if (isTradeMatch) score += 35;
       if (job.state === worker.state) score += 10;
       if (job.district === worker.district) score += 5;
       return Math.min(score, 98);
@@ -4803,7 +5125,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       const filtered = appState.workers.filter(w => {
         if (st && w.state !== st) return false;
         if (dist && w.district !== dist) return false;
-        if (trade && w.trade !== trade) return false;
+        if (trade && w.trade !== trade && (!w.trade || !w.trade.includes(trade)) && (!Array.isArray(w.trades) || !w.trades.includes(trade))) return false;
         if (avail && w.status !== avail) return false;
         if (query) {
           const matchName = w.name.toLowerCase().includes(query);
@@ -5357,6 +5679,11 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
         tradeBarBender: "బార్ బెండర్ / స్టీల్ ఫిక్సర్",
         tradeHelper: "సాధారణ హెల్పర్ / కార్మికుడు",
         tradeContractor: "సివిల్ కాంట్రాక్టర్ / బిల్డర్",
+        tradeSelectPlaceholder: "నైపుణ్యాలను ఎంచుకోండి (కనీసం 1)",
+        tradeSelectAll: "అన్ని నైపుణ్యాలు ఎంచుకోండి (అన్ని పనులు)",
+        tradeAllSelected: "అన్ని నైపుణ్యాలు ఎంచుకోబడ్డాయి",
+        tradeSkillsSelected: "నైపుణ్యాలు ఎంచుకోబడ్డాయి",
+        tradeRequiredError: "దయచేసి కనీసం ఒక వృత్తి / నైపుణ్యాన్ని ఎంచుకోండి.",
         pwdStrengthWeak: "బలహీనమైనది",
         pwdStrengthTooShort: "చాలా చిన్నది",
         pwdStrengthGood: "మంచిది",
@@ -5437,6 +5764,11 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
         tradeBarBender: "Bar Bender / Steel Mat Tier",
         tradeHelper: "General Helper / Labour",
         tradeContractor: "Civil Contractor / Builder",
+        tradeSelectPlaceholder: "Select Trades / Skills (Min 1)",
+        tradeSelectAll: "Select All Skills (All of These)",
+        tradeAllSelected: "All Skills Selected",
+        tradeSkillsSelected: "skills selected",
+        tradeRequiredError: "Please select at least one trade/skill.",
         pwdStrengthWeak: "Weak",
         pwdStrengthTooShort: "Too short",
         pwdStrengthGood: "Good",
@@ -5517,6 +5849,11 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
         tradeBarBender: "बार बेंडर / स्टील फिक्सर",
         tradeHelper: "हेल्पर / सामान्य मजदूर",
         tradeContractor: "सिविल ठेकेदार / बिल्डर",
+        tradeSelectPlaceholder: "ट्रेड / कौशल चुनें (कम से कम 1)",
+        tradeSelectAll: "सभी कौशल चुनें (सभी कार्य)",
+        tradeAllSelected: "सभी कौशल चुने गए",
+        tradeSkillsSelected: "कौशल चुने गए",
+        tradeRequiredError: "कृपया कम से कम एक ट्रेड/कौशल चुनें।",
         pwdStrengthWeak: "कमज़ोर",
         pwdStrengthTooShort: "बहुत छोटा",
         pwdStrengthGood: "अच्छा",
@@ -7814,6 +8151,11 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
         searchInput.placeholder = dict.jobSearchPlaceholder;
       }
 
+      // 6. Refresh Trade multi-select component display with active language
+      if (typeof updateTradeDropdownDisplay === 'function') {
+        updateTradeDropdownDisplay();
+      }
+
       // Re-render views immediately without page refresh
       renderJobs();
       updateWageDisplay();
@@ -7939,6 +8281,15 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           ['postJobModal', 'jobDetailsModal', 'reportInjuryModal', 'workerRegModal', 'profileEditModal', 'voiceProfileWizardModal', 'fairWageEstimatorModal', 'photoVerificationModal', 'aiSahayakModal', 'supabaseModal', 'forgotPasswordModal'].forEach(closeModal);
+          if (typeof closeTradeDropdown === 'function') closeTradeDropdown();
+        }
+      });
+
+      // Close Trade multi-select dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        const container = document.getElementById('regTradeContainer');
+        if (container && !container.contains(e.target)) {
+          if (typeof closeTradeDropdown === 'function') closeTradeDropdown();
         }
       });
     }
