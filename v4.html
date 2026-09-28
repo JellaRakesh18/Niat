@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mazdoor Mitra V4 | AI-Powered Smart Labour & Safety Network</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- FontAwesome 6 CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            blue: '#1e3a8a',
+            navy: '#0f172a',
+            orange: '#ea580c',
+            amber: '#d97706'
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+  .sos-pulse {
+    animation: sosPulse 2s infinite;
+  }
+  @keyframes sosPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+    50% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); }
+  }
+
+  .listening-pulse {
+    animation: micWave 1.2s infinite alternate;
+  }
+  @keyframes micWave {
+    from { transform: scale(1); box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.6); }
+    to { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(234, 88, 12, 0); }
+  }
+
+  .trade-pill.active {
+    background-color: #1e3a8a;
+    color: white;
+    border-color: #1e3a8a;
+  }
+</style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+<!-- TOP EMERGENCY SOS QUICK BAR -->
+<div class="bg-gradient-to-r from-red-700 via-red-600 to-red-700 text-white px-3 py-1.5 text-xs shadow-md sticky top-0 z-[60]">
+  <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center space-x-2">
+      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black bg-white text-red-700 uppercase tracking-wider sos-pulse">
+        <i class="fa-solid fa-triangle-exclamation mr-1"></i> SOS Emergency
+      </span>
+      <span class="font-medium text-xs hidden sm:inline" data-i18n="sosNotice">Construction Site Accident / Medical Assistance:</span>
+    </div>
+
+    <div class="flex items-center space-x-2 overflow-x-auto py-0.5 text-xs">
+      <a href="tel:108" class="bg-white/20 hover:bg-white text-white hover:text-red-700 px-2.5 py-1 rounded font-bold transition flex items-center shadow-xs">
+        <i class="fa-solid fa-truck-medical mr-1.5 text-yellow-300"></i>
+        <span>108 Ambulance</span>
+      </a>
+      <a href="tel:112" class="bg-white/20 hover:bg-white text-white hover:text-red-700 px-2.5 py-1 rounded font-bold transition flex items-center shadow-xs">
+        <i class="fa-solid fa-shield-halved mr-1.5 text-yellow-300"></i>
+        <span>112 National SOS</span>
+      </a>
+      <button onclick="openIncidentModal()" class="bg-yellow-400 hover:bg-yellow-300 text-slate-900 px-2.5 py-1 rounded font-bold transition flex items-center shadow">
+        <i class="fa-solid fa-kit-medical mr-1 text-red-700"></i>
+        <span data-i18n="sos_report">Report Accident</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV: Modular Component -->
+<nav class="bg-[#1e3a8a] text-white sticky top-[33px] sm:top-[37px] z-50 shadow-md">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <div class="flex items-center gap-3">
+      <b data-i18n="appName" class="text-xl flex items-center cursor-pointer" onclick="resetFilters()">
+        <i class="fa-solid fa-helmet-safety text-orange-400 mr-2 text-2xl"></i>
+        <span>Mazdoor Mitra</span>
+      </b>
+      <span class="text-[10px] bg-orange-500 text-white font-black px-2 py-0.5 rounded-full uppercase tracking-widest hidden sm:inline-block">V4 PRO</span>
+    </div>
+
+    <div class="flex gap-2 sm:gap-3 items-center">
+      <!-- Vernacular Language Switcher (11 Indian Languages) -->
+      <div class="flex items-center bg-blue-900/80 border border-blue-700 rounded-lg px-2 py-1">
+        <i class="fa-solid fa-language text-orange-400 mr-1.5 text-sm"></i>
+        <select id="langSwitcher" class="bg-transparent text-white font-medium text-xs sm:text-sm focus:outline-none cursor-pointer">
+          <option value="en" class="text-black">English</option>
+          <option value="te" class="text-black">తెలుగు (Telugu)</option>
+          <option value="hi" class="text-black">हिन्दी (Hindi)</option>
+          <option value="ta" class="text-black">தமிழ் (Tamil)</option>
+          <option value="kn" class="text-black">ಕನ್ನಡ (Kannada)</option>
+          <option value="ml" class="text-black">മലയാളം (Malayalam)</option>
+          <option value="mr" class="text-black">मराठी (Marathi)</option>
+          <option value="bn" class="text-black">বাংলা (Bengali)</option>
+          <option value="gu" class="text-black">ગુજરાતી (Gujarati)</option>
+          <option value="pa" class="text-black">ਪੰਜਾਬੀ (Punjabi)</option>
+          <option value="or" class="text-black">ଓଡ଼ିଆ (Odia)</option>
+        </select>
+      </div>
+
+      <!-- Applications Drawer Button -->
+      <button onclick="openApplicationsModal()" class="relative bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+        <i class="fa-solid fa-file-invoice text-orange-400"></i>
+        <span class="hidden md:inline" data-i18n="nav_my_apps">My Applications</span>
+        <span id="appBadgeCount" class="bg-orange-500 text-white font-bold text-[10px] px-1.5 py-0.2 rounded-full">0</span>
+      </button>
+
+      <!-- Post Job Button (For Contractors) -->
+      <button onclick="openPostJobModal()" class="hidden md:flex bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold items-center gap-1.5 shadow transition">
+        <i class="fa-solid fa-plus-circle"></i>
+        <span data-i18n="post_job_btn">+ Post Job</span>
+      </button>
+
+      <!-- Auth State Button (Login / Profile) -->
+      <div id="authNavContainer">
+        <button id="authBtn" onclick="openAuthModal()" data-i18n="btn_login" class="bg-orange-500 hover:bg-orange-600 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow transition flex items-center gap-1.5">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Login</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN APP BODY -->
+<main class="max-w-6xl mx-auto p-4 flex-1 w-full">
+
+  <!-- GPS Status & Quick Location Banner -->
+  <div class="mb-4 bg-white border border-slate-200 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3 shadow-xs">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-full bg-blue-50 text-[#1e3a8a] flex items-center justify-center font-bold text-sm">
+        <i class="fa-solid fa-location-dot text-orange-500"></i>
+      </div>
+      <div>
+        <p class="text-xs text-gray-500 font-medium" data-i18n="gps_banner_title">Current Geolocation & Hub</p>
+        <p id="gpsStatusText" class="text-xs font-bold text-gray-800">Location not detected yet. Click to enable GPS.</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button onclick="requestUserLocation()" class="bg-blue-50 hover:bg-blue-100 text-[#1e3a8a] border border-blue-200 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
+        <i class="fa-solid fa-crosshairs text-orange-500"></i>
+        <span data-i18n="btn_detect_gps">Detect My GPS</span>
+      </button>
+
+      <!-- Quick Location Preset Simulator for testing -->
+      <div class="relative inline-block text-xs">
+        <select onchange="simulateLocation(this.value)" class="bg-gray-50 border border-gray-300 text-gray-700 px-2 py-1.5 rounded-lg text-xs cursor-pointer focus:outline-none">
+          <option value="">Simulate Location...</option>
+          <option value="17.385,78.486,Hyderabad">Hyderabad, Telangana</option>
+          <option value="14.681,77.600,Anantapur">Anantapur, Andhra Pradesh</option>
+          <option value="28.613,77.209,Delhi">New Delhi / NCR</option>
+          <option value="12.971,77.594,Bengaluru">Bengaluru, Karnataka</option>
+          <option value="19.076,72.877,Mumbai">Mumbai, Maharashtra</option>
+          <option value="13.082,80.270,Chennai">Chennai, Tamil Nadu</option>
+          <option value="22.572,88.363,Kolkata">Kolkata, West Bengal</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cascading Filter Component -->
+  <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+      <!-- 1. State Filter -->
+      <div>
+        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1" data-i18n="label_state">State / UT</label>
+        <select id="fState" class="w-full p-2.5 bg-slate-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#1e3a8a] focus:bg-white transition cursor-pointer"></select>
+      </div>
+
+      <!-- 2. District Filter -->
+      <div>
+        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1" data-i18n="label_district">District</label>
+        <select id="fDistrict" class="w-full p-2.5 bg-slate-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#1e3a8a] focus:bg-white transition cursor-pointer"></select>
+      </div>
+
+      <!-- 3. City / Hub Filter -->
+      <div>
+        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1" data-i18n="label_city">City / Hub</label>
+        <select id="fCity" class="w-full p-2.5 bg-slate-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#1e3a8a] focus:bg-white transition cursor-pointer"></select>
+      </div>
+
+      <!-- 4. Text & Voice Search Input -->
+      <div>
+        <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1" data-i18n="label_search">Keyword Search</label>
+        <div class="relative">
+          <input id="fSearch" data-i18n-placeholder="jobs_search_placeholder" placeholder="Search jobs, skills, contractors..." class="w-full p-2.5 pl-9 pr-9 bg-slate-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#1e3a8a] focus:bg-white transition">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-sm"></i>
+          <!-- Voice Search Mic Button -->
+          <button id="micBtn" onclick="toggleVoiceSearch()" title="Voice Search" class="absolute right-2 top-2 w-7 h-7 flex items-center justify-center text-gray-500 hover:text-orange-600 transition rounded-full">
+            <i class="fa-solid fa-microphone text-sm"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Trade Category Pills -->
+    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+      <span class="text-gray-400 font-bold uppercase text-[10px] whitespace-nowrap" data-i18n="label_trade_filter">Trades:</span>
+      <button onclick="setTradeFilter('')" class="trade-pill active px-3 py-1.5 rounded-full border border-gray-300 font-medium whitespace-nowrap transition" data-trade="">All Trades</button>
+      <button onclick="setTradeFilter('Construction')" class="trade-pill px-3 py-1.5 rounded-full border border-gray-300 font-medium whitespace-nowrap bg-white text-gray-700 hover:border-[#1e3a8a] transition" data-trade="Construction"><i class="fa-solid fa-trowel-bricks mr-1 text-amber-600"></i>Construction</button>
+      <button onclick="setTradeFilter('Masonry')" class="trade-pill px-3 py-1.5 rounded-full border border-gray-300 font-medium whitespace-nowrap bg-white text-gray-700 hover:border-[#1e3a8a] transition" data-trade="Masonry"><i class="fa-solid fa-cubes mr-1 text-stone-600"></i>Masonry</button>
+      <button onclick="setTradeFilter('Painting')" class="trade-pill px-3 py-1.5 rounded-full border border-gray-300 font-medium whitespace-nowrap bg-white text-gray-700 hover:border-[#1e3a8a] transition" data-trade="Painting"><i class="fa-solid fa-paint-roller mr-1 text-blue-500"></i>Painting</button>
+      <button onclick="setTradeFilter('Electrical')" class="trade-pill px-3 py-1.5 rounded-full border border-gray-300 font-medium whitespace-nowrap bg-white text-gray-700 hover:border-[#1e3a8a] transition" data-trade="Electrical"><i class="fa-solid fa-bolt mr-1 text-yellow-500"></i>Electrical</button>
+      <button onclick="setTradeFilter('Plumbing')" class="trade-pill px-3 py-1.5 rounded-full border border-gray-300 font-medium whitespace-nowrap bg-white text-gray-700 hover:border-[#1e3a8a] transition" data-trade="Plumbing"><i class="fa-solid fa-wrench mr-1 text-teal-600"></i>Plumbing</button>
+      <button onclick="setTradeFilter('Carpentry')" class="trade-pill px-3 py-1.5 rounded-full border border-gray-300 font-medium whitespace-nowrap bg-white text-gray-700 hover:border-[#1e3a8a] transition" data-trade="Carpentry"><i class="fa-solid fa-hammer mr-1 text-orange-600"></i>Carpentry</button>
+      <button onclick="setTradeFilter('Welding')" class="trade-pill px-3 py-1.5 rounded-full border border-gray-300 font-medium whitespace-nowrap bg-white text-gray-700 hover:border-[#1e3a8a] transition" data-trade="Welding"><i class="fa-solid fa-fire mr-1 text-red-500"></i>Welding</button>
+      <button onclick="setTradeFilter('Helper')" class="trade-pill px-3 py-1.5 rounded-full border border-gray-300 font-medium whitespace-nowrap bg-white text-gray-700 hover:border-[#1e3a8a] transition" data-trade="Helper"><i class="fa-solid fa-hands-holding mr-1 text-emerald-600"></i>Helper / Labour</button>
+    </div>
+  </div>
+
+  <!-- Jobs Header & Auto-Apply Nearby Button -->
+  <div class="flex flex-wrap justify-between items-center mb-4 gap-3">
+    <div>
+      <h2 data-i18n="jobs_title" class="text-2xl font-black text-[#1e3a8a] flex items-center gap-2">
+        <span>Available Jobs</span>
+      </h2>
+      <p id="jobsCountText" class="text-xs text-gray-500 mt-0.5">Showing verified jobs across India</p>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button onclick="autoApplyNearby()" data-i18n="btn_autoApplyNearby" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow transition flex items-center">
+        <i class="fa-solid fa-location-crosshairs mr-1.5"></i>
+        <span>Auto-Apply Nearby</span>
+      </button>
+      <button onclick="resetFilters()" title="Reset All Filters" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-2 rounded-xl text-xs font-semibold transition">
+        <i class="fa-solid fa-rotate-left"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Jobs Grid Container -->
+  <div id="jobsContainer" class="grid md:grid-cols-2 gap-4">
+    <!-- Reactive cards render here -->
+  </div>
+
+  <!-- No Jobs Fallback (hidden by default) -->
+  <div id="noJobsMsg" class="hidden bg-white p-8 rounded-2xl border border-dashed border-gray-300 text-center my-6">
+    <div class="w-16 h-16 mx-auto mb-3 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center text-2xl">
+      <i class="fa-solid fa-briefcase"></i>
+    </div>
+    <h3 class="text-lg font-bold text-gray-800" data-i18n="no_jobs_found">No jobs match your current filters.</h3>
+    <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">Try clearing your district or city filter, or search for other skills like Mason, Painter, Helper, or Electrician.</p>
+    <button onclick="resetFilters()" class="mt-4 bg-[#1e3a8a] text-white px-4 py-2 rounded-lg text-xs font-bold shadow hover:bg-blue-900 transition">Reset All Filters</button>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-gray-500">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+    <div class="flex items-center gap-2">
+      <b class="text-[#1e3a8a] font-bold"><i class="fa-solid fa-helmet-safety text-orange-400 mr-1"></i>Mazdoor Mitra V4</b>
+      <span>• Dedicated to Dignity of Labour & Safety</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs font-medium">
+      <span class="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200"><i class="fa-solid fa-shield-check mr-1"></i>DBOCW Compliant</span>
+      <span>Helpline: <b>1800-11-2555</b></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================================= -->
+<!-- MODALS SECTION                                                    -->
+<!-- ================================================================= -->
+
+<!-- 1. Auth Modal Component -->
+<div id="authModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden items-center justify-center z-[100] p-4 transition-all">
+  <div class="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-gray-100 animate-in fade-in zoom-in duration-200">
+    <div class="flex justify-between items-center mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+          <i class="fa-solid fa-user-lock"></i>
+        </span>
+        <h2 data-i18n="auth_title" class="text-xl font-bold text-gray-900">Login to Mazdoor Mitra</h2>
+      </div>
+      <button onclick="closeAuthModal()" class="text-gray-400 hover:text-gray-600 text-lg w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <p class="text-xs text-gray-500 mb-4" data-i18n="auth_subtitle">Access verified daily wage work, instant contractor calling, and safety benefits.</p>
+
+    <!-- Role Selection Tabs -->
+    <div class="flex bg-gray-100 p-1 rounded-xl mb-4 text-xs font-bold">
+      <button id="roleWorkerBtn" onclick="selectAuthRole('worker')" class="flex-1 py-1.5 rounded-lg bg-white shadow-xs text-[#1e3a8a] transition">
+        <i class="fa-solid fa-person-digging mr-1"></i> Worker / Labourer
+      </button>
+      <button id="roleContractorBtn" onclick="selectAuthRole('contractor')" class="flex-1 py-1.5 rounded-lg text-gray-600 hover:text-gray-900 transition">
+        <i class="fa-solid fa-user-tie mr-1"></i> Contractor / Builder
+      </button>
+    </div>
+
+    <!-- Phone input -->
+    <div class="mb-3">
+      <label class="block text-xs font-bold text-gray-700 mb-1" data-i18n="auth_phone">Phone Number</label>
+      <div class="relative">
+        <span class="absolute left-3 top-3 text-xs font-bold text-gray-500">+91</span>
+        <input id="authPhone" type="tel" maxlength="10" placeholder="98765 43210" class="w-full p-2.5 pl-12 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#1e3a8a]">
+      </div>
+    </div>
+
+    <div class="text-center my-2 text-xs font-bold text-gray-400 uppercase tracking-widest" data-i18n="auth_or">OR</div>
+
+    <!-- Email input -->
+    <div class="mb-4">
+      <label class="block text-xs font-bold text-gray-700 mb-1" data-i18n="auth_email">Email Address</label>
+      <input id="authEmail" type="email" placeholder="name@domain.com" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#1e3a8a]">
+    </div>
+
+    <!-- OTP Step Box (Revealed when OTP is requested) -->
+    <div id="otpStepBox" class="hidden mb-4 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+      <p class="text-xs font-semibold text-amber-900 mb-1.5" data-i18n="auth_enterOTP">Enter 6-digit OTP:</p>
+      <input id="authOTP" type="number" placeholder="123456" class="w-full p-2.5 border border-amber-300 rounded-lg text-sm text-center font-mono font-bold tracking-widest bg-white">
+      <p class="text-[11px] text-amber-700 mt-1" data-i18n="auth_demoHint">Tip: Enter demo OTP 123456</p>
+    </div>
+
+    <button id="sendOtpBtn" onclick="loginWithOTP()" data-i18n="auth_sendOTP" class="w-full bg-[#1e3a8a] hover:bg-blue-900 text-white py-3 rounded-xl font-bold shadow-md transition text-sm">
+      Send OTP
+    </button>
+
+    <button onclick="closeAuthModal()" class="w-full mt-2 py-2 text-xs font-medium text-gray-500 hover:text-gray-700 transition">
+      Cancel
+    </button>
+  </div>
+</div>
+
+<!-- 2. Job Details & Direct Application Modal -->
+<div id="jobDetailModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden items-center justify-center z-[100] p-4 transition-all">
+  <div class="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <span id="modalJobSkill" class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-[#1e3a8a]">Skill</span>
+        <h3 id="modalJobTitle" class="text-2xl font-black text-[#1e3a8a] mt-1">Construction Helper</h3>
+        <p id="modalJobLocation" class="text-xs font-semibold text-gray-500 mt-0.5">Anantapur, Andhra Pradesh</p>
+      </div>
+      <button onclick="closeJobDetailModal()" class="text-gray-400 hover:text-gray-600 text-lg w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Wage & Time highlight -->
+    <div class="bg-orange-50 border border-orange-100 rounded-xl p-3.5 flex justify-between items-center mb-4">
+      <div>
+        <span class="text-xs font-medium text-orange-800" data-i18n="label_daily_wage">Guaranteed Wage</span>
+        <p id="modalJobWage" class="text-2xl font-black text-orange-600">₹750 / day</p>
+      </div>
+      <div class="text-right">
+        <span class="text-xs font-medium text-orange-800" data-i18n="job_hours">Working Hours</span>
+        <p id="modalJobHours" class="text-xs font-bold text-gray-700 mt-0.5">8:30 AM - 5:30 PM</p>
+      </div>
+    </div>
+
+    <!-- Contractor & Work Site Information -->
+    <div class="space-y-3 mb-5 text-xs">
+      <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+        <span class="font-bold text-gray-500 uppercase text-[10px] tracking-wider block mb-1" data-i18n="job_contractor">Contractor / Supervisor</span>
+        <div class="flex justify-between items-center">
+          <div>
+            <p id="modalContractorName" class="font-bold text-sm text-gray-800">Srinivasa Infra Works</p>
+            <span class="text-emerald-700 text-[11px] font-bold"><i class="fa-solid fa-certificate text-emerald-500 mr-1"></i>Verified DBOCW Contractor</span>
+          </div>
+          <a id="modalContractorCall" href="tel:9876543210" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg font-bold flex items-center gap-1 shadow">
+            <i class="fa-solid fa-phone"></i>
+            <span data-i18n="job_call">Call</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+        <span class="font-bold text-gray-500 uppercase text-[10px] tracking-wider block mb-1" data-i18n="job_requirements">Safety & Gear Required</span>
+        <div id="modalSafetyTags" class="flex flex-wrap gap-1.5 mt-1">
+          <!-- Safety tags -->
+        </div>
+      </div>
+
+      <div>
+        <span class="font-bold text-gray-500 uppercase text-[10px] tracking-wider block mb-1" data-i18n="label_job_description">Work Description</span>
+        <p id="modalJobDesc" class="text-gray-600 leading-relaxed bg-white p-3 border border-slate-200 rounded-xl">Loading materials, mortar mixing, carrying blocks, site clean-up.</p>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="flex items-center gap-2">
+      <button id="modalApplyBtn" onclick="submitCurrentJobApplication()" data-i18n="job_apply_confirm" class="flex-1 bg-[#1e3a8a] hover:bg-blue-900 text-white py-3 rounded-xl font-bold shadow text-sm transition">
+        Confirm Application
+      </button>
+      <button onclick="readAloudCurrentJob()" title="Read Job Info Aloud" class="p-3 bg-orange-100 hover:bg-orange-200 text-orange-700 rounded-xl font-bold transition">
+        <i class="fa-solid fa-volume-high"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 3. My Applications Modal -->
+<div id="applicationsModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden items-center justify-center z-[100] p-4 transition-all">
+  <div class="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl border border-gray-100 max-h-[90vh] flex flex-col">
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <h3 class="text-xl font-bold text-[#1e3a8a]" data-i18n="my_applications_title">My Submitted Applications</h3>
+        <p class="text-xs text-gray-500">Track status of jobs you applied for</p>
+      </div>
+      <button onclick="closeApplicationsModal()" class="text-gray-400 hover:text-gray-600 text-lg w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div id="applicationsList" class="flex-1 overflow-y-auto space-y-2.5 pr-1">
+      <!-- Applications render here -->
+    </div>
+
+    <button onclick="closeApplicationsModal()" class="mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl font-bold text-xs transition">
+      Close Drawer
+    </button>
+  </div>
+</div>
+
+<!-- 4. Post Job Modal (For Contractors/Employers) -->
+<div id="postJobModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden items-center justify-center z-[100] p-4 transition-all">
+  <div class="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-bold text-[#1e3a8a]" data-i18n="post_job_title">Post New Labour Requirement</h3>
+      <button onclick="closePostJobModal()" class="text-gray-400 hover:text-gray-600 text-lg w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <form onsubmit="submitNewJob(event)" class="space-y-3 text-xs">
+      <div>
+        <label class="block font-bold text-gray-700 mb-1">Job Title / Role</label>
+        <input id="newJobTitle" required placeholder="e.g. Shuttering Carpenter" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm">
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Trade Category</label>
+          <select id="newJobSkill" class="w-full p-2.5 border border-gray-300 rounded-lg text-xs bg-slate-50">
+            <option value="Construction">Construction</option>
+            <option value="Masonry">Masonry</option>
+            <option value="Painting">Painting</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Carpentry">Carpentry</option>
+            <option value="Welding">Welding</option>
+            <option value="Helper">Helper / Labour</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Daily Wage (₹)</label>
+          <input id="newJobWage" type="number" required placeholder="850" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">State</label>
+          <select id="newJobState" required class="w-full p-2.5 border border-gray-300 rounded-lg text-xs bg-slate-50"></select>
+        </div>
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">City / Town</label>
+          <input id="newJobCity" required placeholder="e.g. Hyderabad" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm">
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-bold text-gray-700 mb-1">Contractor / Firm Name</label>
+        <input id="newJobContractor" required placeholder="e.g. Krishna Constructions" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm">
+      </div>
+
+      <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold shadow text-sm transition mt-3">
+        Publish Job Vacancy
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- 5. Accident / Site Incident Report Modal -->
+<div id="incidentModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden items-center justify-center z-[100] p-4 transition-all">
+  <div class="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-gray-100">
+    <div class="flex justify-between items-center mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold">
+          <i class="fa-solid fa-truck-medical"></i>
+        </span>
+        <h3 class="text-lg font-bold text-red-700" data-i18n="sos_report">Report Accident / Site Injury</h3>
+      </div>
+      <button onclick="closeIncidentModal()" class="text-gray-400 hover:text-gray-600 text-lg w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <p class="text-xs text-gray-600 mb-4">Fast-track incident report submitted to Site Safety Officer and Labour Welfare Board.</p>
+
+    <form onsubmit="submitIncidentReport(event)" class="space-y-3 text-xs">
+      <div>
+        <label class="block font-bold text-gray-700 mb-1">Worker Name / Injured Person</label>
+        <input id="incWorker" required placeholder="Name of affected worker" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm">
+      </div>
+      <div>
+        <label class="block font-bold text-gray-700 mb-1">Work Site / Location</label>
+        <input id="incSite" required placeholder="Project Name, Landmark, City" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm">
+      </div>
+      <div>
+        <label class="block font-bold text-gray-700 mb-1">Nature of Injury / Incident</label>
+        <textarea id="incDesc" required rows="3" placeholder="Briefly describe what happened (fall, scaffolding collapse, electrical shock, fracture...)" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm"></textarea>
+      </div>
+
+      <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-bold shadow text-sm transition">
+        Submit Incident to Emergency Helpline
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div id="toastBox" class="fixed bottom-5 right-5 z-[110] transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
+  <div class="bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-gray-700">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
+    <div>
+      <p id="toastTitle" class="font-bold text-sm">Notification</p>
+      <p id="toastMsg" class="text-xs text-gray-300">Action performed successfully.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================= -->
+<!-- JAVASCRIPT ENGINE & ARCHITECTURE                                  -->
+<!-- ================================================================= -->
+<script>
+/* =========================================================
+   1. EXHAUSTIVE MULTILINGUAL DICTIONARY (11 LANGUAGES)
+========================================================= */
+const LOCALES = {
+  en: {
+    appName: "Mazdoor Mitra",
+    btn_login: "Login",
+    btn_logout: "Logout",
+    jobs_title: "Available Jobs",
+    jobs_search_placeholder: "Search jobs, skills, contractors, cities...",
+    jobs_filter_allStates: "All States & UTs",
+    form_district: "Select District",
+    form_city: "Select City / Hub",
+    btn_autoApplyNearby: "Auto-Apply Nearby (<30km)",
+    auth_title: "Login to Mazdoor Mitra",
+    auth_subtitle: "Access verified daily wage work, instant contractor calling, and safety benefits.",
+    auth_phone: "Phone Number",
+    auth_or: "OR",
+    auth_email: "Email Address",
+    auth_sendOTP: "Send OTP",
+    auth_enterOTP: "Enter 6-digit OTP:",
+    auth_verifyOTP: "Verify & Login",
+    auth_demoHint: "Tip: Enter demo OTP 123456",
+    job_wage: "₹{wage}/day",
+    job_distance: "{km} km away",
+    job_view_apply: "Apply / View Details",
+    job_applied: "Applied ✓",
+    job_call: "Call",
+    job_hours: "Working Hours",
+    job_contractor: "Contractor / Supervisor",
+    job_requirements: "Safety & Gear Required",
+    job_apply_confirm: "Confirm Application",
+    label_state: "State / UT",
+    label_district: "District",
+    label_city: "City / Hub",
+    label_search: "Keyword Search",
+    label_trade_filter: "Trades:",
+    label_daily_wage: "Guaranteed Wage",
+    label_job_description: "Work Description",
+    sosNotice: "Construction Site Accident / Medical Assistance:",
+    sos_report: "Report Accident",
+    gps_banner_title: "Current Geolocation & Hub",
+    btn_detect_gps: "Detect My GPS",
+    nav_my_apps: "My Applications",
+    post_job_btn: "+ Post Job",
+    post_job_title: "Post New Labour Requirement",
+    my_applications_title: "My Submitted Applications",
+    no_jobs_found: "No jobs match your current filters."
+  },
+  hi: {
+    appName: "मजदूर मित्र",
+    btn_login: "लॉग इन",
+    btn_logout: "लॉग आउट",
+    jobs_title: "उपलब्ध नौकरियां व काम",
+    jobs_search_placeholder: "काम, हुनर, शहर या ठेकेदार खोजें...",
+    jobs_filter_allStates: "सभी राज्य एवं केंद्र शासित प्रदेश",
+    form_district: "ज़िला चुनें",
+    form_city: "शहर / कस्बा चुनें",
+    btn_autoApplyNearby: "पास के काम में ऑटो-आवेदन (<30 किमी)",
+    auth_title: "मजदूर मित्र में लॉगिन करें",
+    auth_subtitle: "सत्यापित दैनिक मजदूरी, काम और सुरक्षा सुविधाएं पाएं।",
+    auth_phone: "मोबाइल नंबर",
+    auth_or: "या",
+    auth_email: "ईमेल पता",
+    auth_sendOTP: "ओटीपी भेजें",
+    auth_enterOTP: "6-अंकों का ओटीपी दर्ज करें:",
+    auth_verifyOTP: "सत्यापित करें और आगे बढ़ें",
+    auth_demoHint: "सलाह: डेमो ओटीपी 123456 डालें",
+    job_wage: "₹{wage}/दिन",
+    job_distance: "{km} किमी दूर",
+    job_view_apply: "आवेदन करें / विवरण देखें",
+    job_applied: "आवेदन हो गया ✓",
+    job_call: "कॉल करें",
+    job_hours: "काम के घंटे",
+    job_contractor: "ठेकेदार / सुपरवाइज़र",
+    job_requirements: "ज़रूरी सुरक्षा उपकरण",
+    job_apply_confirm: "आवेदन की पुष्टि करें",
+    label_state: "राज्य",
+    label_district: "ज़िला",
+    label_city: "शहर",
+    label_search: "खोज",
+    label_trade_filter: "काम के प्रकार:",
+    label_daily_wage: "दैनिक मजदूरी",
+    label_job_description: "काम का विवरण",
+    sosNotice: "साइट दुर्घटना या मेडिकल इमरजेंसी?",
+    sos_report: "दुर्घटना रिपोर्ट करें",
+    gps_banner_title: "वर्तमान जीपीएस लोकेशन",
+    btn_detect_gps: "जीपीएस खोजें",
+    nav_my_apps: "मेरे आवेदन",
+    post_job_btn: "+ काम पोस्ट करें",
+    post_job_title: "श्रमिकों की आवश्यकता पोस्ट करें",
+    my_applications_title: "मेरे सबमिट किए गए आवेदन",
+    no_jobs_found: "इस फ़िल्टर अनुसार कोई काम नहीं मिला।"
+  },
+  te: {
+    appName: "మజ్దూర్ మిత్ర",
+    btn_login: "లాగిన్",
+    btn_logout: "లాగ్ అవుట్",
+    jobs_title: "అందుబాటులో ఉన్న పనులు",
+    jobs_search_placeholder: "నైపుణ్యం, పని పేరు, నగరం లేదా కాంట్రాక్టర్...",
+    jobs_filter_allStates: "అన్ని రాష్ట్రాలు & యూటీలు",
+    form_district: "జిల్లా ఎంచుకోండి",
+    form_city: "నగరం / పట్టణం ఎంచుకోండి",
+    btn_autoApplyNearby: "సమీప పనులకు ఆటో దరఖాస్తు (< 30 కి.మీ)",
+    auth_title: "మజ్దూర్ మిత్ర లాగిన్",
+    auth_subtitle: "రోజువారీ పని, భరోసా వేతనం మరియు రక్షణ సమాచారం పొందండి.",
+    auth_phone: "ఫోన్ నంబర్",
+    auth_or: "లేదా",
+    auth_email: "ఈమెయిల్ చిరునామా",
+    auth_sendOTP: "ఓటీపీ పంపండి",
+    auth_enterOTP: "6-అంకెల ఓటీపీ నమోదు చేయండి:",
+    auth_verifyOTP: "ధృవీకరించి లాగిన్ అవ్వండి",
+    auth_demoHint: "డెమో ఓటీపీ: 123456",
+    job_wage: "₹{wage}/రోజుకు",
+    job_distance: "{km} కి.మీ దూరంలో",
+    job_view_apply: "వివరాలు & దరఖాస్తు",
+    job_applied: "దరఖాస్తు పూర్తయింది ✓",
+    job_call: "కాల్ చేయండి",
+    job_hours: "పని గంటలు",
+    job_contractor: "కాంట్రాక్టర్ / మేస్త్రీ",
+    job_requirements: "రక్షణ సామాగ్రి అవసరం",
+    job_apply_confirm: "దరఖాస్తు ఖరారు చేయండి",
+    label_state: "రాష్ట్రం",
+    label_district: "జిల్లా",
+    label_city: "నగరం",
+    label_search: "శోధన",
+    label_trade_filter: "పనుల వర్గాలు:",
+    label_daily_wage: "భరోసా వేతనం",
+    label_job_description: "పని వివరాలు",
+    sosNotice: "ప్రమాదం లేదా అత్యవసర వైద్య సాయం కొరకు:",
+    sos_report: "గాయం / ప్రమాదం రిపోర్ట్",
+    gps_banner_title: "ప్రస్తుత జీపీఎస్ లొకేషన్",
+    btn_detect_gps: "నా జీపీఎస్ గుర్తించు",
+    nav_my_apps: "నా దరఖాస్తులు",
+    post_job_btn: "+ పని పోస్ట్ చేయండి",
+    post_job_title: "కొత్త కార్మికుల అవసరం పోస్ట్ చేయండి",
+    my_applications_title: "నా దరఖాస్తుల జాబితా",
+    no_jobs_found: "ఎంచుకున్న ఫిల్టర్‌కు పనులేవీ లభించలేదు."
+  },
+  ta: {
+    appName: "மஸ்தூர் மித்ரா",
+    btn_login: "உள்நுழைக",
+    btn_logout: "வெளியேறு",
+    jobs_title: "கிடைக்கும் வேலைகள்",
+    jobs_search_placeholder: "தொழில், வேலை, நகரம் தேடுங்கள்...",
+    jobs_filter_allStates: "அனைத்து மாநிலங்கள்",
+    form_district: "மாவட்டத்தைத் தேர்ந்தெடுக்கவும்",
+    form_city: "நகரத்தைத் தேர்ந்தெடுக்கவும்",
+    btn_autoApplyNearby: "அருகிலுள்ள வேலைக்கு தானியங்கி விண்ணப்பம் (<30 கிமீ)",
+    auth_title: "மஸ்தூர் மித்ரா உள்நுழைவு",
+    auth_subtitle: "உறுதிசெய்யப்பட்ட கூலி மற்றும் வேலை வாய்ப்புகள்.",
+    auth_phone: "தொலைபேசி எண்",
+    auth_or: "அல்லது",
+    auth_email: "மின்னஞ்சல் முகவரி",
+    auth_sendOTP: "OTP அனுப்பவும்",
+    auth_enterOTP: "6 இலக்க OTP உள்ளிடவும்:",
+    auth_verifyOTP: "சரிபார்த்து உள்நுழைக",
+    auth_demoHint: "டெமோ OTP: 123456",
+    job_wage: "₹{wage}/நாள்",
+    job_distance: "{km} கிமீ தூரத்தில்",
+    job_view_apply: "விவரம் காண்க & விண்ணப்பிக்க",
+    job_applied: "விண்ணப்பிக்கப்பட்டது ✓",
+    job_call: "அழைக்க",
+    job_hours: "வேலை நேரம்",
+    job_contractor: "ஒப்பந்ததாரர்",
+    job_requirements: "பாதுகாப்பு உபகரணங்கள்",
+    job_apply_confirm: "விண்ணப்பத்தை உறுதிப்படுத்தவும்",
+    label_state: "மாநிலம்",
+    label_district: "மாவட்டம்",
+    label_city: "நகரம்",
+    label_search: "தேடல்",
+    label_trade_filter: "பிரிவுகள்:",
+    label_daily_wage: "தினசரி கூலி",
+    label_job_description: "வேலை விவரம்",
+    sosNotice: "கட்டுமான தள விபத்து அல்லது மருத்துவ உதவி:",
+    sos_report: "விபத்தை பதிவு செய்யவும்",
+    gps_banner_title: "தற்போதைய GPS இருப்பிடம்",
+    btn_detect_gps: "இருப்பிடம் கண்டறி",
+    nav_my_apps: "என் விண்ணப்பங்கள்",
+    post_job_btn: "+ வேலை இடுக",
+    post_job_title: "புதிய வேலை தேவையை இடுக",
+    my_applications_title: "என் விண்ணப்பங்கள்",
+    no_jobs_found: "வேலைகள் எதுவும் கிடைக்கவில்லை."
+  },
+  kn: {
+    appName: "ಮಜ್ದೂರ್ ಮಿತ್ರ",
+    btn_login: "ಲಾಗಿನ್",
+    btn_logout: "ಲಾಗ್ ಔಟ್",
+    jobs_title: "ಲಭ್ಯವಿರುವ ಕೆಲಸಗಳು",
+    jobs_search_placeholder: "ಕೌಶಲ್ಯ, ಕೆಲಸ, ನಗರ ಹುಡುಕಿ...",
+    jobs_filter_allStates: "ಎಲ್ಲಾ ರಾಜ್ಯಗಳು",
+    form_district: "ಜಿಲ್ಲೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    form_city: "ನಗರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    btn_autoApplyNearby: "ಹತ್ತಿರದ ಕೆಲಸಗಳಿಗೆ ಸ್ವಯಂ-ಅರ್ಜಿ (<30 ಕಿ.ಮೀ)",
+    auth_title: "ಮಜ್ದೂರ್ ಮಿತ್ರ ಲಾಗಿನ್",
+    auth_subtitle: "ದೈನಂದಿನ ಕೂಲಿ, ಕೆಲಸ ಮತ್ತು ಸುರಕ್ಷತಾ ಸೇವೆಗಳು.",
+    auth_phone: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+    auth_or: "ಅಥವಾ",
+    auth_email: "ಇಮೇಲ್ ವಿಳಾಸ",
+    auth_sendOTP: "OTP ಕಳುಹಿಸಿ",
+    auth_enterOTP: "6-ಅಂಕಿಯ OTP ನಮೂದಿಸಿ:",
+    auth_verifyOTP: "ದೃಢೀಕರಿಸಿ ಲಾಗಿನ್ ಮಾಡಿ",
+    auth_demoHint: "ಡೆಮೊ OTP 123456",
+    job_wage: "₹{wage}/ದಿನಕ್ಕೆ",
+    job_distance: "{km} ಕಿ.ಮೀ ದೂರದಲ್ಲಿ",
+    job_view_apply: "ವಿವರ ನೋಡಿ & ಅರ್ಜಿ ಹಾಕಿ",
+    job_applied: "ಅರ್ಜಿ ಸಲ್ಲಿಸಲಾಗಿದೆ ✓",
+    job_call: "ಕರೆ ಮಾಡಿ",
+    job_hours: "ಕೆಲಸದ ಸಮಯ",
+    job_contractor: "ಗುತ್ತಿಗೆದಾರ",
+    job_requirements: "ಸುರಕ್ಷತಾ ಸಾಧನಗಳು",
+    job_apply_confirm: "ಅರ್ಜಿಯನ್ನು ದೃಢೀಕರಿಸಿ",
+    label_state: "ರಾಜ್ಯ",
+    label_district: "ಜಿಲ್ಲೆ",
+    label_city: "ನಗರ",
+    label_search: "ಹುಡುಕಾಟ",
+    label_trade_filter: "ಕೆಲಸದ ವಿಧ:",
+    label_daily_wage: "ಖಾತರಿ ಕೂಲಿ",
+    label_job_description: "ಕೆಲಸದ ವಿವರ",
+    sosNotice: "ತುರ್ತು ವೈದ್ಯಕೀಯ ನೆರವು ಅಥವಾ ಅಪಘಾತ:",
+    sos_report: "ಅಪಘಾತ ವರದಿ ಮಾಡಿ",
+    gps_banner_title: "ಪ್ರಸ್ತುತ ಜಿಪಿಎಸ್ ಸ್ಥಳ",
+    btn_detect_gps: "ಜಿಪಿಎಸ್ ಪತ್ತೆ ಮಾಡಿ",
+    nav_my_apps: "ನನ್ನ ಅರ್ಜಿಗಳು",
+    post_job_btn: "+ ಕೆಲಸ ಪ್ರಕಟಿಸಿ",
+    post_job_title: "ಹೊಸ ಕಾರ್ಮಿಕರ ಅಗತ್ಯತೆ ಪ್ರಕಟಿಸಿ",
+    my_applications_title: "ನನ್ನ ಅರ್ಜಿಗಳು",
+    no_jobs_found: "ಯಾವುದೇ ಕೆಲಸ ಕಂಡುಬಂದಿಲ್ಲ."
+  },
+  ml: {
+    appName: "മസ്ദൂർ മിത്ര",
+    btn_login: "ലോഗിൻ",
+    btn_logout: "ലോഗ് ഔട്ട്",
+    jobs_title: "ലഭ്യമായ ജോലികൾ",
+    jobs_search_placeholder: "തൊഴിൽ, നഗരം അല്ലെങ്കിൽ കോൺട്രാക്ടർ...",
+    jobs_filter_allStates: "എല്ലാ സംസ്ഥാനങ്ങളും",
+    form_district: "ജില്ല തിരഞ്ഞെടുക്കുക",
+    form_city: "നഗരം തിരഞ്ഞെടുക്കുക",
+    btn_autoApplyNearby: "സമീപ ജോലികൾക്ക് സ്വയം അപേക്ഷിക്കുക (<30 കി.മീ)",
+    auth_title: "മസ്ദൂർ മിത്ര ലോഗിൻ",
+    auth_subtitle: "സുരക്ഷിത കൂലിയും തൊഴിലവസരങ്ങളും.",
+    auth_phone: "ഫോൺ നമ്പർ",
+    auth_or: "അല്ലെങ്കിൽ",
+    auth_email: "ഇമെയിൽ വിലാസം",
+    auth_sendOTP: "OTP അയയ്ക്കുക",
+    auth_enterOTP: "6 അക്ക OTP നൽകുക:",
+    auth_verifyOTP: "ലോഗിൻ ചെയ്യുക",
+    auth_demoHint: "ഡെമോ OTP: 123456",
+    job_wage: "₹{wage}/ദിവസം",
+    job_distance: "{km} കി.മീ അകലെ",
+    job_view_apply: "വിവരം കാണുക & അപേക്ഷിക്കുക",
+    job_applied: "അപേക്ഷിച്ചു കഴിഞ്ഞു ✓",
+    job_call: "വിളിക്കുക",
+    job_hours: "ജോലി സമയം",
+    job_contractor: "കോൺട്രാക്ടർ",
+    job_requirements: "സുരക്ഷാ ഉപകരണങ്ങൾ",
+    job_apply_confirm: "അപേക്ഷ സ്ഥിരീകരിക്കുക",
+    label_state: "സംസ്ഥാനം",
+    label_district: "ജില്ല",
+    label_city: "നഗരം",
+    label_search: "തിരയൽ",
+    label_trade_filter: "തൊഴിൽ വിഭാഗം:",
+    label_daily_wage: "വേതനം",
+    label_job_description: "ജോലി വിവരണം",
+    sosNotice: "അടിയന്തര സഹായം അല്ലെങ്കിൽ അപകടം:",
+    sos_report: "അപകടം റിപ്പോർട്ട് ചെയ്യുക",
+    gps_banner_title: "ജി.പി.എസ് ലൊക്കേഷൻ",
+    btn_detect_gps: "ലൊക്കേഷൻ എടുക്കുക",
+    nav_my_apps: "എന്റെ അപേക്ഷകൾ",
+    post_job_btn: "+ ജോലി പോസ്റ്റ് ചെയ്യുക",
+    post_job_title: "തൊഴിലാളി ആവശ്യകത പോസ്റ്റ് ചെയ്യുക",
+    my_applications_title: "എന്റെ അപേക്ഷകൾ",
+    no_jobs_found: "ജോലികൾ ലഭ്യമല്ല."
+  },
+  mr: {
+    appName: "मजदूर मित्र",
+    btn_login: "लॉगिन",
+    btn_logout: "लॉगआउट",
+    jobs_title: "उपलब्ध कामे व नोकऱ्या",
+    jobs_search_placeholder: "कौशल्य, काम, शहर किंवा कंत्राटदार...",
+    jobs_filter_allStates: "सर्व राज्ये",
+    form_district: "जिल्हा निवडा",
+    form_city: "शहर निवडा",
+    btn_autoApplyNearby: "जवळपासच्या कामांसाठी ऑटो-अर्ज (<३० किमी)",
+    auth_title: "मजदूर मित्र लॉगिन",
+    auth_subtitle: "दररोजची मजुरी, सुरक्षित काम आणि सुविधा.",
+    auth_phone: "मोबाईल नंबर",
+    auth_or: "किंवा",
+    auth_email: "ईमेल पत्ता",
+    auth_sendOTP: "OTP पाठवा",
+    auth_enterOTP: "६-अंकी OTP टाका:",
+    auth_verifyOTP: "सत्यापित करा",
+    auth_demoHint: "डेमो OTP: 123456",
+    job_wage: "₹{wage}/दिवस",
+    job_distance: "{km} किमी अंतरावर",
+    job_view_apply: "माहिती पहा आणि अर्ज करा",
+    job_applied: "अर्ज केला ✓",
+    job_call: "कॉल करा",
+    job_hours: "कामाचे तास",
+    job_contractor: "कंत्राटदार",
+    job_requirements: "सुरक्षा साधने",
+    job_apply_confirm: "अर्जाची पुष्टी करा",
+    label_state: "राज्य",
+    label_district: "जिल्हा",
+    label_city: "शहर",
+    label_search: "शोध",
+    label_trade_filter: "व्यवसाय:",
+    label_daily_wage: "मजुरी",
+    label_job_description: "कामाचा तपशील",
+    sosNotice: "अपघात किंवा वैद्यकीय आणीबाणी:",
+    sos_report: "अपघात नोंदवा",
+    gps_banner_title: "सध्याचे GPS स्थान",
+    btn_detect_gps: "स्थान शोधा",
+    nav_my_apps: "माझे अर्ज",
+    post_job_btn: "+ काम पोस्ट करा",
+    post_job_title: "नवीन कामगार आवश्यकता पोस्ट करा",
+    my_applications_title: "माझे अर्ज",
+    no_jobs_found: "कोणतेही काम सापडले नाही."
+  },
+  bn: {
+    appName: "মজদুর মিত্র",
+    btn_login: "লগইন",
+    btn_logout: "লগআউট",
+    jobs_title: "উপলব্ধ কাজ",
+    jobs_search_placeholder: "দক্ষতা, কাজ, শহর বা ঠিকাদার...",
+    jobs_filter_allStates: "সমস্ত রাজ্য",
+    form_district: "জেলা নির্বাচন করুন",
+    form_city: "শহর নির্বাচন করুন",
+    btn_autoApplyNearby: "কাছের কাজের জন্য স্বয়ংক্রিয় আবেদন (<৩০ কিমি)",
+    auth_title: "মজদুর মিত্র লগইন",
+    auth_subtitle: "প্রতিদিনের মজুরি ও কাজের সন্ধান।",
+    auth_phone: "মোবাইল নম্বর",
+    auth_or: "অথবা",
+    auth_email: "ইমেল ঠিকানা",
+    auth_sendOTP: "OTP পাঠান",
+    auth_enterOTP: "৬ সংখ্যার OTP লিখুন:",
+    auth_verifyOTP: "যাচাই করুন",
+    auth_demoHint: "ডেমো OTP: 123456",
+    job_wage: "₹{wage}/দিন",
+    job_distance: "{km} কিমি দূরে",
+    job_view_apply: "বিবরণ দেখুন ও আবেদন করুন",
+    job_applied: "আবেদন সম্পন্ন ✓",
+    job_call: "কল করুন",
+    job_hours: "কাজের সময়",
+    job_contractor: "ঠিকাদার",
+    job_requirements: "সুরক্ষা সরঞ্জাম",
+    job_apply_confirm: "আবেদন নিশ্চিত করুন",
+    label_state: "রাজ্য",
+    label_district: "জেলা",
+    label_city: "শহর",
+    label_search: "অনুসন্ধান",
+    label_trade_filter: "কাজের ধরণ:",
+    label_daily_wage: "দৈনিক মজুরি",
+    label_job_description: "কাজের বিবরণ",
+    sosNotice: "সাইট দুর্ঘটনা বা জরুরি সহায়তা:",
+    sos_report: "দুর্ঘটনার রিপোর্ট করুন",
+    gps_banner_title: "বর্তমান GPS অবস্থান",
+    btn_detect_gps: "অবস্থান খুঁজুন",
+    nav_my_apps: "আমার আবেদন",
+    post_job_btn: "+ কাজ পোস্ট করুন",
+    post_job_title: "নতুন কাজের চাহিদা পোস্ট করুন",
+    my_applications_title: "আমার আবেদন",
+    no_jobs_found: "কোনো কাজ পাওয়া যায়নি।"
+  },
+  gu: {
+    appName: "મજદૂર મિત્ર",
+    btn_login: "લૉગિન",
+    btn_logout: "લૉગઆઉટ",
+    jobs_title: "ઉપલબ્ધ કામ",
+    jobs_search_placeholder: "કારીગરી, કામ, શહેર અથવા કોન્ટ્રાક્ટર...",
+    jobs_filter_allStates: "બધા રાજ્યો",
+    form_district: "જિલ્લો પસંદ કરો",
+    form_city: "શહેર પસંદ કરો",
+    btn_autoApplyNearby: "નજીકના કામમાં આપોઆપ અરજી (<૩૦ કિમી)",
+    auth_title: "મજદૂર મિત્ર લૉગિન",
+    auth_subtitle: "રોજિંદી મજૂરી અને રોજગાર સુરક્ષા.",
+    auth_phone: "મોબાઇલ નંબર",
+    auth_or: "અથવા",
+    auth_email: "ઇમેઇલ સરનામું",
+    auth_sendOTP: "OTP મોકલો",
+    auth_enterOTP: "૬ અંકનો OTP દાખલ કરો:",
+    auth_verifyOTP: "ચકાસો",
+    auth_demoHint: "ડેમો OTP: 123456",
+    job_wage: "₹{wage}/દિવસ",
+    job_distance: "{km} કિમી દૂર",
+    job_view_apply: "વિગતો જુઓ અને અરજી કરો",
+    job_applied: "અરજી થઈ ગઈ ✓",
+    job_call: "કોલ કરો",
+    job_hours: "કામના કલાકો",
+    job_contractor: "કોન્ટ્રાક્ટર",
+    job_requirements: "સુરક્ષા સાધનો",
+    job_apply_confirm: "અરજીની પુષ્ટિ કરો",
+    label_state: "રાજ્ય",
+    label_district: "જિલ્લો",
+    label_city: "શહેર",
+    label_search: "શોધ",
+    label_trade_filter: "કામના પ્રકાર:",
+    label_daily_wage: "દૈનિક મજૂરી",
+    label_job_description: "કામની વિગત",
+    sosNotice: "સાઇટ અકસ્માત અથવા કટોકટી સહાય:",
+    sos_report: "અકસ્માત નોંધાવો",
+    gps_banner_title: "હાલનું GPS સ્થાન",
+    btn_detect_gps: "સ્થાન મેળવો",
+    nav_my_apps: "મારી અરજીઓ",
+    post_job_btn: "+ કામ મૂકો",
+    post_job_title: "નવા મજૂરોની જરૂરિયાત મૂકો",
+    my_applications_title: "મારી અરજીઓ",
+    no_jobs_found: "કોઈ કામ મળ્યું નથી."
+  },
+  pa: {
+    appName: "ਮਜ਼ਦੂਰ ਮਿੱਤਰ",
+    btn_login: "ਲਾਗਇਨ",
+    btn_logout: "ਲਾਗਆਉਟ",
+    jobs_title: "ਉਪਲਬਧ ਕੰਮ ਤੇ ਨੌਕਰੀਆਂ",
+    jobs_search_placeholder: "ਹੁਨਰ, ਕੰਮ, ਸ਼ਹਿਰ ਜਾਂ ਠੇਕੇਦਾਰ...",
+    jobs_filter_allStates: "ਸਾਰੇ ਰਾਜ",
+    form_district: "ਜ਼ਿਲ੍ਹਾ ਚੁਣੋ",
+    form_city: "ਸ਼ਹਿਰ ਚੁਣੋ",
+    btn_autoApplyNearby: "ਨੇੜੇ ਦੇ ਕੰਮ ਲਈ ਸਵੈ-ਅਰਜ਼ੀ (<੩੦ ਕਿਮੀ)",
+    auth_title: "ਮਜ਼ਦੂਰ ਮਿੱਤਰ ਲਾਗਇਨ",
+    auth_subtitle: "ਰੋਜ਼ਾਨਾ ਦਿਹਾੜੀ ਅਤੇ ਕੰਮ ਦੀ ਸੁਰੱਖਿਆ.",
+    auth_phone: "ਮੋਬਾਈਲ ਨੰਬਰ",
+    auth_or: "ਜਾਂ",
+    auth_email: "ਈਮੇਲ ਪਤਾ",
+    auth_sendOTP: "OTP ਭੇਜੋ",
+    auth_enterOTP: "੬ ਅੰਕਾਂ ਦਾ OTP ਦਰਜ ਕਰੋ:",
+    auth_verifyOTP: "ਤਸਦੀਕ ਕਰੋ",
+    auth_demoHint: "ਡੈਮੋ OTP: 123456",
+    job_wage: "₹{wage}/ਦਿਨ",
+    job_distance: "{km} ਕਿਮੀ ਦੂਰ",
+    job_view_apply: "ਵੇਰਵਾ ਦੇਖੋ ਅਤੇ ਅਰਜ਼ੀ ਦਿਓ",
+    job_applied: "ਅਰਜ਼ੀ ਦਿੱਤੀ ਗਈ ✓",
+    job_call: "ਕਾਲ ਕਰੋ",
+    job_hours: "ਕੰਮ ਦੇ ਘੰਟੇ",
+    job_contractor: "ਠੇਕੇਦਾਰ",
+    job_requirements: "ਸੁਰੱਖਿਆ ਉਪਕਰਣ",
+    job_apply_confirm: "ਅਰਜ਼ੀ ਪੱਕੀ ਕਰੋ",
+    label_state: "ਰਾਜ",
+    label_district: "ਜ਼ਿਲ੍ਹਾ",
+    label_city: "ਸ਼ਹਿਰ",
+    label_search: "ਖੋਜ",
+    label_trade_filter: "ਕੰਮ ਦੀ ਕਿਸਮ:",
+    label_daily_wage: "ਦਿਹਾੜੀ",
+    label_job_description: "ਵੇਰਵਾ",
+    sosNotice: "ਐਮਰਜੈਂਸੀ ਮਦਦ ਜਾਂ ਹਾਦਸਾ:",
+    sos_report: "ਹਾਦਸੇ ਦੀ ਰਿਪੋਰਟ ਕਰੋ",
+    gps_banner_title: "ਮੌਜੂਦਾ GPS ਲੋਕੇਸ਼ਨ",
+    btn_detect_gps: "ਲੋਕੇਸ਼ਨ ਲੱਭੋ",
+    nav_my_apps: "ਮੇਰੀਆਂ ਅਰਜ਼ੀਆਂ",
+    post_job_btn: "+ ਕੰਮ ਪੋਸਟ ਕਰੋ",
+    post_job_title: "ਨਵੀਂ ਮੰਗ ਪੋਸਟ ਕਰੋ",
+    my_applications_title: "ਮੇਰੀਆਂ ਅਰਜ਼ੀਆਂ",
+    no_jobs_found: "ਕੋਈ ਕੰਮ ਨਹੀਂ ਮਿਲਿਆ।"
+  },
+  or: {
+    appName: "ମଜଦୁର ମିତ୍ର",
+    btn_login: "ଲଗଇନ",
+    btn_logout: "ଲଗଆଉଟ",
+    jobs_title: "ଉପଲବ୍ଧ କାମ ଓ ନିଯୁକ୍ତି",
+    jobs_search_placeholder: "ଦକ୍ଷତା, କାମ, ସହର ବା ଠିକାଦାର...",
+    jobs_filter_allStates: "ସମସ୍ତ ରାଜ୍ୟ",
+    form_district: "ଜିଲ୍ଲା ବାଛନ୍ତୁ",
+    form_city: "ସହର ବାଛନ୍ତୁ",
+    btn_autoApplyNearby: "ନିକଟସ୍ଥ କାମ ପାଇଁ ସ୍ୱୟଂଚାଳିତ ଆବେଦନ (<୩୦ କିମି)",
+    auth_title: "ମଜଦୁର ମିତ୍ର ଲଗଇନ",
+    auth_subtitle: "ନିୟମିତ ମଜୁରୀ ଓ ନିରାପଦ କାମ।",
+    auth_phone: "ମୋବାଇଲ ନମ୍ବର",
+    auth_or: "କିମ୍ବା",
+    auth_email: "ଇମେଲ ଠିକଣା",
+    auth_sendOTP: "OTP ପଠାନ୍ତୁ",
+    auth_enterOTP: "୬ ଅଙ୍କର OTP ଲେଖନ୍ତୁ:",
+    auth_verifyOTP: "ଯାଞ୍ଚ କରନ୍ତୁ",
+    auth_demoHint: "ଡେମୋ OTP: 123456",
+    job_wage: "₹{wage}/ଦିନ",
+    job_distance: "{km} କିମି ଦୂରରେ",
+    job_view_apply: "ବିବରଣୀ ଦେଖନ୍ତୁ ଓ ଆବେଦନ କରନ୍ତୁ",
+    job_applied: "ଆବେଦନ ହୋଇଗଲା ✓",
+    job_call: "କଲ କରନ୍ତୁ",
+    job_hours: "କାର୍ଯ୍ୟ ସମୟ",
+    job_contractor: "ଠିକାଦାର",
+    job_requirements: "ସୁରକ୍ଷା ଉପକରଣ",
+    job_apply_confirm: "ଆବେଦନ ନିଶ୍ଚିତ କରନ୍ତୁ",
+    label_state: "ରାଜ୍ୟ",
+    label_district: "ଜିଲ୍ଲା",
+    label_city: "ସହର",
+    label_search: "ଖୋଜନ୍ତୁ",
+    label_trade_filter: "ବର୍ଗ:",
+    label_daily_wage: "ଦୈନିକ ମଜୁରୀ",
+    label_job_description: "କାମର ବିବରଣୀ",
+    sosNotice: "ଦୁର୍ଘଟଣା ବା ଜରୁରୀ ସହାୟତା:",
+    sos_report: "ଦୁର୍ଘଟଣା ଜଣାନ୍ତୁ",
+    gps_banner_title: "ବର୍ତ୍ତମାନର GPS ସ୍ଥିତି",
+    btn_detect_gps: "ସ୍ଥିତି ଖୋଜନ୍ତୁ",
+    nav_my_apps: "ମୋର ଆବେଦନ",
+    post_job_btn: "+ କାମ ପୋଷ୍ଟ କରନ୍ତୁ",
+    post_job_title: "ନୂଆ ଶ୍ରମିକ ଆବଶ୍ୟକତା ପୋଷ୍ଟ କରନ୍ତୁ",
+    my_applications_title: "ମୋର ଆବେଦନ",
+    no_jobs_found: "କୌଣସି କାମ ମିଳିଲା ନାହିଁ।"
+  }
+};
+
+let currentLang = 'en';
+
+function t(key, params={}){
+  let dict = LOCALES[currentLang] || LOCALES.en;
+  let str = dict[key] || LOCALES.en[key] || key;
+  Object.keys(params).forEach(k => {
+    str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), params[k]);
+  });
+  return str;
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.innerText = t(el.dataset.i18n);
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = t(el.dataset.i18nPlaceholder);
+  });
+
+  // Update dynamic elements
+  updateFilterPlaceholders();
+  renderJobs();
+  updateAuthNavDisplay();
+  updateBadgeDisplay();
+}
+
+function updateFilterPlaceholders(){
+  const s = document.getElementById('fState');
+  if(s && s.options && s.options.length > 0){
+    s.options[0].text = t('jobs_filter_allStates');
+  }
+  const d = document.getElementById('fDistrict');
+  if(d && d.options && d.options.length > 0 && !d.value){
+    d.options[0].text = t('form_district');
+  }
+  const c = document.getElementById('fCity');
+  if(c && c.options && c.options.length > 0 && !c.value){
+    c.options[0].text = t('form_city');
+  }
+}
+
+document.getElementById('langSwitcher').addEventListener('change', e => {
+  currentLang = e.target.value;
+  localStorage.setItem('mm_lang', currentLang);
+  applyI18n();
+  showToast("Language Switched", `Active Language: ${e.target.options[e.target.selectedIndex].text}`);
+});
+
+/* =========================================================
+   2. EXHAUSTIVE INDIA GEOGRAPHIC DATABASE (36 STATES & UTS)
+========================================================= */
+const INDIA_DATA = {
+  "Andaman and Nicobar Islands": { "Nicobar": ["Car Nicobar"], "North And Middle Andaman": ["Mayabunder"], "South Andaman": ["Port Blair"] },
+  "Andhra Pradesh": {
+    "Anantapur": ["Anantapur", "Guntakal", "Dharmavaram", "Tadipatri"],
+    "Chittoor": ["Tirupati", "Chittoor", "Madanapalle"],
+    "Guntur": ["Guntur", "Tenali", "Narasaraopet"],
+    "Krishna": ["Vijayawada", "Machilipatnam", "Gudivada"],
+    "Visakhapatnam": ["Visakhapatnam", "Gajuwaka", "Anakapalle"],
+    "Kurnool": ["Kurnool", "Adoni", "Nandyal"]
+  },
+  "Arunachal Pradesh": { "Papum Pare": ["Itanagar"], "Tawang": ["Tawang"] },
+  "Assam": { "Kamrup Metro": ["Guwahati"], "Dibrugarh": ["Dibrugarh"], "Jorhat": ["Jorhat"] },
+  "Bihar": { "Patna": ["Patna", "Danapur"], "Gaya": ["Gaya", "Bodh Gaya"], "Muzaffarpur": ["Muzaffarpur"] },
+  "Chandigarh": { "Chandigarh": ["Chandigarh", "Manimajra"] },
+  "Chhattisgarh": { "Raipur": ["Raipur"], "Bilaspur": ["Bilaspur"], "Durg": ["Bhilai", "Durg"] },
+  "Dadra and Nagar Haveli and Daman and Diu": { "Daman": ["Daman"], "Diu": ["Diu"], "Dadra": ["Silvassa"] },
+  "Delhi": {
+    "Central Delhi": ["Connaught Place", "Karol Bagh"],
+    "South Delhi": ["Hauz Khas", "Saket", "Nehru Place"],
+    "North Delhi": ["Civil Lines", "Rohini"],
+    "East Delhi": ["Laxmi Nagar", "Mayur Vihar"],
+    "New Delhi": ["Chanakyapuri"]
+  },
+  "Goa": { "North Goa": ["Panaji", "Mapusa"], "South Goa": ["Margao", "Vasco da Gama"] },
+  "Gujarat": {
+    "Ahmedabad": ["Ahmedabad", "Sanand"],
+    "Surat": ["Surat", "Bardoli"],
+    "Vadodara": ["Vadodara"],
+    "Rajkot": ["Rajkot"]
+  },
+  "Haryana": {
+    "Gurugram": ["Gurugram", "Manesar"],
+    "Faridabad": ["Faridabad"],
+    "Panipat": ["Panipat"],
+    "Ambala": ["Ambala"]
+  },
+  "Himachal Pradesh": { "Shimla": ["Shimla"], "Kangra": ["Dharamshala"], "Solan": ["Solan", "Baddi"] },
+  "Jammu and Kashmir": { "Srinagar": ["Srinagar"], "Jammu": ["Jammu"] },
+  "Jharkhand": { "Ranchi": ["Ranchi"], "Jamshedpur": ["Jamshedpur"], "Dhanbad": ["Dhanbad"] },
+  "Karnataka": {
+    "Bengaluru Urban": ["Bengaluru", "Electronic City", "Whitefield", "Yelahanka"],
+    "Mysuru": ["Mysuru"],
+    "Dharwad": ["Hubballi", "Dharwad"],
+    "Dakshina Kannada": ["Mangaluru"]
+  },
+  "Kerala": {
+    "Thiruvananthapuram": ["Thiruvananthapuram"],
+    "Ernakulam": ["Kochi", "Aluva"],
+    "Kozhikode": ["Kozhikode"]
+  },
+  "Ladakh": { "Leh": ["Leh"], "Kargil": ["Kargil"] },
+  "Lakshadweep": { "Lakshadweep": ["Kavaratti"] },
+  "Madhya Pradesh": { "Bhopal": ["Bhopal"], "Indore": ["Indore"], "Gwalior": ["Gwalior"], "Jabalpur": ["Jabalpur"] },
+  "Maharashtra": {
+    "Mumbai": ["Mumbai", "Andheri", "Bandra", "Kurla"],
+    "Thane": ["Thane", "Kalyan", "Navi Mumbai"],
+    "Pune": ["Pune", "Pimpri-Chinchwad", "Hinjawadi"],
+    "Nagpur": ["Nagpur"],
+    "Nashik": ["Nashik"]
+  },
+  "Manipur": { "Imphal West": ["Imphal"] },
+  "Meghalaya": { "East Khasi Hills": ["Shillong"] },
+  "Mizoram": { "Aizawl": ["Aizawl"] },
+  "Nagaland": { "Dimapur": ["Dimapur"], "Kohima": ["Kohima"] },
+  "Odisha": { "Khordha": ["Bhubaneswar"], "Cuttack": ["Cuttack"], "Sundargarh": ["Rourkela"] },
+  "Puducherry": { "Puducherry": ["Puducherry"] },
+  "Punjab": { "Ludhiana": ["Ludhiana"], "Amritsar": ["Amritsar"], "Jalandhar": ["Jalandhar"] },
+  "Rajasthan": { "Jaipur": ["Jaipur", "Sitapura"], "Jodhpur": ["Jodhpur"], "Kota": ["Kota"] },
+  "Sikkim": { "East Sikkim": ["Gangtok"] },
+  "Tamil Nadu": {
+    "Chennai": ["Chennai", "Guindy", "Tambaram", "Ambattur"],
+    "Coimbatore": ["Coimbatore"],
+    "Madurai": ["Madurai"],
+    "Tiruchirappalli": ["Tiruchirappalli"]
+  },
+  "Telangana": {
+    "Hyderabad": ["Hyderabad", "Gachibowli", "Secunderabad", "Kukatpally", "Madhapur"],
+    "Warangal": ["Warangal", "Hanamkonda"],
+    "Rangareddy": ["LB Nagar", "Rajendranagar", "Shamshabad"],
+    "Medchal-Malkajgiri": ["Medchal", "Kompally"]
+  },
+  "Tripura": { "West Tripura": ["Agartala"] },
+  "Uttar Pradesh": {
+    "Lucknow": ["Lucknow", "Gomti Nagar"],
+    "Gautam Buddha Nagar": ["Noida", "Greater Noida"],
+    "Kanpur": ["Kanpur"],
+    "Varanasi": ["Varanasi"],
+    "Ghaziabad": ["Ghaziabad"]
+  },
+  "Uttarakhand": { "Dehradun": ["Dehradun"], "Haridwar": ["Haridwar"] },
+  "West Bengal": { "Kolkata": ["Kolkata", "Salt Lake", "New Town"], "Howrah": ["Howrah"], "North 24 Parganas": ["Barasat"] }
+};
+
+// Populate States
+function populateStates(){
+  const s = document.getElementById('fState');
+  const newJobStateSelect = document.getElementById('newJobState');
+  
+  let stateOpts = `<option value="">${t('jobs_filter_allStates')}</option>` + 
+    Object.keys(INDIA_DATA).sort().map(st => `<option value="${st}">${st}</option>`).join('');
+  
+  s.innerHTML = stateOpts;
+  if(newJobStateSelect) newJobStateSelect.innerHTML = Object.keys(INDIA_DATA).sort().map(st => `<option value="${st}">${st}</option>`).join('');
+  
+  // Set default empty for district and city
+  document.getElementById('fDistrict').innerHTML = `<option value="">${t('form_district')}</option>`;
+  document.getElementById('fCity').innerHTML = `<option value="">${t('form_city')}</option>`;
+}
+
+function onStateChange(){
+  const st = document.getElementById('fState').value;
+  const d = document.getElementById('fDistrict');
+  const c = document.getElementById('fCity');
+  
+  d.innerHTML = `<option value="">${t('form_district')}</option>`;
+  c.innerHTML = `<option value="">${t('form_city')}</option>`;
+  
+  if(st && INDIA_DATA[st]){
+    Object.keys(INDIA_DATA[st]).sort().forEach(dist => {
+      d.innerHTML += `<option value="${dist}">${dist}</option>`;
+    });
+  }
+  renderJobs();
+}
+
+function onDistrictChange(){
+  const st = document.getElementById('fState').value;
+  const dist = document.getElementById('fDistrict').value;
+  const c = document.getElementById('fCity');
+  
+  c.innerHTML = `<option value="">${t('form_city')}</option>`;
+  
+  if(st && dist && INDIA_DATA[st] && INDIA_DATA[st][dist]){
+    INDIA_DATA[st][dist].sort().forEach(city => {
+      c.innerHTML += `<option value="${city}">${city}</option>`;
+    });
+  }
+  renderJobs();
+}
+
+function resetFilters(){
+  document.getElementById('fState').value = "";
+  document.getElementById('fDistrict').innerHTML = `<option value="">${t('form_district')}</option>`;
+  document.getElementById('fCity').innerHTML = `<option value="">${t('form_city')}</option>`;
+  document.getElementById('fSearch').value = "";
+  activeTradeFilter = "";
+  document.querySelectorAll('.trade-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.trade === "");
+  });
+  renderJobs();
+  showToast("Filters Reset", "Showing all available jobs across India.");
+}
+
+/* =========================================================
+   3. PROXIMITY & HAVERSINE ENGINE
+========================================================= */
+let userCoords = null;
+
+function haversine(lat1, lon1, lat2, lon2){
+  const R = 6371; // Earth radius in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function requestUserLocation(){
+  const statusEl = document.getElementById('gpsStatusText');
+  statusEl.innerText = "Requesting GPS signal from device...";
+  
+  if(!navigator.geolocation){
+    statusEl.innerHTML = `<span class="text-amber-600 font-bold">Geolocation is not supported by your browser.</span>`;
+    return;
+  }
+  
+  navigator.geolocation.getCurrentPosition(
+    p => {
+      userCoords = { lat: p.coords.latitude, lon: p.coords.longitude };
+      statusEl.innerHTML = `<span class="text-emerald-700 font-bold"><i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i>GPS Active: ${userCoords.lat.toFixed(3)}°N, ${userCoords.lon.toFixed(3)}°E</span>`;
+      showToast("Location Detected", "Coordinates locked. Proximity distances updated!");
+      renderJobs();
+    },
+    err => {
+      console.warn("GPS error:", err.message);
+      statusEl.innerHTML = `<span class="text-amber-700 font-medium">GPS unavailable (${err.message}). Using manual region filters.</span>`;
+      showToast("GPS Permission Denied", "You can still filter by State, District, and City or pick a Simulated City.", true);
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+
+function simulateLocation(val){
+  if(!val) return;
+  const parts = val.split(',');
+  userCoords = { lat: parseFloat(parts[0]), lon: parseFloat(parts[1]) };
+  const name = parts[2] || "Simulated Location";
+  document.getElementById('gpsStatusText').innerHTML = `<span class="text-blue-700 font-bold"><i class="fa-solid fa-location-crosshairs mr-1"></i>Simulated Location: <b>${name}</b> (${userCoords.lat.toFixed(2)}°N, ${userCoords.lon.toFixed(2)}°E)</span>`;
+  showToast("Location Set", `Simulating user position in ${name}`);
+  renderJobs();
+}
+
+/* =========================================================
+   4. COMPREHENSIVE ALL-INDIA JOB DATABASE
+========================================================= */
+const DEFAULT_JOBS = [
+  {
+    id: 1,
+    title: "Construction Helper & Material Loader",
+    skill: "Construction",
+    state: "Andhra Pradesh",
+    district: "Anantapur",
+    city: "Anantapur",
+    wage: 750,
+    hours: "8:00 AM - 5:00 PM",
+    vacancies: 6,
+    contractor: { name: "Rayalaseema Infra Projects", phone: "9849012345", verified: true },
+    safetyGear: ["Safety Helmet", "Reflective Vest", "Safety Shoes"],
+    desc: "Assisting masons with bricklaying, loading gravel & cement, aggregate mixing, and general site housekeeping.",
+    lat: 14.6819,
+    lon: 77.6006
+  },
+  {
+    id: 2,
+    title: "Commercial Wall Painter & Putty Specialist",
+    skill: "Painting",
+    state: "Telangana",
+    district: "Hyderabad",
+    city: "Hyderabad",
+    wage: 950,
+    hours: "9:00 AM - 6:00 PM",
+    vacancies: 4,
+    contractor: { name: "Deccan Fine Finishes", phone: "9848098765", verified: true },
+    safetyGear: ["Dust Mask", "Safety Goggles", "Gloves"],
+    desc: "Surface sanding, double-coat putty application, roller primer & emulsion paint on multi-storey residential complex.",
+    lat: 17.3850,
+    lon: 78.4867
+  },
+  {
+    id: 3,
+    title: "Master Mason (Rajmistri) - Brickwork",
+    skill: "Masonry",
+    state: "Telangana",
+    district: "Rangareddy",
+    city: "LB Nagar",
+    wage: 1100,
+    hours: "8:30 AM - 5:30 PM",
+    vacancies: 3,
+    contractor: { name: "Telangana City Builders", phone: "9988776655", verified: true },
+    safetyGear: ["Safety Boots", "Hard Hat", "Hand Gloves"],
+    desc: "Precision fly-ash brick masonry, column plastering, and lintel work for gated community villas.",
+    lat: 17.3457,
+    lon: 78.5522
+  },
+  {
+    id: 4,
+    title: "Senior Electrical Wiring Technician",
+    skill: "Electrical",
+    state: "Karnataka",
+    district: "Bengaluru Urban",
+    city: "Bengaluru",
+    wage: 1200,
+    hours: "9:00 AM - 6:00 PM",
+    vacancies: 5,
+    contractor: { name: "Namma Electro Grid Ltd", phone: "9448011223", verified: true },
+    safetyGear: ["Insulated Rubber Gloves", "Safety Helmet", "Safety Footwear"],
+    desc: "Conduit piping, MCB panel installation, DB termination, and commercial office electrical rough-ins.",
+    lat: 12.9716,
+    lon: 77.5946
+  },
+  {
+    id: 5,
+    title: "Plumber & Sanitary Pipe Fitter",
+    skill: "Plumbing",
+    state: "Tamil Nadu",
+    district: "Chennai",
+    city: "Chennai",
+    wage: 1000,
+    hours: "8:30 AM - 5:30 PM",
+    vacancies: 4,
+    contractor: { name: "Coromandel Plumbing Services", phone: "9840123987", verified: true },
+    safetyGear: ["Waterproof Boots", "Gloves", "Eye Protection"],
+    desc: "CPVC & UPVC pipe jointing, underground drainage lines, overhead water tank fittings, and bathroom line testing.",
+    lat: 13.0827,
+    lon: 80.2707
+  },
+  {
+    id: 6,
+    title: "Shuttering Carpenter & Centering Mistri",
+    skill: "Carpentry",
+    state: "Maharashtra",
+    district: "Mumbai",
+    city: "Mumbai",
+    wage: 1150,
+    hours: "8:00 AM - 5:00 PM",
+    vacancies: 8,
+    contractor: { name: "Metro Heights Infra", phone: "9820054321", verified: true },
+    safetyGear: ["Safety Harness / Lanyard", "Safety Helmet", "Steel-toe Shoes"],
+    desc: "Ply shuttering for slab, beam, and column concrete casting. Props fixing and formwork stripping safely.",
+    lat: 19.0760,
+    lon: 72.8777
+  },
+  {
+    id: 7,
+    title: "Structural Welder & Steel Fabricator",
+    skill: "Welding",
+    state: "Gujarat",
+    district: "Ahmedabad",
+    city: "Ahmedabad",
+    wage: 1050,
+    hours: "9:00 AM - 6:00 PM",
+    vacancies: 3,
+    contractor: { name: "Sabarmati Steelworks", phone: "9898012345", verified: true },
+    safetyGear: ["Welding Face Shield", "Leather Apron & Gloves", "Ear Plugs"],
+    desc: "ARC and MIG welding for steel roof trusses, safety railings, staircases, and heavy warehouse sheds.",
+    lat: 23.0225,
+    lon: 72.5714
+  },
+  {
+    id: 8,
+    title: "General Site Labourer / Beldar",
+    skill: "Helper",
+    state: "Delhi",
+    district: "South Delhi",
+    city: "Hauz Khas",
+    wage: 800,
+    hours: "8:30 AM - 5:00 PM",
+    vacancies: 10,
+    contractor: { name: "National Capital Construction", phone: "9811054321", verified: true },
+    safetyGear: ["Helmet", "Reflective Jacket", "Gum Boots"],
+    desc: "Digging foundation trenches, assisting bar benders, carrying gravel, curing concrete, and debris clearing.",
+    lat: 28.5494,
+    lon: 77.2001
+  },
+  {
+    id: 9,
+    title: "Tile, Granite & Marble Layer",
+    skill: "Masonry",
+    state: "Andhra Pradesh",
+    district: "Krishna",
+    city: "Vijayawada",
+    wage: 1100,
+    hours: "8:30 AM - 5:30 PM",
+    vacancies: 4,
+    contractor: { name: "Amaravati Marbles & Tiles", phone: "9866034567", verified: true },
+    safetyGear: ["Knee Pads", "Dust Mask", "Safety Glasses"],
+    desc: "Precision floor vitrified tile laying, bathroom wall cladding, kitchen granite counter cutting and mirror polishing.",
+    lat: 16.5062,
+    lon: 80.6480
+  },
+  {
+    id: 10,
+    title: "Civil Construction Helper",
+    skill: "Construction",
+    state: "Uttar Pradesh",
+    district: "Gautam Buddha Nagar",
+    city: "Noida",
+    wage: 800,
+    hours: "8:30 AM - 5:30 PM",
+    vacancies: 12,
+    contractor: { name: "Yamuna Expressway Builders", phone: "9871022334", verified: true },
+    safetyGear: ["Safety Helmet", "High-Vis Jacket", "Boots"],
+    desc: "Concrete pouring assist, vibrator handling help, water curing of columns, and site logistics.",
+    lat: 28.5355,
+    lon: 77.3910
+  },
+  {
+    id: 11,
+    title: "Agricultural Farm Hand & Loader",
+    skill: "Helper",
+    state: "Punjab",
+    district: "Ludhiana",
+    city: "Ludhiana",
+    wage: 850,
+    hours: "7:00 AM - 4:00 PM",
+    vacancies: 8,
+    contractor: { name: "Punjab Agri Logistics", phone: "9814055667", verified: true },
+    safetyGear: ["Farm Gloves", "Sun Hat", "Gum Boots"],
+    desc: "Grain bag loading onto trucks, irrigation management, crop harvesting, and mandi transport assistance.",
+    lat: 30.9010,
+    lon: 75.8573
+  },
+  {
+    id: 12,
+    title: "Building Exterior Waterproofing Worker",
+    skill: "Painting",
+    state: "West Bengal",
+    district: "Kolkata",
+    city: "Kolkata",
+    wage: 950,
+    hours: "9:00 AM - 5:30 PM",
+    vacancies: 5,
+    contractor: { name: "Bengal Waterseal Engineers", phone: "9830012345", verified: true },
+    safetyGear: ["Safety Harness", "Chemical Gloves", "Helmet"],
+    desc: "Roof terrace waterproofing, polyurethane chemical coating, exterior crack filling on scaffolding.",
+    lat: 22.5726,
+    lon: 88.3639
+  }
+];
+
+let jobs = JSON.parse(localStorage.getItem('mm_jobs')) || DEFAULT_JOBS;
+let userApplications = JSON.parse(localStorage.getItem('mm_applications')) || [];
+let activeTradeFilter = "";
+let selectedJobForModal = null;
+
+function saveJobsData(){
+  localStorage.setItem('mm_jobs', JSON.stringify(jobs));
+}
+
+function saveApplicationsData(){
+  localStorage.setItem('mm_applications', JSON.stringify(userApplications));
+  updateBadgeDisplay();
+}
+
+function updateBadgeDisplay(){
+  const b = document.getElementById('appBadgeCount');
+  if(b) b.innerText = userApplications.length;
+}
+
+/* =========================================================
+   5. REACTIVE JOB CARD RENDERING & FILTERING
+========================================================= */
+function setTradeFilter(trade){
+  activeTradeFilter = trade;
+  document.querySelectorAll('.trade-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.trade === trade);
+  });
+  renderJobs();
+}
+
+function renderJobs(){
+  const container = document.getElementById('jobsContainer');
+  const noJobsMsg = document.getElementById('noJobsMsg');
+  const countEl = document.getElementById('jobsCountText');
+  
+  const stateVal = document.getElementById('fState').value.trim();
+  const distVal = document.getElementById('fDistrict').value.trim();
+  const cityVal = document.getElementById('fCity').value.trim();
+  const searchVal = document.getElementById('fSearch').value.toLowerCase().trim();
+
+  // Multi-attribute Filter Pipeline
+  let filtered = jobs.filter(j => {
+    // 1. State Filter
+    if(stateVal && j.state !== stateVal) return false;
+    
+    // 2. District Filter
+    if(distVal && j.district && j.district !== distVal) return false;
+    
+    // 3. City Filter
+    if(cityVal && j.city !== cityVal) return false;
+    
+    // 4. Trade / Category Filter
+    if(activeTradeFilter && j.skill.toLowerCase() !== activeTradeFilter.toLowerCase()) return false;
+    
+    // 5. Keyword search (matches title, skill, city, state, or contractor)
+    if(searchVal){
+      const matchTitle = j.title.toLowerCase().includes(searchVal);
+      const matchSkill = j.skill.toLowerCase().includes(searchVal);
+      const matchCity = j.city.toLowerCase().includes(searchVal);
+      const matchState = j.state.toLowerCase().includes(searchVal);
+      const matchContractor = j.contractor && j.contractor.name.toLowerCase().includes(searchVal);
+      if(!matchTitle && !matchSkill && !matchCity && !matchState && !matchContractor) return false;
+    }
+    
+    return true;
+  });
+
+  // Proximity sorting if userCoords is active
+  if(userCoords){
+    filtered.sort((a, b) => {
+      let dA = haversine(userCoords.lat, userCoords.lon, a.lat, a.lon);
+      let dB = haversine(userCoords.lat, userCoords.lon, b.lat, b.lon);
+      return dA - dB;
+    });
+  }
+
+  // Update counter
+  if(countEl){
+    countEl.innerText = `${filtered.length} jobs available • ${stateVal ? stateVal : 'All India'}`;
+  }
+
+  if(filtered.length === 0){
+    container.innerHTML = "";
+    noJobsMsg.classList.remove('hidden');
+    return;
+  } else {
+    noJobsMsg.classList.add('hidden');
+  }
+
+  container.innerHTML = filtered.map(j => {
+    // Distance badge
+    let distBadge = '';
+    let distNum = null;
+    if(userCoords){
+      distNum = haversine(userCoords.lat, userCoords.lon, j.lat, j.lon);
+      let colorClass = distNum < 15 ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : distNum < 50 ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-gray-100 text-gray-700 border-gray-200';
+      distBadge = `<span class="inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-full border ${colorClass}"><i class="fa-solid fa-location-arrow mr-1"></i>${t('job_distance', { km: distNum.toFixed(1) })}</span>`;
+    }
+
+    // Check if already applied
+    const isApplied = userApplications.some(app => app.jobId === j.id);
+
+    return `
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-300 transition duration-200 flex flex-col justify-between">
+        <div>
+          <!-- Header: Title, Skill Badge & Daily Wage -->
+          <div class="flex justify-between items-start gap-2">
+            <div>
+              <span class="inline-block bg-blue-50 text-[#1e3a8a] text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md mb-1.5 border border-blue-100">
+                ${escapeHTML(j.skill)}
+              </span>
+              <h3 class="font-extrabold text-base sm:text-lg text-[#1e3a8a] leading-tight">
+                ${escapeHTML(j.title)}
+              </h3>
+            </div>
+            <div class="text-right whitespace-nowrap">
+              <span class="font-black text-orange-600 text-base sm:text-lg block">
+                ${t('job_wage', { wage: j.wage })}
+              </span>
+              <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider block">Daily Wage</span>
+            </div>
+          </div>
+
+          <!-- Location & Distances -->
+          <div class="flex flex-wrap items-center gap-2 mt-2.5 text-xs text-gray-600">
+            <span class="font-medium flex items-center">
+              <i class="fa-solid fa-location-dot text-red-500 mr-1.5"></i>
+              ${escapeHTML(j.city)}, ${escapeHTML(j.state)}
+            </span>
+            ${distBadge}
+          </div>
+
+          <!-- Contractor & Work Details -->
+          <div class="mt-3 py-2 px-3 bg-slate-50 rounded-xl border border-slate-100 text-xs flex justify-between items-center text-gray-600">
+            <div class="flex items-center gap-1.5">
+              <i class="fa-solid fa-building text-gray-400"></i>
+              <span class="font-bold text-gray-800">${escapeHTML(j.contractor.name)}</span>
+            </div>
+            <span class="text-[11px] text-emerald-600 font-bold"><i class="fa-solid fa-check-circle mr-1"></i>Verified</span>
+          </div>
+
+          <!-- Safety Gear Icons -->
+          <div class="mt-2.5 flex items-center gap-1.5 text-[11px] text-gray-500">
+            <i class="fa-solid fa-shield-halved text-orange-400"></i>
+            <span class="truncate">Safety: ${j.safetyGear.join(', ')}</span>
+          </div>
+        </div>
+
+        <!-- Action Row -->
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2">
+          ${isApplied 
+            ? `<button disabled class="flex-1 bg-emerald-100 text-emerald-800 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 cursor-default">
+                 <i class="fa-solid fa-circle-check"></i>
+                 <span>${t('job_applied')}</span>
+               </button>`
+            : `<button onclick="openJobDetailsModal(${j.id})" data-i18n="job_view_apply" class="flex-1 bg-[#1e3a8a] hover:bg-blue-900 text-white py-2.5 rounded-xl font-bold text-xs transition shadow-xs flex items-center justify-center gap-1.5">
+                 <i class="fa-solid fa-file-signature"></i>
+                 <span>${t('job_view_apply')}</span>
+               </button>`
+          }
+          
+          <!-- Direct Call Button -->
+          <a href="tel:${j.contractor.phone}" title="Call Contractor Directly" class="p-2.5 px-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-bold transition flex items-center">
+            <i class="fa-solid fa-phone"></i>
+          </a>
+
+          <!-- Speech Read Aloud Button -->
+          <button onclick="readAloudJobCard(${j.id})" title="Listen (Voice Readout)" class="p-2.5 px-3 bg-orange-50 hover:bg-orange-100 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold transition flex items-center">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* =========================================================
+   6. AUTO-APPLY NEARBY LOGIC (<30KM)
+========================================================= */
+function autoApplyNearby(){
+  if(!userCoords){
+    showToast("GPS Required", "Please click 'Detect My GPS' or select a simulated location first!", true);
+    requestUserLocation();
+    return;
+  }
+
+  // Filter unapplied jobs within 30km
+  let nearbyUnapplied = jobs.filter(j => {
+    let km = haversine(userCoords.lat, userCoords.lon, j.lat, j.lon);
+    let alreadyApplied = userApplications.some(app => app.jobId === j.id);
+    return km <= 30 && !alreadyApplied;
+  });
+
+  if(nearbyUnapplied.length === 0){
+    let anyNearby = jobs.filter(j => haversine(userCoords.lat, userCoords.lon, j.lat, j.lon) <= 30);
+    if(anyNearby.length > 0){
+      showToast("Already Applied", `You have already applied to all ${anyNearby.length} jobs within 30km!`);
+    } else {
+      showToast("No Jobs Within 30km", "No open vacancies found in your 30km radius. Try picking another state/city or expanding radius.", true);
+    }
+    return;
+  }
+
+  // Auto-apply to all
+  const now = new Date().toLocaleDateString();
+  nearbyUnapplied.forEach(j => {
+    userApplications.unshift({
+      id: "APP-" + Math.floor(100000 + Math.random() * 900000),
+      jobId: j.id,
+      jobTitle: j.title,
+      wage: j.wage,
+      city: j.city,
+      state: j.state,
+      contractor: j.contractor.name,
+      contractorPhone: j.contractor.phone,
+      appliedDate: now,
+      status: "Under Review"
+    });
+  });
+
+  saveApplicationsData();
+  renderJobs();
+  showToast("Auto-Applied!", `Successfully applied to ${nearbyUnapplied.length} verified jobs within 30 km radius!`);
+}
+
+/* =========================================================
+   7. JOB DETAIL MODAL & APPLICATION FLOW
+========================================================= */
+function openJobDetailsModal(jobId){
+  const job = jobs.find(j => j.id === jobId);
+  if(!job) return;
+  selectedJobForModal = job;
+
+  document.getElementById('modalJobSkill').innerText = job.skill;
+  document.getElementById('modalJobTitle').innerText = job.title;
+  document.getElementById('modalJobLocation').innerText = `${job.city}, ${job.district ? job.district + ', ' : ''}${job.state}`;
+  document.getElementById('modalJobWage').innerText = `₹${job.wage} / day`;
+  document.getElementById('modalJobHours').innerText = job.hours || "8:30 AM - 5:30 PM";
+  document.getElementById('modalContractorName').innerText = job.contractor.name;
+  document.getElementById('modalContractorCall').href = `tel:${job.contractor.phone}`;
+  document.getElementById('modalJobDesc').innerText = job.desc;
+
+  // Render safety gear tags
+  const safetyContainer = document.getElementById('modalSafetyTags');
+  safetyContainer.innerHTML = job.safetyGear.map(gear => `
+    <span class="inline-flex items-center text-[11px] font-bold bg-orange-100 text-orange-900 border border-orange-200 px-2.5 py-1 rounded-lg">
+      <i class="fa-solid fa-check text-orange-600 mr-1.5"></i>${escapeHTML(gear)}
+    </span>
+  `).join('');
+
+  // Update Apply button status
+  const applyBtn = document.getElementById('modalApplyBtn');
+  const isApplied = userApplications.some(app => app.jobId === job.id);
+  if(isApplied){
+    applyBtn.innerText = t('job_applied');
+    applyBtn.disabled = true;
+    applyBtn.className = "flex-1 bg-emerald-100 text-emerald-800 py-3 rounded-xl font-bold text-sm cursor-default";
+  } else {
+    applyBtn.innerText = t('job_apply_confirm');
+    applyBtn.disabled = false;
+    applyBtn.className = "flex-1 bg-[#1e3a8a] hover:bg-blue-900 text-white py-3 rounded-xl font-bold shadow text-sm transition";
+  }
+
+  const modal = document.getElementById('jobDetailModal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeJobDetailModal(){
+  const modal = document.getElementById('jobDetailModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+  selectedJobForModal = null;
+}
+
+function submitCurrentJobApplication(){
+  if(!selectedJobForModal) return;
+  const j = selectedJobForModal;
+
+  if(userApplications.some(app => app.jobId === j.id)){
+    showToast("Already Applied", "You have already submitted an application for this vacancy.");
+    closeJobDetailModal();
+    return;
+  }
+
+  userApplications.unshift({
+    id: "APP-" + Math.floor(100000 + Math.random() * 900000),
+    jobId: j.id,
+    jobTitle: j.title,
+    wage: j.wage,
+    city: j.city,
+    state: j.state,
+    contractor: j.contractor.name,
+    contractorPhone: j.contractor.phone,
+    appliedDate: new Date().toLocaleDateString(),
+    status: "Under Review"
+  });
+
+  saveApplicationsData();
+  renderJobs();
+  closeJobDetailModal();
+  showToast("Application Sent", `Applied to ${j.title} at ${j.contractor.name}!`);
+}
+
+/* =========================================================
+   8. APPLICATIONS DRAWER / TRACKER
+========================================================= */
+function openApplicationsModal(){
+  const listEl = document.getElementById('applicationsList');
+  if(!userApplications.length){
+    listEl.innerHTML = `
+      <div class="text-center py-10 text-gray-400">
+        <i class="fa-solid fa-folder-open text-4xl mb-2 text-gray-300"></i>
+        <p class="font-bold text-sm text-gray-600">No applications yet.</p>
+        <p class="text-xs text-gray-400 mt-1">Browse available jobs and tap 'Apply' or 'Auto-Apply Nearby' to get started!</p>
+      </div>
+    `;
+  } else {
+    listEl.innerHTML = userApplications.map(app => `
+      <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+        <div class="flex justify-between items-start">
+          <div>
+            <h4 class="font-black text-sm text-[#1e3a8a]">${escapeHTML(app.jobTitle)}</h4>
+            <p class="text-gray-500 font-medium mt-0.5">${escapeHTML(app.city)}, ${escapeHTML(app.state)} • <b>₹${app.wage}/day</b></p>
+          </div>
+          <span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px]">${escapeHTML(app.status)}</span>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-slate-200 flex justify-between items-center text-[11px] text-gray-500">
+          <span>Contractor: <b>${escapeHTML(app.contractor)}</b></span>
+          <div class="flex items-center gap-2">
+            <span class="text-gray-400">Applied: ${app.appliedDate}</span>
+            <a href="tel:${app.contractorPhone}" class="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              <i class="fa-solid fa-phone mr-1"></i>Call
+            </a>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const modal = document.getElementById('applicationsModal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeApplicationsModal(){
+  const modal = document.getElementById('applicationsModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+/* =========================================================
+   9. CONTRACTOR: POST JOB FEATURE
+========================================================= */
+function openPostJobModal(){
+  const modal = document.getElementById('postJobModal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closePostJobModal(){
+  const modal = document.getElementById('postJobModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+function submitNewJob(e){
+  e.preventDefault();
+  const title = document.getElementById('newJobTitle').value.trim();
+  const skill = document.getElementById('newJobSkill').value;
+  const wage = parseInt(document.getElementById('newJobWage').value) || 800;
+  const state = document.getElementById('newJobState').value;
+  const city = document.getElementById('newJobCity').value.trim();
+  const contractorName = document.getElementById('newJobContractor').value.trim();
+
+  // Basic fallback coords based on user or center of India
+  let lat = userCoords ? userCoords.lat + (Math.random() * 0.04 - 0.02) : 20.5937;
+  let lon = userCoords ? userCoords.lon + (Math.random() * 0.04 - 0.02) : 78.9629;
+
+  const newJob = {
+    id: Date.now(),
+    title,
+    skill,
+    state,
+    district: city,
+    city,
+    wage,
+    hours: "8:30 AM - 5:30 PM",
+    vacancies: 5,
+    contractor: { name: contractorName, phone: "9876501234", verified: true },
+    safetyGear: ["Safety Helmet", "Reflective Jacket", "Safety Boots"],
+    desc: `Required experienced ${skill} workers for construction project in ${city}. Daily on-site wage payment.`,
+    lat,
+    lon
+  };
+
+  jobs.unshift(newJob);
+  saveJobsData();
+  closePostJobModal();
+  renderJobs();
+  showToast("Job Published", `New vacancy for ${title} is now live!`);
+}
+
+/* =========================================================
+   10. ACCIDENT & INCIDENT REPORTING
+========================================================= */
+let incidentLogs = JSON.parse(localStorage.getItem('mm_incidents')) || [];
+
+function openIncidentModal(){
+  const modal = document.getElementById('incidentModal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeIncidentModal(){
+  const modal = document.getElementById('incidentModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+function submitIncidentReport(e){
+  e.preventDefault();
+  const worker = document.getElementById('incWorker').value.trim();
+  const site = document.getElementById('incSite').value.trim();
+  const desc = document.getElementById('incDesc').value.trim();
+
+  const report = {
+    id: "INC-" + Date.now(),
+    worker,
+    site,
+    desc,
+    date: new Date().toLocaleString(),
+    status: "Forwarded to Safety Inspector"
+  };
+
+  incidentLogs.unshift(report);
+  localStorage.setItem('mm_incidents', JSON.stringify(incidentLogs));
+
+  document.getElementById('incWorker').value = '';
+  document.getElementById('incSite').value = '';
+  document.getElementById('incDesc').value = '';
+
+  closeIncidentModal();
+  showToast("Report Submitted", "Incident logged & forwarded to Site Safety Officer & 108 Emergency!", false);
+}
+
+/* =========================================================
+   11. AUTHENTICATION & USER SESSION ENGINE
+========================================================= */
+let currentUser = JSON.parse(localStorage.getItem('mm_user')) || null;
+let currentAuthRole = 'worker';
+
+function selectAuthRole(role){
+  currentAuthRole = role;
+  const wBtn = document.getElementById('roleWorkerBtn');
+  const cBtn = document.getElementById('roleContractorBtn');
+  if(role === 'worker'){
+    wBtn.className = "flex-1 py-1.5 rounded-lg bg-white shadow-xs text-[#1e3a8a] transition";
+    cBtn.className = "flex-1 py-1.5 rounded-lg text-gray-600 hover:text-gray-900 transition";
+  } else {
+    cBtn.className = "flex-1 py-1.5 rounded-lg bg-white shadow-xs text-[#1e3a8a] transition";
+    wBtn.className = "flex-1 py-1.5 rounded-lg text-gray-600 hover:text-gray-900 transition";
+  }
+}
+
+function openAuthModal(){
+  const modal = document.getElementById('authModal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeAuthModal(){
+  const modal = document.getElementById('authModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+  document.getElementById('otpStepBox').classList.add('hidden');
+  document.getElementById('sendOtpBtn').innerText = t('auth_sendOTP');
+}
+
+function loginWithOTP(){
+  const phone = document.getElementById('authPhone').value.trim();
+  const email = document.getElementById('authEmail').value.trim();
+  const otpBox = document.getElementById('otpStepBox');
+  const actionBtn = document.getElementById('sendOtpBtn');
+  const otpInput = document.getElementById('authOTP');
+
+  // Step 1: Request OTP
+  if(otpBox.classList.contains('hidden')){
+    if(!phone && !email){
+      showToast("Missing Information", "Please enter your 10-digit mobile number or email address", true);
+      return;
+    }
+    otpBox.classList.remove('hidden');
+    otpInput.value = "123456"; // Prefill demo OTP
+    actionBtn.innerText = t('auth_verifyOTP');
+    showToast("OTP Sent", `Demo OTP sent to ${phone || email} (Use 123456)`);
+    return;
+  }
+
+  // Step 2: Verify OTP
+  if(otpInput.value.trim() !== "123456"){
+    showToast("Invalid OTP", "Please enter the valid OTP 123456", true);
+    return;
+  }
+
+  currentUser = {
+    id: "USR-" + Math.floor(1000 + Math.random() * 9000),
+    name: currentAuthRole === 'worker' ? "Ramesh Kumar" : "Srinivasa Infra",
+    phone: phone || "9876543210",
+    role: currentAuthRole,
+    state: "Andhra Pradesh",
+    city: "Anantapur"
+  };
+
+  localStorage.setItem('mm_user', JSON.stringify(currentUser));
+  closeAuthModal();
+  updateAuthNavDisplay();
+  showToast("Login Successful", `Welcome back, ${currentUser.name}!`);
+}
+
+function logout(){
+  currentUser = null;
+  localStorage.removeItem('mm_user');
+  updateAuthNavDisplay();
+  showToast("Logged Out", "You have successfully signed out.");
+}
+
+function updateAuthNavDisplay(){
+  const container = document.getElementById('authNavContainer');
+  if(!container) return;
+
+  if(currentUser){
+    container.innerHTML = `
+      <div class="flex items-center gap-2 bg-blue-900/60 border border-blue-700 py-1 px-2.5 rounded-full text-xs">
+        <span class="w-6 h-6 rounded-full bg-orange-500 text-white font-black flex items-center justify-center text-[10px]">
+          ${currentUser.name[0]}
+        </span>
+        <span class="font-bold hidden sm:inline text-white">${escapeHTML(currentUser.name)}</span>
+        <button onclick="logout()" title="Logout" class="text-orange-300 hover:text-white ml-1">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </div>
+    `;
+  } else {
+    container.innerHTML = `
+      <button onclick="openAuthModal()" data-i18n="btn_login" class="bg-orange-500 hover:bg-orange-600 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow transition flex items-center gap-1.5">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span>${t('btn_login')}</span>
+      </button>
+    `;
+  }
+}
+
+/* =========================================================
+   12. VERNACULAR VOICE RECOGNITION & TTS AUDIO ENGINE
+========================================================= */
+let isVoiceListening = false;
+
+function toggleVoiceSearch(){
+  const micBtn = document.getElementById('micBtn');
+  const searchInput = document.getElementById('fSearch');
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition){
+    showToast("Voice Unsupported", "Speech Recognition is not supported in this browser.", true);
+    return;
+  }
+
+  if(isVoiceListening){
+    isVoiceListening = false;
+    micBtn.classList.remove('text-orange-600', 'listening-pulse');
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  
+  // Map current language
+  const langMap = {
+    en: 'en-IN', hi: 'hi-IN', te: 'te-IN', ta: 'ta-IN', kn: 'kn-IN',
+    ml: 'ml-IN', mr: 'mr-IN', bn: 'bn-IN', gu: 'gu-IN', pa: 'pa-IN', or: 'or-IN'
+  };
+  recognition.lang = langMap[currentLang] || 'en-IN';
+
+  micBtn.classList.add('text-orange-600', 'listening-pulse');
+  isVoiceListening = true;
+  showToast("Voice Listening", "Speak your trade or city name now...");
+
+  recognition.onresult = (e) => {
+    const transcript = e.results[0][0].transcript;
+    searchInput.value = transcript;
+    renderJobs();
+    showToast("Voice Recognized", `Searched for: "${transcript}"`);
+    micBtn.classList.remove('text-orange-600', 'listening-pulse');
+    isVoiceListening = false;
+  };
+
+  recognition.onerror = (e) => {
+    console.warn("Speech recognition error:", e.error);
+    micBtn.classList.remove('text-orange-600', 'listening-pulse');
+    isVoiceListening = false;
+  };
+
+  recognition.onend = () => {
+    micBtn.classList.remove('text-orange-600', 'listening-pulse');
+    isVoiceListening = false;
+  };
+
+  recognition.start();
+}
+
+// Text to Speech Readout for unlettered workers
+function speakText(text){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel(); // Stop prior audio
+  const utterance = new SpeechSynthesisUtterance(text);
+  const langMap = {
+    en: 'en-IN', hi: 'hi-IN', te: 'te-IN', ta: 'ta-IN', kn: 'kn-IN',
+    ml: 'ml-IN', mr: 'mr-IN', bn: 'bn-IN', gu: 'gu-IN', pa: 'pa-IN', or: 'or-IN'
+  };
+  utterance.lang = langMap[currentLang] || 'en-IN';
+  utterance.rate = 0.95;
+  window.speechSynthesis.speak(utterance);
+}
+
+function readAloudJobCard(jobId){
+  const job = jobs.find(j => j.id === jobId);
+  if(!job) return;
+  const readout = `${job.title}. Daily wage is ${job.wage} rupees. Location: ${job.city}, ${job.state}. Contractor: ${job.contractor.name}.`;
+  speakText(readout);
+  showToast("Reading Aloud", `Playing audio details for ${job.title}...`);
+}
+
+function readAloudCurrentJob(){
+  if(!selectedJobForModal) return;
+  readAloudJobCard(selectedJobForModal.id);
+}
+
+/* =========================================================
+   13. TOAST NOTIFICATIONS & SANITIZATION UTILITIES
+========================================================= */
+let toastTimeout = null;
+
+function showToast(title, msg, isError = false){
+  const box = document.getElementById('toastBox');
+  const tTitle = document.getElementById('toastTitle');
+  const tMsg = document.getElementById('toastMsg');
+  const tIcon = document.getElementById('toastIcon');
+
+  tTitle.innerText = title;
+  tMsg.innerText = msg;
+
+  if(isError){
+    tIcon.className = "fa-solid fa-circle-exclamation text-amber-400 text-xl";
+  } else {
+    tIcon.className = "fa-solid fa-circle-check text-emerald-400 text-xl";
+  }
+
+  box.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+  
+  if(toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    box.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+  }, 4000);
+}
+
+function escapeHTML(str){
+  if(str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+/* =========================================================
+   14. INITIALIZATION & EVENT BINDINGS
+========================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Restore language if previously saved
+  const savedLang = localStorage.getItem('mm_lang');
+  if(savedLang && LOCALES[savedLang]){
+    currentLang = savedLang;
+    document.getElementById('langSwitcher').value = currentLang;
+  }
+
+  // 2. Populate Cascading Filter & India Data
+  populateStates();
+
+  // 3. Attach Filter Listeners
+  const fState = document.getElementById('fState');
+  const fDistrict = document.getElementById('fDistrict');
+  const fCity = document.getElementById('fCity');
+  const fSearch = document.getElementById('fSearch');
+
+  fState.addEventListener('change', onStateChange);
+  fDistrict.addEventListener('change', onDistrictChange);
+  fCity.addEventListener('change', renderJobs);
+  fSearch.addEventListener('input', () => {
+    renderJobs();
+  });
+
+  // 4. Initial Render & I18n
+  applyI18n();
+  updateBadgeDisplay();
+  updateAuthNavDisplay();
+
+  // 5. Attempt auto-detect location gracefully
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(
+      p => {
+        userCoords = { lat: p.coords.latitude, lon: p.coords.longitude };
+        const statusEl = document.getElementById('gpsStatusText');
+        if(statusEl) statusEl.innerHTML = `<span class="text-emerald-700 font-bold"><i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i>GPS Active: ${userCoords.lat.toFixed(3)}°N, ${userCoords.lon.toFixed(3)}°E</span>`;
+        renderJobs();
+      },
+      () => {},
+      { timeout: 5000 }
+    );
+  }
+});
+</script>
+</body>
+</html>

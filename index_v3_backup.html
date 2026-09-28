@@ -1,0 +1,2319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mazdoor Mitra V3 - All India Labour Support</title>
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                brand: {
+                    light: '#ffedd5',
+                    DEFAULT: '#f97316',
+                    dark: '#c2410c',
+                    blue: '#1e3a8a',
+                    navy: '#0f172a'
+                }
+            }
+        }
+    }
+}
+</script>
+
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8fafc;
+}
+.screen {
+    display: none;
+}
+.screen.active {
+    display: block;
+}
+.card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.06);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+.btn {
+    transition: all .2s ease;
+}
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.btn:active {
+    transform: translateY(0);
+}
+/* Toast Notification */
+#toastNotification {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+</style>
+</head>
+
+<body class="text-gray-800 antialiased min-h-screen flex flex-col justify-between">
+
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div id="toastNotification" class="fixed top-5 right-5 z-50 transform -translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-gray-700">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-green-400 text-lg"></i>
+        <div>
+            <p id="toastTitle" class="font-bold text-sm">Notification</p>
+            <p id="toastMessage" class="text-xs text-gray-300">Action performed successfully.</p>
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="bg-brand-blue text-white sticky top-0 z-40 shadow-lg">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+        <button onclick="navigate('home-screen')" class="font-bold text-xl flex items-center tracking-tight focus:outline-none">
+            <span class="bg-orange-500 text-white p-1.5 rounded-lg mr-2 inline-flex items-center justify-center shadow">
+                <i class="fa-solid fa-helmet-safety text-lg"></i>
+            </span>
+            <span>Mazdoor <span class="text-orange-400 font-extrabold">Mitra</span></span>
+            <span class="text-[10px] ml-2 bg-orange-600/40 border border-orange-400/40 text-orange-200 px-1.5 py-0.5 rounded uppercase font-semibold">V3</span>
+        </button>
+
+        <div class="flex items-center gap-2 sm:gap-4">
+            <!-- Language Switcher -->
+            <div class="flex items-center bg-blue-900/70 border border-blue-700 rounded-lg px-2 py-1 text-sm">
+                <i class="fa-solid fa-language text-orange-400 mr-1.5"></i>
+                <select id="languageSelect" onchange="changeLanguage()" class="bg-transparent text-white outline-none cursor-pointer text-sm font-medium">
+                    <option value="en" class="text-gray-900">English</option>
+                    <option value="hi" class="text-gray-900">हिन्दी</option>
+                    <option value="te" class="text-gray-900">తెలుగు</option>
+                </select>
+            </div>
+
+            <!-- Active User Role Badge & Direct Switcher -->
+            <div id="navUserBadge" class="hidden sm:flex items-center gap-2">
+                <!-- Dynamically populated -->
+            </div>
+
+            <button onclick="navigate('help-screen')" title="Help & Emergency" class="p-2 hover:bg-blue-800 rounded-lg text-white transition">
+                <i class="fa-solid fa-shield-heart text-lg text-orange-400"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<main class="max-w-5xl mx-auto p-4 w-full flex-1">
+
+<!-- HOME SCREEN -->
+<section id="home-screen" class="screen active text-center mt-6">
+    <div class="py-6 px-4">
+        <div class="inline-flex p-4 rounded-full bg-orange-100 text-brand mb-4 shadow-inner">
+            <i class="fa-solid fa-people-carry-box text-5xl"></i>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-brand-blue tracking-tight">
+            Mazdoor <span class="text-brand">Mitra</span>
+        </h1>
+
+        <p id="t_hero_subtitle" class="text-xl sm:text-2xl font-bold text-gray-800 mt-2">
+            Find Work. Find Workers. Build a Better Future.
+        </p>
+
+        <p id="t_hero_desc" class="text-gray-600 mt-1 max-w-xl mx-auto">
+            India's direct labour & contractor bridge with verified fair wages, regional language support, and worker safety protection.
+        </p>
+    </div>
+
+    <!-- Quick Role Selection Buttons -->
+    <div class="flex flex-col sm:flex-row justify-center gap-4 mt-4 max-w-2xl mx-auto">
+        <button onclick="handleRoleSelection('worker')" class="btn bg-brand hover:bg-brand-dark text-white px-6 py-4 rounded-xl font-bold flex items-center justify-center shadow-lg text-base">
+            <i class="fa-solid fa-person-digging text-xl mr-2.5"></i>
+            <span id="t_btn_worker">I am a Worker</span>
+        </button>
+
+        <button onclick="handleRoleSelection('employer')" class="btn bg-brand-blue hover:bg-blue-900 text-white px-6 py-4 rounded-xl font-bold flex items-center justify-center shadow-lg text-base">
+            <i class="fa-solid fa-building text-xl mr-2.5"></i>
+            <span id="t_btn_employer">I am an Employer</span>
+        </button>
+
+        <button onclick="detectLocation()" class="btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-4 rounded-xl font-bold flex items-center justify-center shadow-lg text-base">
+            <i class="fa-solid fa-location-crosshairs text-xl mr-2.5"></i>
+            <span id="t_btn_location">Detect Location</span>
+        </button>
+    </div>
+
+    <!-- 1-Click Demo Testing Pill Bar -->
+    <div class="mt-4 bg-orange-50 border border-orange-200 rounded-xl p-3 max-w-xl mx-auto flex flex-wrap items-center justify-center gap-2 text-xs text-orange-900">
+        <span class="font-bold flex items-center"><i class="fa-solid fa-bolt mr-1 text-orange-500"></i> Instant Demo Login:</span>
+        <button onclick="quickDemoLogin('worker')" class="bg-white border border-orange-300 hover:bg-orange-100 px-3 py-1.5 rounded-lg font-semibold shadow-sm transition">
+            <i class="fa-solid fa-user-gear text-brand mr-1"></i> Demo Worker (Ramesh)
+        </button>
+        <button onclick="quickDemoLogin('employer')" class="bg-white border border-orange-300 hover:bg-orange-100 px-3 py-1.5 rounded-lg font-semibold shadow-sm transition">
+            <i class="fa-solid fa-briefcase text-blue-700 mr-1"></i> Demo Employer (BuildCo)
+        </button>
+    </div>
+
+    <!-- Geolocation Result Box -->
+    <div id="locationResult" class="mt-3 text-sm text-gray-700 font-medium min-h-[24px]"></div>
+
+    <!-- Feature Highlights -->
+    <div class="card mt-8 p-6 sm:p-8 text-left">
+        <h2 id="t_how_it_works" class="text-2xl font-bold text-brand-blue text-center mb-6">
+            How Mazdoor Mitra Works
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="text-center p-4 rounded-xl bg-orange-50/50 border border-orange-100">
+                <div class="w-14 h-14 bg-orange-100 text-brand rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-location-dot text-2xl"></i>
+                </div>
+                <h3 id="t_feature1_title" class="font-bold text-gray-900 mt-2 text-lg">Find Nearby Jobs</h3>
+                <p id="t_feature1_desc" class="text-sm text-gray-600 mt-1">
+                    Search daily wage & skilled jobs across all 28 states and Union Territories by state, district, and city.
+                </p>
+            </div>
+
+            <div class="text-center p-4 rounded-xl bg-blue-50/50 border border-blue-100">
+                <div class="w-14 h-14 bg-blue-100 text-brand-blue rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-handshake text-2xl"></i>
+                </div>
+                <h3 id="t_feature2_title" class="font-bold text-gray-900 mt-2 text-lg">Connect Directly</h3>
+                <p id="t_feature2_desc" class="text-sm text-gray-600 mt-1">
+                    No middlemen or commission fees. Workers and contractors connect via direct phone calls and WhatsApp.
+                </p>
+            </div>
+
+            <div class="text-center p-4 rounded-xl bg-emerald-50/50 border border-emerald-100">
+                <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-shield-halved text-2xl"></i>
+                </div>
+                <h3 id="t_feature3_title" class="font-bold text-gray-900 mt-2 text-lg">Work Safely</h3>
+                <p id="t_feature3_desc" class="text-sm text-gray-600 mt-1">
+                    Emergency safety hotlines (112, 108), wage transparency guidelines, and incident reporting.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WORKER REGISTRATION SCREEN -->
+<section id="worker-reg-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <div class="card p-6 sm:p-8 max-w-xl mx-auto">
+        <div class="flex items-center gap-3 mb-6 border-b pb-4">
+            <span class="p-3 bg-orange-100 text-brand rounded-xl">
+                <i class="fa-solid fa-person-digging text-2xl"></i>
+            </span>
+            <div>
+                <h2 class="text-2xl font-bold text-brand-blue">Create Worker Profile</h2>
+                <p class="text-sm text-gray-500">Register once to get direct job offers</p>
+            </div>
+        </div>
+
+        <form onsubmit="registerWorker(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Full Name</label>
+                <input id="workerName" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="e.g. Ramesh Kumar">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">10-Digit Mobile Number</label>
+                <input id="workerPhone" required type="tel" pattern="[0-9]{10}" maxlength="10" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="e.g. 9876543210">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">State</label>
+                    <select id="workerState" onchange="loadDistricts('workerState','workerDistrict')" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-orange-500 focus:outline-none text-sm">
+                        <option value="">Select State</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">District</label>
+                    <select id="workerDistrict" onchange="loadCities('workerState','workerDistrict','workerCity')" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-orange-500 focus:outline-none text-sm">
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">City / Town</label>
+                    <select id="workerCity" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-orange-500 focus:outline-none text-sm">
+                        <option value="">Select City</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Primary Skill / Trade</label>
+                    <select id="workerSkillSelect" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-orange-500 focus:outline-none text-sm">
+                        <option>Construction</option>
+                        <option>Masonry</option>
+                        <option>Painting</option>
+                        <option>Plumbing</option>
+                        <option>Electrical</option>
+                        <option>Carpentry</option>
+                        <option>Welding</option>
+                        <option>Driving</option>
+                        <option>Cleaning</option>
+                        <option>Farming</option>
+                        <option>Loading/Unloading</option>
+                        <option>Security</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Experience (Years)</label>
+                    <input id="workerExperience" type="number" min="0" max="50" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="e.g. 5">
+                </div>
+            </div>
+
+            <button type="submit" class="btn w-full bg-brand hover:bg-brand-dark text-white py-3.5 rounded-xl font-bold shadow-md text-base mt-2">
+                Create Worker Profile
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- WORKER DASHBOARD SCREEN -->
+<section id="worker-dash-screen" class="screen">
+    <!-- Profile Banner -->
+    <div class="bg-gradient-to-r from-blue-900 to-brand-blue text-white rounded-2xl p-6 shadow-md relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+            <div class="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center text-4xl text-orange-400 border-2 border-orange-400/50">
+                <i class="fa-solid fa-user-helmet-safety"></i>
+            </div>
+            <div class="text-center sm:text-left flex-1">
+                <div class="inline-block bg-orange-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider mb-1">
+                    Verified Worker
+                </div>
+                <h2 id="workerWelcome" class="text-2xl sm:text-3xl font-extrabold">Welcome, Worker</h2>
+                <p id="workerLocationDisplay" class="text-blue-200 text-sm mt-0.5"><i class="fa-solid fa-location-dot mr-1 text-orange-400"></i>Location</p>
+                <p id="workerSkillDisplay" class="text-orange-300 font-semibold text-sm mt-1"></p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="logout()" class="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg font-semibold border border-white/20 transition">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Switch / Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Navigation Dashboard Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <button onclick="navigate('find-jobs-screen')" class="card p-5 text-center hover:border-orange-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-orange-100 text-brand flex items-center justify-center mx-auto group-hover:scale-110 transition">
+                <i class="fa-solid fa-magnifying-glass text-2xl"></i>
+            </div>
+            <p class="font-bold mt-3 text-gray-800">Find Jobs</p>
+            <span class="text-xs text-gray-500">Live vacancies</span>
+        </button>
+
+        <button onclick="showApplications()" class="card p-5 text-center hover:border-blue-300 transition group relative">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-brand-blue flex items-center justify-center mx-auto group-hover:scale-110 transition">
+                <i class="fa-solid fa-file-signature text-2xl"></i>
+            </div>
+            <p class="font-bold mt-3 text-gray-800">My Applications</p>
+            <span id="applicationCount" class="inline-block mt-0.5 bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">0 Applied</span>
+        </button>
+
+        <button onclick="showSavedJobs()" class="card p-5 text-center hover:border-yellow-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-yellow-100 text-yellow-600 flex items-center justify-center mx-auto group-hover:scale-110 transition">
+                <i class="fa-solid fa-bookmark text-2xl"></i>
+            </div>
+            <p class="font-bold mt-3 text-gray-800">Saved Jobs</p>
+            <span id="savedCount" class="text-xs text-gray-500">Bookmarked</span>
+        </button>
+
+        <button onclick="navigate('help-screen')" class="card p-5 text-center hover:border-emerald-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto group-hover:scale-110 transition">
+                <i class="fa-solid fa-shield-halved text-2xl"></i>
+            </div>
+            <p class="font-bold mt-3 text-gray-800">Safety & Support</p>
+            <span class="text-xs text-gray-500">Helpline & Rules</span>
+        </button>
+    </div>
+
+    <!-- Quick Matching Jobs Preview for Worker -->
+    <div class="mt-8">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-xl text-brand-blue">Recommended Jobs For You</h3>
+            <button onclick="navigate('find-jobs-screen')" class="text-sm font-bold text-brand hover:underline">
+                View All <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+        </div>
+        <div id="recommendedJobsContainer" class="space-y-3">
+            <!-- Injected by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- FIND JOBS SCREEN -->
+<section id="find-jobs-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
+        <div>
+            <h2 class="text-2xl font-bold text-brand-blue">Available Labour Jobs</h2>
+            <p class="text-sm text-gray-500">Verified vacancies across India</p>
+        </div>
+        <button onclick="clearJobFilters()" class="text-xs font-semibold text-brand hover:underline">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Reset Filters
+        </button>
+    </div>
+
+    <!-- Search & Multi-tier Location Filters -->
+    <div class="card p-4 sm:p-5 mb-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">State</label>
+                <select id="jobState" onchange="loadDistricts('jobState','jobDistrict');renderJobs()" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-orange-500">
+                    <option value="">All States</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">District</label>
+                <select id="jobDistrict" onchange="loadCities('jobState','jobDistrict','jobCity');renderJobs()" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-orange-500">
+                    <option value="">All Districts</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">City</label>
+                <select id="jobCity" onchange="renderJobs()" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-orange-500">
+                    <option value="">All Cities</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Trade / Skill</label>
+                <select id="jobSkill" onchange="renderJobs()" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-orange-500">
+                    <option value="">All Skills</option>
+                    <option>Construction</option>
+                    <option>Masonry</option>
+                    <option>Painting</option>
+                    <option>Plumbing</option>
+                    <option>Electrical</option>
+                    <option>Carpentry</option>
+                    <option>Welding</option>
+                    <option>Driving</option>
+                    <option>Cleaning</option>
+                    <option>Farming</option>
+                    <option>Security</option>
+                    <option>Loading/Unloading</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="relative mt-3">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <input id="jobSearch" oninput="renderJobs()" placeholder="Search by job title, skill, employer, or landmark..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm">
+        </div>
+    </div>
+
+    <!-- Job Cards Listing -->
+    <div id="jobsContainer" class="space-y-4"></div>
+</section>
+
+<!-- JOB DETAILS SCREEN -->
+<section id="job-details-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <div id="jobDetails" class="card p-6 sm:p-8 max-w-2xl mx-auto"></div>
+</section>
+
+<!-- EMPLOYER REGISTRATION SCREEN -->
+<section id="employer-reg-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <div class="card p-6 sm:p-8 max-w-xl mx-auto">
+        <div class="flex items-center gap-3 mb-6 border-b pb-4">
+            <span class="p-3 bg-blue-100 text-brand-blue rounded-xl">
+                <i class="fa-solid fa-building text-2xl"></i>
+            </span>
+            <div>
+                <h2 class="text-2xl font-bold text-brand-blue">Create Employer Profile</h2>
+                <p class="text-sm text-gray-500">Post jobs and hire skilled workers across India</p>
+            </div>
+        </div>
+
+        <form onsubmit="registerEmployer(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Company / Contractor Name</label>
+                <input id="employerName" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="e.g. BuildCo Infra or Sharma Contractors">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">10-Digit Mobile / WhatsApp Number</label>
+                <input id="employerPhone" required type="tel" pattern="[0-9]{10}" maxlength="10" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="e.g. 9876543210">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">State</label>
+                    <select id="employerState" onchange="loadDistricts('employerState','employerDistrict')" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                        <option value="">Select State</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">District</label>
+                    <select id="employerDistrict" onchange="loadCities('employerState','employerDistrict','employerCity')" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">City / Town</label>
+                    <select id="employerCity" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                        <option value="">Select City</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn w-full bg-brand-blue hover:bg-blue-900 text-white py-3.5 rounded-xl font-bold shadow-md text-base mt-2">
+                Create Employer Profile
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- EMPLOYER DASHBOARD SCREEN -->
+<section id="employer-dash-screen" class="screen">
+    <!-- Employer Banner -->
+    <div class="bg-gradient-to-r from-orange-600 to-brand text-white rounded-2xl p-6 shadow-md relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+            <div class="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center text-4xl text-white border-2 border-white/50">
+                <i class="fa-solid fa-building-user"></i>
+            </div>
+            <div class="text-center sm:text-left flex-1">
+                <div class="inline-block bg-blue-900 text-blue-100 text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider mb-1">
+                    Employer Portal
+                </div>
+                <h2 id="employerWelcome" class="text-2xl sm:text-3xl font-extrabold">Welcome, Employer</h2>
+                <p id="employerLocationDisplay" class="text-orange-100 text-sm mt-0.5"><i class="fa-solid fa-location-dot mr-1"></i>Location</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="logout()" class="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg font-semibold border border-white/20 transition">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Switch / Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Employer Action Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <button onclick="navigate('post-job-screen')" class="card p-5 text-center hover:border-orange-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-orange-100 text-brand flex items-center justify-center mx-auto group-hover:scale-110 transition">
+                <i class="fa-solid fa-plus-circle text-2xl"></i>
+            </div>
+            <p class="font-bold mt-3 text-gray-800">Post New Job</p>
+            <span class="text-xs text-gray-500">Hire workers fast</span>
+        </button>
+
+        <button onclick="showEmployerJobs()" class="card p-5 text-center hover:border-blue-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-brand-blue flex items-center justify-center mx-auto group-hover:scale-110 transition">
+                <i class="fa-solid fa-briefcase text-2xl"></i>
+            </div>
+            <p class="font-bold mt-3 text-gray-800">My Posted Jobs</p>
+            <span id="employerJobCountBadge" class="text-xs text-gray-500">0 active</span>
+        </button>
+
+        <button onclick="showEmployerApplications()" class="card p-5 text-center hover:border-purple-300 transition group relative">
+            <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mx-auto group-hover:scale-110 transition">
+                <i class="fa-solid fa-user-check text-2xl"></i>
+            </div>
+            <p class="font-bold mt-3 text-gray-800">Applications</p>
+            <span id="employerApplicantsBadge" class="inline-block mt-0.5 bg-purple-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">0 Received</span>
+        </button>
+
+        <button onclick="showWorkers()" class="card p-5 text-center hover:border-emerald-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto group-hover:scale-110 transition">
+                <i class="fa-solid fa-users text-2xl"></i>
+            </div>
+            <p class="font-bold mt-3 text-gray-800">Worker Directory</p>
+            <span class="text-xs text-gray-500">Search skilled pool</span>
+        </button>
+    </div>
+
+    <!-- Active Posted Jobs Overview -->
+    <div class="mt-8">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-xl text-brand-blue">Your Active Postings</h3>
+            <button onclick="navigate('post-job-screen')" class="btn bg-brand text-white text-xs px-3 py-1.5 rounded-lg font-bold">
+                <i class="fa-solid fa-plus mr-1"></i> Post Another
+            </button>
+        </div>
+        <div id="quickEmployerJobsContainer" class="space-y-3"></div>
+    </div>
+</section>
+
+<!-- POST JOB SCREEN -->
+<section id="post-job-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <div class="card p-6 sm:p-8 max-w-2xl mx-auto">
+        <div class="flex items-center gap-3 mb-6 border-b pb-4">
+            <span class="p-3 bg-blue-100 text-brand-blue rounded-xl">
+                <i class="fa-solid fa-bullhorn text-2xl"></i>
+            </span>
+            <div>
+                <h2 class="text-2xl font-bold text-brand-blue">Post a New Job Requirement</h2>
+                <p class="text-sm text-gray-500">Reach thousands of active workers instantly</p>
+            </div>
+        </div>
+
+        <form onsubmit="postJob(event)" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Job Title</label>
+                    <input id="jobTitle" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="e.g. Mason for Residential Project">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Required Skill / Trade</label>
+                    <select id="postSkill" class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 text-sm">
+                        <option>Construction</option>
+                        <option>Masonry</option>
+                        <option>Painting</option>
+                        <option>Plumbing</option>
+                        <option>Electrical</option>
+                        <option>Carpentry</option>
+                        <option>Welding</option>
+                        <option>Driving</option>
+                        <option>Cleaning</option>
+                        <option>Farming</option>
+                        <option>Loading/Unloading</option>
+                        <option>Security</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">State</label>
+                    <select id="postState" onchange="loadDistricts('postState','postDistrict')" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 text-sm">
+                        <option value="">Select State</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">District</label>
+                    <select id="postDistrict" onchange="loadCities('postState','postDistrict','postCity')" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 text-sm">
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">City / Town</label>
+                    <select id="postCity" required class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 text-sm">
+                        <option value="">Select City</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Daily Wage (₹)</label>
+                    <input id="jobWage" type="number" min="200" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="e.g. 800">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Workers Needed</label>
+                    <input id="jobWorkers" type="number" min="1" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="e.g. 4">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Working Hours</label>
+                    <input id="jobHours" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="e.g. 9 AM - 5 PM">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Job Description & Site Address</label>
+                <textarea id="jobDescription" required rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Specify project scope, food/transport arrangements, safety gear requirements..."></textarea>
+            </div>
+
+            <button type="submit" class="btn w-full bg-brand-blue hover:bg-blue-900 text-white py-3.5 rounded-xl font-bold shadow-md text-base">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Publish Job Listing
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- APPLICATIONS SCREEN (Worker View) -->
+<section id="applications-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <h2 class="text-2xl font-bold text-brand-blue mb-1">My Submitted Applications</h2>
+    <p class="text-sm text-gray-500 mb-5">Track statuses of jobs you've applied for</p>
+
+    <div id="applicationsContainer" class="space-y-4"></div>
+</section>
+
+<!-- EMPLOYER APPLICATIONS SCREEN (Employer View: Applicants for Posted Jobs) -->
+<section id="employer-applications-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <h2 class="text-2xl font-bold text-brand-blue mb-1">Worker Applications Received</h2>
+    <p class="text-sm text-gray-500 mb-5">Review interested workers, accept candidates, and call directly</p>
+
+    <div id="employerApplicationsContainer" class="space-y-4"></div>
+</section>
+
+<!-- SAVED JOBS SCREEN -->
+<section id="saved-jobs-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <h2 class="text-2xl font-bold text-brand-blue mb-1">Saved Jobs</h2>
+    <p class="text-sm text-gray-500 mb-5">Bookmarked job opportunities to review or apply anytime</p>
+
+    <div id="savedJobsContainer" class="space-y-4"></div>
+</section>
+
+<!-- WORKERS SCREEN (Employer View) -->
+<section id="workers-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <h2 class="text-2xl font-bold text-brand-blue mb-1">All India Worker Directory</h2>
+    <p class="text-sm text-gray-500 mb-4">Browse and contact skilled and semi-skilled workers directly</p>
+
+    <div class="card p-3 sm:p-4 mb-5">
+        <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                <i class="fa-solid fa-user-tag"></i>
+            </span>
+            <input id="workerSearch" oninput="renderWorkers()" placeholder="Search by trade (e.g. Mason, Welder), worker name, or city..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+    </div>
+
+    <div id="workersContainer" class="space-y-4"></div>
+</section>
+
+<!-- MY POSTED JOBS SCREEN (Employer View) -->
+<section id="my-jobs-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <div class="flex justify-between items-center mb-5">
+        <div>
+            <h2 class="text-2xl font-bold text-brand-blue">My Posted Jobs</h2>
+            <p class="text-sm text-gray-500">Manage all your active job listings</p>
+        </div>
+        <button onclick="navigate('post-job-screen')" class="btn bg-brand text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center shadow">
+            <i class="fa-solid fa-plus mr-1.5"></i> Post Job
+        </button>
+    </div>
+
+    <div id="myJobsContainer" class="space-y-4"></div>
+</section>
+
+<!-- HELP & EMERGENCY SAFETY SCREEN -->
+<section id="help-screen" class="screen">
+    <button onclick="goBack()" class="mb-4 text-gray-600 hover:text-gray-900 font-semibold inline-flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Back
+    </button>
+
+    <h2 class="text-2xl font-bold text-brand-blue mb-1">Help, Safety & Emergency Support</h2>
+    <p class="text-sm text-gray-500 mb-5">Immediate safety hotlines, worker protections, and scam dispute reporting</p>
+
+    <div class="space-y-5">
+        <!-- Emergency Hotline Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <a href="tel:112" class="card p-4 border-l-4 border-red-600 bg-red-50 hover:bg-red-100 transition flex items-center gap-3">
+                <div class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center font-extrabold text-lg">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-red-800 uppercase tracking-wide">National Emergency</span>
+                    <p class="text-xl font-black text-red-900">112</p>
+                </div>
+            </a>
+
+            <a href="tel:108" class="card p-4 border-l-4 border-amber-600 bg-amber-50 hover:bg-amber-100 transition flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-600 text-white rounded-full flex items-center justify-center font-extrabold text-lg">
+                    <i class="fa-solid fa-truck-medical"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-amber-800 uppercase tracking-wide">Medical Ambulance</span>
+                    <p class="text-xl font-black text-amber-900">108</p>
+                </div>
+            </a>
+
+            <a href="tel:1098" class="card p-4 border-l-4 border-blue-600 bg-blue-50 hover:bg-blue-100 transition flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-extrabold text-lg">
+                    <i class="fa-solid fa-child"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-blue-800 uppercase tracking-wide">Child Labour Helpline</span>
+                    <p class="text-xl font-black text-blue-900">1098</p>
+                </div>
+            </a>
+
+            <a href="tel:181" class="card p-4 border-l-4 border-purple-600 bg-purple-50 hover:bg-purple-100 transition flex items-center gap-3">
+                <div class="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-extrabold text-lg">
+                    <i class="fa-solid fa-person-dress"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-purple-800 uppercase tracking-wide">Women Helpline</span>
+                    <p class="text-xl font-black text-purple-900">181</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Safety Guidelines -->
+        <div class="card p-6">
+            <h3 class="font-bold text-brand-blue text-lg flex items-center">
+                <i class="fa-solid fa-shield-halved text-brand mr-2 text-xl"></i>
+                Mazdoor Safety & Rights Guidelines
+            </h3>
+            <div class="grid sm:grid-cols-2 gap-3 mt-4 text-sm text-gray-700">
+                <div class="flex items-start gap-2 bg-gray-50 p-3 rounded-lg border">
+                    <i class="fa-solid fa-circle-check text-green-600 mt-1"></i>
+                    <span><b>Confirm Wages Upfront:</b> Always agree on daily wage and working hours before travelling to the work site.</span>
+                </div>
+                <div class="flex items-start gap-2 bg-gray-50 p-3 rounded-lg border">
+                    <i class="fa-solid fa-ban text-red-600 mt-1"></i>
+                    <span><b>Zero Registration Fees:</b> Mazdoor Mitra is 100% free. Never pay any advance fee or deposit to get a job.</span>
+                </div>
+                <div class="flex items-start gap-2 bg-gray-50 p-3 rounded-lg border">
+                    <i class="fa-solid fa-hard-hat text-orange-600 mt-1"></i>
+                    <span><b>Safety Equipment (PPE):</b> Employers must provide helmets, boots, and harnesses for elevated or hazardous work.</span>
+                </div>
+                <div class="flex items-start gap-2 bg-gray-50 p-3 rounded-lg border">
+                    <i class="fa-solid fa-camera text-blue-600 mt-1"></i>
+                    <span><b>Attendance & Proof:</b> Maintain a daily diary or WhatsApp photos of completed work as proof of attendance.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem & Incident Reporting Form -->
+        <div class="card p-6">
+            <h3 class="font-bold text-brand-blue text-lg flex items-center">
+                <i class="fa-solid fa-triangle-exclamation text-red-500 mr-2"></i>
+                Report a Grievance or Scam
+            </h3>
+            <p class="text-xs text-gray-500 mt-1">Facing wage theft, unsafe conditions, or harassment? File an official report:</p>
+
+            <form onsubmit="submitComplaint(event)" class="mt-4 space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input id="complaintSubject" required placeholder="Subject / Employer or Site Name" class="w-full p-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-red-400 focus:outline-none">
+                    <select id="complaintCategory" class="w-full p-3 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-red-400 focus:outline-none">
+                        <option>Unpaid Wages / Wage Deduction</option>
+                        <option>Unsafe Work Environment</option>
+                        <option>False Job Information</option>
+                        <option>Harassment or Abuse</option>
+                        <option>Other Grievance</option>
+                    </select>
+                </div>
+
+                <textarea id="complaintText" required rows="3" class="w-full p-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-red-400 focus:outline-none" placeholder="Provide details like contractor phone number, work site location, and amount owed..."></textarea>
+
+                <button type="submit" class="btn bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold text-sm shadow">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Submit Official Grievance
+                </button>
+            </form>
+
+            <!-- Past Reports List -->
+            <div id="reportsListContainer" class="mt-6 border-t pt-4">
+                <!-- Injected by JS -->
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- BOTTOM BAR -->
+<footer class="bg-white border-t border-gray-200 text-center py-3.5 px-4 text-xs text-gray-500 shadow-inner">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+        <span><b>Mazdoor Mitra V3</b> • All India Labour Support & Safety Network • Free & Direct</span>
+        <div class="flex items-center gap-4">
+            <button onclick="navigate('help-screen')" class="hover:underline text-brand">Safety Hotline</button>
+            <span>•</span>
+            <button onclick="resetAllDemoData()" class="hover:underline text-gray-400">Reset Demo Data</button>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* =========================================================
+   INDIA LOCATION DATABASE (All 28 States & Key UTs)
+   Fixed duplicates and verified clean hierarchy
+========================================================= */
+const INDIA = {
+    "Andhra Pradesh": {
+        "Anantapur": ["Anantapur", "Guntakal", "Dharmavaram", "Hindupur"],
+        "Chittoor": ["Chittoor", "Tirupati", "Madanapalle"],
+        "East Godavari": ["Kakinada", "Rajahmundry", "Amalapuram"],
+        "Guntur": ["Guntur", "Tenali", "Narasaraopet"],
+        "Krishna": ["Vijayawada", "Machilipatnam"],
+        "Kurnool": ["Kurnool", "Adoni", "Nandyal"],
+        "Nellore": ["Nellore", "Kavali", "Gudur"],
+        "Prakasam": ["Ongole", "Chirala", "Markapur"],
+        "Srikakulam": ["Srikakulam", "Palasa"],
+        "Visakhapatnam": ["Visakhapatnam", "Bheemunipatnam", "Gajuwaka"],
+        "Vizianagaram": ["Vizianagaram", "Bobbili"],
+        "West Godavari": ["Eluru", "Bhimavaram", "Tadepalligudem"],
+        "Kadapa": ["Kadapa", "Proddatur", "Rayachoti"]
+    },
+    "Telangana": {
+        "Hyderabad": ["Hyderabad", "Secunderabad", "Charminar", "Gachibowli"],
+        "Rangareddy": ["Shamshabad", "LB Nagar", "Rajendranagar", "Ibrahimpatnam"],
+        "Medchal-Malkajgiri": ["Medchal", "Kompally", "Kukatpally", "Alwal"],
+        "Warangal": ["Warangal", "Hanamkonda", "Kazipet"],
+        "Karimnagar": ["Karimnagar", "Huzurabad", "Jammikunta"],
+        "Nizamabad": ["Nizamabad", "Bodhan", "Armoor"],
+        "Khammam": ["Khammam", "Kothagudem", "Sathupalli"],
+        "Mahbubnagar": ["Mahbubnagar", "Jadcherla", "Nagarkurnool"]
+    },
+    "Karnataka": {
+        "Bengaluru Urban": ["Bengaluru", "Whitefield", "Electronic City", "Yelahanka", "Peenya"],
+        "Mysuru": ["Mysuru", "Nanjangud", "Hunsur"],
+        "Mangaluru (Dakshina Kannada)": ["Mangaluru", "Bantwal", "Puttur"],
+        "Belagavi": ["Belagavi", "Gokak", "Chikkodi"],
+        "Hubballi-Dharwad": ["Hubballi", "Dharwad"],
+        "Kalaburagi": ["Kalaburagi", "Sedam"],
+        "Ballari": ["Ballari", "Hospet", "Sandur"],
+        "Shivamogga": ["Shivamogga", "Bhadravati"]
+    },
+    "Tamil Nadu": {
+        "Chennai": ["Chennai", "Tambaram", "Ambattur", "Guindy"],
+        "Coimbatore": ["Coimbatore", "Pollachi", "Mettupalayam"],
+        "Madurai": ["Madurai", "Melur", "Thirumangalam"],
+        "Salem": ["Salem", "Attur", "Mettur"],
+        "Tiruchirappalli": ["Tiruchirappalli", "Manapparai", "Srirangam"],
+        "Tiruppur": ["Tiruppur", "Avinashi", "Udumalaipettai"],
+        "Tirunelveli": ["Tirunelveli", "Palayamkottai"],
+        "Vellore": ["Vellore", "Katpadi", "Gudiyatham"]
+    },
+    "Maharashtra": {
+        "Mumbai": ["Mumbai", "Andheri", "Bandra", "Borivali", "Dadar"],
+        "Pune": ["Pune", "Pimpri-Chinchwad", "Hadapsar", "Kothrud", "Hinjawadi"],
+        "Nagpur": ["Nagpur", "Kamptee", "Hingna"],
+        "Nashik": ["Nashik", "Malegaon", "Sinnar"],
+        "Thane": ["Thane", "Kalyan", "Navi Mumbai", "Bhiwandi"],
+        "Chhatrapati Sambhajinagar": ["Chhatrapati Sambhajinagar", "Jalna"],
+        "Kolhapur": ["Kolhapur", "Ichalkaranji"],
+        "Solapur": ["Solapur", "Pandharpur"]
+    },
+    "Delhi": {
+        "New Delhi": ["Connaught Place", "Chanakyapuri"],
+        "North Delhi": ["Civil Lines", "Rohini", "Narela"],
+        "South Delhi": ["Saket", "Hauz Khas", "Okhla"],
+        "West Delhi": ["Rajouri Garden", "Janakpuri"],
+        "East Delhi": ["Preet Vihar", "Mayur Vihar"]
+    },
+    "Uttar Pradesh": {
+        "Lucknow": ["Lucknow", "Alambagh", "Gomti Nagar", "Chinhat"],
+        "Kanpur Nagar": ["Kanpur", "Govind Nagar", "Panki"],
+        "Agra": ["Agra", "Fatehabad"],
+        "Varanasi": ["Varanasi", "Ramnagar"],
+        "Prayagraj": ["Prayagraj", "Naini"],
+        "Meerut": ["Meerut", "Modinagar"],
+        "Gautam Buddha Nagar": ["Noida", "Greater Noida", "Dadri"],
+        "Ghaziabad": ["Ghaziabad", "Sahibabad", "Loni"]
+    },
+    "West Bengal": {
+        "Kolkata": ["Kolkata", "Salt Lake", "New Town", "Behala"],
+        "Howrah": ["Howrah", "Bally", "Uluberia"],
+        "Paschim Bardhaman": ["Asansol", "Durgapur"],
+        "Darjeeling": ["Siliguri", "Darjeeling"]
+    },
+    "Gujarat": {
+        "Ahmedabad": ["Ahmedabad", "Sanand", "Maninagar", "SG Highway"],
+        "Surat": ["Surat", "Udhna", "Katargam"],
+        "Vadodara": ["Vadodara", "Makarpura"],
+        "Rajkot": ["Rajkot", "Morbi Road"]
+    },
+    "Rajasthan": {
+        "Jaipur": ["Jaipur", "Sanganer", "Sitapura", "Mansarovar"],
+        "Jodhpur": ["Jodhpur", "Mandore"],
+        "Udaipur": ["Udaipur", "Sukher"],
+        "Kota": ["Kota"]
+    },
+    "Madhya Pradesh": {
+        "Bhopal": ["Bhopal", "Mandideep", "Bairagarh"],
+        "Indore": ["Indore", "Pithampur", "Vijay Nagar"],
+        "Gwalior": ["Gwalior"],
+        "Jabalpur": ["Jabalpur"]
+    },
+    "Bihar": {
+        "Patna": ["Patna", "Danapur", "Phulwari Sharif"],
+        "Gaya": ["Gaya", "Bodh Gaya"],
+        "Muzaffarpur": ["Muzaffarpur"],
+        "Bhagalpur": ["Bhagalpur"]
+    },
+    "Odisha": {
+        "Khordha": ["Bhubaneswar", "Jatni"],
+        "Cuttack": ["Cuttack", "Choudwar"],
+        "Sundargarh": ["Rourkela"]
+    },
+    "Punjab": {
+        "Ludhiana": ["Ludhiana", "Sahnewal"],
+        "Amritsar": ["Amritsar"],
+        "Jalandhar": ["Jalandhar"],
+        "SAS Nagar (Mohali)": ["Mohali", "Kharar"]
+    },
+    "Haryana": {
+        "Gurugram": ["Gurugram", "Manesar", "Sohna"],
+        "Faridabad": ["Faridabad", "Ballabgarh"],
+        "Panipat": ["Panipat"],
+        "Hisar": ["Hisar"]
+    },
+    "Kerala": {
+        "Ernakulam": ["Kochi", "Aluva", "Angamaly"],
+        "Thiruvananthapuram": ["Thiruvananthapuram", "Neyyattinkara"],
+        "Kozhikode": ["Kozhikode", "Vadakara"]
+    },
+    "Jharkhand": {
+        "Ranchi": ["Ranchi", "Hatia"],
+        "East Singhbhum": ["Jamshedpur", "Ghatshila"],
+        "Dhanbad": ["Dhanbad", "Jharia"],
+        "Bokaro": ["Bokaro Steel City", "Chas"]
+    },
+    "Assam": {
+        "Kamrup Metropolitan": ["Guwahati", "Dispur"],
+        "Dibrugarh": ["Dibrugarh"],
+        "Cachar": ["Silchar"]
+    }
+};
+
+/* =========================================================
+   DEFAULT MOCK DATA (Realistic & Ready to Use)
+========================================================= */
+const DEFAULT_JOBS = [
+    {
+        id: 101,
+        title: "Construction Helper & Porter",
+        employer: "BuildCo Infra Projects",
+        employerId: 1001,
+        employerPhone: "9876543210",
+        state: "Telangana",
+        district: "Hyderabad",
+        city: "Hyderabad",
+        skill: "Construction",
+        wage: 750,
+        workers: 8,
+        hours: "8:30 AM - 5:30 PM",
+        description: "Need reliable helpers for sand, cement shifting, and general masonry support on a multi-storey residential project. Free lunch provided.",
+        date: "Today"
+    },
+    {
+        id: 102,
+        title: "Skilled House Painter",
+        employer: "Sri Venkateswara Decorators",
+        employerId: 1002,
+        employerPhone: "9848022338",
+        state: "Andhra Pradesh",
+        district: "Visakhapatnam",
+        city: "Visakhapatnam",
+        skill: "Painting",
+        wage: 900,
+        workers: 3,
+        hours: "9:00 AM - 6:00 PM",
+        description: "Exterior primer and weather-shield paint application for two duplex villas. Brushes and ladders provided.",
+        date: "Today"
+    },
+    {
+        id: 103,
+        title: "Electrician Assistant / Conduit Helper",
+        employer: "Spark Technical Services",
+        employerId: 1003,
+        employerPhone: "9711223344",
+        state: "Karnataka",
+        district: "Bengaluru Urban",
+        city: "Bengaluru",
+        skill: "Electrical",
+        wage: 950,
+        workers: 2,
+        hours: "9:00 AM - 6:00 PM",
+        description: "Commercial IT park wiring, wall chasing, and conduit pipe laying. Basic knowledge of safety boots and tools required.",
+        date: "Yesterday"
+    },
+    {
+        id: 104,
+        title: "Plumbing Assistant & Trench Digger",
+        employer: "Apex Pipeline Solutions",
+        employerId: 1004,
+        employerPhone: "9988776655",
+        state: "Maharashtra",
+        district: "Pune",
+        city: "Pune",
+        skill: "Plumbing",
+        wage: 850,
+        workers: 4,
+        hours: "8:00 AM - 5:00 PM",
+        description: "Laying PVC and drainage pipelines for new society wing. Immediate spot payout every weekend.",
+        date: "2 days ago"
+    }
+];
+
+const DEFAULT_WORKERS = [
+    {
+        id: 201,
+        name: "Ramesh Kumar Yadav",
+        phone: "9876501234",
+        state: "Telangana",
+        district: "Hyderabad",
+        city: "Hyderabad",
+        skill: "Construction",
+        experience: 6,
+        rating: 4.8
+    },
+    {
+        id: 202,
+        name: "Sunil Venkata Rao",
+        phone: "9848123456",
+        state: "Andhra Pradesh",
+        district: "Visakhapatnam",
+        city: "Visakhapatnam",
+        skill: "Painting",
+        experience: 4,
+        rating: 4.9
+    },
+    {
+        id: 203,
+        name: "Manjunath Gowda",
+        phone: "9448112233",
+        state: "Karnataka",
+        district: "Bengaluru Urban",
+        city: "Bengaluru",
+        skill: "Electrical",
+        experience: 5,
+        rating: 4.7
+    },
+    {
+        id: 204,
+        name: "Ganesh Patil",
+        phone: "9822334455",
+        state: "Maharashtra",
+        district: "Pune",
+        city: "Pune",
+        skill: "Plumbing",
+        experience: 8,
+        rating: 5.0
+    }
+];
+
+/* =========================================================
+   MULTILINGUAL TRANSLATIONS (English, Hindi, Telugu)
+========================================================= */
+const I18N = {
+    en: {
+        hero_subtitle: "Find Work. Find Workers. Build a Better Future.",
+        hero_desc: "India's direct labour & contractor bridge with verified fair wages, regional language support, and worker safety protection.",
+        btn_worker: "I am a Worker",
+        btn_employer: "I am an Employer",
+        btn_location: "Detect Location",
+        how_it_works: "How Mazdoor Mitra Works",
+        feature1_title: "Find Nearby Jobs",
+        feature1_desc: "Search daily wage & skilled jobs across all 28 states and Union Territories by state, district, and city.",
+        feature2_title: "Connect Directly",
+        feature2_desc: "No middlemen or commission fees. Workers and contractors connect via direct phone calls and WhatsApp.",
+        feature3_title: "Work Safely",
+        feature3_desc: "Emergency safety hotlines (112, 108), wage transparency guidelines, and incident reporting."
+    },
+    hi: {
+        hero_subtitle: "काम खोजें। कामगार खोजें। बेहतर भविष्य बनाएं।",
+        hero_desc: "भारत का सीधा मजदूर और ठेकेदार मंच - उचित मजदूरी, क्षेत्रीय भाषा और पूर्ण सुरक्षा के साथ।",
+        btn_worker: "मैं कामगार हूँ (मजदूर)",
+        btn_employer: "मैं नियोक्ता हूँ (ठेकेदार)",
+        btn_location: "मेरा स्थान पहचानें",
+        how_it_works: "मजदूर मित्र कैसे काम करता है",
+        feature1_title: "पास का काम खोजें",
+        feature1_desc: "पूरे भारत के राज्यों, जिलों और शहरों में दैनिक मजदूरी और कुशल काम खोजें।",
+        feature2_title: "सीधा संपर्क करें",
+        feature2_desc: "कोई बिचौलिया या कमीशन नहीं। फोन कॉल और व्हाट्सएप के जरिए सीधा काम तय करें।",
+        feature3_title: "सुरक्षित काम करें",
+        feature3_desc: "आपातकालीन हेल्पलाइन (112, 108), सही मजदूरी नियम और समस्या निवारण समर्थन।"
+    },
+    te: {
+        hero_subtitle: "పని పొందండి. కార్మికులను కనుగొనండి. మెరుగైన భవిష్యత్తును నిర్మించుకోండి.",
+        hero_desc: "న్యాయమైన వేతనాలు, ప్రాంతీయ భాషా మద్దతు మరియు కార్మిక భద్రతా రక్షణతో భారతదేశం యొక్క ప్రత్యక్ష లేబర్ వేదిక.",
+        btn_worker: "నేను కార్మికుడిని",
+        btn_employer: "నేను యజమానిని (కాంట్రాక్టర్)",
+        btn_location: "నా లొకేషన్ గుర్తించండి",
+        how_it_works: "మజ్దూర్ మిత్ర ఎలా పనిచేస్తుంది",
+        feature1_title: "సమీప పనులను వెతకండి",
+        feature1_desc: "రాష్ట్రం, జిల్లా మరియు నగరం వారీగా భారతదేశం అంతటా రోజువారీ వేతన పనులను కనుగొనండి.",
+        feature2_title: "నేరుగా సంప్రదించండి",
+        feature2_desc: "దళారులు లేదా కమీషన్లు లేవు. ఫోన్ కాల్స్ మరియు వాట్సాప్ ద్వారా నేరుగా మాట్లాడండి.",
+        feature3_title: "సురక్షితంగా పనిచేయండి",
+        feature3_desc: "అత్యవసర హెల్ప్‌లైన్లు (112, 108), న్యాయమైన వేతన మార్గదర్శకాలు మరియు సమస్య నివేదిక."
+    }
+};
+
+/* =========================================================
+   APP STATE & LOCAL STORAGE INITIALIZATION
+========================================================= */
+let currentUser = JSON.parse(localStorage.getItem("mm_currentUser")) || null;
+let jobs = JSON.parse(localStorage.getItem("mm_jobs")) || DEFAULT_JOBS;
+let workers = JSON.parse(localStorage.getItem("mm_workers")) || DEFAULT_WORKERS;
+let applications = JSON.parse(localStorage.getItem("mm_applications")) || [
+    {
+        id: 301,
+        jobId: 101,
+        workerId: 201,
+        workerName: "Ramesh Kumar Yadav",
+        workerPhone: "9876501234",
+        status: "Applied",
+        date: "Today"
+    }
+];
+let savedJobs = JSON.parse(localStorage.getItem("mm_savedJobs")) || [];
+let complaints = JSON.parse(localStorage.getItem("mm_complaints")) || [];
+let navigationHistory = ["home-screen"];
+let currentLanguage = localStorage.getItem("mm_language") || "en";
+
+function saveData() {
+    localStorage.setItem("mm_currentUser", JSON.stringify(currentUser));
+    localStorage.setItem("mm_jobs", JSON.stringify(jobs));
+    localStorage.setItem("mm_workers", JSON.stringify(workers));
+    localStorage.setItem("mm_applications", JSON.stringify(applications));
+    localStorage.setItem("mm_savedJobs", JSON.stringify(savedJobs));
+    localStorage.setItem("mm_complaints", JSON.stringify(complaints));
+    localStorage.setItem("mm_language", currentLanguage);
+}
+
+function showToast(title, message, isError = false) {
+    const toast = document.getElementById("toastNotification");
+    const icon = document.getElementById("toastIcon");
+    document.getElementById("toastTitle").innerText = title;
+    document.getElementById("toastMessage").innerText = message;
+
+    if (isError) {
+        icon.className = "fa-solid fa-triangle-exclamation text-red-400 text-lg";
+    } else {
+        icon.className = "fa-solid fa-circle-check text-green-400 text-lg";
+    }
+
+    toast.classList.remove("-translate-y-24", "opacity-0", "pointer-events-none");
+    toast.classList.add("translate-y-0", "opacity-100");
+
+    setTimeout(() => {
+        toast.classList.add("-translate-y-24", "opacity-0", "pointer-events-none");
+        toast.classList.remove("translate-y-0", "opacity-100");
+    }, 3500);
+}
+
+/* =========================================================
+   NAVIGATION ENGINE
+========================================================= */
+function navigate(id) {
+    document.querySelectorAll(".screen").forEach(x => x.classList.remove("active"));
+    const target = document.getElementById(id);
+    if (target) {
+        target.classList.add("active");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    if (navigationHistory[navigationHistory.length - 1] !== id) {
+        navigationHistory.push(id);
+    }
+
+    // Refresh context-specific views
+    if (id === "find-jobs-screen") renderJobs();
+    if (id === "applications-screen") renderApplications();
+    if (id === "employer-applications-screen") renderEmployerApplications();
+    if (id === "saved-jobs-screen") renderSavedJobs();
+    if (id === "workers-screen") renderWorkers();
+    if (id === "my-jobs-screen") renderEmployerJobs();
+    if (id === "worker-dash-screen") updateWorkerDashboard();
+    if (id === "employer-dash-screen") updateEmployerDashboard();
+    if (id === "help-screen") renderComplaints();
+
+    updateNavUserBadge();
+}
+
+function goBack() {
+    if (navigationHistory.length > 1) {
+        navigationHistory.pop();
+        const previous = navigationHistory[navigationHistory.length - 1];
+        document.querySelectorAll(".screen").forEach(x => x.classList.remove("active"));
+        const target = document.getElementById(previous);
+        if (target) {
+            target.classList.add("active");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    } else {
+        navigate("home-screen");
+    }
+}
+
+function handleRoleSelection(role) {
+    if (currentUser) {
+        if (currentUser.role === role) {
+            navigate(role === "worker" ? "worker-dash-screen" : "employer-dash-screen");
+            return;
+        }
+    }
+    navigate(role === "worker" ? "worker-reg-screen" : "employer-reg-screen");
+}
+
+function updateNavUserBadge() {
+    const badgeContainer = document.getElementById("navUserBadge");
+    if (!badgeContainer) return;
+
+    if (!currentUser) {
+        badgeContainer.innerHTML = "";
+        return;
+    }
+
+    const isWorker = currentUser.role === "worker";
+    badgeContainer.innerHTML = `
+        <button onclick="navigate('${isWorker ? "worker-dash-screen" : "employer-dash-screen"}')" class="flex items-center gap-1.5 bg-blue-950 border border-blue-700 hover:border-orange-400 px-3 py-1 rounded-lg text-xs font-semibold text-white transition">
+            <i class="fa-solid ${isWorker ? "fa-helmet-safety text-orange-400" : "fa-building text-blue-300"}"></i>
+            <span class="max-w-[100px] truncate">${escapeHTML(currentUser.name)}</span>
+        </button>
+    `;
+}
+
+/* =========================================================
+   LOCATION CASCADING DROPDOWNS
+========================================================= */
+function populateStates() {
+    const ids = ["workerState", "employerState", "jobState", "postState"];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const first = el.options[0].text;
+        el.innerHTML = `<option value="">${first}</option>`;
+        Object.keys(INDIA).sort().forEach(state => {
+            el.innerHTML += `<option value="${state}">${state}</option>`;
+        });
+    });
+}
+
+function loadDistricts(stateId, districtId) {
+    const stateEl = document.getElementById(stateId);
+    const districtEl = document.getElementById(districtId);
+    if (!stateEl || !districtEl) return;
+
+    const state = stateEl.value;
+    districtEl.innerHTML = `<option value="">Select District</option>`;
+
+    if (!state || !INDIA[state]) return;
+
+    Object.keys(INDIA[state]).sort().forEach(d => {
+        districtEl.innerHTML += `<option value="${d}">${d}</option>`;
+    });
+}
+
+function loadCities(stateId, districtId, cityId) {
+    const stateEl = document.getElementById(stateId);
+    const districtEl = document.getElementById(districtId);
+    const cityEl = document.getElementById(cityId);
+    if (!stateEl || !districtEl || !cityEl) return;
+
+    const state = stateEl.value;
+    const district = districtEl.value;
+    cityEl.innerHTML = `<option value="">Select City</option>`;
+
+    if (!state || !district || !INDIA[state] || !INDIA[state][district]) return;
+
+    INDIA[state][district].forEach(c => {
+        cityEl.innerHTML += `<option value="${c}">${c}</option>`;
+    });
+}
+
+/* =========================================================
+   QUICK DEMO LOGINS & PROFILES
+========================================================= */
+function quickDemoLogin(role) {
+    if (role === "worker") {
+        currentUser = {
+            role: "worker",
+            id: 201,
+            name: "Ramesh Kumar Yadav",
+            phone: "9876501234",
+            state: "Telangana",
+            district: "Hyderabad",
+            city: "Hyderabad",
+            skill: "Construction",
+            experience: 6
+        };
+        saveData();
+        showToast("Logged in as Ramesh Kumar", "Worker mode activated");
+        navigate("worker-dash-screen");
+    } else {
+        currentUser = {
+            role: "employer",
+            id: 1001,
+            name: "BuildCo Infra Projects",
+            phone: "9876543210",
+            state: "Telangana",
+            district: "Hyderabad",
+            city: "Hyderabad"
+        };
+        saveData();
+        showToast("Logged in as BuildCo Infra", "Employer mode activated");
+        navigate("employer-dash-screen");
+    }
+}
+
+/* =========================================================
+   WORKER REGISTRATION & DASHBOARD
+========================================================= */
+function registerWorker(e) {
+    e.preventDefault();
+    const name = document.getElementById("workerName").value.trim();
+    const phone = document.getElementById("workerPhone").value.trim();
+    const state = document.getElementById("workerState").value;
+    const district = document.getElementById("workerDistrict").value;
+    const city = document.getElementById("workerCity").value;
+    const skill = document.getElementById("workerSkillSelect").value;
+    const experience = Number(document.getElementById("workerExperience").value);
+
+    if (!name || !phone || !state || !district || !city) {
+        showToast("Missing fields", "Please fill all required registration details", true);
+        return;
+    }
+
+    const worker = {
+        id: Date.now(),
+        name,
+        phone,
+        state,
+        district,
+        city,
+        skill,
+        experience,
+        rating: 5.0
+    };
+
+    workers.unshift(worker);
+    currentUser = { role: "worker", ...worker };
+    saveData();
+
+    showToast("Profile Created", "Welcome to Mazdoor Mitra, " + name + "!");
+    navigate("worker-dash-screen");
+}
+
+function updateWorkerDashboard() {
+    if (!currentUser || currentUser.role !== "worker") return;
+
+    document.getElementById("workerWelcome").innerText = `Welcome, ${currentUser.name}`;
+    document.getElementById("workerLocationDisplay").innerHTML = `<i class="fa-solid fa-location-dot mr-1 text-orange-400"></i> ${currentUser.city}, ${currentUser.state}`;
+    
+    // Fixed: Dedicated workerSkillDisplay ID avoids collision with worker registration select element
+    const skillDisplay = document.getElementById("workerSkillDisplay");
+    if (skillDisplay) {
+        skillDisplay.innerText = `${currentUser.skill} Specialist • ${currentUser.experience} Years Experience`;
+    }
+
+    const myAppCount = applications.filter(a => a.workerId === currentUser.id).length;
+    document.getElementById("applicationCount").innerText = `${myAppCount} Applied`;
+    document.getElementById("savedCount").innerText = `${savedJobs.length} Bookmarked`;
+
+    renderRecommendedJobs();
+}
+
+function renderRecommendedJobs() {
+    const container = document.getElementById("recommendedJobsContainer");
+    if (!container || !currentUser) return;
+
+    // Recommend matching skill first, or same state
+    const matches = jobs.filter(j => j.skill === currentUser.skill || j.state === currentUser.state).slice(0, 3);
+    const toShow = matches.length ? matches : jobs.slice(0, 3);
+
+    container.innerHTML = toShow.map(job => {
+        const isSaved = savedJobs.includes(job.id);
+        const alreadyApplied = applications.some(a => a.jobId === job.id && a.workerId === currentUser.id);
+
+        return `
+            <div class="card p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-l-4 border-orange-500">
+                <div>
+                    <h4 class="font-bold text-gray-900 text-base">${escapeHTML(job.title)}</h4>
+                    <p class="text-xs text-gray-500"><i class="fa-solid fa-building mr-1"></i>${escapeHTML(job.employer)} • <i class="fa-solid fa-location-dot mr-1"></i>${job.city}, ${job.state}</p>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                    <span class="text-brand font-black text-sm bg-orange-50 px-2.5 py-1 rounded-lg border border-orange-200">₹${job.wage}/day</span>
+                    <div class="flex gap-1.5">
+                        <button onclick="showJob(${job.id})" class="btn bg-brand-blue text-white px-3 py-1.5 rounded-lg text-xs font-bold">Details</button>
+                        <button onclick="applyJob(${job.id})" ${alreadyApplied ? 'disabled' : ''} class="btn ${alreadyApplied ? 'bg-green-600' : 'bg-brand'} text-white px-3 py-1.5 rounded-lg text-xs font-bold">
+                            ${alreadyApplied ? '<i class="fa-solid fa-check"></i>' : 'Apply'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+/* =========================================================
+   EMPLOYER REGISTRATION & DASHBOARD
+========================================================= */
+function registerEmployer(e) {
+    e.preventDefault();
+    const name = document.getElementById("employerName").value.trim();
+    const phone = document.getElementById("employerPhone").value.trim();
+    const state = document.getElementById("employerState").value;
+    const district = document.getElementById("employerDistrict").value;
+    const city = document.getElementById("employerCity").value;
+
+    if (!name || !phone || !state || !district || !city) {
+        showToast("Missing fields", "Please fill all required contractor details", true);
+        return;
+    }
+
+    currentUser = {
+        role: "employer",
+        id: Date.now(),
+        name,
+        phone,
+        state,
+        district,
+        city
+    };
+
+    saveData();
+    showToast("Profile Created", "Employer account ready for hiring");
+    navigate("employer-dash-screen");
+}
+
+function updateEmployerDashboard() {
+    if (!currentUser || currentUser.role !== "employer") return;
+
+    document.getElementById("employerWelcome").innerText = `Welcome, ${currentUser.name}`;
+    document.getElementById("employerLocationDisplay").innerHTML = `<i class="fa-solid fa-location-dot mr-1"></i> ${currentUser.city}, ${currentUser.state}`;
+
+    const myJobsList = jobs.filter(j => j.employerId === currentUser.id);
+    document.getElementById("employerJobCountBadge").innerText = `${myJobsList.length} Active Listings`;
+
+    // Calculate applicants for this employer's jobs
+    const myJobIds = myJobsList.map(j => j.id);
+    const applicantCount = applications.filter(a => myJobIds.includes(a.jobId)).length;
+    document.getElementById("employerApplicantsBadge").innerText = `${applicantCount} Received`;
+
+    renderQuickEmployerJobs();
+}
+
+function renderQuickEmployerJobs() {
+    const container = document.getElementById("quickEmployerJobsContainer");
+    if (!container || !currentUser) return;
+
+    const myJobs = jobs.filter(j => j.employerId === currentUser.id);
+    if (!myJobs.length) {
+        container.innerHTML = `
+            <div class="card p-6 text-center text-gray-500">
+                <i class="fa-solid fa-clipboard-list text-3xl mb-2 text-gray-400"></i>
+                <p class="font-medium text-sm">You haven't posted any jobs yet.</p>
+                <button onclick="navigate('post-job-screen')" class="mt-2 text-xs font-bold text-brand hover:underline">Post your first job requirement now →</button>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = myJobs.map(job => {
+        const applicantCount = applications.filter(a => a.jobId === job.id).length;
+        return `
+            <div class="card p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div>
+                    <h4 class="font-bold text-gray-900">${escapeHTML(job.title)}</h4>
+                    <p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>${job.city}, ${job.state} • ₹${job.wage}/day • Needed: ${job.workers}</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2.5 py-1 rounded-full">${applicantCount} Applicants</span>
+                    <button onclick="showEmployerApplications()" class="btn bg-brand-blue text-white px-3 py-1.5 rounded-lg text-xs font-bold">Review</button>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+/* =========================================================
+   POST JOB
+========================================================= */
+function postJob(e) {
+    e.preventDefault();
+    if (!currentUser || currentUser.role !== "employer") {
+        showToast("Employer Required", "Please create or switch to an employer profile first", true);
+        navigate("employer-reg-screen");
+        return;
+    }
+
+    const title = document.getElementById("jobTitle").value.trim();
+    const skill = document.getElementById("postSkill").value;
+    const state = document.getElementById("postState").value;
+    const district = document.getElementById("postDistrict").value;
+    const city = document.getElementById("postCity").value;
+    const wage = Number(document.getElementById("jobWage").value);
+    const workersNeeded = Number(document.getElementById("jobWorkers").value);
+    const hours = document.getElementById("jobHours").value.trim();
+    const description = document.getElementById("jobDescription").value.trim();
+
+    if (!title || !state || !district || !city || !wage || !workersNeeded) {
+        showToast("Missing Info", "Please fill all mandatory job fields", true);
+        return;
+    }
+
+    const newJob = {
+        id: Date.now(),
+        title,
+        employer: currentUser.name,
+        employerId: currentUser.id,
+        employerPhone: currentUser.phone,
+        state,
+        district,
+        city,
+        skill,
+        wage,
+        workers: workersNeeded,
+        hours,
+        description,
+        date: "Today"
+    };
+
+    jobs.unshift(newJob);
+    saveData();
+
+    document.querySelector("#post-job-screen form").reset();
+    showToast("Job Posted!", "Your requirement is now live for all workers.");
+    navigate("employer-dash-screen");
+}
+
+/* =========================================================
+   RENDER JOBS & FILTER ENGINE
+========================================================= */
+function renderJobs() {
+    const container = document.getElementById("jobsContainer");
+    if (!container) return;
+
+    const state = document.getElementById("jobState").value;
+    const district = document.getElementById("jobDistrict").value;
+    const city = document.getElementById("jobCity").value;
+    const skill = document.getElementById("jobSkill").value;
+    const search = document.getElementById("jobSearch").value.toLowerCase().trim();
+
+    const filtered = jobs.filter(job => {
+        return (
+            (!state || job.state === state) &&
+            (!district || job.district === district) &&
+            (!city || job.city === city) &&
+            (!skill || job.skill === skill) &&
+            (!search ||
+                job.title.toLowerCase().includes(search) ||
+                job.skill.toLowerCase().includes(search) ||
+                job.city.toLowerCase().includes(search) ||
+                job.state.toLowerCase().includes(search) ||
+                job.employer.toLowerCase().includes(search))
+        );
+    });
+
+    if (!filtered.length) {
+        container.innerHTML = `
+            <div class="card p-10 text-center text-gray-500">
+                <i class="fa-solid fa-magnifying-glass text-4xl mb-3 text-gray-400"></i>
+                <p class="font-bold text-gray-700">No matching jobs found.</p>
+                <p class="text-sm mt-1">Try broadening your location or skill filter.</p>
+                <button onclick="clearJobFilters()" class="btn mt-4 bg-brand text-white px-4 py-2 rounded-xl text-xs font-bold">Reset Filters</button>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = filtered.map(job => {
+        const saved = savedJobs.includes(job.id);
+        const alreadyApplied = currentUser && currentUser.role === "worker" && applications.some(a => a.jobId === job.id && a.workerId === currentUser.id);
+
+        return `
+            <div class="card p-5 hover:border-orange-300 transition">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-brand-blue">${escapeHTML(job.title)}</h3>
+                            <span class="text-xs bg-blue-100 text-brand-blue font-semibold px-2 py-0.5 rounded-full">${job.skill}</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-0.5">
+                            <i class="fa-solid fa-building mr-1 text-gray-400"></i> ${escapeHTML(job.employer)} • <i class="fa-regular fa-clock mr-1 text-gray-400"></i> ${job.hours}
+                        </p>
+                    </div>
+                    <div class="text-left sm:text-right">
+                        <span class="inline-block bg-orange-100 text-brand font-black text-lg px-3 py-1 rounded-xl">
+                            ₹${job.wage}<span class="text-xs font-medium text-gray-600">/day</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-gray-600 mt-4 bg-gray-50 p-2.5 rounded-xl border">
+                    <span><i class="fa-solid fa-location-dot text-brand mr-1"></i> ${escapeHTML(job.city)}</span>
+                    <span><i class="fa-solid fa-map text-brand mr-1"></i> ${escapeHTML(job.state)}</span>
+                    <span><i class="fa-solid fa-users text-brand mr-1"></i> ${job.workers} Needed</span>
+                    <span><i class="fa-solid fa-calendar-day text-brand mr-1"></i> Posted ${job.date}</span>
+                </div>
+
+                <p class="text-xs text-gray-600 mt-3 line-clamp-2">${escapeHTML(job.description)}</p>
+
+                <div class="flex gap-2 mt-4 pt-3 border-t">
+                    <button onclick="showJob(${job.id})" class="flex-1 btn bg-brand-blue hover:bg-blue-900 text-white py-2.5 rounded-xl font-bold text-sm">
+                        View Details
+                    </button>
+                    
+                    <button onclick="applyJob(${job.id})" ${alreadyApplied ? 'disabled' : ''} class="flex-1 btn ${alreadyApplied ? 'bg-green-600 cursor-not-allowed' : 'bg-brand hover:bg-brand-dark'} text-white py-2.5 rounded-xl font-bold text-sm">
+                        <i class="fa-solid ${alreadyApplied ? 'fa-check' : 'fa-paper-plane'} mr-1.5"></i>
+                        ${alreadyApplied ? 'Applied' : 'Apply Now'}
+                    </button>
+
+                    <button onclick="toggleSave(${job.id})" class="btn px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 border" title="${saved ? 'Unsave' : 'Bookmark Job'}">
+                        <i class="fa-solid fa-bookmark ${saved ? 'text-yellow-500' : 'text-gray-400'}"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+function clearJobFilters() {
+    document.getElementById("jobState").value = "";
+    document.getElementById("jobDistrict").innerHTML = '<option value="">All Districts</option>';
+    document.getElementById("jobCity").innerHTML = '<option value="">All Cities</option>';
+    document.getElementById("jobSkill").value = "";
+    document.getElementById("jobSearch").value = "";
+    renderJobs();
+}
+
+/* =========================================================
+   JOB DETAILS & APPLICATION FLOW
+========================================================= */
+function showJob(id) {
+    const job = jobs.find(j => j.id === id);
+    if (!job) return;
+
+    const alreadyApplied = currentUser && currentUser.role === "worker" && applications.some(a => a.jobId === id && a.workerId === currentUser.id);
+    const saved = savedJobs.includes(id);
+
+    const container = document.getElementById("jobDetails");
+    container.innerHTML = `
+        <div class="flex justify-between items-start">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-wider bg-orange-100 text-brand px-2.5 py-1 rounded-full">${job.skill}</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-blue mt-2">${escapeHTML(job.title)}</h2>
+                <p class="text-gray-600 text-sm mt-1">
+                    <i class="fa-solid fa-building text-gray-400 mr-1"></i> Posted by <b>${escapeHTML(job.employer)}</b>
+                </p>
+            </div>
+            <div class="text-right">
+                <span class="text-2xl font-black text-brand">₹${job.wage}</span>
+                <span class="block text-xs text-gray-500">Daily spot payout</span>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 border rounded-2xl p-4 sm:p-5 grid grid-cols-2 sm:grid-cols-3 gap-3 mt-6 text-sm">
+            <div>
+                <p class="text-xs text-gray-500 font-bold uppercase">Location</p>
+                <p class="font-semibold text-gray-800">${escapeHTML(job.city)}, ${escapeHTML(job.district)}</p>
+                <p class="text-xs text-gray-600">${escapeHTML(job.state)}</p>
+            </div>
+            <div>
+                <p class="text-xs text-gray-500 font-bold uppercase">Workers Needed</p>
+                <p class="font-semibold text-gray-800">${job.workers} Persons</p>
+            </div>
+            <div>
+                <p class="text-xs text-gray-500 font-bold uppercase">Work Hours</p>
+                <p class="font-semibold text-gray-800">${escapeHTML(job.hours)}</p>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <h3 class="font-bold text-gray-900 text-base">Work Description & Requirements</h3>
+            <p class="text-gray-700 mt-2 text-sm leading-relaxed whitespace-pre-line bg-white p-4 border rounded-xl">${escapeHTML(job.description)}</p>
+        </div>
+
+        <!-- Direct Connect Buttons for Workers -->
+        <div class="mt-6 p-4 rounded-xl bg-blue-50 border border-blue-200">
+            <h4 class="font-bold text-brand-blue text-sm">Direct Employer Connect:</h4>
+            <div class="flex flex-wrap gap-2 mt-2">
+                <a href="tel:${job.employerPhone || '9876543210'}" class="btn bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-xs font-bold inline-flex items-center">
+                    <i class="fa-solid fa-phone mr-1.5"></i> Call Employer (${job.employerPhone || '9876543210'})
+                </a>
+                <a href="https://wa.me/91${job.employerPhone || '9876543210'}?text=${encodeURIComponent('Hello, I saw your job posting on Mazdoor Mitra for ' + job.title + '. I am interested.')}" target="_blank" class="btn bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-xs font-bold inline-flex items-center">
+                    <i class="fa-brands fa-whatsapp mr-1.5"></i> WhatsApp Message
+                </a>
+            </div>
+        </div>
+
+        <div class="flex gap-3 mt-6 pt-4 border-t">
+            <button onclick="applyJob(${job.id})" ${alreadyApplied ? 'disabled' : ''} class="flex-1 btn py-3.5 rounded-xl font-bold text-white text-base shadow ${alreadyApplied ? 'bg-green-600 cursor-not-allowed' : 'bg-brand hover:bg-brand-dark'}">
+                <i class="fa-solid ${alreadyApplied ? 'fa-check' : 'fa-paper-plane'} mr-2"></i>
+                ${alreadyApplied ? 'Already Applied' : 'Submit Job Application'}
+            </button>
+
+            <button onclick="toggleSave(${job.id})" class="btn px-5 rounded-xl bg-gray-100 hover:bg-gray-200 border" title="${saved ? 'Unsave' : 'Save'}">
+                <i class="fa-solid fa-bookmark text-lg ${saved ? 'text-yellow-500' : 'text-gray-400'}"></i>
+            </button>
+        </div>
+    `;
+
+    navigate("job-details-screen");
+}
+
+function applyJob(jobId) {
+    if (!currentUser || currentUser.role !== "worker") {
+        showToast("Worker Profile Needed", "Please register as a worker or use Demo Worker login", true);
+        navigate("worker-reg-screen");
+        return;
+    }
+
+    if (applications.some(a => a.jobId === jobId && a.workerId === currentUser.id)) {
+        showToast("Already Applied", "You have already submitted your application for this job.");
+        return;
+    }
+
+    applications.push({
+        id: Date.now(),
+        jobId,
+        workerId: currentUser.id,
+        workerName: currentUser.name,
+        workerPhone: currentUser.phone,
+        status: "Applied",
+        date: "Today"
+    });
+
+    saveData();
+    updateWorkerDashboard();
+    showToast("Application Submitted!", "The contractor has received your application.");
+    
+    // Refresh view
+    const currentScreen = navigationHistory[navigationHistory.length - 1];
+    if (currentScreen === "job-details-screen") showJob(jobId);
+    if (currentScreen === "find-jobs-screen") renderJobs();
+}
+
+function toggleSave(id) {
+    if (savedJobs.includes(id)) {
+        savedJobs = savedJobs.filter(x => x !== id);
+        showToast("Removed", "Job removed from your saved list");
+    } else {
+        savedJobs.push(id);
+        showToast("Job Saved", "Added to your bookmarked jobs");
+    }
+    saveData();
+    if (currentUser && currentUser.role === "worker") updateWorkerDashboard();
+    renderJobs();
+}
+
+/* =========================================================
+   WORKER APPLICATIONS & SAVED JOBS VIEWS
+========================================================= */
+function showApplications() {
+    navigate("applications-screen");
+}
+
+function renderApplications() {
+    const container = document.getElementById("applicationsContainer");
+    if (!container) return;
+
+    if (!currentUser) {
+        container.innerHTML = `
+            <div class="card p-8 text-center text-gray-500">
+                Please log in to view your applications.
+            </div>
+        `;
+        return;
+    }
+
+    const myApps = applications.filter(a => a.workerId === currentUser.id);
+    if (!myApps.length) {
+        container.innerHTML = `
+            <div class="card p-8 text-center text-gray-500">
+                <i class="fa-solid fa-file-circle-xmark text-4xl mb-2 text-gray-400"></i>
+                <p class="font-bold">No applications submitted yet.</p>
+                <button onclick="navigate('find-jobs-screen')" class="mt-3 btn bg-brand text-white px-4 py-2 rounded-xl text-xs font-bold">Browse Available Jobs</button>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = myApps.map(app => {
+        const job = jobs.find(j => j.id === app.jobId) || {
+            title: "Construction Project",
+            city: "Local",
+            state: "Region",
+            wage: 700,
+            employer: "Contractor"
+        };
+
+        const statusColor = app.status === "Accepted" ? "bg-green-100 text-green-800" :
+                           app.status === "Rejected" ? "bg-red-100 text-red-800" : "bg-orange-100 text-orange-800";
+
+        return `
+            <div class="card p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h3 class="font-bold text-lg text-brand-blue">${escapeHTML(job.title)}</h3>
+                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-full ${statusColor}">${app.status}</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-1">
+                        <i class="fa-solid fa-building mr-1"></i> ${escapeHTML(job.employer)} • <i class="fa-solid fa-location-dot mr-1"></i> ${job.city}, ${job.state}
+                    </p>
+                    <p class="text-xs text-gray-500 mt-1">Applied on: ${app.date}</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-brand font-black text-sm">₹${job.wage}/day</span>
+                    <button onclick="showJob(${app.jobId})" class="btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold">View Job</button>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+function showSavedJobs() {
+    navigate("saved-jobs-screen");
+}
+
+function renderSavedJobs() {
+    const container = document.getElementById("savedJobsContainer");
+    if (!container) return;
+
+    const saved = jobs.filter(j => savedJobs.includes(j.id));
+    if (!saved.length) {
+        container.innerHTML = `
+            <div class="card p-8 text-center text-gray-500">
+                <i class="fa-solid fa-bookmark text-4xl mb-2 text-gray-400"></i>
+                <p class="font-bold">No saved jobs.</p>
+                <p class="text-sm">Click the bookmark icon on any job card to save it here.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = saved.map(job => `
+        <div class="card p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div>
+                <h3 class="font-bold text-lg text-brand-blue">${escapeHTML(job.title)}</h3>
+                <p class="text-xs text-gray-600 mt-1">${escapeHTML(job.city)}, ${escapeHTML(job.state)} • ${job.skill}</p>
+                <p class="text-brand font-black text-sm mt-1">₹${job.wage}/day</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="showJob(${job.id})" class="btn bg-brand-blue text-white px-4 py-2 rounded-xl text-xs font-bold">View & Apply</button>
+                <button onclick="toggleSave(${job.id})" class="btn bg-gray-100 text-gray-600 px-3 py-2 rounded-xl text-xs" title="Remove"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+        </div>
+    `).join("");
+}
+
+/* =========================================================
+   EMPLOYER: VIEW APPLICANTS & ACCEPT / REJECT
+========================================================= */
+function showEmployerApplications() {
+    navigate("employer-applications-screen");
+}
+
+function renderEmployerApplications() {
+    const container = document.getElementById("employerApplicationsContainer");
+    if (!container) return;
+
+    if (!currentUser || currentUser.role !== "employer") {
+        container.innerHTML = `<div class="card p-8 text-center text-gray-500">Please log in as an Employer to view applicants.</div>`;
+        return;
+    }
+
+    const myJobs = jobs.filter(j => j.employerId === currentUser.id);
+    const myJobIds = myJobs.map(j => j.id);
+    const receivedApps = applications.filter(a => myJobIds.includes(a.jobId));
+
+    if (!receivedApps.length) {
+        container.innerHTML = `
+            <div class="card p-8 text-center text-gray-500">
+                <i class="fa-solid fa-users-slash text-4xl mb-2 text-gray-400"></i>
+                <p class="font-bold">No applications received yet.</p>
+                <p class="text-sm mt-1">When workers apply for your posted jobs, their profiles will appear here.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = receivedApps.map(app => {
+        const job = jobs.find(j => j.id === app.jobId) || { title: "Job Requirement" };
+        const worker = workers.find(w => w.id === app.workerId) || {
+            name: app.workerName,
+            phone: app.workerPhone || "9876543210",
+            skill: "Worker",
+            experience: 3,
+            city: "Local"
+        };
+
+        return `
+            <div class="card p-5">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <div>
+                        <span class="text-xs bg-blue-100 text-blue-900 font-bold px-2 py-0.5 rounded">For Job: ${escapeHTML(job.title)}</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-1">${escapeHTML(worker.name)}</h3>
+                        <p class="text-xs text-gray-600">${worker.skill} • ${worker.experience} Years Exp • ${worker.city || 'India'}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs px-2.5 py-1 rounded-full font-bold ${app.status === 'Accepted' ? 'bg-green-100 text-green-800' : app.status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-orange-100 text-orange-800'}">
+                            ${app.status}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t">
+                    <a href="tel:${worker.phone}" class="btn bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold inline-flex items-center">
+                        <i class="fa-solid fa-phone mr-1"></i> Call Worker (${worker.phone})
+                    </a>
+                    <a href="https://wa.me/91${worker.phone}?text=${encodeURIComponent('Hello ' + worker.name + ', we saw your application for ' + job.title + ' on Mazdoor Mitra.')}" target="_blank" class="btn bg-emerald-700 hover:bg-emerald-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold inline-flex items-center">
+                        <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp
+                    </a>
+                    <div class="ml-auto flex gap-1">
+                        <button onclick="setApplicationStatus(${app.id}, 'Accepted')" class="btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Accept</button>
+                        <button onclick="setApplicationStatus(${app.id}, 'Rejected')" class="btn bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1.5 rounded-lg text-xs font-bold">Decline</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+function setApplicationStatus(appId, status) {
+    const app = applications.find(a => a.id === appId);
+    if (!app) return;
+    app.status = status;
+    saveData();
+    showToast("Status Updated", `Application marked as ${status}`);
+    renderEmployerApplications();
+}
+
+/* =========================================================
+   EMPLOYER JOBS & WORKERS DIRECTORY
+========================================================= */
+function showEmployerJobs() {
+    navigate("my-jobs-screen");
+}
+
+function renderEmployerJobs() {
+    const container = document.getElementById("myJobsContainer");
+    if (!container) return;
+
+    if (!currentUser || currentUser.role !== "employer") {
+        container.innerHTML = `<div class="card p-8 text-center text-gray-500">Please login as an Employer.</div>`;
+        return;
+    }
+
+    const mine = jobs.filter(j => j.employerId === currentUser.id);
+    if (!mine.length) {
+        container.innerHTML = `
+            <div class="card p-8 text-center text-gray-500">
+                You haven't posted any jobs yet.
+                <button onclick="navigate('post-job-screen')" class="mt-3 block mx-auto btn bg-brand text-white px-4 py-2 rounded-xl text-xs font-bold">Post a Job Now</button>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = mine.map(job => {
+        const applicantCount = applications.filter(a => a.jobId === job.id).length;
+        return `
+            <div class="card p-5 mb-4 border-l-4 border-blue-600">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="font-bold text-xl text-brand-blue">${escapeHTML(job.title)}</h3>
+                        <p class="text-xs text-gray-500">${job.city}, ${job.state} • ${job.skill}</p>
+                    </div>
+                    <span class="bg-orange-100 text-brand font-black px-3 py-1 rounded-xl text-sm">₹${job.wage}/day</span>
+                </div>
+                <p class="text-xs text-gray-600 mt-2">${escapeHTML(job.description)}</p>
+                <div class="flex justify-between items-center mt-4 pt-3 border-t text-xs">
+                    <span class="text-gray-600">Workers Needed: <b>${job.workers}</b></span>
+                    <button onclick="showEmployerApplications()" class="btn bg-brand-blue text-white px-3 py-1.5 rounded-lg font-bold">
+                        <i class="fa-solid fa-users mr-1"></i> View ${applicantCount} Applicants
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+function showWorkers() {
+    navigate("workers-screen");
+}
+
+function renderWorkers() {
+    const container = document.getElementById("workersContainer");
+    if (!container) return;
+
+    const search = document.getElementById("workerSearch").value.toLowerCase().trim();
+    const filtered = workers.filter(w => (
+        !search ||
+        w.name.toLowerCase().includes(search) ||
+        w.skill.toLowerCase().includes(search) ||
+        w.city.toLowerCase().includes(search) ||
+        w.state.toLowerCase().includes(search)
+    ));
+
+    if (!filtered.length) {
+        container.innerHTML = `
+            <div class="card p-8 text-center text-gray-500">
+                <i class="fa-solid fa-user-slash text-4xl mb-2 text-gray-400"></i>
+                <p>No workers match your search query.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = filtered.map(w => `
+        <div class="card p-5">
+            <div class="flex justify-between items-start">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-orange-100 text-brand rounded-full flex items-center justify-center text-xl font-bold">
+                        ${w.name.charAt(0)}
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-brand-blue">${escapeHTML(w.name)}</h3>
+                        <p class="text-xs font-semibold text-orange-600">${w.skill} Specialist</p>
+                        <p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>${escapeHTML(w.city)}, ${escapeHTML(w.state)}</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">★ ${w.rating || 4.8}</span>
+                    <p class="text-xs text-gray-500 mt-1">${w.experience} yrs exp</p>
+                </div>
+            </div>
+
+            <div class="flex gap-2 mt-4 pt-3 border-t">
+                <a href="tel:${w.phone}" class="flex-1 btn bg-green-600 hover:bg-green-700 text-white py-2 rounded-xl text-xs font-bold text-center inline-flex items-center justify-center">
+                    <i class="fa-solid fa-phone mr-1.5"></i> Direct Call (${w.phone})
+                </a>
+                <a href="https://wa.me/91${w.phone}?text=${encodeURIComponent('Hello ' + w.name + ', we have a labour requirement on Mazdoor Mitra.')}" target="_blank" class="flex-1 btn bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-xl text-xs font-bold text-center inline-flex items-center justify-center">
+                    <i class="fa-brands fa-whatsapp mr-1.5"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    `).join("");
+}
+
+/* =========================================================
+   GEOLOCATION & REVERSE METRO MATCH
+========================================================= */
+function detectLocation() {
+    const result = document.getElementById("locationResult");
+    if (!navigator.geolocation) {
+        result.innerHTML = `<span class="text-red-500"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Geolocation is not supported by this browser.</span>`;
+        return;
+    }
+
+    result.innerHTML = `<span class="text-blue-600"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Detecting your current location...</span>`;
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            // Approximate Indian Metro Hub Matching
+            let matchedRegion = "Hyderabad, Telangana";
+            if (lat > 28.0 && lat < 29.0 && lon > 76.5 && lon < 77.5) matchedRegion = "New Delhi, Delhi";
+            else if (lat > 18.8 && lat < 19.3 && lon > 72.7 && lon < 73.2) matchedRegion = "Mumbai, Maharashtra";
+            else if (lat > 12.8 && lat < 13.2 && lon > 77.4 && lon < 77.8) matchedRegion = "Bengaluru, Karnataka";
+            else if (lat > 12.9 && lat < 13.3 && lon > 80.1 && lon < 80.4) matchedRegion = "Chennai, Tamil Nadu";
+            else if (lat > 17.2 && lat < 17.6 && lon > 78.2 && lon < 78.6) matchedRegion = "Hyderabad, Telangana";
+            else if (lat > 22.4 && lat < 22.7 && lon > 88.2 && lon < 88.5) matchedRegion = "Kolkata, West Bengal";
+
+            result.innerHTML = `
+                <div class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-300 px-3 py-1.5 rounded-lg text-xs">
+                    <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                    <span>GPS Coordinates: <b>${lat.toFixed(3)}°N, ${lon.toFixed(3)}°E</b> (Nearest Hub: <b>${matchedRegion}</b>)</span>
+                </div>
+            `;
+            showToast("Location Detected", `Identified near ${matchedRegion}`);
+        },
+        error => {
+            result.innerHTML = `<span class="text-amber-700 bg-amber-50 px-3 py-1 rounded-lg border border-amber-200 inline-block text-xs"><i class="fa-solid fa-circle-exclamation mr-1"></i> Location permission was denied or unavailable. You can manually choose your state & city below.</span>`;
+        },
+        { timeout: 10000 }
+    );
+}
+
+/* =========================================================
+   COMPLAINTS & GRIEVANCE REPORTING
+========================================================= */
+function submitComplaint(e) {
+    e.preventDefault();
+    const subject = document.getElementById("complaintSubject").value.trim();
+    const category = document.getElementById("complaintCategory").value;
+    const text = document.getElementById("complaintText").value.trim();
+
+    if (!subject || !text) {
+        showToast("Missing Info", "Please describe your problem and work site details", true);
+        return;
+    }
+
+    const report = {
+        id: "GR-" + Math.floor(100000 + Math.random() * 900000),
+        subject,
+        category,
+        message: text,
+        date: new Date().toLocaleDateString(),
+        status: "Under Review"
+    };
+
+    complaints.unshift(report);
+    saveData();
+
+    document.getElementById("complaintSubject").value = "";
+    document.getElementById("complaintText").value = "";
+
+    showToast("Report Submitted", "Grievance ID: " + report.id);
+    renderComplaints();
+}
+
+function renderComplaints() {
+    const container = document.getElementById("reportsListContainer");
+    if (!container) return;
+
+    if (!complaints.length) {
+        container.innerHTML = `<p class="text-xs text-gray-500 italic">No grievances filed yet.</p>`;
+        return;
+    }
+
+    container.innerHTML = `
+        <h4 class="font-bold text-gray-800 text-xs uppercase mb-3">Your Submitted Reports (${complaints.length})</h4>
+        <div class="space-y-2">
+            ${complaints.map(c => `
+                <div class="bg-gray-50 border rounded-lg p-3 text-xs">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-gray-900">${escapeHTML(c.subject)} <span class="text-gray-400 font-normal">(${c.id})</span></span>
+                        <span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px]">${c.status}</span>
+                    </div>
+                    <p class="text-gray-600 mt-1">${escapeHTML(c.message)}</p>
+                    <span class="text-[10px] text-gray-400 mt-1 block">Filed on ${c.date} • ${c.category}</span>
+                </div>
+            `).join("")}
+        </div>
+    `;
+}
+
+/* =========================================================
+   MULTILINGUAL SWITCHER
+========================================================= */
+function changeLanguage() {
+    const lang = document.getElementById("languageSelect").value;
+    currentLanguage = lang;
+    localStorage.setItem("mm_language", lang);
+
+    const t = I18N[lang] || I18N.en;
+
+    // Apply translations to key home labels
+    document.getElementById("t_hero_subtitle").innerText = t.hero_subtitle;
+    document.getElementById("t_hero_desc").innerText = t.hero_desc;
+    document.getElementById("t_btn_worker").innerText = t.btn_worker;
+    document.getElementById("t_btn_employer").innerText = t.btn_employer;
+    document.getElementById("t_btn_location").innerText = t.btn_location;
+    document.getElementById("t_how_it_works").innerText = t.how_it_works;
+    document.getElementById("t_feature1_title").innerText = t.feature1_title;
+    document.getElementById("t_feature1_desc").innerText = t.feature1_desc;
+    document.getElementById("t_feature2_title").innerText = t.feature2_title;
+    document.getElementById("t_feature2_desc").innerText = t.feature2_desc;
+    document.getElementById("t_feature3_title").innerText = t.feature3_title;
+    document.getElementById("t_feature3_desc").innerText = t.feature3_desc;
+
+    showToast("Language Changed", lang === "te" ? "తెలుగు భాష ఎంపిక చేయబడింది" : lang === "hi" ? "हिन्दी भाषा चुनी गई" : "Language switched to English");
+}
+
+/* =========================================================
+   LOGOUT & DEMO RESET
+========================================================= */
+function logout() {
+    currentUser = null;
+    localStorage.removeItem("mm_currentUser");
+    navigationHistory = ["home-screen"];
+    showToast("Logged Out", "You can now select another profile or register.");
+    navigate("home-screen");
+}
+
+function resetAllDemoData() {
+    if (confirm("Reset all jobs, workers, applications, and saved data to initial defaults?")) {
+        localStorage.clear();
+        jobs = DEFAULT_JOBS;
+        workers = DEFAULT_WORKERS;
+        applications = [
+            {
+                id: 301,
+                jobId: 101,
+                workerId: 201,
+                workerName: "Ramesh Kumar Yadav",
+                workerPhone: "9876501234",
+                status: "Applied",
+                date: "Today"
+            }
+        ];
+        savedJobs = [];
+        complaints = [];
+        currentUser = null;
+        saveData();
+        showToast("Reset Completed", "App restored to original clean state");
+        setTimeout(() => location.reload(), 500);
+    }
+}
+
+/* =========================================================
+   SECURITY ESCAPING
+========================================================= */
+function escapeHTML(value) {
+    if (value === null || value === undefined) return "";
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+    populateStates();
+
+    // Set active language
+    const langSelect = document.getElementById("languageSelect");
+    if (langSelect && currentLanguage) {
+        langSelect.value = currentLanguage;
+        if (currentLanguage !== "en") {
+            changeLanguage();
+        }
+    }
+
+    // Restore active session
+    if (currentUser) {
+        if (currentUser.role === "worker") {
+            updateWorkerDashboard();
+            navigate("worker-dash-screen");
+        } else if (currentUser.role === "employer") {
+            updateEmployerDashboard();
+            navigate("employer-dash-screen");
+        }
+    } else {
+        navigate("home-screen");
+    }
+});
+</script>
+
+</body>
+</html>

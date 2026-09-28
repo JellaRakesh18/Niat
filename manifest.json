@@ -1,0 +1,24 @@
+{
+  "name": "Mazdoor Mitra - Smart Labour & Safety Network",
+  "short_name": "Mazdoor Mitra",
+  "description": "National Skilled Labour Marketplace, Fair Wages, Emergency 108/112 & Safety Network",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#ea580c",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%230f172a'/%3E%3Cpath d='M32 144h128M48 144v-32a48 48 0 0 1 96 0v32M96 36v32' stroke='%23ea580c' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='96' cy='104' r='16' fill='%23ea580c'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%230f172a'/%3E%3Cpath d='M85 384h342M128 384v-85a128 128 0 0 1 256 0v85M256 96v85' stroke='%23ea580c' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='256' cy='277' r='42' fill='%23ea580c'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
