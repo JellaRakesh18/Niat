@@ -69,6 +69,10 @@
   <!-- Chart.js CDN for Real-Time Analytics -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+  <!-- Supabase Cloud SDK & Sync Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+
   <style>
     /* Clean custom scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -221,6 +225,13 @@
 
       <!-- Language Switcher, Tactile Emergency Boxes & Persona Toggle -->
       <div class="flex items-center space-x-2 sm:space-x-2.5">
+        <!-- Supabase Cloud Connection Status Badge -->
+        <button onclick="openModal('supabaseModal')" class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 transition shadow-2xs cursor-pointer" title="Supabase Cloud Live Status & Sync Controls">
+          <span id="supabaseStatusDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="hidden md:inline font-bold">Cloud:</span>
+          <span id="supabaseStatusText" class="font-extrabold">Supabase</span>
+        </button>
+
         <!-- Global Language Dropdown (11 Supported Indian Languages) -->
         <div class="relative flex items-center">
           <i class="fa-solid fa-globe text-slate-400 absolute left-2.5 text-xs pointer-events-none"></i>
@@ -1550,6 +1561,81 @@
     </div>
   </div>
 
+  <!-- Supabase Cloud Connection Modal -->
+  <div id="supabaseModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-lg font-black shadow-md">
+            <i class="fa-solid fa-cloud"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-slate-900 text-base">Supabase Cloud Database</h3>
+            <p class="text-[11px] text-slate-500 font-medium">PostgreSQL Backend & Realtime Synchronization</p>
+          </div>
+        </div>
+        <button onclick="closeModal('supabaseModal')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Connection Details Card -->
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-bold">Connection Status:</span>
+          <span class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="supabaseModalStatusText">Connected</span>
+          </span>
+        </div>
+        <div class="text-xs">
+          <span class="text-slate-500 font-bold block mb-1">Project Endpoint:</span>
+          <code class="block bg-slate-900 text-emerald-400 font-mono text-[11px] px-3 py-2 rounded-xl break-all">https://eeocbfsgsqpymnnnzcmk.supabase.co</code>
+        </div>
+        <div class="text-xs">
+          <span class="text-slate-500 font-bold block mb-1">Active Cloud Tables:</span>
+          <div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
+            <span class="px-2 py-0.5 bg-slate-200 text-slate-800 rounded-md font-bold">jobs</span>
+            <span class="px-2 py-0.5 bg-slate-200 text-slate-800 rounded-md font-bold">workers</span>
+            <span class="px-2 py-0.5 bg-slate-200 text-slate-800 rounded-md font-bold">applications</span>
+            <span class="px-2 py-0.5 bg-slate-200 text-slate-800 rounded-md font-bold">attendance</span>
+            <span class="px-2 py-0.5 bg-slate-200 text-slate-800 rounded-md font-bold">incidents</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        <button onclick="syncAllFromSupabase(true)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition flex items-center justify-center space-x-2 shadow-sm active:scale-95 cursor-pointer">
+          <i class="fa-solid fa-arrows-rotate"></i>
+          <span>Sync All Data Now</span>
+        </button>
+
+        <button onclick="copySupabaseSQLSetup()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-black py-2.5 px-4 rounded-xl text-xs transition flex items-center justify-center space-x-2 shadow-sm active:scale-95 cursor-pointer">
+          <i class="fa-solid fa-copy text-amber-400"></i>
+          <span id="copySqlBtnText">Copy SQL Schema</span>
+        </button>
+      </div>
+
+      <!-- SQL Instructions notice -->
+      <div id="supabaseSetupTip" class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-xs text-amber-900 space-y-1">
+        <div class="flex items-center space-x-1.5 font-black text-amber-800">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Database Schema Setup (One-Time)</span>
+        </div>
+        <p class="text-[11px] leading-relaxed">
+          If you haven't executed the database schema in Supabase yet: Click <b>"Copy SQL Schema"</b> above, open your <a href="https://supabase.com/dashboard/project/eeocbfsgsqpymnnnzcmk/sql/new" target="_blank" class="underline font-bold text-amber-950">Supabase SQL Editor</a>, paste it, and click <b>Run</b>. All tables will instantly activate with live multi-device sync!
+        </p>
+      </div>
+
+      <div class="flex justify-end pt-2 border-t">
+        <button onclick="closeModal('supabaseModal')" class="px-5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs transition">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Bar -->
   <div id="toastNotification" class="fixed top-20 right-4 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 transition duration-300 transform translate-y-[-100px] opacity-0 pointer-events-none">
     <div id="toastIcon" class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm font-bold">
@@ -2398,6 +2484,127 @@
       setupEventListeners();
       updateRoleDisplayUI();
       startLiveClock();
+      if (typeof initMazdoorSupabase === "function") {
+        initMazdoorSupabase();
+      }
+    }
+
+    function copySupabaseSQLSetup() {
+      const sql = `-- Mazdoor Mitra Cloud Database Setup Script
+-- Supabase Project: eeocbfsgsqpymnnnzcmk
+-- https://eeocbfsgsqpymnnnzcmk.supabase.co
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+CREATE TABLE IF NOT EXISTS public.jobs (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    title TEXT NOT NULL,
+    trade TEXT NOT NULL,
+    employer TEXT NOT NULL,
+    employer_phone TEXT DEFAULT '9876543210',
+    phone TEXT DEFAULT '9876543210',
+    wage INTEGER NOT NULL CHECK (wage >= 300),
+    workers_needed INTEGER DEFAULT 1,
+    hours TEXT DEFAULT '8 hours',
+    state TEXT NOT NULL,
+    district TEXT NOT NULL,
+    city TEXT NOT NULL,
+    description TEXT,
+    posted_date TEXT DEFAULT CURRENT_DATE::text,
+    is_scam BOOLEAN DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.workers (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    trade TEXT NOT NULL,
+    wage INTEGER NOT NULL CHECK (wage >= 300),
+    experience INTEGER DEFAULT 1,
+    status TEXT DEFAULT 'Available',
+    state TEXT NOT NULL,
+    district TEXT NOT NULL,
+    city TEXT NOT NULL,
+    verified BOOLEAN DEFAULT true,
+    photo_skill_verified BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.applications (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    job_id BIGINT,
+    job_title TEXT,
+    worker_name TEXT NOT NULL,
+    worker_phone TEXT NOT NULL,
+    worker_trade TEXT NOT NULL,
+    status TEXT DEFAULT 'Submitted',
+    applied_date TEXT DEFAULT CURRENT_DATE::text,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.attendance (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    worker_name TEXT NOT NULL,
+    date TEXT NOT NULL,
+    timestamp TEXT NOT NULL,
+    type TEXT DEFAULT 'Check-In',
+    location TEXT,
+    verified BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.incidents (
+    id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    worker_name TEXT NOT NULL,
+    incident_type TEXT NOT NULL,
+    severity TEXT NOT NULL,
+    contractor_phone TEXT,
+    location TEXT NOT NULL,
+    description TEXT,
+    timestamp TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE public.jobs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.workers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.applications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.attendance ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.incidents ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read jobs" ON public.jobs FOR SELECT USING (true);
+CREATE POLICY "Allow public insert jobs" ON public.jobs FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update jobs" ON public.jobs FOR UPDATE USING (true);
+
+CREATE POLICY "Allow public read workers" ON public.workers FOR SELECT USING (true);
+CREATE POLICY "Allow public insert workers" ON public.workers FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update workers" ON public.workers FOR UPDATE USING (true);
+
+CREATE POLICY "Allow public read apps" ON public.applications FOR SELECT USING (true);
+CREATE POLICY "Allow public insert apps" ON public.applications FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Allow public read att" ON public.attendance FOR SELECT USING (true);
+CREATE POLICY "Allow public insert att" ON public.attendance FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Allow public read inc" ON public.incidents FOR SELECT USING (true);
+CREATE POLICY "Allow public insert inc" ON public.incidents FOR INSERT WITH CHECK (true);
+
+ALTER PUBLICATION supabase_realtime ADD TABLE public.jobs;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.workers;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.applications;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
+
+      navigator.clipboard.writeText(sql).then(() => {
+        const btnText = document.getElementById("copySqlBtnText");
+        if (btnText) btnText.innerText = "✓ SQL Copied!";
+        showToast("SQL Script Copied!", "Open Supabase SQL Editor and click Run to initialize tables.");
+        setTimeout(() => {
+          if (btnText) btnText.innerText = "Copy SQL Schema";
+        }, 3000);
+      }).catch(() => {
+        showToast("Copy notice", "Please open supabase-schema.sql from the repository.");
+      });
     }
 
         function loadStateFromStorage() {
@@ -2828,6 +3035,9 @@
 
         appState.attendanceLogs.unshift(log);
         saveStateToStorage();
+        if (typeof pushAttendanceToSupabase === "function") {
+          pushAttendanceToSupabase(log);
+        }
         renderAttendanceLogs();
         showToast("Attendance Recorded!", `Checked in at ${log.timestamp}. GPS geotagged.`);
         speakText("Attendance checked in successfully. GPS coordinates saved.");
@@ -3427,7 +3637,7 @@
       }
 
       if (!appState.applications) appState.applications = [];
-      appState.applications.push({
+      const newApp = {
         id: Date.now(),
         jobId: job.id,
         jobTitle: job.title,
@@ -3437,8 +3647,12 @@
         workerTrade: appState.currentUser.trade,
         status: "Submitted",
         appliedDate: new Date().toLocaleDateString('en-CA')
-      });
+      };
+      appState.applications.push(newApp);
       saveStateToStorage();
+      if (typeof pushApplicationToSupabase === "function") {
+        pushApplicationToSupabase(newApp);
+      }
       renderJobs();
       renderApplications();
       renderAnalytics();
@@ -3539,6 +3753,9 @@
 
       appState.applications.unshift(application);
       saveStateToStorage();
+      if (typeof pushApplicationToSupabase === "function") {
+        pushApplicationToSupabase(application);
+      }
       closeModal("jobDetailsModal");
       renderJobs();
       renderApplications();
@@ -3601,6 +3818,9 @@
 
       appState.jobs.unshift(newJob);
       saveStateToStorage();
+      if (typeof pushJobToSupabase === "function") {
+        pushJobToSupabase(newJob);
+      }
       closeModal("postJobModal");
       document.querySelector("#postJobModal form").reset();
       renderJobs();
@@ -3725,6 +3945,9 @@
 
       appState.workers.unshift(newWorker);
       saveStateToStorage();
+      if (typeof pushWorkerToSupabase === "function") {
+        pushWorkerToSupabase(newWorker);
+      }
       closeModal("workerRegModal");
       document.querySelector("#workerRegModal form").reset();
       renderWorkers();
@@ -3897,6 +4120,9 @@
 
       appState.incidentLogs.unshift(newLog);
       saveStateToStorage();
+      if (typeof pushIncidentToSupabase === "function") {
+        pushIncidentToSupabase(newLog);
+      }
       closeModal("reportInjuryModal");
       document.querySelector("#reportInjuryModal form").reset();
       renderIncidentLogs();
@@ -4811,7 +5037,7 @@
     function setupEventListeners() {
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-          ['postJobModal', 'jobDetailsModal', 'reportInjuryModal', 'workerRegModal', 'profileEditModal', 'voiceProfileWizardModal', 'fairWageEstimatorModal', 'photoVerificationModal', 'aiSahayakModal'].forEach(closeModal);
+          ['postJobModal', 'jobDetailsModal', 'reportInjuryModal', 'workerRegModal', 'profileEditModal', 'voiceProfileWizardModal', 'fairWageEstimatorModal', 'photoVerificationModal', 'aiSahayakModal', 'supabaseModal'].forEach(closeModal);
         }
       });
     }

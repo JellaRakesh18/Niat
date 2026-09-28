@@ -97,9 +97,18 @@ Start-Process "index.html"
 
 ---
 
+### 8. Supabase Cloud PostgreSQL & Realtime Backend
+- **Project URL:** `https://eeocbfsgsqpymnnnzcmk.supabase.co`
+- **Real-time Sync:** Live sync for jobs, worker registrations, applications, and attendance.
+- **Offline Resilient:** Operates seamlessly offline with `localStorage` and syncs with Supabase automatically when online.
+- **SQL Schema Script:** Complete table definitions, RLS security policies, and initial seed data provided in [`supabase-schema.sql`](supabase-schema.sql).
+
+---
+
 ## 🛠 Tech Stack
 - **Frontend:** Clean HTML5, Modern CSS, Tailwind CSS (CDN)
+- **Database & Realtime:** Supabase Cloud (PostgreSQL 15 + PostgREST + Realtime)
 - **Icons:** FontAwesome 6 Pro CDN
 - **Charts:** Chart.js for real-time labour supply/demand analytics
-- **Architecture:** Zero-build single-file vanilla JavaScript architecture
+- **Architecture:** Zero-build single-file vanilla JavaScript architecture with cloud sync
 - **Deployment:** GitHub Pages / Netlify / Vercel ready
