@@ -433,275 +433,57 @@
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans pb-20 lg:pb-0">
 
   <!-- ========================================================= -->
-  <!-- 00. WELCOME LIGHT RAY INTRO SPLASH SCREEN (ANIMATED)      -->
+  <!-- 00. STAR SWIRL, PARTICLE BLAST & WELCOME INTRO SPLASH     -->
   <!-- ========================================================= -->
-  <div id="splashScreen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-950 overflow-hidden select-none" style="background: radial-gradient(circle at center, #151122 0%, #0a0b12 50%, #030408 100%);">
+  <div id="splashScreen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#070b14] overflow-hidden select-none cursor-pointer" onclick="dismissSplashScreen(true)">
+    <!-- 60FPS Hardware Accelerated Star & Blast Canvas -->
+    <canvas id="splashStarsCanvas" class="absolute inset-0 block w-full h-full pointer-events-none"></canvas>
 
     <!-- Top Right Skip Button -->
-    <button type="button" 
-            id="splashSkipBtn"
-            onclick="dismissSplashScreen(true)" 
-            class="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 px-3.5 py-1.5 rounded-full bg-slate-900/85 hover:bg-slate-800 border border-orange-500/30 hover:border-orange-500 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xl active:scale-95 cursor-pointer backdrop-blur-md group">
-      <span class="group-hover:text-orange-400 transition-colors">దాటవేయి (Skip)</span>
-      <i class="fa-solid fa-forward text-orange-400 text-[10px] group-hover:translate-x-0.5 transition-transform"></i>
-    </button>
-
-    <!-- Radiating Light Rays & Atmospheric Shimmer Background -->
-    <div class="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
-      <div class="mm-light-rays"></div>
-      <div class="mm-light-burst"></div>
-      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at center, transparent 35%, #030509 90%);"></div>
+    <div class="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 pointer-events-auto">
+      <button type="button" 
+              id="splashSkipBtn"
+              onclick="event.stopPropagation(); dismissSplashScreen(true);" 
+              class="group px-4 py-2 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 hover:border-sky-400/50 text-slate-300 hover:text-white text-xs font-semibold tracking-wide backdrop-blur-md transition-all duration-300 shadow-lg hover:shadow-sky-500/20 flex items-center gap-2 cursor-pointer active:scale-95">
+        <span>Skip</span>
+        <span class="text-sky-400 group-hover:translate-x-0.5 transition-transform inline-block">&rarr;</span>
+      </button>
     </div>
 
-    <!-- Center Hero Section with Character Handshake Animation Stage -->
-    <div class="relative z-10 flex flex-col items-center max-w-xl w-full px-4 text-center">
+    <!-- Celestial Depth Vignette -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at center, transparent 35%, rgba(7, 11, 20, 0.75) 80%, #070b14 100%);"></div>
 
-      <!-- Vector Character & Handshake Animation Stage -->
-      <div class="w-full max-w-lg mx-auto aspect-[680/340] relative flex items-center justify-center cursor-pointer" onclick="dismissSplashScreen(true)" title="Mazdoor Mitra - Tap to Enter">
-        <svg viewBox="0 0 680 340" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-2xl">
-          <defs>
-            <!-- Radial stage floor glow -->
-            <radialGradient id="stageFloorGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#ea580c" stop-opacity="0.38" />
-              <stop offset="60%" stop-color="#f97316" stop-opacity="0.12" />
-              <stop offset="100%" stop-color="#ea580c" stop-opacity="0" />
-            </radialGradient>
-
-            <!-- Handshake burst glow -->
-            <radialGradient id="handshakeBurstGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
-              <stop offset="25%" stop-color="#fde047" stop-opacity="0.9" />
-              <stop offset="60%" stop-color="#ea580c" stop-opacity="0.5" />
-              <stop offset="100%" stop-color="#ea580c" stop-opacity="0" />
-            </radialGradient>
-
-            <!-- Gradient for Shield Base -->
-            <linearGradient id="shieldGradSplash" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ff9900" />
-              <stop offset="50%" stop-color="#f25c05" />
-              <stop offset="100%" stop-color="#c93800" />
-            </linearGradient>
-
-            <!-- 3D Gold Gradient for MM Monogram -->
-            <linearGradient id="mmGoldSplash" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#ffe082" />
-              <stop offset="40%" stop-color="#ff9800" />
-              <stop offset="100%" stop-color="#bf360c" />
-            </linearGradient>
-
-            <!-- Bottom Arch Green Gradient -->
-            <linearGradient id="greenBaseSplash" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#16a34a" />
-              <stop offset="100%" stop-color="#0e622b" />
-            </linearGradient>
-          </defs>
-
-          <!-- Stage Floor Glow & Cast Shadows -->
-          <ellipse cx="340" cy="285" rx="270" ry="32" fill="url(#stageFloorGlow)" />
-          <ellipse cx="230" cy="285" rx="55" ry="9" fill="#000000" opacity="0.4" />
-          <ellipse cx="450" cy="285" rx="55" ry="9" fill="#000000" opacity="0.4" />
-
-          <!-- ============================================== -->
-          <!-- CHARACTER 1: BLUE-COLLAR WORKER (LEFT)         -->
-          <!-- ============================================== -->
-          <g id="workerGroup" class="anim-worker">
-            <!-- Work Jeans / Trousers -->
-            <path d="M 216 226 L 219 269 L 232 269 L 233 226 Z" fill="#1e293b" />
-            <path d="M 237 226 L 239 269 L 253 269 L 253 226 Z" fill="#0f172a" />
-            <!-- Sturdy Construction Work Boots -->
-            <path d="M 212 269 L 233 269 L 235 281 L 208 281 Z" fill="#78350f" />
-            <path d="M 237 269 L 258 269 L 261 281 L 234 281 Z" fill="#92400e" />
-            <rect x="207" y="279" width="29" height="3" rx="1" fill="#451a03" />
-            <rect x="233" y="279" width="29" height="3" rx="1" fill="#451a03" />
-
-            <!-- Back Arm -->
-            <path d="M 214 172 Q 206 195 208 218" stroke="#1e3a8a" stroke-width="11" stroke-linecap="round" />
-            <circle cx="208" cy="221" r="5" fill="#f6ad55" />
-
-            <!-- High-Vis Safety Vest & Blue Shirt -->
-            <path d="M 214 163 L 256 163 Q 260 205 256 226 L 214 226 Q 210 205 214 163 Z" fill="#f97316" />
-            <path d="M 214 163 L 217 226 M 253 226 L 256 163" stroke="#facc15" stroke-width="3" />
-            <!-- Reflective Silver Stripes (Glow) -->
-            <rect x="214" y="184" width="42" height="6.5" rx="1.5" fill="#f8fafc" opacity="0.95" />
-            <rect x="214" y="206" width="42" height="6.5" rx="1.5" fill="#f8fafc" opacity="0.95" />
-            <line x1="227" y1="163" x2="227" y2="226" stroke="#ffffff" stroke-width="3.5" opacity="0.9" />
-            <line x1="243" y1="163" x2="243" y2="226" stroke="#ffffff" stroke-width="3.5" opacity="0.9" />
-
-            <!-- Shirt Collar & Neck -->
-            <path d="M 223 162 L 247 162 L 243 172 L 227 172 Z" fill="#1e40af" />
-            <rect x="230" y="153" width="11" height="11" rx="2" fill="#f6ad55" />
-
-            <!-- Worker Head & Hardhat Profile -->
-            <g id="workerHead">
-              <!-- Head profile -->
-              <path d="M 223 130 Q 248 130 252 142 Q 252 154 242 157 Q 230 157 224 150 Z" fill="#fbd38d" />
-              <circle cx="218" cy="138" r="4" fill="#f6ad55" />
-              <!-- Eye & smile -->
-              <circle cx="244" cy="139" r="2" fill="#1e293b" />
-              <path d="M 240 148 Q 245 152 249 148" stroke="#78350f" stroke-width="1.8" fill="none" stroke-linecap="round" />
-
-              <!-- Safety Hardhat (Industrial Orange) -->
-              <path d="M 205 130 C 205 106 220 96 238 96 C 256 96 271 106 271 130 Z" fill="#f97316" />
-              <path d="M 235 96 L 241 96 L 241 128 L 235 128 Z" fill="#ffffff" opacity="0.6" />
-              <!-- Hardhat Brim -->
-              <path d="M 198 128 C 205 125 272 125 280 128 C 282 131 276 134 238 134 C 200 134 196 131 198 128 Z" fill="#ea580c" />
-              <!-- Safety Star Badge on Helmet -->
-              <circle cx="238" cy="114" r="4.5" fill="#fde047" />
-              <path d="M 238 111 L 239 113.5 L 241.5 113.5 L 239.5 115 L 240.2 117.5 L 238 116 L 235.8 117.5 L 236.5 115 L 234.5 113.5 L 237 113.5 Z" fill="#d97706" />
-            </g>
-
-            <!-- Reaching Worker Arm (Animated) -->
-            <g class="anim-worker-arm">
-              <path d="M 252 173 Q 284 185 315 196" stroke="#1e40af" stroke-width="12" stroke-linecap="round" />
-              <rect x="309" y="190" width="8" height="12" rx="2" fill="#1e3a8a" />
-              <path d="M 314 192 Q 330 195 337 199 Q 335 207 325 207 Q 314 204 314 199 Z" fill="#f6ad55" />
-              <!-- Thumb pointing up in clasp -->
-              <path d="M 326 193 Q 334 190 338 195" stroke="#f6ad55" stroke-width="4.5" stroke-linecap="round" />
-            </g>
-          </g>
-
-          <!-- ============================================== -->
-          <!-- CHARACTER 2: EMPLOYER / CONTRACTOR (RIGHT)     -->
-          <!-- ============================================== -->
-          <g id="employerGroup" class="anim-employer">
-            <!-- Tailored Trousers & Polished Shoes -->
-            <path d="M 426 226 L 428 269 L 442 269 L 442 226 Z" fill="#334155" />
-            <path d="M 446 226 L 448 269 L 462 269 L 462 226 Z" fill="#475569" />
-            <path d="M 422 269 L 444 269 L 446 281 L 418 281 Z" fill="#090d16" />
-            <path d="M 448 269 L 470 269 L 472 281 L 445 281 Z" fill="#0f172a" />
-            <line x1="424" y1="273" x2="438" y2="273" stroke="#64748b" stroke-width="1" />
-
-            <!-- Back Arm -->
-            <path d="M 466 172 Q 474 195 472 218" stroke="#1e293b" stroke-width="11" stroke-linecap="round" />
-            <circle cx="472" cy="221" r="5" fill="#fbd38d" />
-
-            <!-- Smart Formal Blazer & Crisp Shirt -->
-            <path d="M 422 163 L 466 163 Q 470 205 466 226 L 422 226 Q 418 205 422 163 Z" fill="#1e293b" />
-            <path d="M 432 163 L 442 195 L 436 226 M 456 163 L 446 195 L 452 226" stroke="#334155" stroke-width="2.5" />
-            <!-- Shirt & Tie -->
-            <path d="M 440 156 L 436 172 L 444 172 Z" fill="#ffffff" />
-            <path d="M 444 172 L 442 196 L 446 196 Z" fill="#ea580c" />
-            <!-- Executive Pocket Square -->
-            <rect x="452" y="178" width="8" height="3" rx="1" fill="#38bdf8" />
-            <!-- Neck -->
-            <rect x="439" y="153" width="11" height="11" rx="2" fill="#fbd38d" />
-
-            <!-- Employer Head & Groomed Hair -->
-            <g id="employerHead">
-              <!-- Groomed Hair -->
-              <path d="M 425 116 C 425 100 445 94 458 96 C 470 98 476 110 474 124 C 466 118 455 116 440 118 Z" fill="#0f172a" />
-              <!-- Face Profile facing left -->
-              <path d="M 456 120 Q 430 120 426 134 Q 426 148 436 154 Q 448 154 456 146 Z" fill="#fbd38d" />
-              <circle cx="460" cy="135" r="4" fill="#f6ad55" />
-              <!-- Eye & smile -->
-              <circle cx="434" cy="134" r="2" fill="#1e293b" />
-              <path d="M 436 143 Q 432 147 428 143" stroke="#78350f" stroke-width="1.8" fill="none" stroke-linecap="round" />
-            </g>
-
-            <!-- Reaching Employer Arm (Animated) -->
-            <g class="anim-employer-arm">
-              <path d="M 428 173 Q 396 185 365 196" stroke="#1e293b" stroke-width="12" stroke-linecap="round" />
-              <rect x="363" y="191" width="7" height="11" rx="1.5" fill="#ffffff" />
-              <path d="M 366 193 Q 350 196 341 200 Q 343 207 353 207 Q 365 204 366 201 Z" fill="#fbd38d" />
-              <!-- Clasp wrap -->
-              <path d="M 342 194 Q 334 198 338 205 Q 346 207 350 202" fill="#fbd38d" stroke="#d97706" stroke-width="1" />
-            </g>
-          </g>
-
-          <!-- ============================================== -->
-          <!-- HANDSHAKE CLASP & CELEBRATION SPARKS (CENTER)  -->
-          <!-- ============================================== -->
-          <g id="handshakeGroup" class="anim-handshake">
-            <!-- Golden Aura Burst at Clasp Point (340, 200) -->
-            <g class="anim-sparks">
-              <circle cx="340" cy="200" r="32" fill="url(#handshakeBurstGlow)" />
-              <circle cx="340" cy="200" r="24" fill="none" stroke="#fde047" stroke-width="2" stroke-dasharray="3 3" opacity="0.8" />
-            </g>
-
-            <!-- 4-Pointed Sparkle Stars radiating outward -->
-            <!-- Star 1 (Top Center) -->
-            <g class="anim-star-1">
-              <path d="M 340 156 L 342 163 L 349 165 L 342 167 L 340 174 L 338 167 L 331 165 L 338 163 Z" fill="#ffffff" stroke="#fde047" stroke-width="0.8" />
-            </g>
-            <!-- Star 2 (Left Mid) -->
-            <g class="anim-star-2">
-              <path d="M 314 179 L 316 183 L 320 185 L 316 187 L 314 191 L 312 187 L 308 185 L 312 183 Z" fill="#fde047" />
-            </g>
-            <!-- Star 3 (Right Mid) -->
-            <g class="anim-star-3">
-              <path d="M 366 179 L 368 183 L 372 185 L 368 187 L 366 191 L 364 187 L 360 185 L 364 183 Z" fill="#fde047" />
-            </g>
-            <!-- Star 4 (Bottom Left) -->
-            <g class="anim-star-4">
-              <path d="M 326 218 L 327.5 222 L 331.5 223.5 L 327.5 225 L 326 229 L 324.5 225 L 320.5 223.5 L 324.5 222 Z" fill="#ffedd5" />
-            </g>
-            <!-- Star 5 (Bottom Right) -->
-            <g class="anim-star-5">
-              <path d="M 354 218 L 355.5 222 L 359.5 223.5 L 355.5 225 L 354 229 L 352.5 225 L 348.5 223.5 L 352.5 222 Z" fill="#ffedd5" />
-            </g>
-          </g>
-
-          <!-- ============================================== -->
-          <!-- OFFICIAL MAZDOOR MITRA CREST REVEAL (ABOVE)    -->
-          <!-- ============================================== -->
-          <g id="logoRevealGroup" class="anim-logo">
-            <g transform="translate(300, 10) scale(0.20)">
-              <!-- Outer Circular Ring -->
-              <circle cx="200" cy="200" r="190" fill="none" stroke="#ea580c" stroke-width="12" />
-              <circle cx="200" cy="200" r="176" fill="#ffffff" />
-              <!-- Protective Shield -->
-              <path d="M200 45 L320 95 C320 235 200 320 200 320 C200 320 80 235 80 95 Z" fill="url(#shieldGradSplash)" />
-              <!-- Worker Safety Cap & Silhouette -->
-              <path d="M150 200 C150 140 250 140 250 200 Z" fill="#ffffff" opacity="0.9" />
-              <circle cx="200" cy="130" r="22" fill="#ffffff" />
-              <circle cx="200" cy="128" r="9" fill="#dc2626" />
-              <circle cx="200" cy="128" r="3.5" fill="#ffffff" />
-              <!-- 3D 'MM' Monogram -->
-              <path d="M95 260 L95 165 L145 235 L195 165 L195 260 L170 260 L170 210 L145 238 L120 210 L120 260 Z" fill="url(#mmGoldSplash)" stroke="#ffe082" stroke-width="2" />
-              <path d="M195 260 L195 165 L245 235 L295 165 L295 260 L270 260 L270 210 L245 238 L220 210 L220 260 Z" fill="url(#mmGoldSplash)" stroke="#ffe082" stroke-width="2" />
-              <!-- Bottom Green Leaves Base -->
-              <path d="M90 240 Q200 365 310 240 Q200 385 90 240 Z" fill="url(#greenBaseSplash)" />
-            </g>
-          </g>
-        </svg>
-      </div>
-
-      <!-- Welcoming Typography with Glow -->
-      <div class="anim-text mt-2 sm:mt-3 space-y-1.5 text-center">
-        <!-- National Network Pill -->
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-[10px] sm:text-[11px] font-black uppercase tracking-wider">
-          <span class="w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
-          <span>National Labour & Contractor Network</span>
-        </div>
-
-        <!-- Main Title -->
-        <h1 class="text-2xl sm:text-4xl font-black tracking-tight text-white flex items-center justify-center gap-2">
-          <span>Mazdoor</span>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 drop-shadow-md">Mitra</span>
-        </h1>
-
-        <!-- Multilingual Slogan -->
-        <div class="space-y-0.5 pt-0.5">
-          <p class="text-xs sm:text-sm font-bold text-orange-200">
-            కార్మికుల భద్రత • ఉపాధి • సంక్షేమం
-          </p>
-          <p class="text-[11px] text-slate-400">
-            Connecting India's Skilled Artisans & Builders
-          </p>
+    <!-- Final Reveal Typography (Fade-in, scale-up upon blast) -->
+    <div id="splashWelcomeBox" class="relative z-20 flex flex-col items-center justify-center px-6 text-center max-w-2xl opacity-0 scale-90 translate-y-6 blur-md transition-all duration-1000 ease-out pointer-events-none">
+      <!-- MM Monogram Emblem -->
+      <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-sky-500 via-indigo-500 to-amber-400 p-[2px] shadow-[0_0_35px_rgba(56,189,248,0.45)] mb-4">
+        <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center font-black text-2xl sm:text-3xl text-white tracking-wider">
+          MM
         </div>
       </div>
 
-      <!-- Progress Loading Bar & Pulsing Status -->
-      <div class="anim-text mt-5 flex flex-col items-center space-y-2 w-64 max-w-xs">
-        <div class="w-full bg-slate-900/90 rounded-full h-1.5 overflow-hidden p-0.5 border border-slate-700/60 shadow-inner">
-          <div id="splashProgressBar" class="h-full bg-gradient-to-r from-orange-500 via-amber-400 to-orange-400 rounded-full splash-progress-fill"></div>
-        </div>
-        <div class="flex items-center space-x-2 text-[10px] text-slate-400 font-bold tracking-wider">
-          <i class="fa-solid fa-handshake-simple text-orange-500 text-[11px]"></i>
-          <span>సిస్టమ్ సిద్ధమవుతోంది (Loading Platform)...</span>
-        </div>
+      <!-- Welcome to Mazdoor Mitra Title -->
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.4)] leading-tight">
+        Welcome to <span class="bg-gradient-to-r from-sky-400 via-amber-300 to-orange-400 bg-clip-text text-transparent">Mazdoor Mitra</span>
+      </h1>
+
+      <!-- Professional Subtitle -->
+      <p class="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-slate-300 font-medium tracking-wide drop-shadow-sm max-w-lg">
+        Empowering Workers • Connecting Builders Across India
+      </p>
+
+      <!-- Multilingual Accent -->
+      <div class="mt-3 flex items-center gap-2 text-xs text-sky-400/80 font-medium">
+        <span>काम पाएं, कारीगर पाएं</span>
+        <span class="w-1 h-1 rounded-full bg-sky-400/50"></span>
+        <span>పని పొందండి, కార్మికులను కనుగొనండి</span>
       </div>
 
+      <!-- Portal Entry Pulse -->
+      <div class="mt-7 flex items-center gap-2 text-[11px] font-mono tracking-widest uppercase text-slate-400/80">
+        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+        <span>Opening Login Portal...</span>
+      </div>
     </div>
   </div>
 
@@ -4482,21 +4264,251 @@
     let stateDistChartInstance = null;
 
     // =========================================================
-    // WELCOME LIGHT RAY INTRO SPLASH SCREEN CONTROLLER
+    // STAR SWIRL, CONVERGENCE, PARTICLE BLAST & WELCOME INTRO
     // =========================================================
     let splashDismissTimer = null;
+    let splashAnimFrame = null;
+    let isSplashDismissing = false;
 
     function initSplashScreen() {
       const splash = document.getElementById('splashScreen');
-      if (!splash) return;
+      const canvas = document.getElementById('splashStarsCanvas');
+      if (!splash || !canvas) return;
 
-      // Auto-dismiss after 2.8 seconds
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      const resizeSplash = () => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.scale(dpr, dpr);
+      };
+
+      resizeSplash();
+      window.addEventListener('resize', resizeSplash);
+
+      // Animation Timeline Configuration
+      const SWIRL_DURATION = 1600;     // Initial drift & gentle circular swirl
+      const CONVERGE_DURATION = 1500;  // Rapid inward convergence into center
+      const BLAST_TIME = SWIRL_DURATION + CONVERGE_DURATION; // 3100ms
+      const REVEAL_DELAY = BLAST_TIME + 150;                 // 3250ms: Text reveal
+      const HOLD_DURATION = 1800;                            // 1.8s hold on "Welcome to Mazdoor Mitra"
+      const AUTO_EXIT_TIME = BLAST_TIME + HOLD_DURATION + 1300; // ~6.2s total
+
+      // Generate 450+ Star Particles
+      const STAR_COUNT = width < 768 ? 320 : 500;
+      const stars = [];
+      const cx = width / 2;
+      const cy = height / 2;
+
+      for (let i = 0; i < STAR_COUNT; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const maxDist = Math.max(width, height) * 0.75;
+        const dist = Math.sqrt(Math.random()) * maxDist + 20;
+
+        stars.push({
+          id: i,
+          baseDist: dist,
+          currentDist: dist,
+          angle: angle,
+          angularSpeed: (0.008 + (1 / (dist * 0.05 + 1)) * 0.025) * (Math.random() > 0.5 ? 1 : -1) * (0.8 + Math.random() * 0.4),
+          x: cx + Math.cos(angle) * dist,
+          y: cy + Math.sin(angle) * dist,
+          size: Math.random() * 2.2 + 0.8,
+          baseAlpha: Math.random() * 0.6 + 0.4,
+          twinkleSpeed: Math.random() * 0.06 + 0.02,
+          twinkleOffset: Math.random() * Math.PI * 2,
+          vx: 0,
+          vy: 0,
+          isBlasted: false
+        });
+      }
+
+      let blastSparks = [];
+      let shockwaveRadius = 0;
+      let shockwaveAlpha = 0;
+      let blastTriggered = false;
+      const startTime = performance.now();
+
+      // Trigger Text Reveal ("Welcome to Mazdoor Mitra")
+      setTimeout(() => {
+        const box = document.getElementById('splashWelcomeBox');
+        if (box) {
+          box.classList.remove('opacity-0', 'scale-90', 'translate-y-6', 'blur-md');
+          box.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+        }
+      }, REVEAL_DELAY);
+
+      // Auto Transition to Login Page
       splashDismissTimer = setTimeout(() => {
         dismissSplashScreen(false);
-      }, 2800);
+      }, AUTO_EXIT_TIME);
 
-      // Dismiss on keydown (Escape, Space, Enter)
       window.addEventListener('keydown', handleSplashKeydown);
+
+      // 60FPS Render Loop
+      const render = (now) => {
+        if (!document.getElementById('splashScreen')) return;
+        const elapsed = now - startTime;
+        const currentCx = width / 2;
+        const currentCy = height / 2;
+
+        // Clean Dark Background (Deep Midnight Blue #070b14)
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = 'rgba(7, 11, 20, 0.32)';
+        ctx.fillRect(0, 0, width, height);
+
+        // Additive Luminous Blending
+        ctx.globalCompositeOperation = 'lighter';
+
+        // 1. SWIRL & CONVERGENCE PHASES
+        if (elapsed < BLAST_TIME) {
+          let convergence = 0;
+          if (elapsed > SWIRL_DURATION) {
+            const t = (elapsed - SWIRL_DURATION) / CONVERGE_DURATION;
+            convergence = Math.min(1, Math.max(0, t * t * t));
+          }
+
+          // Central Singularity Glow as stars concentrate
+          if (convergence > 0.4) {
+            const coreSize = 18 + convergence * 34;
+            const coreGlow = ctx.createRadialGradient(currentCx, currentCy, 0, currentCx, currentCy, coreSize);
+            coreGlow.addColorStop(0, `rgba(255, 255, 255, ${convergence * 0.95})`);
+            coreGlow.addColorStop(0.3, `rgba(56, 189, 248, ${convergence * 0.65})`);
+            coreGlow.addColorStop(0.7, `rgba(14, 165, 233, ${convergence * 0.25})`);
+            coreGlow.addColorStop(1, 'rgba(7, 11, 20, 0)');
+
+            ctx.fillStyle = coreGlow;
+            ctx.beginPath();
+            ctx.arc(currentCx, currentCy, coreSize, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Draw Stars
+          for (let i = 0; i < stars.length; i++) {
+            const s = stars[i];
+            const speedMultiplier = 1 + convergence * 5.5;
+            s.angle += s.angularSpeed * speedMultiplier;
+
+            const targetDist = s.baseDist * (1 - convergence) + (Math.sin(elapsed * 0.01 + s.id) * 6 * (1 - convergence));
+            s.currentDist = Math.max(2, targetDist);
+
+            s.x = currentCx + Math.cos(s.angle) * s.currentDist;
+            s.y = currentCy + Math.sin(s.angle) * s.currentDist;
+
+            const twinkle = Math.sin(elapsed * s.twinkleSpeed + s.twinkleOffset) * 0.3;
+            const alpha = Math.min(1, Math.max(0.15, s.baseAlpha + twinkle));
+
+            ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (s.size > 1.8) {
+              ctx.fillStyle = `rgba(224, 242, 254, ${alpha * 0.4})`;
+              ctx.beginPath();
+              ctx.arc(s.x, s.y, s.size * 2.4, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        }
+        // 2. PARTICLE BLAST & SHOCKWAVE PHASE
+        else {
+          if (!blastTriggered) {
+            blastTriggered = true;
+            shockwaveRadius = 5;
+            shockwaveAlpha = 1.0;
+
+            // Radial velocity impulse to all stars
+            for (let i = 0; i < stars.length; i++) {
+              const s = stars[i];
+              const blastAngle = s.angle + (Math.random() - 0.5) * 0.6;
+              const blastSpeed = 8 + Math.random() * 22;
+              s.vx = Math.cos(blastAngle) * blastSpeed;
+              s.vy = Math.sin(blastAngle) * blastSpeed;
+              s.isBlasted = true;
+            }
+
+            // Scatter secondary bright sparks
+            const sparkCount = 90;
+            blastSparks = [];
+            for (let k = 0; k < sparkCount; k++) {
+              const spkAngle = Math.random() * Math.PI * 2;
+              const spkSpeed = 6 + Math.random() * 26;
+              blastSparks.push({
+                x: currentCx,
+                y: currentCy,
+                vx: Math.cos(spkAngle) * spkSpeed,
+                vy: Math.sin(spkAngle) * spkSpeed,
+                size: Math.random() * 3 + 1.2,
+                alpha: 1.0,
+                decay: 0.016 + Math.random() * 0.02,
+                color: Math.random() > 0.4 ? 'rgba(255, 255, 255,' : 'rgba(56, 189, 248,'
+              });
+            }
+          }
+
+          // Expanding shockwave ring
+          if (shockwaveAlpha > 0.01) {
+            shockwaveRadius += 16;
+            shockwaveAlpha = Math.max(0, shockwaveAlpha - 0.028);
+
+            ctx.strokeStyle = `rgba(255, 255, 255, ${shockwaveAlpha * 0.8})`;
+            ctx.lineWidth = Math.max(1, 3 * shockwaveAlpha);
+            ctx.beginPath();
+            ctx.arc(currentCx, currentCy, shockwaveRadius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.strokeStyle = `rgba(56, 189, 248, ${shockwaveAlpha * 0.4})`;
+            ctx.lineWidth = Math.max(1, 6 * shockwaveAlpha);
+            ctx.beginPath();
+            ctx.arc(currentCx, currentCy, Math.max(0, shockwaveRadius - 6), 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          // Exploding star particles
+          for (let i = 0; i < stars.length; i++) {
+            const s = stars[i];
+            s.x += s.vx;
+            s.y += s.vy;
+            s.vx *= 0.94;
+            s.vy *= 0.94;
+            s.baseAlpha = Math.max(0.08, s.baseAlpha * 0.985);
+
+            ctx.fillStyle = `rgba(255, 255, 255, ${s.baseAlpha})`;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Exploding secondary sparks
+          for (let k = 0; k < blastSparks.length; k++) {
+            const spk = blastSparks[k];
+            if (spk.alpha <= 0) continue;
+
+            spk.x += spk.vx;
+            spk.y += spk.vy;
+            spk.vx *= 0.95;
+            spk.vy *= 0.95;
+            spk.alpha = Math.max(0, spk.alpha - spk.decay);
+
+            ctx.fillStyle = `${spk.color} ${spk.alpha})`;
+            ctx.beginPath();
+            ctx.arc(spk.x, spk.y, spk.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        splashAnimFrame = requestAnimationFrame(render);
+      };
+
+      splashAnimFrame = requestAnimationFrame(render);
     }
 
     function handleSplashKeydown(e) {
@@ -4508,30 +4520,41 @@
 
     function dismissSplashScreen(immediate = false) {
       const splash = document.getElementById('splashScreen');
-      if (!splash || splash.classList.contains('splash-fade-out')) return;
+      if (!splash || isSplashDismissing) return;
 
       if (splashDismissTimer) {
         clearTimeout(splashDismissTimer);
         splashDismissTimer = null;
       }
       window.removeEventListener('keydown', handleSplashKeydown);
+      isSplashDismissing = true;
 
       if (immediate) {
-        splash.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
+        splash.style.transition = 'opacity 0.35s ease-out, transform 0.35s ease-out';
         splash.style.opacity = '0';
-        splash.style.transform = 'scale(1.04)';
+        splash.style.transform = 'scale(1.05)';
         splash.style.pointerEvents = 'none';
         setTimeout(() => {
+          if (splashAnimFrame) {
+            cancelAnimationFrame(splashAnimFrame);
+            splashAnimFrame = null;
+          }
           if (splash.parentNode) splash.parentNode.removeChild(splash);
-        }, 220);
+        }, 360);
       } else {
-        splash.classList.add('splash-fade-out');
+        splash.style.transition = 'opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
+        splash.style.opacity = '0';
+        splash.style.transform = 'scale(1.04) translateY(-10px)';
+        splash.style.pointerEvents = 'none';
         setTimeout(() => {
+          if (splashAnimFrame) {
+            cancelAnimationFrame(splashAnimFrame);
+            splashAnimFrame = null;
+          }
           if (splash.parentNode) splash.parentNode.removeChild(splash);
-        }, 550);
+        }, 670);
       }
     }
-
     // --- D. INITIALIZATION ---
     function initApp() {
       initSplashScreen();
