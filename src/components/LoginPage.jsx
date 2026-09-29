@@ -242,7 +242,7 @@ export default function LoginPage({ onLoginSuccess }) {
           {/* ROLE SELECTOR TOGGLE (Worker vs Contractor) */}
           <div className="space-y-1.5">
             <label className="block text-xs font-bold text-slate-700">
-              Select Your Account Type <span className="text-red-500">*</span>
+              Select Your Role <span className="text-red-500">*</span>
             </label>
             <div className="grid grid-cols-2 gap-2.5">
               {/* Option 1: Worker */}
@@ -257,7 +257,7 @@ export default function LoginPage({ onLoginSuccess }) {
               >
                 <span className="text-xl mb-0.5">👷</span>
                 <span className="text-xs font-black">Worker</span>
-                <span className="text-[10px] opacity-80">मजदूर • కార్మికుడు</span>
+                <span className="text-[10px] opacity-80">Find Work</span>
               </button>
 
               {/* Option 2: Contractor / Employer */}
@@ -271,8 +271,8 @@ export default function LoginPage({ onLoginSuccess }) {
                 }`}
               >
                 <span className="text-xl mb-0.5">🏢</span>
-                <span className="text-xs font-black">Contractor</span>
-                <span className="text-[10px] opacity-80">ठेकेदार • యజమాని</span>
+                <span className="text-xs font-black">Contractor / Owner</span>
+                <span className="text-[10px] opacity-80">Post Jobs</span>
               </button>
             </div>
           </div>

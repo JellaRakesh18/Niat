@@ -889,19 +889,19 @@
 
           <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-extrabold uppercase tracking-wide border border-emerald-200">
             <i class="fa-solid fa-lock text-brand-500"></i>
-            <span data-i18n="authSecurityBadge">ధృవీకరించబడిన సురక్షిత ప్రవేశం</span>
+            <span data-i18n="authSecurityBadge">Verified Secure Access</span>
           </div>
-          <h2 id="authHeadingTitle" data-i18n="authHeadingLogin" class="text-2xl font-black text-slate-900 tracking-tight">మజ్దూర్ మిత్రకు స్వాగతం</h2>
-          <p id="authHeadingSub" data-i18n="authSubLogin" class="text-xs text-slate-500">ఉద్యోగాల శోధన, హాజరు నమోదు & అత్యవసర సహాయం కొరకు లాగిన్ అవ్వండి</p>
+          <h2 id="authHeadingTitle" data-i18n="authHeadingLogin" class="text-2xl font-black text-slate-900 tracking-tight">Welcome to Mazdoor Mitra</h2>
+          <p id="authHeadingSub" data-i18n="authSubLogin" class="text-xs text-slate-500">Sign in to search jobs, record attendance & access emergency aid</p>
         </div>
 
         <!-- Mode Toggle Tabs (Login vs Register) -->
         <div class="flex p-1 bg-slate-100 rounded-2xl border border-slate-200">
           <button type="button" id="tabBtnLogin" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl text-xs font-black transition text-slate-900 bg-white shadow-xs cursor-pointer">
-            <i class="fa-solid fa-right-to-bracket mr-1.5 text-brand-600"></i> <span data-i18n="authTabLogin">లాగిన్</span>
+            <i class="fa-solid fa-right-to-bracket mr-1.5 text-brand-600"></i> <span data-i18n="authTabLogin">Log In</span>
           </button>
           <button type="button" id="tabBtnRegister" onclick="switchAuthTab('register')" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer">
-            <i class="fa-solid fa-user-plus mr-1.5 text-blue-600"></i> <span data-i18n="authTabRegister">సైన్ అప్</span>
+            <i class="fa-solid fa-user-plus mr-1.5 text-blue-600"></i> <span data-i18n="authTabRegister">Sign Up</span>
           </button>
         </div>
 
@@ -913,21 +913,21 @@
           <!-- Role Selection (Worker vs Contractor) -->
           <div class="space-y-1.5">
             <label class="block text-xs font-bold text-slate-700">
-              <span id="loginSelectRoleLabel">మీ పాత్రను ఎంచుకోండి (Select Your Role)</span> <span class="text-red-500">*</span>
+              <span id="loginSelectRoleLabel">Select Your Role</span> <span class="text-red-500">*</span>
             </label>
             <div class="grid grid-cols-2 gap-2">
               <button type="button" onclick="selectLoginRole('worker')" id="loginRoleWorkerBtn" class="p-2.5 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer">
                 <div class="text-lg mb-0.5">👷</div>
                 <div class="text-[11px] leading-tight">
-                  <span class="block font-black">కార్మికుడు (Worker)</span>
-                  <span class="text-[9px] opacity-85 block">मजदूर • Find Work</span>
+                  <span class="block font-black">Worker</span>
+                  <span class="text-[9px] opacity-85 block">Find Work</span>
                 </div>
               </button>
               <button type="button" onclick="selectLoginRole('employer')" id="loginRoleEmployerBtn" class="p-2.5 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
                 <div class="text-lg mb-0.5">🏢</div>
                 <div class="text-[11px] leading-tight">
-                  <span class="block font-black">కాంట్రాక్టర్ / యజమాని</span>
-                  <span class="text-[9px] opacity-75 block">ठेकेदार • Post Jobs</span>
+                  <span class="block font-black">Contractor / Owner</span>
+                  <span class="text-[9px] opacity-75 block">Post Jobs</span>
                 </div>
               </button>
             </div>
@@ -937,10 +937,10 @@
           <!-- Dual Method Tabs: Mobile OTP vs Email/Password -->
           <div class="flex items-center justify-center space-x-2 border-b border-slate-200 pb-3">
             <button type="button" id="loginMethodPhoneBtn" onclick="switchLoginMethod('phone')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-brand-500 text-white shadow-xs cursor-pointer">
-              <i class="fa-solid fa-mobile-screen-button mr-1.5"></i> <span>మొబైల్ & OTP (Verified SMS)</span>
+              <i class="fa-solid fa-mobile-screen-button mr-1.5"></i> <span>Mobile & OTP (Verified SMS)</span>
             </button>
             <button type="button" id="loginMethodEmailBtn" onclick="switchLoginMethod('email')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">
-              <i class="fa-solid fa-envelope mr-1.5"></i> <span>ఈమెయిల్ & పాస్‌వర్డ్</span>
+              <i class="fa-solid fa-envelope mr-1.5"></i> <span>Email & Password</span>
             </button>
           </div>
 
@@ -950,21 +950,21 @@
             <div id="loginStepMobile" class="space-y-3.5">
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">
-                  <span data-i18n="authMobileLabel">మొబైల్ నంబర్ (Mobile Number)</span> <span class="text-red-500">*</span>
+                  <span data-i18n="authMobileLabel">Mobile Number</span> <span class="text-red-500">*</span>
                 </label>
                 <div class="relative flex rounded-xl border border-slate-300 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500/20 bg-slate-50">
                   <span class="inline-flex items-center px-3 rounded-l-xl border-r border-slate-300 text-slate-600 font-bold text-xs bg-slate-100">
                     🇮🇳 +91
                   </span>
-                  <input type="tel" id="loginPhoneInput" maxlength="10" placeholder="ఉదా: 9848012345" oninput="handlePhoneInputChange(this.value)" class="w-full bg-transparent px-3 py-2.5 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
+                  <input type="tel" id="loginPhoneInput" maxlength="10" placeholder="e.g. 9848012345" oninput="handlePhoneInputChange(this.value)" class="w-full bg-transparent px-3 py-2.5 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
                 </div>
-                <p id="loginPhoneError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి 6-9 తో ప్రారంభమయ్యే చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి.</p>
+                <p id="loginPhoneError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Please enter a valid 10-digit mobile number starting with 6-9.</p>
               </div>
 
               <!-- OTP Request Button (Disabled until 10 valid digits) -->
               <button type="button" id="btnSendOtp" onclick="handleSendOTP()" disabled class="w-full bg-brand-500 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm flex items-center justify-center space-x-2 opacity-50 cursor-not-allowed">
                 <i class="fa-solid fa-paper-plane"></i>
-                <span id="btnSendOtpText">మొబైల్‌లో OTP పొందండి (Get OTP on Mobile)</span>
+                <span id="btnSendOtpText">Get OTP on Mobile</span>
               </button>
             </div>
 
@@ -977,7 +977,7 @@
                   <span class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">SMS Dispatched</span>
                 </div>
                 <button type="button" onclick="editPhoneNumber()" class="text-brand-600 hover:text-brand-800 text-[11px] font-bold underline cursor-pointer">
-                  <i class="fa-solid fa-pen-to-square mr-0.5"></i> నంబర్ మార్చండి (Edit)
+                  <i class="fa-solid fa-pen-to-square mr-0.5"></i> Edit Number
                 </button>
               </div>
 
@@ -994,7 +994,7 @@
               <!-- 6-digit individual box inputs -->
               <div>
                 <label class="block text-xs font-bold text-emerald-950 mb-2 text-center">
-                  6 అంకెల ధృవీకరణ కోడ్ నమోదు చేయండి (Enter 6-Digit OTP)
+                  Enter 6-Digit OTP
                 </label>
                 <div class="flex justify-between items-center gap-1.5 sm:gap-2" id="otpBoxContainer">
                   <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-box w-11 h-12 text-center text-xl font-black bg-white border border-emerald-300 rounded-xl focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-slate-900 outline-none shadow-xs" data-index="0">
@@ -1019,7 +1019,7 @@
               <!-- Verify & Proceed Button -->
               <button type="button" id="btnVerifyProceed" onclick="handleVerifyPhoneOTP()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-md active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
                 <i class="fa-solid fa-circle-check"></i>
-                <span id="btnVerifyProceedText">ధృవీకరించి ప్రవేశించండి (Verify & Proceed)</span>
+                <span id="btnVerifyProceedText">Verify & Proceed</span>
               </button>
             </div>
           </div>
@@ -1028,18 +1028,18 @@
           <div id="loginEmailMethodView" class="hidden space-y-3.5">
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">
-                <span data-i18n="authEmailLabel">ఈమెయిల్ చిరునామా</span> <span class="text-red-500">*</span>
+                <span data-i18n="authEmailLabel">Email Address</span> <span class="text-red-500">*</span>
               </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-envelope absolute left-3 text-slate-400 text-xs"></i>
                 <input type="email" id="loginEmailInput" placeholder="name@example.com" data-i18n-placeholder="authEmailPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20">
               </div>
-              <p id="loginEmailError" data-i18n="authEmailError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి సరైన ఈమెయిల్ చిరునామాను నమోదు చేయండి.</p>
+              <p id="loginEmailError" data-i18n="authEmailError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Please enter a valid email address.</p>
             </div>
 
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">
-                <span data-i18n="authPasswordLabel">పాస్‌వర్డ్</span> <span class="text-red-500">*</span>
+                <span data-i18n="authPasswordLabel">Password</span> <span class="text-red-500">*</span>
               </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-lock absolute left-3 text-slate-400 text-xs"></i>
@@ -1048,22 +1048,22 @@
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
-              <p id="loginPasswordError" data-i18n="authPasswordError" class="hidden text-[11px] text-red-600 font-semibold mt-1">పాస్‌వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి.</p>
+              <p id="loginPasswordError" data-i18n="authPasswordError" class="hidden text-[11px] text-red-600 font-semibold mt-1">Password must be at least 6 characters.</p>
             </div>
 
             <div class="flex items-center justify-between text-xs pt-1">
               <label class="flex items-center space-x-2 cursor-pointer text-slate-600">
                 <input type="checkbox" id="loginRememberMe" checked class="rounded text-brand-600 focus:ring-brand-500 border-slate-300">
-                <span data-i18n="authRememberMe">నన్ను గుర్తుంచుకో</span>
+                <span data-i18n="authRememberMe">Remember Me</span>
               </label>
               <button type="button" onclick="openModal('forgotPasswordModal')" class="text-brand-600 hover:text-brand-700 font-bold hover:underline cursor-pointer">
-                <span data-i18n="authForgotPassword">పాస్‌వర్డ్ మర్చిపోయారా?</span>
+                <span data-i18n="authForgotPassword">Forgot Password?</span>
               </button>
             </div>
 
             <button type="button" onclick="handleEmailPasswordLogin()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
               <i class="fa-solid fa-right-to-bracket"></i>
-              <span data-i18n="authBtnSignIn">డాష్‌బోర్డ్‌కి లాగిన్ అవ్వండి</span>
+              <span data-i18n="authBtnSignIn">Sign In to Dashboard</span>
             </button>
           </div>
         </div>
@@ -1075,21 +1075,21 @@
           <!-- Role Selection Pills: Mutually Exclusive Worker vs Employer -->
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1.5">
-              <span id="authSelectRoleText" data-i18n="authSelectRole">మీ పాత్రను ఎంచుకోండి (Select Account Type)</span> <span class="text-red-500">*</span>
+              <span id="authSelectRoleText" data-i18n="authSelectRole">Select Your Role</span> <span class="text-red-500">*</span>
             </label>
             <div class="grid grid-cols-2 gap-2">
               <button type="button" onclick="selectRegisterRole('worker')" id="regRoleWorkerBtn" class="p-2.5 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer">
                 <div class="text-lg mb-0.5">👷</div>
                 <div class="text-[11px] leading-tight">
-                  <span data-i18n="roleWorker" class="block font-black">కార్మికుడు (Skilled Worker)</span>
-                  <span data-i18n="roleWorkerSub" class="text-[9px] opacity-85 block">నైపుణ్య కార్మికుడు • Find Work</span>
+                  <span data-i18n="roleWorker" class="block font-black">Worker</span>
+                  <span data-i18n="roleWorkerSub" class="text-[9px] opacity-85 block">Find Work</span>
                 </div>
               </button>
               <button type="button" onclick="selectRegisterRole('employer')" id="regRoleEmployerBtn" class="p-2.5 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
                 <div class="text-lg mb-0.5">🏢</div>
                 <div class="text-[11px] leading-tight">
-                  <span data-i18n="roleEmployer" class="block font-black">యజమాని (Employer / Contractor)</span>
-                  <span data-i18n="roleEmployerSub" class="text-[9px] opacity-75 block">బిల్డర్ / మేస్త్రీ • Hire Labour</span>
+                  <span data-i18n="roleEmployer" class="block font-black">Contractor / Owner</span>
+                  <span data-i18n="roleEmployerSub" class="text-[9px] opacity-75 block">Post Jobs</span>
                 </div>
               </button>
             </div>
