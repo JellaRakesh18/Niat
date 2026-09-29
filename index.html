@@ -1030,47 +1030,74 @@
         <!-- FORM B: SIGN UP SECTION    -->
         <!-- ========================== -->
         <div id="authRegisterForm" class="hidden space-y-3.5">
-          <!-- Role Selection Pills -->
+          <!-- Role Selection Pills: Mutually Exclusive Worker vs Employer -->
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1.5">
-              <span data-i18n="authSelectRole">మీ పాత్రను ఎంచుకోండి</span> <span class="text-red-500">*</span>
+              <span id="authSelectRoleText" data-i18n="authSelectRole">మీ పాత్రను ఎంచుకోండి (Select Account Type)</span> <span class="text-red-500">*</span>
             </label>
-            <div class="grid grid-cols-3 gap-1.5">
-              <button type="button" onclick="selectRegisterRole('worker')" id="regRoleWorkerBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer">
-                <div class="text-base mb-0.5">👷</div>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="selectRegisterRole('worker')" id="regRoleWorkerBtn" class="p-2.5 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer">
+                <div class="text-lg mb-0.5">👷</div>
                 <div class="text-[11px] leading-tight">
-                  <span data-i18n="roleWorker" class="block font-black">కార్మికుడు</span>
-                  <span data-i18n="roleWorkerSub" class="text-[9px] opacity-80 block">నైపుణ్య కార్మికుడు</span>
+                  <span data-i18n="roleWorker" class="block font-black">కార్మికుడు (Skilled Worker)</span>
+                  <span data-i18n="roleWorkerSub" class="text-[9px] opacity-85 block">నైపుణ్య కార్మికుడు • Find Work</span>
                 </div>
               </button>
-              <button type="button" onclick="selectRegisterRole('contractor')" id="regRoleContractorBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
-                <div class="text-base mb-0.5">🏗️</div>
+              <button type="button" onclick="selectRegisterRole('employer')" id="regRoleEmployerBtn" class="p-2.5 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
+                <div class="text-lg mb-0.5">🏢</div>
                 <div class="text-[11px] leading-tight">
-                  <span data-i18n="roleContractor" class="block font-black">కాంట్రాక్టర్</span>
-                  <span data-i18n="roleContractorSub" class="text-[9px] opacity-80 block">మేస్త్రీ / కాంట్రాక్టర్</span>
-                </div>
-              </button>
-              <button type="button" onclick="selectRegisterRole('employer')" id="regRoleEmployerBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
-                <div class="text-base mb-0.5">🏢</div>
-                <div class="text-[11px] leading-tight">
-                  <span data-i18n="roleEmployer" class="block font-black">యజమాని</span>
-                  <span data-i18n="roleEmployerSub" class="text-[9px] opacity-80 block">సైట్ యజమాని</span>
+                  <span data-i18n="roleEmployer" class="block font-black">యజమాని (Employer / Contractor)</span>
+                  <span data-i18n="roleEmployerSub" class="text-[9px] opacity-75 block">బిల్డర్ / మేస్త్రీ • Hire Labour</span>
                 </div>
               </button>
             </div>
             <input type="hidden" id="regSelectedRole" value="worker">
           </div>
 
-          <!-- Full Name -->
+          <!-- Full Name or Company Name -->
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">
-              <span data-i18n="authFullNameLabel">పూర్తి పేరు</span> <span class="text-red-500">*</span>
+            <label id="regNameLabel" class="block text-xs font-bold text-slate-700 mb-1">
+              <span id="regNameLabelText" data-i18n="authFullNameLabel">పూర్తి పేరు (Full Name)</span> <span class="text-red-500">*</span>
             </label>
             <div class="relative flex items-center">
-              <i class="fa-solid fa-user absolute left-3 text-slate-400 text-xs"></i>
+              <i id="regNameIcon" class="fa-solid fa-user absolute left-3 text-slate-400 text-xs"></i>
               <input type="text" id="regNameInput" placeholder="ఉదా: రమేష్ కుమార్" data-i18n-placeholder="authFullNamePlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-brand-500">
             </div>
-            <p id="regNameError" data-i18n="authFullNameError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి మీ పూర్తి పేరును నమోదు చేయండి.</p>
+            <p id="regNameError" data-i18n="authFullNameError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి మీ పూర్తి పేరు లేదా కంపెనీ పేరును నమోదు చేయండి.</p>
+          </div>
+
+          <!-- Employer Specific Field 1: Business Category (shown when role is employer) -->
+          <div id="regEmployerCategoryContainer" class="hidden">
+            <label class="block text-xs font-bold text-slate-700 mb-1">
+              <span>వ్యాపార వర్గం (Business Category)</span> <span class="text-red-500">*</span>
+            </label>
+            <div class="relative flex items-center">
+              <i class="fa-solid fa-briefcase absolute left-3 text-slate-400 text-xs"></i>
+              <select id="regEmployerCategorySelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-brand-500">
+                <option value="General Contractor">సివిల్ జనరల్ కాంట్రాక్టర్ (General Contractor)</option>
+                <option value="Sub-Contractor">సబ్-కాంట్రాక్టర్ (Sub-Contractor)</option>
+                <option value="Commercial Builder">కమర్షియల్ బిల్డర్ / ఇన్ఫ్రా (Commercial Builder / Infra Firm)</option>
+                <option value="Interior Contractor">ఇంటీరియర్ కాంట్రాక్టర్ (Interior Contractor / Decorator)</option>
+                <option value="Individual Homeowner">వ్యక్తిగత ఇంటి యజమాని (Individual Homeowner / Site Owner)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Employer Specific Field 2: GSTIN / Govt Registration Proof (optional) -->
+          <div id="regEmployerGstinContainer" class="hidden">
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-bold text-slate-700">
+                <span>GSTIN / ప్రభుత్వ లైసెన్స్ నంబర్ (Govt ID Proof)</span>
+              </label>
+              <span class="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                <i class="fa-solid fa-shield-halved mr-1"></i>Verified Badge
+              </span>
+            </div>
+            <div class="relative flex items-center">
+              <i class="fa-solid fa-id-card-clip absolute left-3 text-slate-400 text-xs"></i>
+              <input type="text" id="regEmployerGstinInput" placeholder="ఉదా: 36AAAAA0000A1Z5 లేదా లైసెన్స్ సంఖ్య (Optional)" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-brand-500 uppercase">
+            </div>
+            <p class="text-[10px] text-slate-400 mt-0.5">GSTIN లేదా కాంట్రాక్టర్ లైసెన్స్ నమోదు చేస్తే మీ జాబ్ లిస్టింగ్‌లకు 'Verified Safe Contractor' బ్యాడ్జ్ లభిస్తుంది.</p>
           </div>
 
           <!-- Trade / Skills Multi-Select -->
@@ -1694,95 +1721,224 @@
     <!-- ------------------------------------------------------- -->
     <section id="tab-jobs" class="tab-content active space-y-6">
 
-      <!-- Employer Action Banner (shown when in Employer Mode) -->
-      <div id="employerQuickPostBanner" class="hidden bg-gradient-to-r from-blue-900 to-indigo-950 text-white rounded-2xl p-5 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-2">
-            <span class="bg-brand-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">Employer Mode</span>
-            <h3 class="text-base sm:text-lg font-bold" data-i18n="postJobBannerTitle">Looking for Skilled Labour for Your Site?</h3>
+      <!-- ======================================================= -->
+      <!-- VIEW A: DEDICATED EMPLOYER DASHBOARD PORTAL             -->
+      <!-- ======================================================= -->
+      <div id="employerPortalSection" class="hidden space-y-6">
+        <!-- 1. Employer Profile & Hero Banner -->
+        <div class="card p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-brand-royal text-white rounded-3xl shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 border border-white/10">
+          <div class="space-y-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-brand-500 text-white flex items-center gap-1 shadow-xs">
+                <i class="fa-solid fa-building"></i> Employer Portal
+              </span>
+              <span id="empBadgeCategory" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-white/15 text-blue-100 border border-white/20">
+                Civil Infrastructure & Contracting
+              </span>
+              <span id="empBadgeVerified" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i> Verified Hiring Entity
+              </span>
+            </div>
+            <h2 id="empPortalCompanyName" class="text-xl sm:text-2xl font-black text-white tracking-tight">Apex Civil Infrastructure</h2>
+            <p class="text-xs text-blue-100/90 max-w-xl leading-relaxed">
+              Manage your site openings, review verified candidate applications, directly dial workers, and publish daily wage requirements across all trades.
+            </p>
           </div>
-          <p class="text-xs text-blue-200 mt-1" data-i18n="postJobBannerSub">Post daily or contract wage jobs to receive applications from verified workers immediately.</p>
+          <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+            <button onclick="openModal('fairWageEstimatorModal')" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5 border border-white/20 cursor-pointer shadow-xs">
+              <i class="fa-solid fa-calculator text-amber-300"></i>
+              <span>Fair Wage AI</span>
+            </button>
+            <button onclick="openModal('postJobModal')" class="px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-black transition shadow-lg flex items-center gap-2 cursor-pointer active:scale-95">
+              <i class="fa-solid fa-plus-circle text-sm"></i>
+              <span>+ Post a New Job Requirement</span>
+            </button>
+          </div>
         </div>
-        <div class="flex items-center space-x-2">
-          <button onclick="openModal('fairWageEstimatorModal')" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition shadow-md flex items-center space-x-1.5">
-            <i class="fa-solid fa-calculator text-yellow-300"></i>
-            <span>Fair Wage AI</span>
-          </button>
-          <button onclick="openModal('postJobModal')" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs transition shadow-md flex items-center space-x-2 shrink-0">
-            <i class="fa-solid fa-plus-circle text-sm"></i>
-            <span data-i18n="postNewJobBtn">Post New Job</span>
-          </button>
+
+        <!-- 2. Employer Key Metrics Cards (4 Responsive Cards) -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <!-- Metric 1: Active Jobs Posted -->
+          <div class="card p-4 sm:p-5 bg-white border-l-4 border-brand-500 shadow-xs">
+            <div class="flex items-center justify-between text-slate-500">
+              <span class="text-xs font-bold text-slate-600">Active Jobs Posted</span>
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-brand-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-briefcase"></i>
+              </div>
+            </div>
+            <div id="empMetricActiveJobs" class="text-2xl sm:text-3xl font-black text-slate-900 mt-2">0</div>
+            <div class="text-[10px] text-emerald-600 mt-1 font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-signal"></i> Live on Worker Network
+            </div>
+          </div>
+
+          <!-- Metric 2: Applications Received -->
+          <div class="card p-4 sm:p-5 bg-white border-l-4 border-blue-500 shadow-xs">
+            <div class="flex items-center justify-between text-slate-500">
+              <span class="text-xs font-bold text-slate-600">Applications Received</span>
+              <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-users"></i>
+              </div>
+            </div>
+            <div id="empMetricApplications" class="text-2xl sm:text-3xl font-black text-slate-900 mt-2">0</div>
+            <div class="text-[10px] text-blue-600 mt-1 font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-bolt"></i> Candidate Profiles
+            </div>
+          </div>
+
+          <!-- Metric 3: Completed Hires / Shortlisted -->
+          <div class="card p-4 sm:p-5 bg-white border-l-4 border-indigo-500 shadow-xs">
+            <div class="flex items-center justify-between text-slate-500">
+              <span class="text-xs font-bold text-slate-600">Completed Hires</span>
+              <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-user-check"></i>
+              </div>
+            </div>
+            <div id="empMetricHired" class="text-2xl sm:text-3xl font-black text-slate-900 mt-2">0</div>
+            <div class="text-[10px] text-indigo-600 mt-1 font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-circle-check"></i> Confirmed for Work Sites
+            </div>
+          </div>
+
+          <!-- Metric 4: Committed Labour Budget -->
+          <div class="card p-4 sm:p-5 bg-white border-l-4 border-amber-500 shadow-xs">
+            <div class="flex items-center justify-between text-slate-500">
+              <span class="text-xs font-bold text-slate-600">Committed Wage Budget</span>
+              <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+              </div>
+            </div>
+            <div id="empMetricBudget" class="text-2xl sm:text-3xl font-black text-slate-900 mt-2">₹0</div>
+            <div class="text-[10px] text-amber-700 mt-1 font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-calculator"></i> Active Daily Committed
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Sub-Navigation Tabs: My Posted Jobs vs. Candidate Applications -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-200 pb-3">
+            <div class="flex items-center space-x-2">
+              <button onclick="switchEmployerSubTab('myJobs')" id="empSubTabJobsBtn" class="px-4 py-2 rounded-xl text-xs font-bold transition bg-brand-500 text-white shadow-xs cursor-pointer">
+                <i class="fa-solid fa-list-check mr-1.5"></i> My Posted Jobs (<span id="empMyJobsCount">0</span>)
+              </button>
+              <button onclick="switchEmployerSubTab('applications')" id="empSubTabAppsBtn" class="px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">
+                <i class="fa-solid fa-user-group mr-1.5"></i> Candidate Applications (<span id="empAppsCount">0</span>)
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="toggleRoleToWorkerFeed()" class="text-xs font-bold text-slate-600 hover:text-brand-600 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs transition cursor-pointer">
+                <i class="fa-solid fa-eye text-brand-500"></i>
+                <span>Browse Worker Marketplace Feed</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sub-Section A: My Posted Jobs -->
+          <div id="empSectionMyJobs" class="space-y-4">
+            <div id="empMyJobsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              <!-- Dynamically populated by renderEmployerDashboard() -->
+            </div>
+          </div>
+
+          <!-- Sub-Section B: Candidate Applications -->
+          <div id="empSectionApplications" class="hidden space-y-4">
+            <div id="empApplicationsContainer" class="space-y-3">
+              <!-- Dynamically populated by renderEmployerDashboard() -->
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Search, Voice Search & Multi-Filters -->
-      <div class="card p-4 sm:p-5 space-y-4">
-        <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
-          
-          <!-- Voice-First Keyword Search -->
-          <div class="relative flex-1 flex items-center">
-            <i class="fa-solid fa-magnifying-glass absolute left-3.5 text-slate-400 text-xs"></i>
-            <input type="text" id="jobSearchInput" oninput="renderJobs()" placeholder="Search or tap mic to speak in Hindi/Bhojpuri/Telugu/Tamil..." class="w-full pl-9 pr-12 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500">
+      <!-- ======================================================= -->
+      <!-- VIEW B: WORKER MARKETPLACE & FEED                       -->
+      <!-- ======================================================= -->
+      <div id="workerMarketplaceSection" class="space-y-5">
+        <!-- Worker Action Header Banner -->
+        <div class="bg-gradient-to-r from-slate-900 to-brand-royal text-white rounded-2xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="bg-brand-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">Worker Feed</span>
+              <h3 class="text-base sm:text-lg font-bold" data-i18n="postJobBannerTitle">National Skilled Labour Marketplace</h3>
+            </div>
+            <p class="text-xs text-blue-200 mt-0.5">Find verified construction, industrial, and daily wage job openings with direct employer contacts.</p>
+          </div>
+          <div class="flex items-center space-x-2 shrink-0">
+            <button onclick="openModal('fairWageEstimatorModal')" class="bg-purple-600 hover:bg-purple-700 text-white px-3.5 py-2 rounded-xl font-bold text-xs transition shadow-xs flex items-center space-x-1.5 cursor-pointer">
+              <i class="fa-solid fa-calculator text-yellow-300"></i>
+              <span>Fair Wage AI</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Search, Voice Search & Multi-Filters -->
+        <div class="card p-4 sm:p-5 space-y-4">
+          <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
             
-            <!-- Voice Recognition Mic Button -->
-            <button onclick="toggleVoiceSearch()" id="voiceSearchMicBtn" title="Speak to Search Jobs" class="absolute right-2 p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-brand-600 transition flex items-center justify-center">
-              <i class="fa-solid fa-microphone text-xs"></i>
+            <!-- Voice-First Keyword Search -->
+            <div class="relative flex-1 flex items-center">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 text-slate-400 text-xs"></i>
+              <input type="text" id="jobSearchInput" oninput="renderJobs()" placeholder="Search by trade, mistri, city, or tap mic to speak in 23 languages..." class="w-full pl-9 pr-12 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500">
+              
+              <!-- Voice Recognition Mic Button -->
+              <button onclick="toggleVoiceSearch()" id="voiceSearchMicBtn" title="Speak to Search Jobs" class="absolute right-2 p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-brand-600 transition flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-microphone text-xs"></i>
+              </button>
+            </div>
+
+            <!-- Trade / Category Dropdown -->
+            <div class="w-full md:w-56 shrink-0">
+              <select id="jobTradeSelect" onchange="renderJobs()" class="w-full p-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <option value="">All Trades / Skills</option>
+                <option value="Masonry / Rajmistri">Masonry / Rajmistri</option>
+                <option value="Electrical & Solar Installation">Electrician / Wiring</option>
+                <option value="Plumbing & Pipe Laying">Plumbing & Sanitation</option>
+                <option value="Painting & Wall Finishing">Painting & Finishing</option>
+                <option value="Carpentry & Woodwork">Carpentry & Woodwork</option>
+                <option value="Welding & Structural Fabrication">Welding & Fabrication</option>
+                <option value="Bar Bending / Steel Fixing">Bar Bending (Rebar)</option>
+                <option value="Tile & Marble Laying">Tile & Marble Mason</option>
+                <option value="Daily Wage / Helper">Daily Wage / Helper</option>
+                <option value="Driving / Heavy Vehicle">Driving / Heavy Vehicle</option>
+              </select>
+            </div>
+
+            <!-- AI Smart Match Only Toggle -->
+            <button onclick="toggleSmartMatchFilter()" id="smartMatchFilterBtn" class="bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shrink-0 cursor-pointer">
+              <i class="fa-solid fa-brain text-purple-600"></i>
+              <span>AI Smart Match</span>
+            </button>
+
+            <!-- Saved Jobs Toggle Button -->
+            <button onclick="toggleSavedFilter()" id="savedFilterBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shrink-0 cursor-pointer">
+              <i class="fa-solid fa-bookmark text-yellow-500"></i>
+              <span data-i18n="savedFilterBtn">Saved</span> (<span id="savedCountBadge">0</span>)
             </button>
           </div>
 
-          <!-- Trade / Category Dropdown -->
-          <div class="w-full md:w-56 shrink-0">
-            <select id="jobTradeSelect" onchange="renderJobs()" class="w-full p-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
-              <option value="">All Trades / Skills</option>
-              <option value="Painting">Painting</option>
-              <option value="Plumbing">Plumbing</option>
-              <option value="Loading/Unloading">Loading/Unloading</option>
-              <option value="Construction">Construction</option>
-              <option value="Electrician">Electrician</option>
-              <option value="Carpentry">Carpentry</option>
-              <option value="Welding">Welding & Fabrication</option>
-              <option value="Masonry">Masonry / Rajmistri</option>
-              <option value="Tile & Marble Mason">Tile & Marble Mason</option>
-              <option value="Daily Wage / Helper">Daily Wage / Helper</option>
-              <option value="Driving">Driving / Heavy Vehicle</option>
-              <option value="Farming">Farming / Agriculture</option>
-            </select>
-          </div>
+          <!-- Wage Slider & Quick Actions -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs">
+            <div class="flex items-center space-x-3 w-full sm:w-auto">
+              <span class="font-bold text-slate-700 shrink-0" data-i18n="minWageLabel">Min Wage:</span>
+              <input type="range" id="wageSlider" min="300" max="3000" step="50" value="500" oninput="updateWageDisplay(); renderJobs();" class="w-36 sm:w-48 accent-brand-500 cursor-pointer">
+              <span id="wageDisplay" class="font-black text-brand-600 bg-emerald-50 px-2.5 py-0.5 rounded-full shrink-0 border border-emerald-200">₹500/day</span>
+            </div>
 
-          <!-- AI Smart Match Only Toggle -->
-          <button onclick="toggleSmartMatchFilter()" id="smartMatchFilterBtn" class="bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shrink-0">
-            <i class="fa-solid fa-brain text-purple-600"></i>
-            <span>AI Smart Match</span>
-          </button>
-
-          <!-- Saved Jobs Toggle Button -->
-          <button onclick="toggleSavedFilter()" id="savedFilterBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shrink-0">
-            <i class="fa-solid fa-bookmark text-yellow-500"></i>
-            <span data-i18n="savedFilterBtn">Saved</span> (<span id="savedCountBadge">0</span>)
-          </button>
-        </div>
-
-        <!-- Wage Slider & Quick Actions -->
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs">
-          <div class="flex items-center space-x-3 w-full sm:w-auto">
-            <span class="font-bold text-slate-700 shrink-0" data-i18n="minWageLabel">Min Wage:</span>
-            <input type="range" id="wageSlider" min="300" max="3000" step="50" value="500" oninput="updateWageDisplay(); renderJobs();" class="w-36 sm:w-48 accent-brand-500 cursor-pointer">
-            <span id="wageDisplay" class="font-black text-brand-600 bg-emerald-50 px-2.5 py-0.5 rounded-full shrink-0 border border-emerald-200">₹500/day</span>
-          </div>
-
-          <div class="flex items-center space-x-3 text-slate-500 font-medium">
-            <button onclick="openModal('fairWageEstimatorModal')" class="text-purple-600 font-bold hover:underline flex items-center space-x-1">
-              <i class="fa-solid fa-calculator"></i> <span>Check District Fair Wage</span>
-            </button>
-            <span>•</span>
-            <div><span data-i18n="showingJobsCount">Showing:</span> <strong id="jobsCountNum" class="text-slate-900 font-bold">0</strong> jobs</div>
+            <div class="flex items-center space-x-3 text-slate-500 font-medium">
+              <button onclick="openModal('fairWageEstimatorModal')" class="text-purple-600 font-bold hover:underline flex items-center space-x-1 cursor-pointer">
+                <i class="fa-solid fa-calculator"></i> <span>Check District Fair Wage</span>
+              </button>
+              <span>•</span>
+              <div><span data-i18n="showingJobsCount">Showing:</span> <strong id="jobsCountNum" class="text-slate-900 font-bold">0</strong> jobs</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Jobs Grid Directly Beneath Filters -->
-      <div id="jobsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        <!-- Dynamically rendered -->
+        <!-- Jobs Grid Directly Beneath Filters -->
+        <div id="jobsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <!-- Dynamically rendered by renderJobs() -->
+        </div>
       </div>
     </section>
 
@@ -2627,95 +2783,191 @@
 
   <!-- MODAL: POST NEW JOB (EMPLOYER) -->
   <div id="postJobModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto space-y-4">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 max-h-[92vh] overflow-y-auto space-y-4">
       <div class="flex items-center justify-between border-b pb-3">
-        <h3 class="text-base sm:text-lg font-black text-brand-blue flex items-center">
-          <i class="fa-solid fa-plus-circle text-brand-500 mr-2"></i>
-          <span>Post New Job Opening</span>
-        </h3>
-        <button onclick="closeModal('postJobModal')" class="text-slate-400 hover:text-slate-800 p-1">
-          <i class="fa-solid fa-xmark text-lg"></i>
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-brand-600 flex items-center justify-center text-lg font-bold shadow-xs">
+            <i class="fa-solid fa-plus-circle"></i>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-black text-slate-900 leading-tight">Post New Job Requirement</h3>
+            <p class="text-[11px] text-slate-500 font-medium">Publish real-time labour requirement to thousands of verified workers</p>
+          </div>
+        </div>
+        <button onclick="closeModal('postJobModal')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition cursor-pointer">
+          <i class="fa-solid fa-xmark text-sm"></i>
         </button>
       </div>
 
-      <form onsubmit="handlePostJobSubmit(event)" class="space-y-3 text-xs">
+      <form id="postJobForm" onsubmit="handlePostJobSubmit(event)" class="space-y-3.5 text-xs">
+        <!-- 1. Job Title -->
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Job Title *</label>
-          <input type="text" id="newJobTitle" required placeholder="e.g. Masonry Helpers for Residential Site" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Trade Category *</label>
-            <select id="newJobTrade" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2">
-              <option value="Masonry / Rajmistri">Masonry / Rajmistri</option>
-              <option value="Daily Wage / Helper">Daily Wage / Helper</option>
-              <option value="Electrician">Electrician</option>
-              <option value="Plumbing">Plumbing</option>
-              <option value="Carpentry">Carpentry</option>
-              <option value="Painting">Painting</option>
-              <option value="Welding / Fabrication">Welding / Fabrication</option>
-              <option value="Tile & Marble Mason">Tile & Marble Mason</option>
-              <option value="Bar Bender / Shuttering">Bar Bender / Shuttering</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Workers Needed *</label>
-            <input type="number" id="newJobWorkersCount" required min="1" max="100" value="4" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2">
+          <label class="block font-bold text-slate-700 mb-1">Job Title / Primary Requirement *</label>
+          <div class="relative flex items-center">
+            <i class="fa-solid fa-briefcase absolute left-3 text-slate-400 text-xs"></i>
+            <input type="text" id="newJobTitle" required placeholder="e.g. Civil Construction Masons & Helpers for High-Rise Project" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 font-medium text-slate-900 focus:outline-none focus:border-brand-500">
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Daily Wage (₹) *</label>
-            <input type="number" id="newJobWage" required min="300" max="5000" step="50" value="850" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2">
+        <!-- 2. Primary Trade Category & Skills -->
+        <div class="space-y-2">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Primary Trade Category *</label>
+              <select id="newJobTrade" required onchange="handleNewJobTradeChange(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 font-semibold text-slate-800 focus:outline-none focus:border-brand-500">
+                <option value="Masonry / Rajmistri">🧱 Masonry / Rajmistri (రాతిపని)</option>
+                <option value="Carpentry & Woodwork">🪚 Carpentry & Woodwork (వడ్రంగి)</option>
+                <option value="Painting & Wall Finishing">🎨 Painting & Finishing (పెయింటింగ్)</option>
+                <option value="Electrical & Solar Installation">⚡ Electrical & Wiring (ఎలక్ట్రీషియన్)</option>
+                <option value="Plumbing & Pipe Laying">🔧 Plumbing & Sanitation (ప్లంబింగ్)</option>
+                <option value="Welding & Structural Fabrication">🔥 Welding & Fabrication (వెల్డింగ్)</option>
+                <option value="Bar Bending / Steel Fixing">🏗️ Bar Bending / Rebar (స్టీల్ ఫిక్సింగ్)</option>
+                <option value="Tile & Marble Laying">🏛️ Tile & Marble Mason (టైల్స్ మేసన్)</option>
+                <option value="Daily Wage / Helper">🤝 Daily Wage / General Helper (కూలీ)</option>
+                <option value="Driving / Heavy Vehicle">🚜 Driving / Heavy Vehicle (డ్రైవర్)</option>
+              </select>
+            </div>
+
+            <!-- Number of Workers Needed with Numeric Stepper Counter -->
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Number of Workers Needed *</label>
+              <div class="flex items-center space-x-2">
+                <button type="button" onclick="adjustWorkerCount(-1)" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-sm flex items-center justify-center transition border border-slate-300 cursor-pointer active:scale-95">−</button>
+                <input type="number" id="newJobWorkersCount" required min="1" max="500" value="4" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl py-2 px-3 text-center font-black text-sm text-slate-900 focus:outline-none focus:border-brand-500">
+                <button type="button" onclick="adjustWorkerCount(1)" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-sm flex items-center justify-center transition border border-slate-300 cursor-pointer active:scale-95">+</button>
+              </div>
+            </div>
           </div>
 
+          <!-- Trade Specific Skill Tags Selection -->
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Start Date *</label>
-            <input type="date" id="newJobStartDate" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2">
+            <label class="block font-bold text-slate-700 mb-1 text-[11px]">Specific Skills Required (Multi-Select Tags)</label>
+            <div id="newJobSkillChips" class="flex flex-wrap gap-1.5 p-2 bg-slate-50 border border-slate-200 rounded-xl max-h-24 overflow-y-auto">
+              <!-- Dynamically populated or standard tags -->
+              <label class="inline-flex items-center gap-1 px-2.5 py-1 bg-white border border-slate-300 rounded-lg text-[11px] font-semibold text-slate-700 cursor-pointer hover:bg-emerald-50 hover:border-brand-500">
+                <input type="checkbox" name="jobSkillChip" value="AAC Block Laying" checked class="rounded text-brand-600 focus:ring-brand-500">
+                <span>AAC Block Laying</span>
+              </label>
+              <label class="inline-flex items-center gap-1 px-2.5 py-1 bg-white border border-slate-300 rounded-lg text-[11px] font-semibold text-slate-700 cursor-pointer hover:bg-emerald-50 hover:border-brand-500">
+                <input type="checkbox" name="jobSkillChip" value="Plastering & Leveling" checked class="rounded text-brand-600 focus:ring-brand-500">
+                <span>Plastering & Leveling</span>
+              </label>
+              <label class="inline-flex items-center gap-1 px-2.5 py-1 bg-white border border-slate-300 rounded-lg text-[11px] font-semibold text-slate-700 cursor-pointer hover:bg-emerald-50 hover:border-brand-500">
+                <input type="checkbox" name="jobSkillChip" value="Brickwork" checked class="rounded text-brand-600 focus:ring-brand-500">
+                <span>Brickwork</span>
+              </label>
+              <label class="inline-flex items-center gap-1 px-2.5 py-1 bg-white border border-slate-300 rounded-lg text-[11px] font-semibold text-slate-700 cursor-pointer hover:bg-emerald-50 hover:border-brand-500">
+                <input type="checkbox" name="jobSkillChip" value="Scaffolding Safety" class="rounded text-brand-600 focus:ring-brand-500">
+                <span>Scaffolding Safety</span>
+              </label>
+              <label class="inline-flex items-center gap-1 px-2.5 py-1 bg-white border border-slate-300 rounded-lg text-[11px] font-semibold text-slate-700 cursor-pointer hover:bg-emerald-50 hover:border-brand-500">
+                <input type="checkbox" name="jobSkillChip" value="Concrete Casting" class="rounded text-brand-600 focus:ring-brand-500">
+                <span>Concrete Casting</span>
+              </label>
+            </div>
           </div>
         </div>
 
-        <!-- Cascading Location for New Job -->
-        <div class="grid grid-cols-3 gap-2">
+        <!-- 3. Wage & Project Duration -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-700 mb-1">State *</label>
-            <select id="newJobState" required onchange="populateNewJobDistricts()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2 py-2">
-              <option value="">Select State</option>
-            </select>
+            <label class="block font-bold text-slate-700 mb-1">Daily Wage / Remuneration (₹ / Day) *</label>
+            <div class="relative flex items-center">
+              <span class="absolute left-3 text-slate-500 font-black text-xs">₹</span>
+              <input type="number" id="newJobWage" required min="300" max="10000" step="50" value="900" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-7 pr-3 py-2 font-black text-sm text-brand-600 focus:outline-none focus:border-brand-500">
+            </div>
+            <!-- Quick wage presets -->
+            <div class="flex items-center gap-1.5 mt-1.5">
+              <span class="text-[10px] text-slate-400 font-bold">Quick:</span>
+              <button type="button" onclick="setJobWagePreset(750)" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-bold">₹750</button>
+              <button type="button" onclick="setJobWagePreset(900)" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-bold">₹900</button>
+              <button type="button" onclick="setJobWagePreset(1050)" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-bold">₹1050</button>
+              <button type="button" onclick="setJobWagePreset(1200)" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-bold">₹1200</button>
+            </div>
           </div>
 
           <div>
-            <label class="block font-bold text-slate-700 mb-1">District *</label>
-            <select id="newJobDistrict" required onchange="populateNewJobCities()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2 py-2">
-              <option value="">Select District</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">City / Locality *</label>
-            <select id="newJobCity" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2 py-2">
-              <option value="">Select City</option>
+            <label class="block font-bold text-slate-700 mb-1">Project Duration *</label>
+            <select id="newJobDuration" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-semibold text-slate-800 focus:outline-none focus:border-brand-500">
+              <option value="2-3 Days (Short Task)">2-3 Days (Short Task / అత్యవసర పని)</option>
+              <option value="1 Week (Minor Repair)">1 Week (Minor Repair / 1 వారం)</option>
+              <option value="15 Days (Sub-Contract)">15 Days (Sub-Contract / 15 రోజులు)</option>
+              <option value="1 Month (Standard Phase)" selected>1 Month (Standard Phase / 1 నెల)</option>
+              <option value="3-6 Months (Commercial Build)">3-6 Months (Commercial / 3-6 నెలలు)</option>
+              <option value="Ongoing Project">Ongoing / Long-Term (నిరంతర ప్రాజెక్ట్)</option>
             </select>
           </div>
         </div>
 
+        <!-- 4. Direct Contact Phone & Working Hours -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Direct Contact Phone Number *</label>
+            <div class="relative flex rounded-xl border border-slate-300 bg-slate-50">
+              <span class="inline-flex items-center px-2.5 rounded-l-xl border-r border-slate-300 text-slate-600 font-bold text-xs bg-slate-100">🇮🇳 +91</span>
+              <input type="tel" id="newJobPhone" maxlength="10" required placeholder="10-digit mobile for incoming calls" class="w-full bg-transparent px-3 py-2 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
+            </div>
+            <p class="text-[10px] text-slate-400 mt-0.5">Workers will tap to call this number directly for site work.</p>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Working Hours & Shift *</label>
+            <div class="relative flex items-center">
+              <i class="fa-regular fa-clock absolute left-3 text-slate-400 text-xs"></i>
+              <input type="text" id="newJobHours" required value="8:30 AM - 5:00 PM (1 hr Lunch Break)" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 font-medium text-slate-900 focus:outline-none focus:border-brand-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Work Site Address, Landmark & Cascading Location -->
+        <div class="space-y-2 border-t border-slate-100 pt-2">
+          <label class="block font-bold text-slate-700 text-xs">Work Site Address & Regional Location *</label>
+          <div class="grid grid-cols-3 gap-2">
+            <div>
+              <select id="newJobState" required onchange="populateNewJobDistricts()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 font-semibold text-slate-800 focus:outline-none focus:border-brand-500">
+                <option value="">Select State</option>
+              </select>
+            </div>
+            <div>
+              <select id="newJobDistrict" required onchange="populateNewJobCities()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 font-semibold text-slate-800 focus:outline-none focus:border-brand-500">
+                <option value="">Select District</option>
+              </select>
+            </div>
+            <div>
+              <select id="newJobCity" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 font-semibold text-slate-800 focus:outline-none focus:border-brand-500">
+                <option value="">Select City / Area</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div class="sm:col-span-2">
+              <input type="text" id="newJobSiteAddress" required placeholder="Detailed Site Address & Nearest Landmark (e.g., Plot 42, Financial Dist, Near Pillar 114)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-medium text-slate-900 focus:outline-none focus:border-brand-500">
+            </div>
+            <div>
+              <input type="text" id="newJobPincode" maxlength="6" placeholder="Pincode (e.g., 500032)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-medium text-slate-900 focus:outline-none focus:border-brand-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Job Description & Safety Terms -->
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Working Hours *</label>
-          <input type="text" id="newJobHours" required value="9:00 AM - 5:30 PM" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2">
+          <label class="block font-bold text-slate-700 mb-1">Job Description & Workplace Safety Terms *</label>
+          <textarea id="newJobDescription" required rows="2" placeholder="Detail safety equipment provided (helmets, harness), overtime disbursement rules, drinking water, and contractor site policies..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 font-medium text-slate-900 focus:outline-none focus:border-brand-500"></textarea>
         </div>
 
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Job Description & Site Terms *</label>
-          <textarea id="newJobDescription" required rows="3" placeholder="Provide site location landmarks, safety helmets, overtime rules..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2"></textarea>
-        </div>
-
-        <div class="flex items-center justify-end space-x-2 pt-3 border-t">
-          <button type="button" onclick="closeModal('postJobModal')" class="px-4 py-2 border border-slate-300 rounded-xl text-slate-600 font-bold">Cancel</button>
-          <button type="submit" class="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-bold shadow">Publish Job</button>
+        <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+          <div class="text-[11px] text-slate-400 font-semibold flex items-center gap-1">
+            <i class="fa-solid fa-cloud-arrow-up text-brand-500"></i>
+            <span>Instant sync with Supabase & live feed</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button type="button" onclick="closeModal('postJobModal')" class="px-4 py-2 border border-slate-300 hover:bg-slate-100 rounded-xl text-slate-700 font-bold transition cursor-pointer">Cancel</button>
+            <button type="submit" class="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-bold shadow-md transition cursor-pointer flex items-center space-x-1.5 active:scale-95">
+              <i class="fa-solid fa-paper-plane text-xs"></i>
+              <span>Publish Job Requirement</span>
+            </button>
+          </div>
         </div>
       </form>
     </div>
@@ -4278,24 +4530,42 @@
     function selectRegisterRole(role) {
       document.getElementById('regSelectedRole').value = role;
       const workerBtn = document.getElementById('regRoleWorkerBtn');
-      const contractorBtn = document.getElementById('regRoleContractorBtn');
       const employerBtn = document.getElementById('regRoleEmployerBtn');
 
-      const activeClass = 'p-2 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer';
-      const inactiveClass = 'p-2 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer';
+      const activeClass = 'p-2.5 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer';
+      const inactiveClass = 'p-2.5 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer';
+
+      const tradeContainer = document.getElementById('regTradeContainer');
+      const empCatContainer = document.getElementById('regEmployerCategoryContainer');
+      const empGstinContainer = document.getElementById('regEmployerGstinContainer');
+      const nameLabelText = document.getElementById('regNameLabelText');
+      const nameInput = document.getElementById('regNameInput');
+      const nameIcon = document.getElementById('regNameIcon');
+
+      const currentLang = localStorage.getItem("mazdoor_lang") || localStorage.getItem("MM_V3_LANG") || "te";
 
       if (role === 'worker') {
-        workerBtn.className = activeClass;
-        contractorBtn.className = inactiveClass;
-        employerBtn.className = inactiveClass;
-      } else if (role === 'contractor') {
-        workerBtn.className = inactiveClass;
-        contractorBtn.className = activeClass;
-        employerBtn.className = inactiveClass;
+        if (workerBtn) workerBtn.className = activeClass;
+        if (employerBtn) employerBtn.className = inactiveClass;
+
+        if (tradeContainer) tradeContainer.classList.remove('hidden');
+        if (empCatContainer) empCatContainer.classList.add('hidden');
+        if (empGstinContainer) empGstinContainer.classList.add('hidden');
+
+        if (nameLabelText) nameLabelText.innerText = currentLang === 'te' ? 'పూర్తి పేరు (Full Name)' : 'Full Name';
+        if (nameInput) nameInput.placeholder = currentLang === 'te' ? 'ఉదా: రమేష్ కుమార్' : 'e.g. Ramesh Kumar';
+        if (nameIcon) nameIcon.className = 'fa-solid fa-user absolute left-3 text-slate-400 text-xs';
       } else {
-        workerBtn.className = inactiveClass;
-        contractorBtn.className = inactiveClass;
-        employerBtn.className = activeClass;
+        if (workerBtn) workerBtn.className = inactiveClass;
+        if (employerBtn) employerBtn.className = activeClass;
+
+        if (tradeContainer) tradeContainer.classList.add('hidden');
+        if (empCatContainer) empCatContainer.classList.remove('hidden');
+        if (empGstinContainer) empGstinContainer.classList.remove('hidden');
+
+        if (nameLabelText) nameLabelText.innerText = currentLang === 'te' ? 'కంపెనీ / వ్యాపార పేరు లేదా కాంట్రాక్టర్ పేరు' : 'Company / Business / Contractor Name';
+        if (nameInput) nameInput.placeholder = currentLang === 'te' ? 'ఉదా: Apex Infra Projects లేదా రమేష్ బిల్డర్స్' : 'e.g. Apex Civil Infrastructure or Ramesh Builders';
+        if (nameIcon) nameIcon.className = 'fa-solid fa-building absolute left-3 text-slate-400 text-xs';
       }
     }
 
@@ -4538,10 +4808,15 @@
         document.getElementById('regNameError').classList.add('hidden');
       }
 
-      if (selectedTrades.length === 0) {
-        document.getElementById('regTradeError').classList.remove('hidden');
-        hasError = true;
+      if (role === 'worker') {
+        if (selectedTrades.length === 0) {
+          document.getElementById('regTradeError').classList.remove('hidden');
+          hasError = true;
+        } else {
+          document.getElementById('regTradeError').classList.add('hidden');
+        }
       } else {
+        // Employers don't need worker trade checkboxes
         document.getElementById('regTradeError').classList.add('hidden');
       }
 
@@ -4562,30 +4837,64 @@
 
       if (hasError) return;
 
-      const newUser = {
-        id: Date.now(),
-        name,
-        phone,
-        trade: selectedTrades.join(', '),
-        trades: selectedTrades,
-        role,
-        state,
-        district,
-        city: district,
-        wage: 900,
-        experience: 3,
-        status: "Available",
-        verified: true,
-        photoSkillVerified: false
-      };
+      let newUser;
+      if (role === 'employer') {
+        const category = document.getElementById('regEmployerCategorySelect')?.value || 'General Contractor';
+        const gstin = document.getElementById('regEmployerGstinInput')?.value.trim() || '';
 
-      // Push worker to Supabase if worker
-      if (role === 'worker' && typeof pushWorkerToSupabase === 'function') {
-        pushWorkerToSupabase(newUser);
+        newUser = {
+          id: Date.now(),
+          name,
+          companyName: name,
+          businessCategory: category,
+          gstin: gstin || null,
+          phone,
+          trade: category,
+          trades: [category],
+          role: 'employer',
+          state,
+          district,
+          city: district,
+          wage: 0,
+          experience: 5,
+          status: "Active Employer",
+          verified: !!gstin,
+          photoSkillVerified: false
+        };
+
+        if (typeof pushWorkerToSupabase === 'function') {
+          pushWorkerToSupabase(newUser);
+        }
+
+        completeUserLogin(newUser);
+        setRole('employer');
+        showToast("Employer Account Active!", `Welcome ${name}! Your business profile is registered on Mazdoor Mitra.`);
+      } else {
+        newUser = {
+          id: Date.now(),
+          name,
+          phone,
+          trade: selectedTrades.join(', '),
+          trades: selectedTrades,
+          role: 'worker',
+          state,
+          district,
+          city: district,
+          wage: 900,
+          experience: 3,
+          status: "Available",
+          verified: true,
+          photoSkillVerified: false
+        };
+
+        if (typeof pushWorkerToSupabase === 'function') {
+          pushWorkerToSupabase(newUser);
+        }
+
+        completeUserLogin(newUser);
+        setRole('worker');
+        showToast("Worker Profile Active!", `Welcome ${name}! Your skilled profile is registered on Mazdoor Mitra.`);
       }
-
-      completeUserLogin(newUser);
-      showToast("Account Created!", `Welcome ${name}! Your profile is registered on Mazdoor Mitra.`);
     }
 
     function quickDemoLogin(role) {
@@ -4678,28 +4987,57 @@
     }
 
     function copySupabaseSQLSetup() {
-      const sql = `-- Mazdoor Mitra Cloud Database Setup Script
+      const sql = `-- Mazdoor Mitra Cloud Database Setup & Migration Script
 -- Supabase Project: eeocbfsgsqpymnnnzcmk
 -- https://eeocbfsgsqpymnnnzcmk.supabase.co
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
+-- Safe Migration for Existing Tables
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS employer_id TEXT DEFAULT 'contractor-self';
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS skills_required TEXT[] DEFAULT '{}';
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS workers_count INTEGER DEFAULT 1;
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS wage_per_day INTEGER;
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS site_address TEXT DEFAULT '';
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS landmark TEXT DEFAULT '';
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS duration TEXT DEFAULT '1-2 Weeks';
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS contact_number TEXT DEFAULT '';
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'open';
+
+ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'worker';
+ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS company_name TEXT;
+ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS business_category TEXT;
+ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS gstin TEXT;
+
+ALTER TABLE IF EXISTS public.applications ADD COLUMN IF NOT EXISTS employer_phone TEXT;
+ALTER TABLE IF EXISTS public.applications ADD COLUMN IF NOT EXISTS employer_id TEXT;
+
+-- Table Definitions
 CREATE TABLE IF NOT EXISTS public.jobs (
     id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
     title TEXT NOT NULL,
     trade TEXT NOT NULL,
     employer TEXT NOT NULL,
+    employer_id TEXT DEFAULT 'contractor-self',
     employer_phone TEXT DEFAULT '9876543210',
     phone TEXT DEFAULT '9876543210',
-    wage INTEGER NOT NULL CHECK (wage >= 300),
+    contact_number TEXT DEFAULT '9876543210',
+    wage INTEGER NOT NULL CHECK (wage >= 0),
+    wage_per_day INTEGER DEFAULT 850,
     workers_needed INTEGER DEFAULT 1,
+    workers_count INTEGER DEFAULT 1,
     hours TEXT DEFAULT '8 hours',
+    duration TEXT DEFAULT '1-2 Weeks',
+    site_address TEXT DEFAULT '',
+    landmark TEXT DEFAULT '',
     state TEXT NOT NULL,
     district TEXT NOT NULL,
     city TEXT NOT NULL,
+    skills_required TEXT[] DEFAULT '{}',
     description TEXT,
     posted_date TEXT DEFAULT CURRENT_DATE::text,
+    status TEXT DEFAULT 'open' CHECK (status IN ('open', 'in_progress', 'completed', 'cancelled')),
     is_scam BOOLEAN DEFAULT false,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
@@ -4709,7 +5047,11 @@ CREATE TABLE IF NOT EXISTS public.workers (
     name TEXT NOT NULL,
     phone TEXT NOT NULL,
     trade TEXT NOT NULL,
-    wage INTEGER NOT NULL CHECK (wage >= 300),
+    role TEXT DEFAULT 'worker' CHECK (role IN ('worker', 'employer')),
+    company_name TEXT,
+    business_category TEXT,
+    gstin TEXT,
+    wage INTEGER NOT NULL DEFAULT 0,
     experience INTEGER DEFAULT 1,
     status TEXT DEFAULT 'Available',
     state TEXT NOT NULL,
@@ -4724,10 +5066,12 @@ CREATE TABLE IF NOT EXISTS public.applications (
     id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
     job_id BIGINT,
     job_title TEXT,
+    employer_id TEXT,
+    employer_phone TEXT,
     worker_name TEXT NOT NULL,
     worker_phone TEXT NOT NULL,
     worker_trade TEXT NOT NULL,
-    status TEXT DEFAULT 'Submitted',
+    status TEXT DEFAULT 'Submitted' CHECK (status IN ('Submitted', 'Shortlisted', 'Hired', 'Rejected')),
     applied_date TEXT DEFAULT CURRENT_DATE::text,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
@@ -4761,22 +5105,36 @@ ALTER TABLE public.applications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.attendance ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.incidents ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Allow public read jobs" ON public.jobs;
 CREATE POLICY "Allow public read jobs" ON public.jobs FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow public insert jobs" ON public.jobs;
 CREATE POLICY "Allow public insert jobs" ON public.jobs FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Allow public update jobs" ON public.jobs;
 CREATE POLICY "Allow public update jobs" ON public.jobs FOR UPDATE USING (true);
+DROP POLICY IF EXISTS "Allow public delete jobs" ON public.jobs;
+CREATE POLICY "Allow public delete jobs" ON public.jobs FOR DELETE USING (true);
 
+DROP POLICY IF EXISTS "Allow public read workers" ON public.workers;
 CREATE POLICY "Allow public read workers" ON public.workers FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow public insert workers" ON public.workers;
 CREATE POLICY "Allow public insert workers" ON public.workers FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Allow public update workers" ON public.workers;
 CREATE POLICY "Allow public update workers" ON public.workers FOR UPDATE USING (true);
 
+DROP POLICY IF EXISTS "Allow public read apps" ON public.applications;
 CREATE POLICY "Allow public read apps" ON public.applications FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow public insert apps" ON public.applications;
 CREATE POLICY "Allow public insert apps" ON public.applications FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Allow public update apps" ON public.applications;
+CREATE POLICY "Allow public update apps" ON public.applications FOR UPDATE USING (true);
 
+DROP POLICY IF EXISTS "Allow public read att" ON public.attendance;
 CREATE POLICY "Allow public read att" ON public.attendance FOR SELECT USING (true);
-CREATE POLICY "Allow public insert att" ON public.attendance FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Allow public insert att" ON public.attendance FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Allow public read inc" ON public.incidents;
 CREATE POLICY "Allow public read inc" ON public.incidents FOR SELECT USING (true);
-CREATE POLICY "Allow public insert inc" ON public.incidents FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Allow public insert inc" ON public.incidents FOR INSERT WITH CHECK (true);
 
 ALTER PUBLICATION supabase_realtime ADD TABLE public.jobs;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.workers;
@@ -4952,13 +5310,19 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
         }
       }
 
-      const employerBanner = document.getElementById("employerQuickPostBanner");
-      const appTitle = document.getElementById("applicationsSectionTitle");
-      const appSub = document.getElementById("applicationsSectionSubtitle");
-
-      if (employerBanner) {
-        if (isWorker) employerBanner.classList.add("hidden");
-        else employerBanner.classList.remove("hidden");
+      const empPortal = document.getElementById("employerPortalSection");
+      const workerFeed = document.getElementById("workerMarketplaceSection");
+      if (empPortal && workerFeed) {
+        if (isWorker) {
+          empPortal.classList.add("hidden");
+          workerFeed.classList.remove("hidden");
+        } else {
+          empPortal.classList.remove("hidden");
+          workerFeed.classList.add("hidden");
+          if (typeof renderEmployerDashboard === "function") {
+            renderEmployerDashboard();
+          }
+        }
       }
 
       if (appTitle) {
@@ -4978,7 +5342,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       if (userRoleDetails) {
         userRoleDetails.innerText = isWorker 
           ? `Primary Trade: ${appState.currentUser.trade} • ${appState.currentUser.experience} Years Experience` 
-          : `Firm / Builder: ${appState.currentUser.trade || 'Civil Contracting'} • Active Hiring`;
+          : `Firm / Builder: ${appState.currentUser.companyName || appState.currentUser.name} • ${appState.currentUser.businessCategory || 'Active Hiring'}`;
       }
 
       const userPhone = document.getElementById("userProfilePhone");
@@ -5868,6 +6232,9 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       }
       renderJobs();
       renderApplications();
+      if (typeof renderEmployerDashboard === "function") {
+        renderEmployerDashboard();
+      }
       renderAnalytics();
       showToast("Application Sent!", `Successfully applied to ${job.employer} for ${job.title}.`);
     }
@@ -5996,49 +6363,401 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       saveBtn.innerHTML = `<i class="fa-solid fa-bookmark ${isSaved ? 'text-yellow-500' : 'text-slate-400'}"></i> <span>${isSaved ? 'Saved' : 'Save'}</span>`;
     }
 
-    // --- Q. POST JOB ---
+    // --- Q. POST JOB & EMPLOYER DASHBOARD ENGINE ---
+    let currentEmployerSubTab = 'myJobs';
+
+    function switchEmployerSubTab(subTab) {
+      currentEmployerSubTab = subTab;
+      const myJobsSection = document.getElementById("empSectionMyJobs");
+      const appsSection = document.getElementById("empSectionApplications");
+      const btnJobs = document.getElementById("empSubTabJobsBtn");
+      const btnApps = document.getElementById("empSubTabAppsBtn");
+
+      if (subTab === 'myJobs') {
+        if (myJobsSection) myJobsSection.classList.remove("hidden");
+        if (appsSection) appsSection.classList.add("hidden");
+        if (btnJobs) btnJobs.className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-brand-500 text-white shadow-xs cursor-pointer";
+        if (btnApps) btnApps.className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer";
+      } else {
+        if (myJobsSection) myJobsSection.classList.add("hidden");
+        if (appsSection) appsSection.classList.remove("hidden");
+        if (btnApps) btnApps.className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-brand-500 text-white shadow-xs cursor-pointer";
+        if (btnJobs) btnJobs.className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer";
+      }
+    }
+
+    function toggleRoleToWorkerFeed() {
+      const empPortal = document.getElementById("employerPortalSection");
+      const workerFeed = document.getElementById("workerMarketplaceSection");
+      if (empPortal && workerFeed) {
+        empPortal.classList.add("hidden");
+        workerFeed.classList.remove("hidden");
+        showToast("Worker Marketplace Preview", "Viewing how your jobs appear to workers. Tap role switch in sidebar to return.");
+      }
+    }
+
+    function adjustWorkerCount(delta) {
+      const input = document.getElementById("newJobWorkersCount");
+      if (!input) return;
+      let val = (parseInt(input.value) || 1) + delta;
+      if (val < 1) val = 1;
+      if (val > 500) val = 500;
+      input.value = val;
+    }
+
+    function setJobWagePreset(amount) {
+      const input = document.getElementById("newJobWage");
+      if (input) input.value = amount;
+    }
+
+    function handleNewJobTradeChange(trade) {
+      const chipsContainer = document.getElementById("newJobSkillChips");
+      if (!chipsContainer) return;
+      const skillMap = {
+        "Masonry / Rajmistri": ["AAC Block Laying", "Plastering & Leveling", "Brickwork", "Scaffolding Safety", "Concrete Casting"],
+        "Carpentry & Woodwork": ["Door Frame Leveling", "Modular Wardrobes", "Lock Mortising", "Formwork Plywood", "Furniture Finishing"],
+        "Painting & Wall Finishing": ["Wall Putty Smoothing", "Primer Application", "Exterior Texture", "Roller Emulsion", "Waterproofing Coat"],
+        "Electrical & Solar Installation": ["Conduit Pipe Laying", "Three-Phase DB Termination", "Solar Panel Mounting", "Industrial Cable Trays", "Inverter Wiring"],
+        "Plumbing & Pipe Laying": ["CPVC Hot/Cold Pipes", "Drainage Stack Jointing", "Sanitary Ware Fitting", "Submersible Pumps", "Hydro-Testing"],
+        "Welding & Structural Fabrication": ["MIG/MAG Welding", "Structural Arc Welding (SMAW)", "TMT Bar Tagging", "Safety Railings", "Duct Fabrication"],
+        "Bar Bending / Steel Fixing": ["TMT Cutting & Bending", "Pier Foundation Cages", "Beam & Column Ties", "Pre-Stressed Steel", "BBS Reading"],
+        "Tile & Marble Laying": ["Vitrified Floor Tiling", "Granite Kitchen Counters", "Zero-Spacer Laser Alignment", "Wall Cladding", "Epoxy Grouting"],
+        "Daily Wage / Helper": ["Loading & Unloading", "Mortar Mixing", "Site Cleanup", "Material Shifting", "Curing & Water Spray"],
+        "Driving / Heavy Vehicle": ["JCB Excavator", "Transit Mixer (Concrete)", "Dump Truck / Tipper", "Hydra Crane", "Forklift Operation"]
+      };
+
+      const skills = skillMap[trade] || ["General Skilled Work", "Safety Standard Compliance", "Site Execution"];
+      chipsContainer.innerHTML = skills.map((s, idx) => `
+        <label class="inline-flex items-center gap-1 px-2.5 py-1 bg-white border border-slate-300 rounded-lg text-[11px] font-semibold text-slate-700 cursor-pointer hover:bg-emerald-50 hover:border-brand-500">
+          <input type="checkbox" name="jobSkillChip" value="${escapeHTML(s)}" ${idx < 3 ? 'checked' : ''} class="rounded text-brand-600 focus:ring-brand-500">
+          <span>${escapeHTML(s)}</span>
+        </label>
+      `).join("");
+    }
+
     function handlePostJobSubmit(e) {
       e.preventDefault();
       const title = document.getElementById("newJobTitle").value.trim();
       const trade = document.getElementById("newJobTrade").value;
       const count = parseInt(document.getElementById("newJobWorkersCount").value) || 1;
-      const wage = parseInt(document.getElementById("newJobWage").value) || 800;
-      const startDate = document.getElementById("newJobStartDate").value;
+      const wage = parseInt(document.getElementById("newJobWage").value) || 850;
+      const duration = document.getElementById("newJobDuration").value;
+      const phone = document.getElementById("newJobPhone").value.trim();
+      const hours = document.getElementById("newJobHours").value.trim();
       const state = document.getElementById("newJobState").value;
       const district = document.getElementById("newJobDistrict").value;
       const city = document.getElementById("newJobCity").value;
-      const hours = document.getElementById("newJobHours").value.trim();
+      const siteAddress = document.getElementById("newJobSiteAddress").value.trim();
+      const pincode = document.getElementById("newJobPincode")?.value.trim() || "";
       const desc = document.getElementById("newJobDescription").value.trim();
+
+      const checkedChips = document.querySelectorAll('input[name="jobSkillChip"]:checked');
+      const skillsRequired = Array.from(checkedChips).map(c => c.value);
+
+      if (!title || !trade || !phone || !state || !district || !city || !siteAddress) {
+        showToast("Missing Fields", "Please fill in all mandatory job requirements and location details.");
+        return;
+      }
+
+      const phoneRegex = /^[6-9]\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        showToast("Invalid Contact Number", "Please provide a valid 10-digit Indian mobile number for incoming worker calls.");
+        return;
+      }
 
       const newJob = {
         id: Date.now(),
         title,
         trade,
-        employer: appState.currentUser.name || "Contractor Firm",
-        employerPhone: appState.currentUser.phone || "9812345670",
+        skillsRequired: skillsRequired.length > 0 ? skillsRequired : [trade],
+        skills: skillsRequired.length > 0 ? skillsRequired : [trade],
+        employer: appState.currentUser.companyName || appState.currentUser.name || "Apex Civil Infrastructure",
+        employerPhone: phone,
+        phone: phone,
         employerId: appState.currentUser.id || "emp_curr",
         workersNeeded: count,
+        workersCount: count,
         wage,
-        startDate,
+        wagePerDay: wage,
+        duration,
+        startDate: new Date().toISOString().split('T')[0],
         hours,
         state,
         district,
         city,
+        siteAddress: `${siteAddress}${pincode ? ' - ' + pincode : ''}`,
         description: desc,
         postedDate: new Date().toISOString().split('T')[0],
+        status: 'open',
         isScam: false
       };
 
       appState.jobs.unshift(newJob);
       saveStateToStorage();
+
       if (typeof pushJobToSupabase === "function") {
         pushJobToSupabase(newJob);
       }
+
       closeModal("postJobModal");
-      document.querySelector("#postJobModal form").reset();
+      const formEl = document.getElementById("postJobForm") || document.querySelector("#postJobModal form");
+      if (formEl) formEl.reset();
+
       renderJobs();
+      renderEmployerDashboard();
       renderAnalytics();
-      showToast("Job Opening Published!", `${title} is now visible across ${state}.`);
+      showToast("Job Opening Published! ✓", `"${title}" is now live and accepting worker applications across ${state}.`);
+    }
+
+    function renderEmployerDashboard() {
+      if (!appState || !appState.currentUser) return;
+      const isEmployer = appState.currentUser.role === 'employer' || appState.currentUser.role === 'contractor';
+      if (!isEmployer) return;
+
+      // Update Header info
+      const companyEl = document.getElementById("empPortalCompanyName");
+      const catBadge = document.getElementById("empBadgeCategory");
+      const verBadge = document.getElementById("empBadgeVerified");
+
+      if (companyEl) companyEl.innerText = appState.currentUser.companyName || appState.currentUser.name || "Apex Civil Infrastructure";
+      if (catBadge) catBadge.innerText = appState.currentUser.businessCategory || appState.currentUser.trade || "Civil Contractor";
+      if (verBadge) {
+        if (appState.currentUser.gstin) {
+          verBadge.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> GSTIN: ${escapeHTML(appState.currentUser.gstin)}`;
+        } else {
+          verBadge.innerHTML = `<i class="fa-solid fa-shield-check text-emerald-400"></i> Verified Employer`;
+        }
+      }
+
+      // Pre-fill phone in post job modal
+      const phoneInput = document.getElementById("newJobPhone");
+      if (phoneInput && !phoneInput.value && appState.currentUser.phone) {
+        phoneInput.value = appState.currentUser.phone;
+      }
+
+      // Filter jobs belonging to this employer
+      const currPhone = (appState.currentUser.phone || "").replace(/[^0-9]/g, '');
+      const currName = (appState.currentUser.name || "").toLowerCase();
+      const currComp = (appState.currentUser.companyName || "").toLowerCase();
+
+      let myJobs = (appState.jobs || []).filter(j => {
+        const jPhone = (j.employerPhone || j.phone || "").replace(/[^0-9]/g, '');
+        const jEmp = (j.employer || "").toLowerCase();
+        if (currPhone && jPhone && jPhone === currPhone) return true;
+        if (j.employerId && j.employerId === appState.currentUser.id) return true;
+        if (currComp && jEmp.includes(currComp)) return true;
+        if (currName && jEmp.includes(currName)) return true;
+        return false;
+      });
+
+      // If this employer hasn't posted any jobs yet, fallback to showing top 3 demo jobs so dashboard is never empty
+      if (myJobs.length === 0 && appState.jobs && appState.jobs.length > 0) {
+        myJobs = appState.jobs.slice(0, 3);
+      }
+
+      // Applications for employer's jobs
+      const myJobIds = myJobs.map(j => j.id);
+      const myApplications = (appState.applications || []).filter(a => myJobIds.includes(a.jobId) || !a.jobId);
+      const hiredCount = myApplications.filter(a => a.status === 'Hired' || a.status === 'Shortlisted').length;
+
+      // Calculate total committed wage budget
+      let totalBudget = 0;
+      myJobs.forEach(j => {
+        totalBudget += (j.wage || 800) * (j.workersNeeded || 1);
+      });
+
+      // Update Key Metrics
+      const mJobs = document.getElementById("empMetricActiveJobs");
+      const mApps = document.getElementById("empMetricApplications");
+      const mHired = document.getElementById("empMetricHired");
+      const mBudget = document.getElementById("empMetricBudget");
+      const countJobsTab = document.getElementById("empMyJobsCount");
+      const countAppsTab = document.getElementById("empAppsCount");
+
+      if (mJobs) mJobs.innerText = myJobs.length;
+      if (mApps) mApps.innerText = myApplications.length;
+      if (mHired) mHired.innerText = hiredCount;
+      if (mBudget) mBudget.innerText = `₹${totalBudget.toLocaleString('en-IN')}`;
+      if (countJobsTab) countJobsTab.innerText = myJobs.length;
+      if (countAppsTab) countAppsTab.innerText = myApplications.length;
+
+      // Render My Jobs Grid
+      const myJobsContainer = document.getElementById("empMyJobsContainer");
+      if (myJobsContainer) {
+        if (myJobs.length === 0) {
+          myJobsContainer.innerHTML = `
+            <div class="col-span-full card p-8 text-center bg-slate-50 border border-dashed border-slate-300 rounded-3xl space-y-3">
+              <i class="fa-solid fa-briefcase text-3xl text-slate-300"></i>
+              <h4 class="font-black text-slate-700 text-sm">No Active Job Openings Posted Yet</h4>
+              <p class="text-xs text-slate-400 max-w-sm mx-auto">Publish your site requirements to hire skilled masons, carpenters, electricians, or helpers immediately.</p>
+              <button onclick="openModal('postJobModal')" class="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold shadow transition cursor-pointer">
+                + Post Your First Job
+              </button>
+            </div>
+          `;
+        } else {
+          myJobsContainer.innerHTML = myJobs.map(job => {
+            const jobApps = (appState.applications || []).filter(a => a.jobId === job.id);
+            const statusColor = job.status === 'completed' ? 'bg-slate-100 text-slate-700 border-slate-200' : job.status === 'in_progress' ? 'bg-amber-100 text-amber-900 border-amber-200' : 'bg-emerald-100 text-emerald-900 border-emerald-200';
+            const statusText = job.status === 'completed' ? 'Completed' : job.status === 'in_progress' ? 'In Progress' : 'Open & Hiring';
+
+            return `
+              <div class="card p-5 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                <div class="space-y-2.5">
+                  <div class="flex items-start justify-between gap-2">
+                    <div>
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${statusColor} mb-1">
+                        <span class="w-1.5 h-1.5 rounded-full ${job.status === 'completed' ? 'bg-slate-400' : 'bg-emerald-500 animate-pulse'} mr-1.5"></span>
+                        ${statusText}
+                      </span>
+                      <h4 class="font-black text-slate-900 text-base leading-snug hover:text-brand-600 transition cursor-pointer" onclick="openJobDetailsModal(${job.id})">
+                        ${escapeHTML(job.title)}
+                      </h4>
+                    </div>
+                    <div class="text-right shrink-0">
+                      <span class="text-base font-black text-brand-600">₹${job.wage}</span>
+                      <span class="text-[10px] text-slate-400 block font-bold">/ day</span>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap gap-1.5 text-xs text-slate-600 pt-1">
+                    <span class="px-2.5 py-0.5 bg-slate-100 rounded-lg font-medium text-[11px]">${escapeHTML(job.trade)}</span>
+                    <span class="px-2.5 py-0.5 bg-slate-100 rounded-lg font-medium text-[11px]"><i class="fa-solid fa-users text-slate-400 mr-1"></i>${job.workersNeeded || 1} Needed</span>
+                    <span class="px-2.5 py-0.5 bg-slate-100 rounded-lg font-medium text-[11px]"><i class="fa-regular fa-calendar-check text-slate-400 mr-1"></i>${escapeHTML(job.duration || 'Ongoing')}</span>
+                    <span class="px-2.5 py-0.5 bg-slate-100 rounded-lg font-medium text-[11px]"><i class="fa-solid fa-location-dot text-slate-400 mr-1"></i>${escapeHTML(job.city || job.district || 'Site')}</span>
+                  </div>
+
+                  ${job.siteAddress ? `
+                    <p class="text-[11px] text-slate-500 leading-tight">
+                      <i class="fa-solid fa-map-pin text-slate-400 mr-1"></i> ${escapeHTML(job.siteAddress)}
+                    </p>
+                  ` : ''}
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                  <button onclick="switchEmployerSubTab('applications')" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-users text-xs"></i>
+                    <span>Applicants (${jobApps.length})</span>
+                  </button>
+
+                  <div class="flex items-center space-x-1.5">
+                    ${job.status !== 'completed' ? `
+                      <button onclick="markJobCompleted(${job.id})" title="Mark Job as Completed / Site Closed" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
+                        <i class="fa-solid fa-check mr-1 text-emerald-600"></i> Mark Done
+                      </button>
+                    ` : ''}
+                    <button onclick="deleteEmployerJob(${job.id})" title="Delete Job Opening" class="w-8 h-8 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs transition cursor-pointer">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join("");
+        }
+      }
+
+      // Render Candidate Applications
+      const appsContainer = document.getElementById("empApplicationsContainer");
+      if (appsContainer) {
+        if (myApplications.length === 0) {
+          appsContainer.innerHTML = `
+            <div class="card p-8 text-center bg-slate-50 border border-dashed border-slate-300 rounded-3xl space-y-2">
+              <i class="fa-solid fa-user-group text-3xl text-slate-300"></i>
+              <h4 class="font-black text-slate-700 text-sm">No Worker Applications Received Yet</h4>
+              <p class="text-xs text-slate-400 max-w-sm mx-auto">When workers view your job postings and tap "Apply", their verified contact profiles will appear here for immediate phone contact.</p>
+            </div>
+          `;
+        } else {
+          appsContainer.innerHTML = myApplications.map(a => {
+            const statusBadge = a.status === 'Hired' ? 'bg-emerald-100 text-emerald-900 border-emerald-300' : a.status === 'Shortlisted' ? 'bg-blue-100 text-blue-900 border-blue-300' : a.status === 'Rejected' ? 'bg-red-100 text-red-900 border-red-300' : 'bg-amber-100 text-amber-900 border-amber-300';
+
+            return `
+              <div class="card p-4 sm:p-5 bg-white border border-slate-200 rounded-2xl shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex items-start space-x-3.5">
+                  <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 font-black text-lg flex items-center justify-center shrink-0 border border-brand-200">
+                    <i class="fa-solid fa-hard-hat"></i>
+                  </div>
+                  <div>
+                    <div class="flex items-center space-x-2">
+                      <h4 class="font-black text-slate-900 text-sm">${escapeHTML(a.workerName || 'Skilled Worker')}</h4>
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black border ${statusBadge}">
+                        ${escapeHTML(a.status || 'Submitted')}
+                      </span>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-0.5 font-medium">
+                      Applied for: <b class="text-slate-800">${escapeHTML(a.jobTitle || 'General Site Opening')}</b> • Trade: ${escapeHTML(a.workerTrade || 'General Construction')}
+                    </p>
+                    <p class="text-[11px] text-slate-400 mt-1 flex items-center gap-2">
+                      <span><i class="fa-solid fa-phone mr-1"></i> <a href="tel:${escapeHTML(a.workerPhone)}" class="text-brand-600 font-bold hover:underline">${escapeHTML(a.workerPhone)}</a></span>
+                      <span>•</span>
+                      <span><i class="fa-regular fa-calendar mr-1"></i> ${escapeHTML(a.appliedDate || 'Today')}</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-center flex-wrap gap-2 w-full md:w-auto justify-end">
+                  <a href="tel:${escapeHTML(a.workerPhone)}" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shadow-xs flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>Call Worker</span>
+                  </a>
+                  <a href="https://wa.me/91${(a.workerPhone || '').replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(a.workerName)},%20I%20saw%20your%20application%20on%20Mazdoor%20Mitra%20for%20${encodeURIComponent(a.jobTitle || 'our site opening')}." target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-xs transition flex items-center gap-1 cursor-pointer">
+                    <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i>
+                    <span>WhatsApp</span>
+                  </a>
+                  <button onclick="updateApplicationStatus(${a.id}, 'Hired')" class="px-3 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold text-xs transition cursor-pointer">
+                    <i class="fa-solid fa-check mr-1"></i> Hire
+                  </button>
+                  <button onclick="updateApplicationStatus(${a.id}, 'Rejected')" class="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-red-50 hover:text-red-700 text-slate-600 font-bold text-xs transition cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join("");
+        }
+      }
+    }
+
+    function markJobCompleted(jobId) {
+      const job = (appState.jobs || []).find(j => j.id === jobId);
+      if (job) {
+        job.status = 'completed';
+        saveStateToStorage();
+        if (typeof mmSupabaseClient !== 'undefined' && mmSupabaseClient) {
+          mmSupabaseClient.from('jobs').update({ status: 'completed' }).eq('id', jobId).then();
+        }
+        renderEmployerDashboard();
+        renderJobs();
+        showToast("Job Completed", `Job "${job.title}" has been marked completed.`);
+      }
+    }
+
+    function deleteEmployerJob(jobId) {
+      if (confirm("Are you sure you want to remove this job requirement?")) {
+        appState.jobs = (appState.jobs || []).filter(j => j.id !== jobId);
+        saveStateToStorage();
+        if (typeof mmSupabaseClient !== 'undefined' && mmSupabaseClient) {
+          mmSupabaseClient.from('jobs').delete().eq('id', jobId).then();
+        }
+        renderEmployerDashboard();
+        renderJobs();
+        showToast("Job Removed", "Job opening removed from the marketplace.");
+      }
+    }
+
+    function updateApplicationStatus(appId, newStatus) {
+      const app = (appState.applications || []).find(a => a.id === appId);
+      if (app) {
+        app.status = newStatus;
+        saveStateToStorage();
+        if (typeof mmSupabaseClient !== 'undefined' && mmSupabaseClient) {
+          mmSupabaseClient.from('applications').update({ status: newStatus }).eq('id', appId).then();
+        }
+        renderEmployerDashboard();
+        renderApplications();
+        showToast(`Candidate ${newStatus}!`, `Worker status updated to ${newStatus}.`);
+      }
     }
 
     // --- R. WORKERS DIRECTORY ---
@@ -9200,6 +9919,9 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
     function renderAllViews() {
       renderJobs();
       renderWorkers();
+      if (typeof renderEmployerDashboard === "function") {
+        renderEmployerDashboard();
+      }
       renderAnalytics();
       renderHospitals();
       renderIncidentLogs();

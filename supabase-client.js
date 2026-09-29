@@ -259,14 +259,14 @@ function setupSupabaseRealtimeSubscriptions() {
 async function pushJobToSupabase(job) {
   if (!mmSupabaseClient) return;
   try {
-    const { error } = await mmSupabaseClient.from('jobs').insert([{
+    const payload = {
       title: job.title,
       trade: job.trade,
       employer: job.employer,
       employer_phone: job.employerPhone || job.phone,
       phone: job.phone || job.employerPhone,
       wage: job.wage,
-      workers_needed: job.workersNeeded || 1,
+      workers_needed: job.workersNeeded || job.workersCount || 1,
       hours: job.hours || "8 hours",
       state: job.state,
       district: job.district,
@@ -274,9 +274,39 @@ async function pushJobToSupabase(job) {
       description: job.description || "",
       posted_date: job.postedDate || new Date().toISOString().split('T')[0],
       is_scam: job.isScam || false
-    }]);
-    if (error) console.warn("Supabase pushJob error:", error);
-    else console.log("Job successfully pushed to Supabase Cloud");
+    };
+
+    if (job.employerId) payload.employer_id = job.employerId;
+    if (job.skillsRequired) payload.skills_required = job.skillsRequired;
+    if (job.workersCount) payload.workers_count = job.workersCount;
+    if (job.wagePerDay) payload.wage_per_day = job.wagePerDay;
+    if (job.siteAddress) payload.site_address = job.siteAddress;
+    if (job.duration) payload.duration = job.duration;
+    if (job.status) payload.status = job.status;
+
+    const { error } = await mmSupabaseClient.from('jobs').insert([payload]);
+    if (error) {
+      console.warn("Retrying pushJob with core schema payload:", error.message);
+      const corePayload = {
+        title: job.title,
+        trade: job.trade,
+        employer: job.employer,
+        employer_phone: job.employerPhone || job.phone,
+        phone: job.phone || job.employerPhone,
+        wage: job.wage,
+        workers_needed: job.workersNeeded || 1,
+        hours: job.hours || "8 hours",
+        state: job.state,
+        district: job.district,
+        city: job.city,
+        description: job.description || "",
+        posted_date: job.postedDate || new Date().toISOString().split('T')[0],
+        is_scam: job.isScam || false
+      };
+      await mmSupabaseClient.from('jobs').insert([corePayload]);
+    } else {
+      console.log("Job successfully pushed to Supabase Cloud");
+    }
   } catch (e) {
     console.warn("Supabase pushJob exception:", e);
   }
@@ -285,21 +315,44 @@ async function pushJobToSupabase(job) {
 async function pushWorkerToSupabase(worker) {
   if (!mmSupabaseClient) return;
   try {
-    const { error } = await mmSupabaseClient.from('workers').insert([{
+    const fullPayload = {
       name: worker.name,
       phone: worker.phone,
       trade: worker.trade,
-      wage: worker.wage,
-      experience: worker.experience,
+      wage: worker.wage || 0,
+      experience: worker.experience || 1,
       status: worker.status || "Available",
       state: worker.state,
       district: worker.district,
       city: worker.city,
       verified: worker.verified !== false,
       photo_skill_verified: worker.photoSkillVerified !== false
-    }]);
-    if (error) console.warn("Supabase pushWorker error:", error);
-    else console.log("Worker successfully pushed to Supabase Cloud");
+    };
+    if (worker.role) fullPayload.role = worker.role;
+    if (worker.companyName || worker.company_name) fullPayload.company_name = worker.companyName || worker.company_name;
+    if (worker.businessCategory || worker.business_category) fullPayload.business_category = worker.businessCategory || worker.business_category;
+    if (worker.gstin) fullPayload.gstin = worker.gstin;
+
+    const { error } = await mmSupabaseClient.from('workers').insert([fullPayload]);
+    if (error) {
+      console.warn("Retrying pushWorker with base schema:", error.message);
+      const basePayload = {
+        name: worker.name,
+        phone: worker.phone,
+        trade: worker.trade,
+        wage: worker.wage || 0,
+        experience: worker.experience || 1,
+        status: worker.status || "Available",
+        state: worker.state,
+        district: worker.district,
+        city: worker.city,
+        verified: worker.verified !== false,
+        photo_skill_verified: worker.photoSkillVerified !== false
+      };
+      await mmSupabaseClient.from('workers').insert([basePayload]);
+    } else {
+      console.log("Worker/Employer successfully pushed to Supabase Cloud");
+    }
   } catch (e) {
     console.warn("Supabase pushWorker exception:", e);
   }
