@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#ea580c">
+  <meta name="theme-color" content="#1B4D3E">
   <meta name="description" content="Mazdoor Mitra - National Skilled Labour Marketplace, Emergency 108/112 & Workplace Safety Network across all 28 States and 8 Union Territories of India.">
   <title>Mazdoor Mitra | AI-Powered Smart Labour & Safety Network</title>
   <link rel="manifest" href="manifest.json">
@@ -17,18 +17,20 @@
         extend: {
           colors: {
             brand: {
-              50: '#fff7ed',
-              100: '#ffedd5',
-              200: '#fed7aa',
-              300: '#fdba74',
-              400: '#fb923c',
-              500: '#ea580c', // High-visibility industrial orange
-              600: '#c2410c',
-              700: '#9a3412',
-              800: '#7c2d12',
-              900: '#431407',
-              blue: '#1e3a8a',
-              darkblue: '#0f172a'
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#1B4D3E', // Forest Green primary
+              600: '#143d31', // Deep Forest
+              700: '#0e2d24',
+              800: '#0a201a',
+              900: '#05120e',
+              forest: '#1B4D3E',
+              royal: '#0F52BA',
+              blue: '#0F52BA',
+              darkblue: '#0F172A'
             },
             emergency: {
               light: '#fef2f2',
@@ -74,6 +76,20 @@
   <script src="supabase-client.js"></script>
 
   <style>
+    /* Complete viewport reset: fix horizontal overflow 100% */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      background-color: #F8FAFC;
+      color: #0F172A;
+      font-family: 'Segoe UI', Inter, system-ui, -apple-system, sans-serif;
+    }
+
     /* Clean custom scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; }
@@ -108,8 +124,8 @@
       animation: micPulse 1.2s infinite alternate;
     }
     @keyframes micPulse {
-      from { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7); transform: scale(1); }
-      to { box-shadow: 0 0 0 12px rgba(234, 88, 12, 0); transform: scale(1.08); }
+      from { box-shadow: 0 0 0 0 rgba(27, 77, 62, 0.7); transform: scale(1); }
+      to { box-shadow: 0 0 0 12px rgba(27, 77, 62, 0); transform: scale(1.08); }
     }
 
     /* ========================================================= */
@@ -119,11 +135,11 @@
     /* Pulsating Glowing Outline for Logo */
     @keyframes mmLogoGlowPulse {
       0%, 100% {
-        filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.65)) drop-shadow(0 0 25px rgba(245, 158, 11, 0.3));
+        filter: drop-shadow(0 0 10px rgba(27, 77, 62, 0.65)) drop-shadow(0 0 25px rgba(15, 82, 186, 0.35));
         transform: scale(1);
       }
       50% {
-        filter: drop-shadow(0 0 22px rgba(249, 115, 22, 0.95)) drop-shadow(0 0 45px rgba(251, 191, 36, 0.6));
+        filter: drop-shadow(0 0 22px rgba(27, 77, 62, 0.95)) drop-shadow(0 0 45px rgba(15, 82, 186, 0.65));
         transform: scale(1.03);
       }
     }
@@ -171,9 +187,9 @@
       height: 250vmax;
       background: repeating-conic-gradient(
         from 0deg at 50% 50%,
-        rgba(249, 115, 22, 0.12) 0deg 10deg,
+        rgba(27, 77, 62, 0.16) 0deg 10deg,
         transparent 10deg 20deg,
-        rgba(234, 88, 12, 0.08) 20deg 30deg,
+        rgba(15, 82, 186, 0.12) 20deg 30deg,
         transparent 30deg 40deg
       );
       animation: mmRaysSpin 40s linear infinite;
@@ -192,7 +208,7 @@
       width: 600px;
       height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(249, 115, 22, 0.45) 0%, rgba(234, 88, 12, 0.18) 40%, transparent 70%);
+      background: radial-gradient(circle, rgba(27, 77, 62, 0.5) 0%, rgba(15, 82, 186, 0.25) 40%, transparent 70%);
       animation: mmBurstPulse 3s ease-in-out infinite;
       pointer-events: none;
       will-change: transform, opacity;
@@ -709,27 +725,27 @@
             <defs>
               <!-- Gradient for Shield Base -->
               <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ff9900" />
-                <stop offset="50%" stop-color="#f25c05" />
-                <stop offset="100%" stop-color="#c93800" />
+                <stop offset="0%" stop-color="#0F52BA" />
+                <stop offset="50%" stop-color="#1B4D3E" />
+                <stop offset="100%" stop-color="#143d31" />
               </linearGradient>
 
               <!-- 3D Gold Gradient for MM Monogram -->
               <linearGradient id="mmGold" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stop-color="#ffe082" />
-                <stop offset="40%" stop-color="#ff9800" />
-                <stop offset="100%" stop-color="#bf360c" />
+                <stop offset="40%" stop-color="#34d399" />
+                <stop offset="100%" stop-color="#059669" />
               </linearGradient>
 
-              <!-- Text Orange Gradient -->
-              <linearGradient id="textOrange" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#f25c05" />
-                <stop offset="100%" stop-color="#ff7b00" />
+              <!-- Text Forest Green Gradient -->
+              <linearGradient id="textForest" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#1B4D3E" />
+                <stop offset="100%" stop-color="#22c55e" />
               </linearGradient>
 
               <!-- Bottom Arch Green Gradient -->
               <linearGradient id="greenBase" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#16a34a" />
+                <stop offset="0%" stop-color="#1B4D3E" />
                 <stop offset="100%" stop-color="#0e622b" />
               </linearGradient>
             </defs>
@@ -737,7 +753,7 @@
             <!-- LEFT EMBLEM CREST -->
             <g transform="translate(30, 10)">
               <!-- Outer Circular Ring -->
-              <circle cx="200" cy="200" r="190" fill="none" stroke="#ea580c" stroke-width="12" />
+              <circle cx="200" cy="200" r="190" fill="none" stroke="#1B4D3E" stroke-width="12" />
               <circle cx="200" cy="200" r="176" fill="#ffffff" />
 
               <!-- Protective Shield -->
@@ -763,47 +779,33 @@
             <!-- RIGHT BRAND TYPOGRAPHY -->
             <g transform="translate(460, 60)">
               <!-- MAZDOOR -->
-              <text x="0" y="90" font-family="'Arial Black', Impact, sans-serif" font-size="82" font-weight="900" fill="#0b2c6b" letter-spacing="2">MAZDOOR</text>
+              <text x="0" y="90" font-family="'Arial Black', Impact, sans-serif" font-size="82" font-weight="900" fill="#0F52BA" letter-spacing="2">MAZDOOR</text>
               
               <!-- MITRA -->
-              <text x="0" y="180" font-family="'Arial Black', Impact, sans-serif" font-size="86" font-weight="900" fill="url(#textOrange)" letter-spacing="3">MITRA</text>
+              <text x="0" y="180" font-family="'Arial Black', Impact, sans-serif" font-size="86" font-weight="900" fill="url(#textForest)" letter-spacing="3">MITRA</text>
 
               <!-- Tagline -->
-              <text x="5" y="230" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" fill="#0b2c6b" letter-spacing="0.5">Find Work. Find Workers. Build a Better Future.</text>
+              <text x="5" y="230" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" fill="#0F172A" letter-spacing="0.5">Find Work. Find Workers. Build a Better Future.</text>
 
               <!-- Accent Line & Pin -->
-              <rect x="5" y="258" width="170" height="4" rx="2" fill="#ea580c" />
-              <path d="M190 248 C184 248 179 253 179 259 C179 267 190 278 190 278 C190 278 201 267 201 259 C201 253 196 248 190 248 Z" fill="#0b2c6b" />
+              <rect x="5" y="258" width="170" height="4" rx="2" fill="#1B4D3E" />
+              <path d="M190 248 C184 248 179 253 179 259 C179 267 190 278 190 278 C190 278 201 267 201 259 C201 253 196 248 190 248 Z" fill="#0F52BA" />
               <circle cx="190" cy="256" r="3.5" fill="#ffffff" />
               <rect x="205" y="258" width="180" height="4" rx="2" fill="#16a34a" />
             </g>
           </svg>
         </a>
 
-        <!-- Top Right Controls (Language / Action) -->
+        <!-- Top Right Controls (Language Selector) -->
         <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-          <span class="text-xs bg-orange-100 text-orange-700 font-semibold px-2.5 py-1 rounded-full border border-orange-200 hidden sm:inline-block">
-            Live Portal
+          <span class="text-xs bg-emerald-50 text-emerald-800 font-semibold px-2.5 py-1 rounded-full border border-emerald-200 hidden sm:inline-block">
+            National Portal
           </span>
-
-          <!-- 108 Ambulance -->
-          <a href="tel:108" class="bg-red-600 hover:bg-red-700 text-white px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center space-x-1 shadow-sm active:scale-95" title="Direct Dial 108 Ambulance">
-            <i class="fa-solid fa-truck-medical text-yellow-300"></i>
-            <span class="hidden md:inline" data-i18n="ambulance108">108 ఆంబులెన్స్</span>
-            <span class="md:hidden">108</span>
-          </a>
-
-          <!-- 112 SOS -->
-          <a href="tel:112" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center space-x-1 shadow-sm active:scale-95" title="Direct Dial 112 Police/SOS">
-            <i class="fa-solid fa-shield-halved text-cyan-300"></i>
-            <span class="hidden md:inline" data-i18n="emergency112">112 SOS</span>
-            <span class="md:hidden">112</span>
-          </a>
 
           <!-- Auth Language Switcher: 22 Scheduled Indian Languages + English -->
           <div class="relative flex items-center">
-            <i class="fa-solid fa-globe text-orange-500 absolute left-2.5 text-xs pointer-events-none"></i>
-            <select id="authLanguageSelect" onchange="handleLanguageChange(this.value)" aria-label="Select Application Language" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold rounded-xl pl-7 pr-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer shadow-sm">
+            <i class="fa-solid fa-globe text-brand-500 absolute left-2.5 text-xs pointer-events-none"></i>
+            <select id="authLanguageSelect" onchange="handleLanguageChange(this.value)" aria-label="Select Application Language" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold rounded-xl pl-7 pr-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer shadow-sm">
               <option value="te" selected>తెలుగు (Telugu)</option>
               <option value="en">English (EN)</option>
               <option value="hi">हिंदी (Hindi)</option>
@@ -842,26 +844,26 @@
         <div class="text-center space-y-2">
           <!-- Animated Mini-Logo Display -->
           <div class="flex justify-center mb-1">
-            <div class="w-16 h-16 rounded-2xl bg-white p-1 border border-orange-200 shadow-lg relative group">
+            <div class="w-16 h-16 rounded-2xl bg-white p-1 border border-emerald-200 shadow-lg relative group">
               <svg class="w-full h-full mm-logo-pulse" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <linearGradient id="shieldGradCard" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#ff9900" />
-                    <stop offset="50%" stop-color="#f25c05" />
-                    <stop offset="100%" stop-color="#c93800" />
+                    <stop offset="0%" stop-color="#0F52BA" />
+                    <stop offset="50%" stop-color="#1B4D3E" />
+                    <stop offset="100%" stop-color="#143d31" />
                   </linearGradient>
                   <linearGradient id="mmGoldCard" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" stop-color="#ffe082" />
-                    <stop offset="40%" stop-color="#ff9800" />
-                    <stop offset="100%" stop-color="#bf360c" />
+                    <stop offset="40%" stop-color="#34d399" />
+                    <stop offset="100%" stop-color="#059669" />
                   </linearGradient>
                   <linearGradient id="greenBaseCard" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#16a34a" />
+                    <stop offset="0%" stop-color="#1B4D3E" />
                     <stop offset="100%" stop-color="#0e622b" />
                   </linearGradient>
                 </defs>
                 <!-- Outer Circular Ring -->
-                <circle cx="200" cy="200" r="190" fill="none" stroke="#ea580c" stroke-width="12" />
+                <circle cx="200" cy="200" r="190" fill="none" stroke="#1B4D3E" stroke-width="12" />
                 <circle cx="200" cy="200" r="176" fill="#ffffff" />
                 <!-- Protective Shield -->
                 <path d="M200 45 L320 95 C320 235 200 320 200 320 C200 320 80 235 80 95 Z" fill="url(#shieldGradCard)" />
@@ -879,14 +881,14 @@
                 <!-- Bottom Green Leaves Base -->
                 <path d="M90 240 Q200 365 310 240 Q200 385 90 240 Z" fill="url(#greenBaseCard)" />
               </svg>
-              <div class="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full border-2 border-white flex items-center justify-center shadow-xs">
+              <div class="absolute -top-1 -right-1 w-4 h-4 bg-brand-500 rounded-full border-2 border-white flex items-center justify-center shadow-xs">
                 <i class="fa-solid fa-shield-halved text-[8px] text-white"></i>
               </div>
             </div>
           </div>
 
-          <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-[11px] font-extrabold uppercase tracking-wide">
-            <i class="fa-solid fa-lock text-orange-600"></i>
+          <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-extrabold uppercase tracking-wide border border-emerald-200">
+            <i class="fa-solid fa-lock text-brand-500"></i>
             <span data-i18n="authSecurityBadge">ధృవీకరించబడిన సురక్షిత ప్రవేశం</span>
           </div>
           <h2 id="authHeadingTitle" data-i18n="authHeadingLogin" class="text-2xl font-black text-slate-900 tracking-tight">మజ్దూర్ మిత్రకు స్వాగతం</h2>
@@ -896,7 +898,7 @@
         <!-- Mode Toggle Tabs (Login vs Register) -->
         <div class="flex p-1 bg-slate-100 rounded-2xl border border-slate-200">
           <button type="button" id="tabBtnLogin" onclick="switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl text-xs font-black transition text-slate-900 bg-white shadow-xs cursor-pointer">
-            <i class="fa-solid fa-right-to-bracket mr-1.5 text-orange-600"></i> <span data-i18n="authTabLogin">లాగిన్</span>
+            <i class="fa-solid fa-right-to-bracket mr-1.5 text-brand-600"></i> <span data-i18n="authTabLogin">లాగిన్</span>
           </button>
           <button type="button" id="tabBtnRegister" onclick="switchAuthTab('register')" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer">
             <i class="fa-solid fa-user-plus mr-1.5 text-blue-600"></i> <span data-i18n="authTabRegister">సైన్ అప్</span>
@@ -909,7 +911,7 @@
         <div id="authLoginForm" class="space-y-4">
           <!-- Dual Method Tabs: Mobile OTP vs Email/Password -->
           <div class="flex items-center justify-center space-x-2 border-b border-slate-200 pb-3">
-            <button type="button" id="loginMethodPhoneBtn" onclick="switchLoginMethod('phone')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-orange-500 text-white shadow-xs cursor-pointer">
+            <button type="button" id="loginMethodPhoneBtn" onclick="switchLoginMethod('phone')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-brand-500 text-white shadow-xs cursor-pointer">
               <i class="fa-solid fa-mobile-screen-button mr-1.5"></i> <span data-i18n="authMethodPhone">మొబైల్ & OTP</span>
             </button>
             <button type="button" id="loginMethodEmailBtn" onclick="switchLoginMethod('email')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">
@@ -923,7 +925,7 @@
               <label class="block text-xs font-bold text-slate-700 mb-1">
                 <span data-i18n="authMobileLabel">మొబైల్ నంబర్</span> <span class="text-red-500">*</span>
               </label>
-              <div class="relative flex rounded-xl border border-slate-300 focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-500/20 bg-slate-50">
+              <div class="relative flex rounded-xl border border-slate-300 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500/20 bg-slate-50">
                 <span class="inline-flex items-center px-3 rounded-l-xl border-r border-slate-300 text-slate-600 font-bold text-xs bg-slate-100">
                   🇮🇳 +91
                 </span>
@@ -934,25 +936,25 @@
 
             <!-- OTP Request Button -->
             <div id="otpRequestContainer">
-              <button type="button" onclick="handleSendOTP()" id="btnSendOtp" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
+              <button type="button" onclick="handleSendOTP()" id="btnSendOtp" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
                 <i class="fa-solid fa-paper-plane"></i>
                 <span data-i18n="authBtnGetOtp">మొబైల్‌లో OTP పొందండి</span>
               </button>
             </div>
 
             <!-- OTP Input Section (Revealed after OTP sent) -->
-            <div id="otpVerifySection" class="hidden space-y-3 p-3.5 rounded-2xl bg-orange-50/70 border border-orange-200">
+            <div id="otpVerifySection" class="hidden space-y-3 p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
               <div class="flex items-center justify-between text-xs">
-                <span class="font-bold text-orange-950" data-i18n="authOtpLabel">6 అంకెల OTP నమోదు చేయండి:</span>
-                <span id="otpTimerDisplay" class="font-mono text-orange-700 font-bold text-[11px]">మళ్ళీ పంపండి 30s</span>
+                <span class="font-bold text-emerald-950" data-i18n="authOtpLabel">6 అంకెల OTP నమోదు చేయండి:</span>
+                <span id="otpTimerDisplay" class="font-mono text-emerald-700 font-bold text-[11px]">మళ్ళీ పంపండి 30s</span>
               </div>
               
               <div class="relative">
-                <input type="text" id="loginOtpInput" maxlength="6" placeholder="• • • • • •" class="w-full bg-white border border-orange-300 rounded-xl px-4 py-2.5 text-center text-lg font-black tracking-widest text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <input type="text" id="loginOtpInput" maxlength="6" placeholder="• • • • • •" class="w-full bg-white border border-emerald-300 rounded-xl px-4 py-2.5 text-center text-lg font-black tracking-widest text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
               </div>
 
               <div class="flex items-center justify-between gap-2">
-                <button type="button" onclick="autoFillDemoOTP()" class="text-[11px] font-bold text-orange-700 hover:text-orange-900 underline cursor-pointer">
+                <button type="button" onclick="autoFillDemoOTP()" class="text-[11px] font-bold text-emerald-700 hover:text-emerald-900 underline cursor-pointer">
                   <span data-i18n="authBtnAutoOtp">⚡ డెమో OTP పూరించండి (123456)</span>
                 </button>
                 <button type="button" id="btnResendOtp" onclick="handleSendOTP(true)" disabled class="text-[11px] font-bold text-slate-400 cursor-not-allowed">
@@ -975,7 +977,7 @@
               </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-envelope absolute left-3 text-slate-400 text-xs"></i>
-                <input type="email" id="loginEmailInput" placeholder="name@example.com" data-i18n-placeholder="authEmailPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20">
+                <input type="email" id="loginEmailInput" placeholder="name@example.com" data-i18n-placeholder="authEmailPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20">
               </div>
               <p id="loginEmailError" data-i18n="authEmailError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి సరైన ఈమెయిల్ చిరునామాను నమోదు చేయండి.</p>
             </div>
@@ -986,7 +988,7 @@
               </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-lock absolute left-3 text-slate-400 text-xs"></i>
-                <input type="password" id="loginPasswordInput" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20">
+                <input type="password" id="loginPasswordInput" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20">
                 <button type="button" onclick="togglePasswordVisibility('loginPasswordInput', this)" class="absolute right-3 text-slate-400 hover:text-slate-600 text-xs p-1 cursor-pointer">
                   <i class="fa-solid fa-eye"></i>
                 </button>
@@ -996,15 +998,15 @@
 
             <div class="flex items-center justify-between text-xs pt-1">
               <label class="flex items-center space-x-2 cursor-pointer text-slate-600">
-                <input type="checkbox" id="loginRememberMe" checked class="rounded text-orange-600 focus:ring-orange-500 border-slate-300">
+                <input type="checkbox" id="loginRememberMe" checked class="rounded text-brand-600 focus:ring-brand-500 border-slate-300">
                 <span data-i18n="authRememberMe">నన్ను గుర్తుంచుకో</span>
               </label>
-              <button type="button" onclick="openModal('forgotPasswordModal')" class="text-orange-600 hover:text-orange-700 font-bold hover:underline cursor-pointer">
+              <button type="button" onclick="openModal('forgotPasswordModal')" class="text-brand-600 hover:text-brand-700 font-bold hover:underline cursor-pointer">
                 <span data-i18n="authForgotPassword">పాస్‌వర్డ్ మర్చిపోయారా?</span>
               </button>
             </div>
 
-            <button type="button" onclick="handleEmailPasswordLogin()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
+            <button type="button" onclick="handleEmailPasswordLogin()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
               <i class="fa-solid fa-right-to-bracket"></i>
               <span data-i18n="authBtnSignIn">డాష్‌బోర్డ్‌కి లాగిన్ అవ్వండి</span>
             </button>
@@ -1014,7 +1016,7 @@
           <div class="pt-3 border-t border-slate-100 space-y-2">
             <span class="block text-[10px] text-slate-400 font-bold text-center uppercase tracking-wider" data-i18n="authDemoTitle">తక్షణ 1-ట్యాప్ డెమో లాగిన్</span>
             <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="quickDemoLogin('worker')" class="bg-orange-50 hover:bg-orange-100 text-orange-900 border border-orange-200 py-2 px-2.5 rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer">
+              <button type="button" onclick="quickDemoLogin('worker')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 py-2 px-2.5 rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer">
                 <span data-i18n="authDemoWorker">👷 కార్మికుడు డెమో</span>
               </button>
               <button type="button" onclick="quickDemoLogin('contractor')" class="bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 py-2 px-2.5 rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer">
@@ -1034,7 +1036,7 @@
               <span data-i18n="authSelectRole">మీ పాత్రను ఎంచుకోండి</span> <span class="text-red-500">*</span>
             </label>
             <div class="grid grid-cols-3 gap-1.5">
-              <button type="button" onclick="selectRegisterRole('worker')" id="regRoleWorkerBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-orange-500 text-white border-orange-500 shadow-xs cursor-pointer">
+              <button type="button" onclick="selectRegisterRole('worker')" id="regRoleWorkerBtn" class="p-2 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer">
                 <div class="text-base mb-0.5">👷</div>
                 <div class="text-[11px] leading-tight">
                   <span data-i18n="roleWorker" class="block font-black">కార్మికుడు</span>
@@ -1066,7 +1068,7 @@
             </label>
             <div class="relative flex items-center">
               <i class="fa-solid fa-user absolute left-3 text-slate-400 text-xs"></i>
-              <input type="text" id="regNameInput" placeholder="ఉదా: రమేష్ కుమార్" data-i18n-placeholder="authFullNamePlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+              <input type="text" id="regNameInput" placeholder="ఉదా: రమేష్ కుమార్" data-i18n-placeholder="authFullNamePlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-brand-500">
             </div>
             <p id="regNameError" data-i18n="authFullNameError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి మీ పూర్తి పేరును నమోదు చేయండి.</p>
           </div>
@@ -1077,7 +1079,7 @@
               <label class="block text-xs font-bold text-slate-700">
                 <span data-i18n="authTradeLabel">ప్రధాన వృత్తులు / నైపుణ్యాలు</span> <span class="text-red-500">*</span>
               </label>
-              <span class="text-[10px] font-bold text-orange-700 bg-orange-100/80 px-2 py-0.5 rounded-full border border-orange-200">
+              <span class="text-[10px] font-bold text-brand-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                 <i class="fa-solid fa-list-check mr-1"></i>Multi-Select
               </span>
             </div>
@@ -1089,15 +1091,15 @@
             <button type="button" 
                     id="regTradeDropdownBtn" 
                     onclick="toggleTradeDropdown(event)" 
-                    class="w-full bg-slate-50 hover:bg-slate-100/90 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-left font-semibold text-slate-800 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition flex items-center justify-between shadow-2xs cursor-pointer group">
+                    class="w-full bg-slate-50 hover:bg-slate-100/90 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-left font-semibold text-slate-800 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-emerald-200 transition flex items-center justify-between shadow-2xs cursor-pointer group">
               <div class="flex items-center gap-2 overflow-hidden flex-1 mr-2">
-                <i class="fa-solid fa-screwdriver-wrench text-orange-500 text-xs shrink-0"></i>
+                <i class="fa-solid fa-screwdriver-wrench text-brand-500 text-xs shrink-0"></i>
                 <div id="regTradeDisplay" class="flex flex-wrap items-center gap-1.5 overflow-hidden">
                   <span id="regTradePlaceholder" class="text-slate-400 font-medium text-xs truncate" data-i18n="tradeSelectPlaceholder">నైపుణ్యాలను ఎంచుకోండి (కనీసం 1)</span>
                 </div>
               </div>
               <div class="flex items-center gap-1.5 shrink-0">
-                <span id="regTradeCountBadge" class="hidden px-1.5 py-0.5 rounded-full bg-orange-500 text-white text-[10px] font-black leading-none">0</span>
+                <span id="regTradeCountBadge" class="hidden px-1.5 py-0.5 rounded-full bg-brand-500 text-white text-[10px] font-black leading-none">0</span>
                 <i id="regTradeCaret" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200 group-hover:text-slate-600"></i>
               </div>
             </button>
@@ -1106,18 +1108,18 @@
             <div id="regTradeDropdownMenu" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 overflow-hidden transition-all duration-200 divide-y divide-slate-100">
               
               <!-- "Select All" / "All of These" Header -->
-              <div class="p-2.5 bg-gradient-to-r from-orange-50/90 to-amber-50/90 hover:from-orange-100/90 hover:to-amber-100/90 transition">
+              <div class="p-2.5 bg-gradient-to-r from-emerald-50/90 to-teal-50/90 hover:from-emerald-100/90 hover:to-teal-100/90 transition">
                 <label class="flex items-center cursor-pointer select-none">
                   <input type="checkbox" 
                          id="regTradeSelectAll" 
                          onchange="handleSelectAllTrades(this.checked)" 
-                         class="w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
+                         class="w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
                   <div class="ml-2.5 flex items-center justify-between flex-1">
-                    <span class="font-extrabold text-xs text-orange-950 flex items-center gap-1.5">
-                      <i class="fa-solid fa-check-double text-orange-500 text-xs"></i>
+                    <span class="font-extrabold text-xs text-slate-900 flex items-center gap-1.5">
+                      <i class="fa-solid fa-check-double text-brand-500 text-xs"></i>
                       <span data-i18n="tradeSelectAll">అన్ని నైపుణ్యాలు ఎంచుకోండి (అన్ని పనులు)</span>
                     </span>
-                    <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-orange-200/80 text-orange-900 border border-orange-300">
+                    <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-200">
                       9 SKILLS
                     </span>
                   </div>
@@ -1128,110 +1130,110 @@
               <div class="max-h-56 overflow-y-auto p-1.5 space-y-0.5 custom-scrollbar" id="regTradeList">
                 
                 <!-- 1. Masonry -->
-                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
-                  <input type="checkbox" name="regTrades" value="Masonry / Rajmistri" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
-                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-emerald-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Masonry / Rajmistri" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-slate-950">
                     <span class="flex items-center gap-2">
                       <span class="text-sm">🧱</span>
                       <span data-i18n="tradeMasonry">రాతిపని / రాజ్మిస్త్రీ</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Rajmistri</span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-brand-600">Rajmistri</span>
                   </span>
                 </label>
 
                 <!-- 2. Electrical -->
-                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
-                  <input type="checkbox" name="regTrades" value="Electrical & Solar Installation" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
-                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-emerald-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Electrical & Solar Installation" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-slate-950">
                     <span class="flex items-center gap-2">
                       <span class="text-sm">⚡</span>
                       <span data-i18n="tradeElectrician">ఎలక్ట్రీషియన్ / వైర్‌మ్యాన్</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Electrician</span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-brand-600">Electrician</span>
                   </span>
                 </label>
 
                 <!-- 3. Plumbing -->
-                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
-                  <input type="checkbox" name="regTrades" value="Plumbing & Pipe Laying" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
-                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-emerald-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Plumbing & Pipe Laying" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-slate-950">
                     <span class="flex items-center gap-2">
                       <span class="text-sm">🔧</span>
                       <span data-i18n="tradePlumber">ప్లంబర్ / పైపు ఫిట్టర్</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Plumber</span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-brand-600">Plumber</span>
                   </span>
                 </label>
 
                 <!-- 4. Carpentry -->
-                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
-                  <input type="checkbox" name="regTrades" value="Carpentry & Woodwork" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
-                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-emerald-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Carpentry & Woodwork" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-slate-950">
                     <span class="flex items-center gap-2">
                       <span class="text-sm">🪚</span>
                       <span data-i18n="tradeCarpenter">వడ్రంగి (కార్పెంటర్)</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Carpenter</span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-brand-600">Carpenter</span>
                   </span>
                 </label>
 
                 <!-- 5. Painting -->
-                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
-                  <input type="checkbox" name="regTrades" value="Painting & Wall Finishing" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
-                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-emerald-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Painting & Wall Finishing" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-slate-950">
                     <span class="flex items-center gap-2">
                       <span class="text-sm">🎨</span>
                       <span data-i18n="tradePainter">పెయింటర్</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Painter</span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-brand-600">Painter</span>
                   </span>
                 </label>
 
                 <!-- 6. Welding -->
-                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
-                  <input type="checkbox" name="regTrades" value="Welding & Structural Fabrication" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
-                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-emerald-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Welding & Structural Fabrication" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-slate-950">
                     <span class="flex items-center gap-2">
                       <span class="text-sm">🔥</span>
                       <span data-i18n="tradeWelder">వెల్డర్ / ఫ్యాబ్రికేటర్</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Welder</span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-brand-600">Welder</span>
                   </span>
                 </label>
 
                 <!-- 7. Bar Bending -->
-                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
-                  <input type="checkbox" name="regTrades" value="Bar Bending / Steel Fixing" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
-                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-emerald-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Bar Bending / Steel Fixing" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-slate-950">
                     <span class="flex items-center gap-2">
                       <span class="text-sm">🏗️</span>
                       <span data-i18n="tradeBarBender">బార్ బెండర్ / స్టీల్ ఫిక్సర్</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Bar Bender</span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-brand-600">Bar Bender</span>
                   </span>
                 </label>
 
                 <!-- 8. Helper -->
-                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
-                  <input type="checkbox" name="regTrades" value="General Construction Helper" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
-                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-emerald-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="General Construction Helper" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-slate-950">
                     <span class="flex items-center gap-2">
                       <span class="text-sm">👷</span>
                       <span data-i18n="tradeHelper">సాధారణ హెల్పర్ / కార్మికుడు</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Helper</span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-brand-600">Helper</span>
                   </span>
                 </label>
 
                 <!-- 9. Contractor -->
-                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-orange-50/60 cursor-pointer transition select-none group">
-                  <input type="checkbox" name="regTrades" value="Civil Contracting Firm" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-orange-600 border-slate-300 focus:ring-orange-500 accent-orange-600 cursor-pointer">
-                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-orange-900">
+                <label class="flex items-center px-2.5 py-2 rounded-xl hover:bg-emerald-50/60 cursor-pointer transition select-none group">
+                  <input type="checkbox" name="regTrades" value="Civil Contracting Firm" onchange="handleTradeCheckboxChange()" class="trade-checkbox w-4 h-4 rounded text-brand-600 border-slate-300 focus:ring-brand-500 accent-brand-500 cursor-pointer">
+                  <span class="ml-2.5 flex items-center justify-between flex-1 text-xs font-bold text-slate-800 group-hover:text-slate-950">
                     <span class="flex items-center gap-2">
                       <span class="text-sm">🏢</span>
                       <span data-i18n="tradeContractor">సివిల్ కాంట్రాక్టర్ / బిల్డర్</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-orange-600">Contractor</span>
+                    <span class="text-[10px] text-slate-400 font-medium group-hover:text-brand-600">Contractor</span>
                   </span>
                 </label>
 
@@ -1242,7 +1244,7 @@
                 <span id="regTradeCounterText" class="text-[11px] font-bold text-slate-500">0 ఎంచుకోబడ్డాయి (0 selected)</span>
                 <button type="button" 
                         onclick="closeTradeDropdown()" 
-                        class="px-3.5 py-1.5 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white rounded-lg text-xs font-bold transition shadow-2xs cursor-pointer">
+                        class="px-3.5 py-1.5 bg-brand-500 hover:bg-brand-600 active:scale-95 text-white rounded-lg text-xs font-bold transition shadow-2xs cursor-pointer">
                   పూర్తయింది (Done) ✓
                 </button>
               </div>
@@ -1269,13 +1271,13 @@
           <div class="grid grid-cols-2 gap-2">
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="authStateLabel">రాష్ట్రం</label>
-              <select id="regStateSelect" onchange="handleRegStateChange(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-orange-500">
+              <select id="regStateSelect" onchange="handleRegStateChange(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-brand-500">
                 <!-- Dynamically populated from INDIA_REGIONS -->
               </select>
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="authDistrictLabel">జిల్లా / నగరం</label>
-              <select id="regDistrictSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-orange-500">
+              <select id="regDistrictSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-brand-500">
                 <!-- Dynamically populated based on state -->
               </select>
             </div>
@@ -1289,7 +1291,7 @@
               </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-lock absolute left-3 text-slate-400 text-xs"></i>
-                <input type="password" id="regPasswordInput" oninput="checkPasswordStrength(this.value)" placeholder="కనీసం 6 అక్షరాలు" data-i18n-placeholder="authCreatePasswordPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+                <input type="password" id="regPasswordInput" oninput="checkPasswordStrength(this.value)" placeholder="కనీసం 6 అక్షరాలు" data-i18n-placeholder="authCreatePasswordPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-brand-500">
                 <button type="button" onclick="togglePasswordVisibility('regPasswordInput', this)" class="absolute right-3 text-slate-400 hover:text-slate-600 text-xs p-1 cursor-pointer">
                   <i class="fa-solid fa-eye"></i>
                 </button>
@@ -1308,7 +1310,7 @@
               </label>
               <div class="relative flex items-center">
                 <i class="fa-solid fa-shield-halved absolute left-3 text-slate-400 text-xs"></i>
-                <input type="password" id="regConfirmPasswordInput" placeholder="పాస్‌వర్డ్‌ను మళ్ళీ నమోదు చేయండి" data-i18n-placeholder="authConfirmPasswordPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+                <input type="password" id="regConfirmPasswordInput" placeholder="పాస్‌వర్డ్‌ను మళ్ళీ నమోదు చేయండి" data-i18n-placeholder="authConfirmPasswordPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:border-brand-500">
                 <button type="button" onclick="togglePasswordVisibility('regConfirmPasswordInput', this)" class="absolute right-3 text-slate-400 hover:text-slate-600 text-xs p-1 cursor-pointer">
                   <i class="fa-solid fa-eye"></i>
                 </button>
@@ -1319,12 +1321,12 @@
 
           <!-- Terms & Safety Pledge -->
           <label class="flex items-start space-x-2 text-[11px] text-slate-600 cursor-pointer pt-1">
-            <input type="checkbox" id="regTermsCheckbox" checked class="mt-0.5 rounded text-orange-600 focus:ring-orange-500 border-slate-300">
+            <input type="checkbox" id="regTermsCheckbox" checked class="mt-0.5 rounded text-brand-600 focus:ring-brand-500 border-slate-300">
             <span data-i18n="authTermsPledge">నేను DBOCW న్యాయమైన వేతనాలు, భద్రతా నిబంధనలు మరియు జాతీయ కార్మిక నిబంధనలకు అంగీకరిస్తున్నాను.</span>
           </label>
 
           <!-- Register Submit Button -->
-          <button type="button" onclick="handleRegisterSubmit()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-md active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
+          <button type="button" onclick="handleRegisterSubmit()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-md active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
             <i class="fa-solid fa-user-check"></i>
             <span data-i18n="authBtnRegisterSubmit">ఖాతా సృష్టించి డాష్‌బోర్డ్ తెరవండి</span>
           </button>
@@ -1333,15 +1335,28 @@
       </div>
     </main>
 
-    <!-- Bottom Government & Trust Footer -->
-    <footer class="relative z-10 max-w-6xl w-full mx-auto px-4 py-3.5 text-center text-xs text-slate-400 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div class="flex items-center space-x-2 text-[11px]">
-        <span class="text-emerald-400 font-bold"><i class="fa-solid fa-shield-check mr-1"></i> <span data-i18n="authCompliance1">DBOCW & e-Shram ధృవీకృతం</span></span>
-        <span>•</span>
-        <span data-i18n="authCompliance2">వేతన చెల్లింపుల చట్టం 1936</span>
+    <!-- Bottom Government & Trust Footer with Tactile Emergency Controls -->
+    <footer class="relative z-10 max-w-6xl w-full mx-auto px-4 py-4 text-center text-xs text-slate-400 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-3">
+      <!-- Emergency Helpline Direct Dials -->
+      <div class="flex items-center space-x-2">
+        <a href="tel:108" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95" title="Direct Dial 108 Ambulance">
+          <i class="fa-solid fa-truck-medical text-yellow-300"></i>
+          <span data-i18n="ambulance108">108 Ambulance</span>
+        </a>
+        <a href="tel:112" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95" title="Direct Dial 112 SOS">
+          <i class="fa-solid fa-shield-halved text-cyan-300"></i>
+          <span data-i18n="emergency112">112 SOS</span>
+        </a>
       </div>
+
+      <div class="flex items-center space-x-2 text-[11px]">
+        <span class="text-emerald-400 font-bold"><i class="fa-solid fa-shield-check mr-1"></i> <span data-i18n="authCompliance1">DBOCW & e-Shram Certified</span></span>
+        <span>•</span>
+        <span data-i18n="authCompliance2">Payment of Wages Act 1936</span>
+      </div>
+
       <div class="text-[11px]">
-        <span data-i18n="authHelplineText">అధికారిక కార్మిక టోల్-ఫ్రీ హెల్ప్‌లైన్:</span> <a href="tel:14434" class="text-orange-400 font-bold hover:underline">14434</a>
+        <span data-i18n="authHelplineText">National Labour Helpline:</span> <a href="tel:14434" class="text-emerald-400 font-bold hover:underline">14434</a>
       </div>
     </footer>
   </div>
@@ -1349,295 +1364,325 @@
   <!-- ========================================================= -->
   <!-- MAIN APP WRAPPER (PROTECTED ROUTE: REVEALED UPON LOGIN)   -->
   <!-- ========================================================= -->
-  <div id="mainAppWrapper" class="hidden flex flex-col min-h-screen">
+  <div id="mainAppWrapper" class="hidden min-h-screen w-full max-w-[100vw] overflow-x-hidden flex flex-col lg:flex-row bg-[#F8FAFC]">
 
-  <!-- ========================================================= -->
-  <!-- 1. TOP HIGH-VISIBILITY EMERGENCY SOS QUICK BAR (FIXED)     -->
-  <!-- ========================================================= -->
-  <!-- ========================================================= -->
-  <!-- 1. TOP HIGH-VISIBILITY EMERGENCY SOS QUICK BAR (FIXED)     -->
-  <!-- ========================================================= -->
-  <!-- 1. TOP HIGH-VISIBILITY EMERGENCY SOS QUICK BAR (FIXED)     -->
-  <!-- ========================================================= -->
-  <div class="bg-slate-900 text-slate-100 px-3 py-2 text-xs border-b border-slate-800 shadow-xs sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2.5">
+    <!-- ========================================================= -->
+    <!-- 1. MOBILE TOP NAVIGATION BAR (Visible on screens < lg)    -->
+    <!-- ========================================================= -->
+    <header class="lg:hidden bg-white border-b border-slate-200 px-3.5 py-2.5 flex items-center justify-between sticky top-0 z-40 shadow-xs">
+      <div class="flex items-center space-x-2.5">
+        <button type="button" onclick="toggleSidebarDrawer(true)" class="p-2 -ml-1.5 rounded-xl text-slate-700 hover:bg-slate-100 transition active:scale-95" aria-label="Open Navigation Drawer">
+          <i class="fa-solid fa-bars text-base text-slate-800"></i>
+        </button>
+        <!-- Mobile Logo -->
+        <a href="javascript:void(0)" onclick="switchTab('jobs')" class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 420" class="h-9 w-auto">
+            <defs>
+              <linearGradient id="shieldGradMob" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0F52BA" />
+                <stop offset="50%" stop-color="#1B4D3E" />
+                <stop offset="100%" stop-color="#143d31" />
+              </linearGradient>
+              <linearGradient id="mmGoldMob" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ffe082" />
+                <stop offset="40%" stop-color="#34d399" />
+                <stop offset="100%" stop-color="#059669" />
+              </linearGradient>
+              <linearGradient id="textForestMob" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#1B4D3E" />
+                <stop offset="100%" stop-color="#22c55e" />
+              </linearGradient>
+            </defs>
+            <g transform="translate(30, 10)">
+              <circle cx="200" cy="200" r="190" fill="none" stroke="#1B4D3E" stroke-width="12" />
+              <circle cx="200" cy="200" r="176" fill="#ffffff" />
+              <path d="M200 45 L320 95 C320 235 200 320 200 320 C200 320 80 235 80 95 Z" fill="url(#shieldGradMob)" />
+              <path d="M150 200 C150 140 250 140 250 200 Z" fill="#ffffff" opacity="0.9" />
+              <circle cx="200" cy="130" r="22" fill="#ffffff" />
+              <circle cx="200" cy="128" r="9" fill="#dc2626" />
+              <circle cx="200" cy="128" r="3.5" fill="#ffffff" />
+              <path d="M95 260 L95 165 L145 235 L195 165 L195 260 L170 260 L170 210 L145 238 L120 210 L120 260 Z" fill="url(#mmGoldMob)" stroke="#ffe082" stroke-width="2" />
+              <path d="M195 260 L195 165 L245 235 L295 165 L295 260 L270 260 L270 210 L245 238 L220 210 L220 260 Z" fill="url(#mmGoldMob)" stroke="#ffe082" stroke-width="2" />
+              <path d="M90 240 Q200 365 310 240 Q200 385 90 240 Z" fill="#1B4D3E" />
+            </g>
+            <g transform="translate(460, 60)">
+              <text x="0" y="90" font-family="'Arial Black', Impact, sans-serif" font-size="82" font-weight="900" fill="#0F52BA" letter-spacing="2">MAZDOOR</text>
+              <text x="0" y="180" font-family="'Arial Black', Impact, sans-serif" font-size="86" font-weight="900" fill="url(#textForestMob)" letter-spacing="3">MITRA</text>
+            </g>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Mobile Right Controls: Role Badge & Avatar -->
       <div class="flex items-center space-x-2">
-        <span class="inline-flex items-center px-2.5 py-1 rounded-xl text-[10px] font-black bg-red-600 text-white uppercase tracking-wider shadow-xs sos-pulse">
-          <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> SOS Emergency
-        </span>
-        <span class="font-bold text-slate-200 text-xs hidden md:inline" data-i18n="sosNotice">
-          Site Accident or Medical Emergency? Tap Direct Helpline:
-        </span>
-      </div>
-
-      <!-- Tactile Emergency Box Cards -->
-      <div class="flex items-center space-x-2 sm:space-x-2.5 overflow-x-auto py-0.5">
-        <a href="tel:108" class="bg-red-600 hover:bg-red-700 text-white px-3.5 py-1.5 rounded-xl font-black text-xs transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0" title="Call 108 Ambulance">
-          <i class="fa-solid fa-truck-medical text-yellow-300 text-sm"></i>
-          <span data-i18n="ambulance108">108 Ambulance</span>
-        </a>
-
-        <a href="tel:112" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-xl font-black text-xs transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0" title="Call 112 Emergency">
-          <i class="fa-solid fa-shield-halved text-cyan-300 text-sm"></i>
-          <span data-i18n="emergency112">112 Emergency</span>
-        </a>
-
-        <a href="tel:01123382363" class="bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-3.5 py-1.5 rounded-xl font-black text-xs transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0" title="Call Labour Board">
-          <i class="fa-solid fa-phone-volume text-emerald-400 text-sm"></i>
-          <span data-i18n="labourBoard" class="hidden sm:inline">Labour Board</span><span class="sm:hidden">Labour</span>
-        </a>
-
-        <button onclick="openModal('reportInjuryModal')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-3.5 py-1.5 rounded-xl font-black text-xs transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0">
-          <i class="fa-solid fa-notes-medical text-xs"></i>
-          <span data-i18n="reportAccidentBtn">Report Injury</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- SITE SAFETY & WEATHER HAZARD ALERT BOT BANNER -->
-  <div id="weatherAlertBanner" class="bg-amber-50 border-b border-amber-200 text-amber-950 px-4 py-2 text-xs font-medium shadow-xs flex items-center justify-between">
-    <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
-      <div class="flex items-center space-x-2">
-        <div class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-700 flex items-center justify-center shrink-0">
-          <i class="fa-solid fa-temperature-arrow-up text-xs"></i>
-        </div>
-        <span><b class="font-black text-amber-900">National Heat & Site Advisory:</b> Extreme temperature warning active. Mandatory 15-min hydration breaks every 2 hours under shade. Protect against heatstroke!</span>
-      </div>
-      <button onclick="document.getElementById('weatherAlertBanner').classList.add('hidden')" class="text-amber-700 hover:text-amber-950 p-1" title="Dismiss">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- ========================================================= -->
-  <!-- 2. MAIN HEADER & NAVIGATION BAR                           -->
-  <!-- ========================================================= -->
-  <header class="bg-white border-b border-slate-200 shadow-xs sticky top-[42px] z-40">
-    <!-- TOP NAVIGATION & GLOBAL REACTIVE LANGUAGE SWITCHER -->
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between">
-      <!-- Official Mazdoor Mitra Brand Logo -->
-      <a href="javascript:void(0)" onclick="switchTab('jobs')" class="flex items-center gap-2 sm:gap-3 cursor-pointer group shrink-0 py-0.5" title="Mazdoor Mitra Dashboard">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 420" class="h-10 sm:h-12 md:h-14 w-auto group-hover:scale-105 transition-transform duration-200">
-          <defs>
-            <linearGradient id="shieldGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ff9900" />
-              <stop offset="50%" stop-color="#f25c05" />
-              <stop offset="100%" stop-color="#c93800" />
-            </linearGradient>
-            <linearGradient id="mmGoldNav" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#ffe082" />
-              <stop offset="40%" stop-color="#ff9800" />
-              <stop offset="100%" stop-color="#bf360c" />
-            </linearGradient>
-            <linearGradient id="textOrangeNav" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#f25c05" />
-              <stop offset="100%" stop-color="#ff7b00" />
-            </linearGradient>
-            <linearGradient id="greenBaseNav" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#16a34a" />
-              <stop offset="100%" stop-color="#0e622b" />
-            </linearGradient>
-          </defs>
-
-          <!-- LEFT EMBLEM CREST -->
-          <g transform="translate(30, 10)">
-            <circle cx="200" cy="200" r="190" fill="none" stroke="#ea580c" stroke-width="12" />
-            <circle cx="200" cy="200" r="176" fill="#ffffff" />
-            <path d="M200 45 L320 95 C320 235 200 320 200 320 C200 320 80 235 80 95 Z" fill="url(#shieldGradNav)" />
-            <path d="M150 200 C150 140 250 140 250 200 Z" fill="#ffffff" opacity="0.9" />
-            <circle cx="200" cy="130" r="22" fill="#ffffff" />
-            <circle cx="200" cy="128" r="9" fill="#dc2626" />
-            <circle cx="200" cy="128" r="3.5" fill="#ffffff" />
-            <path d="M95 260 L95 165 L145 235 L195 165 L195 260 L170 260 L170 210 L145 238 L120 210 L120 260 Z" fill="url(#mmGoldNav)" stroke="#ffe082" stroke-width="2" />
-            <path d="M195 260 L195 165 L245 235 L295 165 L295 260 L270 260 L270 210 L245 238 L220 210 L220 260 Z" fill="url(#mmGoldNav)" stroke="#ffe082" stroke-width="2" />
-            <path d="M90 240 Q200 365 310 240 Q200 385 90 240 Z" fill="url(#greenBaseNav)" />
-          </g>
-
-          <!-- RIGHT BRAND TYPOGRAPHY -->
-          <g transform="translate(460, 60)">
-            <text x="0" y="90" font-family="'Arial Black', Impact, sans-serif" font-size="82" font-weight="900" fill="#0b2c6b" letter-spacing="2">MAZDOOR</text>
-            <text x="0" y="180" font-family="'Arial Black', Impact, sans-serif" font-size="86" font-weight="900" fill="url(#textOrangeNav)" letter-spacing="3">MITRA</text>
-            <text x="5" y="230" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" fill="#0b2c6b" letter-spacing="0.5">Find Work. Find Workers. Build a Better Future.</text>
-            <rect x="5" y="258" width="170" height="4" rx="2" fill="#ea580c" />
-            <path d="M190 248 C184 248 179 253 179 259 C179 267 190 278 190 278 C190 278 201 267 201 259 C201 253 196 248 190 248 Z" fill="#0b2c6b" />
-            <circle cx="190" cy="256" r="3.5" fill="#ffffff" />
-            <rect x="205" y="258" width="180" height="4" rx="2" fill="#16a34a" />
-          </g>
-        </svg>
-      </a>
-
-      <!-- Primary Desktop Navigation Links -->
-      <nav class="hidden lg:flex items-center space-x-1 text-sm font-semibold">
-        <button onclick="switchTab('jobs')" class="nav-btn px-3 py-2 rounded-lg text-brand-600 bg-slate-100 transition" data-tab="jobs">
-          <i class="fa-solid fa-briefcase mr-1.5 text-brand-500"></i> <span data-i18n="navJobs">Jobs</span>
-        </button>
-        <button onclick="switchTab('workers')" class="nav-btn px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition" data-tab="workers">
-          <i class="fa-solid fa-users mr-1.5 text-blue-500"></i> <span data-i18n="navWorkers">Workers</span>
-        </button>
-        <button onclick="switchTab('attendance')" class="nav-btn px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition" data-tab="attendance">
-          <i class="fa-solid fa-camera mr-1.5 text-indigo-500"></i> <span data-i18n="navAttendance">Attendance</span>
-        </button>
-        <button onclick="switchTab('emergency')" class="nav-btn px-3 py-2 rounded-lg text-red-600 hover:bg-red-50 transition" data-tab="emergency">
-          <i class="fa-solid fa-kit-medical mr-1.5"></i> <span data-i18n="navEmergency">Emergency</span>
-        </button>
-        <button onclick="switchTab('analytics')" class="nav-btn px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition" data-tab="analytics">
-          <i class="fa-solid fa-chart-pie mr-1.5 text-emerald-500"></i> <span data-i18n="navAnalytics">Analytics</span>
-        </button>
-        <button onclick="switchTab('profile')" class="nav-btn px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition" data-tab="profile">
-          <i class="fa-solid fa-id-card mr-1.5 text-slate-600"></i> <span data-i18n="navProfile">Profile</span>
-        </button>
-      </nav>
-
-      <!-- Language Switcher, Tactile Emergency Boxes & Persona Toggle -->
-      <div class="flex items-center space-x-2 sm:space-x-2.5">
-        <!-- Supabase Cloud Connection Status Badge -->
-        <button onclick="openModal('supabaseModal')" class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 transition shadow-2xs cursor-pointer" title="Supabase Cloud Live Status & Sync Controls">
-          <span id="supabaseStatusDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span class="hidden md:inline font-bold">Cloud:</span>
-          <span id="supabaseStatusText" class="font-extrabold">Supabase</span>
-        </button>
-
-        <!-- Global Language Dropdown (22 Scheduled Indian Languages + English) -->
-        <div class="relative flex items-center">
-          <i class="fa-solid fa-globe text-slate-400 absolute left-2.5 text-xs pointer-events-none"></i>
-          <select id="globalLanguageSelect" onchange="handleLanguageChange(this.value)" aria-label="Select Application Language" class="bg-slate-50 border border-slate-300 rounded-xl pl-7 pr-3 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer shadow-2xs">
-            <option value="te" selected>తెలుగు (Telugu)</option>
-            <option value="en">English (EN)</option>
-            <option value="hi">हिंदी (Hindi)</option>
-            <option value="ta">தமிழ் (Tamil)</option>
-            <option value="kn">ಕನ್ನಡ (Kannada)</option>
-            <option value="ml">മലയാളം (Malayalam)</option>
-            <option value="mr">मराठी (Marathi)</option>
-            <option value="bn">বাংলা (Bengali)</option>
-            <option value="gu">ગુજરાતી (Gujarati)</option>
-            <option value="or">ଓଡ଼ିଆ (Odia)</option>
-            <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
-            <option value="as">অসমীয়া (Assamese)</option>
-            <option value="ur">اردو (Urdu)</option>
-            <option value="sa">संस्कृतम् (Sanskrit)</option>
-            <option value="ks">كٲشُر (Kashmiri)</option>
-            <option value="kok">कोंकणी (Konkani)</option>
-            <option value="mai">मैथिली (Maithili)</option>
-            <option value="mni">মৈতৈলোন্ (Manipuri)</option>
-            <option value="ne">नेपाली (Nepali)</option>
-            <option value="brx">बड़ो (Bodo)</option>
-            <option value="doi">डोगरी (Dogri)</option>
-            <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ (Santali)</option>
-            <option value="sd">سنڌي (Sindhi)</option>
-          </select>
-        </div>
-
-        <!-- Tactile Emergency Box Cards (Prominent rounded box dial buttons matching Voice AI button) -->
-        <div class="flex items-center space-x-1.5 sm:space-x-2">
-          <!-- 108 Ambulance -->
-          <a href="tel:108" class="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0 border border-red-500" title="108 Ambulance (Direct Dial)">
-            <i class="fa-solid fa-truck-medical text-yellow-300 text-sm"></i>
-            <span class="hidden sm:inline" data-i18n="ambulance108">108 Ambulance</span>
-            <span class="sm:hidden">108</span>
-          </a>
-
-          <!-- 112 Emergency -->
-          <a href="tel:112" class="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0 border border-blue-500" title="112 Emergency (Direct Dial)">
-            <i class="fa-solid fa-shield-halved text-cyan-300 text-sm"></i>
-            <span class="hidden sm:inline" data-i18n="emergency112">112 Emergency</span>
-            <span class="sm:hidden">112</span>
-          </a>
-
-          <!-- Labour Board Helpline -->
-          <a href="tel:01123382363" class="bg-slate-900 hover:bg-slate-800 text-emerald-400 border border-slate-700 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0 hidden lg:flex" title="Labour Board Helpline 011-23382363 (Direct Dial)">
-            <i class="fa-solid fa-phone-volume text-emerald-400 text-sm"></i>
-            <span data-i18n="labourBoard">Labour Board</span>
-          </a>
-        </div>
-
-        <!-- Segmented Role Switcher: Worker / Employer -->
-        <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200">
-          <button id="roleWorkerBtn" onclick="setRole('worker')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-xs bg-white text-brand-600 border border-brand-200">
-            <i class="fa-solid fa-helmet-safety text-sm"></i>
-            <span id="roleWorkerLabel" data-i18n="roleWorker">Worker</span>
-          </button>
-          <button id="roleEmployerBtn" onclick="setRole('employer')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 border-transparent bg-transparent">
-            <i class="fa-solid fa-building-wheat text-sm"></i>
-            <span id="roleEmployerLabel" data-i18n="roleEmployer">Employer</span>
-          </button>
-        </div>
-
-        <!-- Voice Assistant Quick Launch -->
-        <button onclick="openModal('voiceProfileWizardModal')" title="Build profile with Voice AI" class="bg-purple-600 hover:bg-purple-700 text-white px-3 sm:px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0 border border-purple-500">
-          <i class="fa-solid fa-microphone-lines text-yellow-300"></i>
-          <span>Voice AI</span>
-        </button>
-
-        <!-- 1-Click HTML Standalone Download -->
-        <button onclick="downloadCodeFile()" title="Download Full Application as Single HTML File" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-2.5 py-1.5 rounded-xl font-bold transition flex items-center shadow-xs shrink-0">
-          <i class="fa-solid fa-download sm:mr-1.5"></i>
-          <span class="hidden sm:inline">Save HTML</span>
-        </button>
-
-        <!-- Logged-in User Badge & Logout Button -->
-        <div id="authHeaderUserBadge" class="flex items-center space-x-2 pl-2 border-l border-slate-200 shrink-0">
-          <div class="w-8 h-8 rounded-full bg-orange-600 text-white font-black text-xs flex items-center justify-center shadow-xs">
-            <span id="headerUserAvatar">JR</span>
-          </div>
-          <div class="hidden xl:block text-left text-xs leading-tight">
-            <div id="headerUserName" class="font-bold text-slate-800 truncate max-w-[110px]">Jella Rakesh</div>
-            <div id="headerUserRole" class="text-[10px] text-orange-600 font-bold uppercase tracking-wider">Worker</div>
-          </div>
-          <button onclick="handleLogout()" class="text-slate-500 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition cursor-pointer" title="Log Out of Mazdoor Mitra">
-            <i class="fa-solid fa-right-from-bracket text-sm"></i>
-          </button>
+        <span id="mobileUserRoleBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Worker</span>
+        <div class="w-8 h-8 rounded-full bg-brand-500 text-white font-bold text-xs flex items-center justify-center shadow-xs">
+          <span id="mobileUserAvatar">JR</span>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- ========================================================= -->
-  <!-- 3. HIERARCHICAL CASCADING REGIONAL LOCATION BAR           -->
-  <!-- ========================================================= -->
-  <div class="bg-white border-b border-slate-200 shadow-xs py-2.5 px-4 sticky top-[95px] z-30">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 text-xs">
+    <!-- MOBILE SIDEBAR BACKDROP -->
+    <div id="sidebarBackdrop" onclick="toggleSidebarDrawer(false)" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 transition-opacity lg:hidden"></div>
+
+    <!-- ========================================================= -->
+    <!-- 2. LEFT SIDEBAR: LOGO, PROFILE, ROLE, NAV & UTILITIES      -->
+    <!-- ========================================================= -->
+    <aside id="appSidebar" class="fixed inset-y-0 left-0 z-50 w-72 xl:w-80 bg-white border-r border-slate-200 flex flex-col justify-between overflow-y-auto transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static lg:h-screen lg:shrink-0">
       
-      <!-- Location Filter Label -->
-      <div class="flex items-center space-x-2 text-slate-700 font-bold shrink-0">
-        <i class="fa-solid fa-location-dot text-brand-500 text-sm"></i>
-        <span data-i18n="locationFilterTitle">All-India Region Filter:</span>
-        <span id="activeRegionBadge" class="bg-orange-100 text-brand-700 px-2 py-0.5 rounded-full text-[10px] font-black">All India</span>
+      <!-- Top Section -->
+      <div class="p-4 space-y-4">
+
+        <!-- Brand Header Logo & Mobile Drawer Close Button -->
+        <div class="flex items-center justify-between pb-1">
+          <a href="javascript:void(0)" onclick="switchTab('jobs'); toggleSidebarDrawer(false);" class="flex items-center cursor-pointer group" title="Mazdoor Mitra Dashboard">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 420" class="h-10 sm:h-11 w-auto group-hover:scale-105 transition-transform duration-200">
+              <defs>
+                <linearGradient id="shieldGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0F52BA" />
+                  <stop offset="50%" stop-color="#1B4D3E" />
+                  <stop offset="100%" stop-color="#143d31" />
+                </linearGradient>
+                <linearGradient id="mmGoldNav" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffe082" />
+                  <stop offset="40%" stop-color="#34d399" />
+                  <stop offset="100%" stop-color="#059669" />
+                </linearGradient>
+                <linearGradient id="textForestNav" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#1B4D3E" />
+                  <stop offset="100%" stop-color="#22c55e" />
+                </linearGradient>
+                <linearGradient id="greenBaseNav" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#1B4D3E" />
+                  <stop offset="100%" stop-color="#0e622b" />
+                </linearGradient>
+              </defs>
+
+              <!-- LEFT EMBLEM CREST -->
+              <g transform="translate(30, 10)">
+                <circle cx="200" cy="200" r="190" fill="none" stroke="#1B4D3E" stroke-width="12" />
+                <circle cx="200" cy="200" r="176" fill="#ffffff" />
+                <path d="M200 45 L320 95 C320 235 200 320 200 320 C200 320 80 235 80 95 Z" fill="url(#shieldGradNav)" />
+                <path d="M150 200 C150 140 250 140 250 200 Z" fill="#ffffff" opacity="0.9" />
+                <circle cx="200" cy="130" r="22" fill="#ffffff" />
+                <circle cx="200" cy="128" r="9" fill="#dc2626" />
+                <circle cx="200" cy="128" r="3.5" fill="#ffffff" />
+                <path d="M95 260 L95 165 L145 235 L195 165 L195 260 L170 260 L170 210 L145 238 L120 210 L120 260 Z" fill="url(#mmGoldNav)" stroke="#ffe082" stroke-width="2" />
+                <path d="M195 260 L195 165 L245 235 L295 165 L295 260 L270 260 L270 210 L245 238 L220 210 L220 260 Z" fill="url(#mmGoldNav)" stroke="#ffe082" stroke-width="2" />
+                <path d="M90 240 Q200 365 310 240 Q200 385 90 240 Z" fill="url(#greenBaseNav)" />
+              </g>
+
+              <!-- RIGHT BRAND TYPOGRAPHY -->
+              <g transform="translate(460, 60)">
+                <text x="0" y="90" font-family="'Arial Black', Impact, sans-serif" font-size="82" font-weight="900" fill="#0F52BA" letter-spacing="2">MAZDOOR</text>
+                <text x="0" y="180" font-family="'Arial Black', Impact, sans-serif" font-size="86" font-weight="900" fill="url(#textForestNav)" letter-spacing="3">MITRA</text>
+                <text x="5" y="230" font-family="'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" fill="#0F172A" letter-spacing="0.5">Find Work. Find Workers. Build Future.</text>
+                <rect x="5" y="258" width="170" height="4" rx="2" fill="#1B4D3E" />
+                <path d="M190 248 C184 248 179 253 179 259 C179 267 190 278 190 278 C190 278 201 267 201 259 C201 253 196 248 190 248 Z" fill="#0F52BA" />
+                <circle cx="190" cy="256" r="3.5" fill="#ffffff" />
+                <rect x="205" y="258" width="180" height="4" rx="2" fill="#16a34a" />
+              </g>
+            </svg>
+          </a>
+          <button type="button" onclick="toggleSidebarDrawer(false)" class="lg:hidden p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition" aria-label="Close sidebar">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Logged-in User Profile Card & Role Switcher -->
+        <div id="authHeaderUserBadge" class="bg-slate-50 border border-slate-200/90 rounded-2xl p-3 space-y-2.5 shadow-2xs">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2.5 min-w-0">
+              <div class="w-9 h-9 rounded-xl bg-brand-500 text-white font-black text-xs flex items-center justify-center shadow-xs shrink-0">
+                <span id="headerUserAvatar">JR</span>
+              </div>
+              <div class="text-left text-xs leading-tight min-w-0">
+                <div id="headerUserName" class="font-bold text-slate-900 truncate max-w-[130px]">Jella Rakesh</div>
+                <div id="headerUserRole" class="text-[10px] text-brand-600 font-bold uppercase tracking-wider">Worker</div>
+              </div>
+            </div>
+            <button onclick="handleLogout()" class="text-slate-400 hover:text-red-600 p-2 rounded-xl hover:bg-red-50 transition shrink-0" title="Log Out of Mazdoor Mitra">
+              <i class="fa-solid fa-right-from-bracket text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Segmented Role Switcher: Worker / Employer -->
+          <div class="grid grid-cols-2 p-1 bg-slate-200/70 rounded-xl gap-1">
+            <button id="roleWorkerBtn" onclick="setRole('worker')" class="flex items-center justify-center space-x-1.5 py-1.5 rounded-lg text-xs font-bold transition shadow-xs bg-white text-brand-600 border border-brand-200">
+              <i class="fa-solid fa-helmet-safety text-xs"></i>
+              <span id="roleWorkerLabel" data-i18n="roleWorker">Worker</span>
+            </button>
+            <button id="roleEmployerBtn" onclick="setRole('employer')" class="flex items-center justify-center space-x-1.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 border-transparent bg-transparent">
+              <i class="fa-solid fa-building-wheat text-xs"></i>
+              <span id="roleEmployerLabel" data-i18n="roleEmployer">Employer</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Primary Vertical Navigation Links -->
+        <nav class="space-y-1 text-sm font-semibold">
+          <button onclick="switchTab('jobs'); toggleSidebarDrawer(false);" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-brand-600 bg-brand-50 font-bold transition shadow-2xs border border-brand-200/50 text-left" data-tab="jobs">
+            <i class="fa-solid fa-briefcase text-base text-brand-500 w-5 text-center"></i>
+            <span data-i18n="navJobs">Jobs Marketplace</span>
+          </button>
+          <button onclick="switchTab('workers'); toggleSidebarDrawer(false);" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition text-left" data-tab="workers">
+            <i class="fa-solid fa-users text-base text-blue-600 w-5 text-center"></i>
+            <span data-i18n="navWorkers">Workers Directory</span>
+          </button>
+          <button onclick="switchTab('attendance'); toggleSidebarDrawer(false);" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition text-left" data-tab="attendance">
+            <i class="fa-solid fa-camera text-base text-indigo-600 w-5 text-center"></i>
+            <span data-i18n="navAttendance">Punch-in Attendance</span>
+          </button>
+          <button onclick="switchTab('emergency'); toggleSidebarDrawer(false);" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-red-600 hover:bg-red-50 transition text-left" data-tab="emergency">
+            <i class="fa-solid fa-kit-medical text-base text-red-600 w-5 text-center"></i>
+            <span data-i18n="navEmergency">Emergency & Hospitals</span>
+          </button>
+          <button onclick="switchTab('analytics'); toggleSidebarDrawer(false);" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition text-left" data-tab="analytics">
+            <i class="fa-solid fa-chart-pie text-base text-emerald-600 w-5 text-center"></i>
+            <span data-i18n="navAnalytics">Market Analytics</span>
+          </button>
+          <button onclick="switchTab('profile'); toggleSidebarDrawer(false);" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition text-left" data-tab="profile">
+            <i class="fa-solid fa-id-card text-base text-slate-600 w-5 text-center"></i>
+            <span data-i18n="navProfile">My Profile</span>
+          </button>
+        </nav>
+
+        <!-- Divider -->
+        <div class="border-t border-slate-200 pt-3">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2">Action Utilities</span>
+        </div>
+
+        <!-- Relocated Utility Controls -->
+        <div class="space-y-2.5">
+          <!-- Global Language Dropdown (22 Scheduled Indian Languages + English) -->
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 mb-1 px-1">Language / భాష / भाषा</label>
+            <div class="relative flex items-center">
+              <i class="fa-solid fa-globe text-brand-500 absolute left-3 text-xs pointer-events-none"></i>
+              <select id="globalLanguageSelect" onchange="handleLanguageChange(this.value)" aria-label="Select Application Language" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-8 pr-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer shadow-2xs">
+                <option value="te" selected>తెలుగు (Telugu)</option>
+                <option value="en">English (EN)</option>
+                <option value="hi">हिंदी (Hindi)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+                <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                <option value="ml">മലയാളം (Malayalam)</option>
+                <option value="mr">मराठी (Marathi)</option>
+                <option value="bn">বাংলা (Bengali)</option>
+                <option value="gu">ગુજરાતી (Gujarati)</option>
+                <option value="or">ଓଡ଼ିଆ (Odia)</option>
+                <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                <option value="as">অসমীয়া (Assamese)</option>
+                <option value="ur">اردو (Urdu)</option>
+                <option value="sa">संस्कृतम् (Sanskrit)</option>
+                <option value="ks">كٲشُر (Kashmiri)</option>
+                <option value="kok">कोंकणी (Konkani)</option>
+                <option value="mai">मैथिली (Maithili)</option>
+                <option value="mni">মৈতৈলোন্ (Manipuri)</option>
+                <option value="ne">नेपाली (Nepali)</option>
+                <option value="brx">बड़ो (Bodo)</option>
+                <option value="doi">डोगरी (Dogri)</option>
+                <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ (Santali)</option>
+                <option value="sd">سنڌي (Sindhi)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Voice AI Profile Wizard Quick Launch -->
+          <button onclick="openModal('voiceProfileWizardModal')" title="Build profile with Voice AI" class="w-full bg-purple-600 hover:bg-purple-700 text-white px-3 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-xs active:scale-98">
+            <i class="fa-solid fa-microphone-lines text-yellow-300 text-sm"></i>
+            <span>Voice AI Wizard</span>
+          </button>
+
+          <!-- Supabase Cloud Connection Status Badge -->
+          <button onclick="openModal('supabaseModal')" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 transition shadow-2xs cursor-pointer" title="Supabase Cloud Live Status & Sync Controls">
+            <div class="flex items-center space-x-2">
+              <span id="supabaseStatusDot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Cloud Status:</span>
+            </div>
+            <span id="supabaseStatusText" class="font-extrabold text-emerald-900">Supabase</span>
+          </button>
+
+          <!-- 1-Click HTML Standalone Download -->
+          <button onclick="downloadCodeFile()" title="Download Full Application as Single HTML File" class="w-full bg-slate-800 hover:bg-slate-900 text-white text-xs px-3 py-2 rounded-xl font-bold transition flex items-center justify-center space-x-2 shadow-xs">
+            <i class="fa-solid fa-download text-xs text-emerald-400"></i>
+            <span>Save HTML Offline</span>
+          </button>
+        </div>
+
       </div>
 
-      <!-- Cascading Selectors: State -> District -> City -->
-      <div class="grid grid-cols-3 gap-2 flex-1 max-w-2xl">
-        <select id="globalStateSelect" onchange="handleStateChange()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-slate-50 text-slate-800 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500">
-          <option value="">All States / UTs</option>
-        </select>
-
-        <select id="globalDistrictSelect" onchange="handleDistrictChange()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-slate-50 text-slate-800 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500">
-          <option value="">All Districts</option>
-        </select>
-
-        <select id="globalCitySelect" onchange="handleCityChange()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-slate-50 text-slate-800 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500">
-          <option value="">All Cities / Towns</option>
-        </select>
+      <!-- Sidebar Bottom Info -->
+      <div class="p-4 border-t border-slate-200 text-center text-[11px] text-slate-400 bg-slate-50/50">
+        <div class="font-bold text-slate-600">Mazdoor Mitra v3.2</div>
+        <div class="text-[10px] text-slate-400">DBOCW & e-Shram Compliant</div>
       </div>
 
-      <!-- Quick Geolocation & "All India" Quick Reset Toggle -->
-      <div class="flex items-center space-x-2 shrink-0">
-        <button onclick="detectLocation()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl font-bold transition flex items-center space-x-1 shadow-2xs" title="Detect GPS Location">
-          <i class="fa-solid fa-location-crosshairs text-brand-500"></i>
-          <span class="hidden sm:inline" data-i18n="gpsBtn">GPS</span>
-        </button>
+    </aside>
 
-        <button onclick="resetRegionFilter()" class="bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200 px-3 py-1.5 rounded-xl font-bold transition flex items-center space-x-1.5 shadow-2xs" title="Reset to All-India">
-          <i class="fa-solid fa-globe text-orange-500"></i>
-          <span data-i18n="allIndiaReset">All India</span>
-        </button>
+    <!-- ========================================================= -->
+    <!-- 3. RIGHT MAIN WORKSPACE COLUMN (Header, Location, Tabs)   -->
+    <!-- ========================================================= -->
+    <div class="flex-1 min-w-0 flex flex-col min-h-screen bg-[#F8FAFC] overflow-x-hidden">
+
+      <!-- SITE SAFETY & WEATHER HAZARD ALERT BOT BANNER -->
+      <div id="weatherAlertBanner" class="bg-amber-50 border-b border-amber-200 text-amber-950 px-4 py-2 text-xs font-medium shadow-xs flex items-center justify-between">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <div class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-700 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-temperature-arrow-up text-xs"></i>
+            </div>
+            <span><b class="font-black text-amber-900">National Heat & Site Advisory:</b> Extreme temperature warning active. Mandatory 15-min hydration breaks every 2 hours under shade. Protect against heatstroke!</span>
+          </div>
+          <button onclick="document.getElementById('weatherAlertBanner').classList.add('hidden')" class="text-amber-700 hover:text-amber-950 p-1" title="Dismiss">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
       </div>
 
-    </div>
-  </div>
+      <!-- HIERARCHICAL CASCADING REGIONAL LOCATION BAR (STICKY) -->
+      <div class="bg-white border-b border-slate-200 shadow-xs py-2.5 px-4 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 text-xs">
+          
+          <!-- Location Filter Label -->
+          <div class="flex items-center space-x-2 text-slate-700 font-bold shrink-0">
+            <i class="fa-solid fa-location-dot text-brand-500 text-sm"></i>
+            <span data-i18n="locationFilterTitle">All-India Region Filter:</span>
+            <span id="activeRegionBadge" class="bg-emerald-50 text-brand-700 border border-emerald-200 px-2 py-0.5 rounded-full text-[10px] font-black">All India</span>
+          </div>
 
-  <!-- GPS Status Banner -->
-  <div id="gpsStatusBanner" class="hidden bg-emerald-50 border-b border-emerald-200 px-4 py-1.5 text-xs text-emerald-800 text-center font-medium"></div>
+          <!-- Cascading Selectors: State -> District -> City -->
+          <div class="grid grid-cols-3 gap-2 flex-1 max-w-2xl">
+            <select id="globalStateSelect" onchange="handleStateChange()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-slate-50 text-slate-800 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500">
+              <option value="">All States / UTs</option>
+            </select>
+
+            <select id="globalDistrictSelect" onchange="handleDistrictChange()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-slate-50 text-slate-800 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500">
+              <option value="">All Districts</option>
+            </select>
+
+            <select id="globalCitySelect" onchange="handleCityChange()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-slate-50 text-slate-800 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500">
+              <option value="">All Cities / Towns</option>
+            </select>
+          </div>
+
+          <!-- Quick Geolocation & "All India" Quick Reset Toggle -->
+          <div class="flex items-center space-x-2 shrink-0">
+            <button onclick="detectLocation()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl font-bold transition flex items-center space-x-1 shadow-2xs" title="Detect GPS Location">
+              <i class="fa-solid fa-location-crosshairs text-brand-500"></i>
+              <span class="hidden sm:inline" data-i18n="gpsBtn">GPS</span>
+            </button>
+
+            <button onclick="resetRegionFilter()" class="bg-emerald-50 hover:bg-emerald-100 text-brand-700 border border-emerald-200 px-3 py-1.5 rounded-xl font-bold transition flex items-center space-x-1.5 shadow-2xs" title="Reset to All-India">
+              <i class="fa-solid fa-globe text-brand-500"></i>
+              <span data-i18n="allIndiaReset">All India</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- GPS Status Banner -->
+      <div id="gpsStatusBanner" class="hidden bg-emerald-50 border-b border-emerald-200 px-4 py-1.5 text-xs text-emerald-800 text-center font-medium"></div>
 
   <!-- ========================================================= -->
   <!-- 4. MAIN CONTENT WORKSPACES (TABS)                         -->
@@ -1653,7 +1698,7 @@
       <div id="employerQuickPostBanner" class="hidden bg-gradient-to-r from-blue-900 to-indigo-950 text-white rounded-2xl p-5 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div class="flex items-center space-x-2">
-            <span class="bg-orange-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">Employer Mode</span>
+            <span class="bg-brand-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">Employer Mode</span>
             <h3 class="text-base sm:text-lg font-bold" data-i18n="postJobBannerTitle">Looking for Skilled Labour for Your Site?</h3>
           </div>
           <p class="text-xs text-blue-200 mt-1" data-i18n="postJobBannerSub">Post daily or contract wage jobs to receive applications from verified workers immediately.</p>
@@ -1680,7 +1725,7 @@
             <input type="text" id="jobSearchInput" oninput="renderJobs()" placeholder="Search or tap mic to speak in Hindi/Bhojpuri/Telugu/Tamil..." class="w-full pl-9 pr-12 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500">
             
             <!-- Voice Recognition Mic Button -->
-            <button onclick="toggleVoiceSearch()" id="voiceSearchMicBtn" title="Speak to Search Jobs" class="absolute right-2 p-2 rounded-lg bg-orange-100 hover:bg-orange-200 text-brand-600 transition flex items-center justify-center">
+            <button onclick="toggleVoiceSearch()" id="voiceSearchMicBtn" title="Speak to Search Jobs" class="absolute right-2 p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-brand-600 transition flex items-center justify-center">
               <i class="fa-solid fa-microphone text-xs"></i>
             </button>
           </div>
@@ -1722,7 +1767,7 @@
           <div class="flex items-center space-x-3 w-full sm:w-auto">
             <span class="font-bold text-slate-700 shrink-0" data-i18n="minWageLabel">Min Wage:</span>
             <input type="range" id="wageSlider" min="300" max="3000" step="50" value="500" oninput="updateWageDisplay(); renderJobs();" class="w-36 sm:w-48 accent-brand-500 cursor-pointer">
-            <span id="wageDisplay" class="font-black text-brand-600 bg-orange-100 px-2.5 py-0.5 rounded-full shrink-0 border border-orange-200">₹500/day</span>
+            <span id="wageDisplay" class="font-black text-brand-600 bg-emerald-50 px-2.5 py-0.5 rounded-full shrink-0 border border-emerald-200">₹500/day</span>
           </div>
 
           <div class="flex items-center space-x-3 text-slate-500 font-medium">
@@ -1735,8 +1780,8 @@
         </div>
       </div>
 
-      <!-- Jobs Grid -->
-      <div id="jobsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Jobs Grid Directly Beneath Filters -->
+      <div id="jobsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         <!-- Dynamically rendered -->
       </div>
     </section>
@@ -1881,15 +1926,15 @@
           <div class="text-[10px] text-blue-600 mt-1 font-semibold">Active & Verified Profiles</div>
         </div>
 
-        <div class="card p-5 bg-gradient-to-br from-orange-50 to-white border-l-4 border-orange-500">
+        <div class="card p-5 bg-gradient-to-br from-teal-50 to-white border-l-4 border-brand-royal">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-slate-500" data-i18n="kpiEmployers">Registered Employers</span>
-            <div class="w-8 h-8 rounded-lg bg-orange-100 text-brand flex items-center justify-center text-sm">
+            <div class="w-8 h-8 rounded-lg bg-teal-100 text-brand-royal flex items-center justify-center text-sm">
               <i class="fa-solid fa-building"></i>
             </div>
           </div>
-          <div id="kpiEmployersCount" class="text-2xl sm:text-3xl font-black text-orange-950 mt-2">0</div>
-          <div class="text-[10px] text-orange-600 mt-1 font-semibold">Contractors & Builders</div>
+          <div id="kpiEmployersCount" class="text-2xl sm:text-3xl font-black text-slate-900 mt-2">0</div>
+          <div class="text-[10px] text-brand-royal mt-1 font-semibold">Contractors & Builders</div>
         </div>
 
         <div class="card p-5 bg-gradient-to-br from-emerald-50 to-white border-l-4 border-emerald-600">
@@ -2121,7 +2166,7 @@
       <div class="card p-6 bg-gradient-to-r from-slate-900 to-brand-blue text-white">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div class="flex items-center space-x-4">
-            <div class="w-16 h-16 rounded-2xl bg-orange-500 text-white font-black text-2xl flex items-center justify-center shadow-lg border-2 border-white/20">
+            <div class="w-16 h-16 rounded-2xl bg-brand-500 text-white font-black text-2xl flex items-center justify-center shadow-lg border-2 border-white/20">
               <i id="userProfileAvatarIcon" class="fa-solid fa-user"></i>
             </div>
             <div>
@@ -2242,6 +2287,91 @@
     </section>
 
   </main>
+
+  <!-- ========================================================= -->
+  <!-- 5. TACTILE EMERGENCY HELPLINES & STATUTORY FOOTER         -->
+  <!-- ========================================================= -->
+  <footer class="mt-auto bg-slate-900 text-slate-100 border-t border-slate-800 pb-24 lg:pb-8">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      
+      <!-- Top Helpline Title & Direct Dispatch Info -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-6 pb-5 border-b border-slate-800">
+        <div class="flex items-center space-x-3">
+          <span class="inline-flex items-center px-3 py-1.5 rounded-xl text-xs font-black bg-red-600 text-white uppercase tracking-wider shadow-sm sos-pulse">
+            <i class="fa-solid fa-triangle-exclamation mr-2"></i> 24/7 National Emergency Helplines
+          </span>
+          <span class="text-xs text-slate-300 font-bold hidden sm:inline" data-i18n="sosNotice">
+            Site Accident or Medical Emergency? Tap Direct Helpline:
+          </span>
+        </div>
+        <div class="text-xs text-slate-400 flex items-center space-x-1.5">
+          <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+          <span>Direct Connection to Verified Emergency Dispatchers</span>
+        </div>
+      </div>
+
+      <!-- Tactile Emergency Cards Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <!-- 108 Ambulance -->
+        <a href="tel:108" class="bg-red-600 hover:bg-red-700 text-white p-3.5 rounded-2xl font-black text-xs transition flex flex-col items-center justify-center text-center space-y-1 shadow-md hover:scale-[1.02] active:scale-95 border border-red-500" title="Call 108 Ambulance (Direct Dial)">
+          <i class="fa-solid fa-truck-medical text-yellow-300 text-xl"></i>
+          <span class="text-sm font-black" data-i18n="ambulance108">108 Ambulance</span>
+          <span class="text-[10px] text-red-100 font-medium">Medical & Trauma SOS</span>
+        </a>
+
+        <!-- 112 Emergency -->
+        <a href="tel:112" class="bg-blue-600 hover:bg-blue-700 text-white p-3.5 rounded-2xl font-black text-xs transition flex flex-col items-center justify-center text-center space-y-1 shadow-md hover:scale-[1.02] active:scale-95 border border-blue-500" title="Call 112 Police/Fire/Rescue (Direct Dial)">
+          <i class="fa-solid fa-shield-halved text-cyan-300 text-xl"></i>
+          <span class="text-sm font-black" data-i18n="emergency112">112 Emergency</span>
+          <span class="text-[10px] text-blue-100 font-medium">Police, Fire & Rescue</span>
+        </a>
+
+        <!-- Labour Board Helpline -->
+        <a href="tel:01123382363" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 p-3.5 rounded-2xl font-black text-xs transition flex flex-col items-center justify-center text-center space-y-1 shadow-md hover:scale-[1.02] active:scale-95" title="Call Official Labour Board Helpline (Direct Dial)">
+          <i class="fa-solid fa-phone-volume text-emerald-400 text-xl"></i>
+          <span class="text-sm font-black" data-i18n="labourBoard">Labour Board</span>
+          <span class="text-[10px] text-slate-400 font-medium">011-23382363 Disputes</span>
+        </a>
+
+        <!-- National Labour Support 14434 -->
+        <a href="tel:14434" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 p-3.5 rounded-2xl font-black text-xs transition flex flex-col items-center justify-center text-center space-y-1 shadow-md hover:scale-[1.02] active:scale-95" title="Call National Labour Toll-Free Helpline (Direct Dial)">
+          <i class="fa-solid fa-headset text-amber-400 text-xl"></i>
+          <span class="text-sm font-black">14434 Helpline</span>
+          <span class="text-[10px] text-slate-400 font-medium">Toll-Free Govt Support</span>
+        </a>
+
+        <!-- Report Site Injury -->
+        <button onclick="openModal('reportInjuryModal')" class="col-span-2 sm:col-span-1 bg-amber-500 hover:bg-amber-600 text-slate-950 p-3.5 rounded-2xl font-black text-xs transition flex flex-col items-center justify-center text-center space-y-1 shadow-md hover:scale-[1.02] active:scale-95">
+          <i class="fa-solid fa-notes-medical text-xl text-slate-950"></i>
+          <span class="text-sm font-black" data-i18n="reportAccidentBtn">Report Injury</span>
+          <span class="text-[10px] text-slate-800 font-bold">Instant Accident Filing</span>
+        </button>
+      </div>
+
+      <!-- Statutory Verification & Protection Guarantees -->
+      <div class="mt-8 pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 text-[11px]">
+          <span class="text-emerald-400 font-bold flex items-center">
+            <i class="fa-solid fa-shield-check mr-1.5 text-sm"></i>
+            <span>e-Shram & DBOCW Certified</span>
+          </span>
+          <span class="text-slate-600">•</span>
+          <span>Payment of Wages Act, 1936</span>
+          <span class="text-slate-600">•</span>
+          <span class="text-cyan-400 font-semibold">100% Zero-Commission Guarantee</span>
+          <span class="text-slate-600">•</span>
+          <span>Direct Contractor-Worker Matching</span>
+        </div>
+
+        <div class="text-[11px] text-slate-500 text-center md:text-right">
+          Mazdoor Mitra © 2026. Empowering skilled workers across all 28 States & 8 UTs.
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  </div> <!-- /Right Main Column -->
 
   <!-- ========================================================= -->
   <!-- 5. FLOATING 24/7 AI LABOUR SAHAYAK (HELPDESK BOT)         -->
@@ -2938,7 +3068,7 @@
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
       <div class="flex items-center justify-between border-b pb-3">
         <div class="flex items-center space-x-2.5">
-          <div class="w-10 h-10 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-base shadow-xs">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-brand-600 flex items-center justify-center font-bold text-base shadow-xs">
             <i class="fa-solid fa-key"></i>
           </div>
           <div>
@@ -2959,13 +3089,13 @@
         <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="fpInputLabel">మొబైల్ లేదా ఈమెయిల్ చిరునామా</label>
         <div class="relative flex items-center">
           <i class="fa-solid fa-id-badge absolute left-3 text-slate-400 text-xs"></i>
-          <input type="text" id="forgotInput" placeholder="ఉదా: 9848012345 లేదా user@example.com" data-i18n-placeholder="fpPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-orange-500">
+          <input type="text" id="forgotInput" placeholder="ఉదా: 9848012345 లేదా user@example.com" data-i18n-placeholder="fpPlaceholder" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:border-brand-500">
         </div>
       </div>
 
       <div class="flex items-center justify-end space-x-2 pt-2 border-t">
         <button type="button" onclick="closeModal('forgotPasswordModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition cursor-pointer" data-i18n="fpCancelBtn">రద్దు చేయండి</button>
-        <button type="button" onclick="handleForgotPasswordSubmit()" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer" data-i18n="fpSubmitBtn">రీసెట్ కోడ్ పంపండి</button>
+        <button type="button" onclick="handleForgotPasswordSubmit()" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer" data-i18n="fpSubmitBtn">రీసెట్ కోడ్ పంపండి</button>
       </div>
     </div>
   </div>
@@ -3923,12 +4053,19 @@
       const avatarEl = document.getElementById('headerUserAvatar');
       const nameEl = document.getElementById('headerUserName');
       const roleEl = document.getElementById('headerUserRole');
+      const mobAvatar = document.getElementById('mobileUserAvatar');
+      const mobRole = document.getElementById('mobileUserRoleBadge');
+
+      const initials = (user.name || 'U').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+      const roleText = (user.role && user.role.toLowerCase() === 'employer') ? 'Employer' : 'Worker';
 
       if (nameEl) nameEl.innerText = user.name || 'User';
-      if (roleEl) roleEl.innerText = user.role || 'Worker';
-      if (avatarEl) {
-        const initials = (user.name || 'U').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-        avatarEl.innerText = initials;
+      if (roleEl) roleEl.innerText = roleText;
+      if (avatarEl) avatarEl.innerText = initials;
+      if (mobAvatar) mobAvatar.innerText = initials;
+      if (mobRole) {
+        mobRole.innerText = roleText;
+        mobRole.className = roleText === 'Worker' ? "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800" : "text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800";
       }
     }
 
@@ -3971,12 +4108,12 @@
       const emailView = document.getElementById('loginEmailMethodView');
 
       if (method === 'phone') {
-        phoneBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-orange-500 text-white shadow-xs cursor-pointer';
+        phoneBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-brand-500 text-white shadow-xs cursor-pointer';
         emailBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer';
         phoneView.classList.remove('hidden');
         emailView.classList.add('hidden');
       } else {
-        emailBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-orange-500 text-white shadow-xs cursor-pointer';
+        emailBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-brand-500 text-white shadow-xs cursor-pointer';
         phoneBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer';
         emailView.classList.remove('hidden');
         phoneView.classList.add('hidden');
@@ -4052,7 +4189,7 @@
           if (timerDisplay) timerDisplay.innerText = dict.authCodeExpired || 'కోడ్ గడువు ముగిసింది';
           if (resendBtn) {
             resendBtn.disabled = false;
-            resendBtn.className = 'text-[11px] font-bold text-orange-600 hover:text-orange-800 underline cursor-pointer';
+            resendBtn.className = 'text-[11px] font-bold text-brand-600 hover:text-brand-800 underline cursor-pointer';
           }
         }
       }, 1000);
@@ -4144,7 +4281,7 @@
       const contractorBtn = document.getElementById('regRoleContractorBtn');
       const employerBtn = document.getElementById('regRoleEmployerBtn');
 
-      const activeClass = 'p-2 rounded-xl border text-center transition font-bold text-xs bg-orange-500 text-white border-orange-500 shadow-xs cursor-pointer';
+      const activeClass = 'p-2 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer';
       const inactiveClass = 'p-2 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer';
 
       if (role === 'worker') {
@@ -4695,25 +4832,40 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
     }
 
     // --- E. NAVIGATION & TABS ---
+    function toggleSidebarDrawer(open) {
+      const sidebar = document.getElementById('appSidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      if (!sidebar) return;
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        if (backdrop) backdrop.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        if (backdrop) backdrop.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
     function switchTab(tabId) {
       document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
       const target = document.getElementById(`tab-${tabId}`);
       if (target) target.classList.add("active");
 
-      // Update Desktop Nav Buttons (.nav-btn)
+      // Update Desktop Nav Buttons (.nav-btn) in Left Sidebar
       document.querySelectorAll(".nav-btn").forEach(btn => {
         const bTab = btn.getAttribute("data-tab");
         if (bTab === tabId) {
           if (tabId === 'emergency') {
-            btn.className = "nav-btn px-3 py-2 rounded-lg text-red-600 bg-red-100 font-bold transition";
+            btn.className = "nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-red-600 bg-red-50 font-bold transition border border-red-200 text-left";
           } else {
-            btn.className = "nav-btn px-3 py-2 rounded-lg text-brand-600 bg-slate-100 font-bold transition";
+            btn.className = "nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-brand-600 bg-brand-50 font-bold transition shadow-2xs border border-brand-200/50 text-left";
           }
         } else {
           if (bTab === 'emergency') {
-            btn.className = "nav-btn px-3 py-2 rounded-lg text-red-600 hover:bg-red-50 transition";
+            btn.className = "nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-red-600 hover:bg-red-50 transition text-left";
           } else {
-            btn.className = "nav-btn px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition";
+            btn.className = "nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition text-left";
           }
         }
       });
@@ -4769,12 +4921,19 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       const employerBtn = document.getElementById("roleEmployerBtn");
       if (workerBtn && employerBtn) {
         if (isWorker) {
-          workerBtn.className = "flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-xs bg-white text-brand-600 border border-brand-200";
-          employerBtn.className = "flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 border-transparent bg-transparent";
+          workerBtn.className = "flex items-center justify-center space-x-1.5 py-1.5 rounded-lg text-xs font-bold transition shadow-xs bg-white text-brand-600 border border-brand-200";
+          employerBtn.className = "flex items-center justify-center space-x-1.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 border-transparent bg-transparent";
         } else {
-          employerBtn.className = "flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-xs bg-white text-blue-700 border border-blue-200";
-          workerBtn.className = "flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 border-transparent bg-transparent";
+          employerBtn.className = "flex items-center justify-center space-x-1.5 py-1.5 rounded-lg text-xs font-bold transition shadow-xs bg-white text-blue-700 border border-blue-200";
+          workerBtn.className = "flex items-center justify-center space-x-1.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900 border-transparent bg-transparent";
         }
+      }
+
+      // Mobile role badge
+      const mobRole = document.getElementById("mobileUserRoleBadge");
+      if (mobRole) {
+        mobRole.innerText = isWorker ? "Worker" : "Employer";
+        mobRole.className = isWorker ? "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800" : "text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800";
       }
 
       // Legacy single button if present
@@ -5147,7 +5306,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
 
       const container = document.getElementById("chatMessages");
       container.innerHTML += `
-        <div class="p-3 bg-brand-50 text-slate-900 rounded-2xl rounded-tr-none border border-orange-200 max-w-[85%] ml-auto text-right font-medium text-xs">
+        <div class="p-3 bg-brand-50 text-slate-900 rounded-2xl rounded-tr-none border border-emerald-200 max-w-[85%] ml-auto text-right font-medium text-xs">
           ${escapeHTML(query)}
         </div>
       `;
@@ -5587,7 +5746,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
             <div class="space-y-2.5">
               <!-- Header Line: Job Title Left, Daily Wage Right -->
               <div class="flex items-start justify-between gap-3">
-                <h3 class="font-bold text-slate-900 text-base sm:text-lg leading-snug cursor-pointer hover:text-orange-600 transition" onclick="openJobDetailsModal(${job.id})">
+                <h3 class="font-bold text-slate-900 text-base sm:text-lg leading-snug cursor-pointer hover:text-brand-600 transition" onclick="openJobDetailsModal(${job.id})">
                   ${escapeHTML(job.title)}
                 </h3>
                 <div class="text-right shrink-0">
@@ -5736,7 +5895,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
       }
 
       document.getElementById("modalJobContent").innerHTML = `
-        <div class="bg-orange-50/70 p-4 rounded-2xl border border-orange-100 grid grid-cols-2 gap-3">
+        <div class="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-100 grid grid-cols-2 gap-3">
           <div>
             <span class="text-slate-400 block text-[10px] font-bold uppercase">Daily Wage</span>
             <span class="text-base font-black text-brand-600">₹${job.wage} / day</span>
