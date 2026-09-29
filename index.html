@@ -3405,6 +3405,89 @@
     </div>
   </div>
 
+  <!-- Desktop Call Worker Diagnostic Modal (Native dialer on mobile, rich QR & copy on desktop) -->
+  <div id="workerCallModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl overflow-hidden border border-slate-100 text-slate-800 animate-in zoom-in-95 duration-150">
+      
+      <!-- Modal Header -->
+      <div class="px-5 py-4 bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 text-white flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold">
+            <i class="fa-solid fa-phone"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm leading-tight text-white">Direct Contact</h3>
+            <p id="workerCallModalName" class="text-[11px] text-emerald-100 font-medium truncate max-w-[200px]">Worker</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeWorkerCallModal()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xs font-bold transition cursor-pointer" aria-label="Close dialog">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 space-y-4">
+        
+        <!-- Formatted Phone & 1-Click Copy -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-2.5">
+          <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+            Mobile Number (India)
+          </div>
+
+          <div class="flex items-center justify-between gap-2">
+            <span id="workerCallModalPhoneDisplay" class="font-mono text-base font-extrabold text-slate-900 tracking-wider">
+              +91 98765 43210
+            </span>
+
+            <button type="button" id="workerCallModalCopyBtn" onclick="copyWorkerCallPhone()" class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 shadow-2xs">
+              <i class="fa-regular fa-copy text-slate-500"></i>
+              <span id="workerCallModalCopyText">Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- QR Code Section: Scan to Call -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center space-y-2.5">
+          <div class="text-[11px] font-bold text-slate-700 flex items-center justify-center space-x-1.5">
+            <span>📱</span>
+            <span>Scan with phone camera to call:</span>
+          </div>
+
+          <div class="flex justify-center">
+            <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-2xs inline-block">
+              <img id="workerCallModalQR" src="" alt="Scan QR code to call worker" class="w-36 h-36 rounded-lg object-contain" loading="lazy">
+            </div>
+          </div>
+
+          <p class="text-[10px] text-slate-500 leading-normal max-w-[240px] mx-auto">
+            Point your mobile camera at this code to dial immediately without typing.
+          </p>
+        </div>
+
+        <!-- WhatsApp Link -->
+        <div>
+          <a id="workerCallModalWhatsApp" href="#" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition shadow-2xs">
+            <i class="fa-brands fa-whatsapp text-sm text-emerald-600"></i>
+            <span>Chat on WhatsApp</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs">
+        <a id="workerCallModalTelLink" href="#" class="text-slate-500 hover:text-emerald-700 text-[11px] font-semibold underline" title="Launch default telephony protocol">
+          Try opening dialer app
+        </a>
+
+        <button type="button" onclick="closeWorkerCallModal()" class="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs transition cursor-pointer">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Supabase Cloud Connection Modal -->
   <div id="supabaseModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
@@ -7193,13 +7276,123 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;`;
               </div>
             </div>
 
-            <a href="tel:${escapeHTML(w.phone)}" class="btn bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center space-x-1.5 transition shadow">
-              <i class="fa-solid fa-phone"></i>
-              <span>Call Direct (${escapeHTML(w.phone)})</span>
+            <a href="tel:${sanitizePhoneE164(w.phone)}" onclick="return handleCallDirect(event, '${escapeHTML(w.phone)}', '${escapeHTML(w.name)}')" class="btn bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 transition shadow-sm active:scale-95 cursor-pointer" title="Call ${escapeHTML(w.name)}">
+              <i class="fa-solid fa-phone text-xs"></i>
+              <span>Call Direct</span>
             </a>
           </div>
         `;
       }).join("");
+    }
+
+    // ==============================================================================
+    // CROSS-DEVICE CALL DIRECT HELPERS (Mobile Native Dialer vs Desktop QR / Copy)
+    // ==============================================================================
+    let currentModalPhoneE164 = "";
+
+    function sanitizePhoneE164(phone) {
+      if (!phone) return "";
+      const digits = String(phone).replace(/\D/g, "");
+      if (digits.length === 10) return `+91${digits}`;
+      if (digits.length === 12 && digits.startsWith("91")) return `+${digits}`;
+      if (String(phone).trim().startsWith("+")) return `+${digits}`;
+      return `+91${digits.slice(-10)}`;
+    }
+
+    function formatPhoneDisplay(phone) {
+      if (!phone) return "—";
+      const digits = String(phone).replace(/\D/g, "");
+      const last10 = digits.slice(-10);
+      if (last10.length === 10) return `+91 ${last10.slice(0, 5)} ${last10.slice(5)}`;
+      return phone;
+    }
+
+    function isMobileOrTelephonyClient() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera || "";
+      const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+      const hasTouch = (('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0) || ('msMaxTouchPoints' in navigator && navigator.msMaxTouchPoints > 0));
+      const isSmallScreen = window.innerWidth <= 768;
+      return isMobileUA || (hasTouch && isSmallScreen);
+    }
+
+    function handleCallDirect(event, rawPhone, workerName) {
+      if (isMobileOrTelephonyClient()) {
+        // Mobile device: proceed to native dialer immediately
+        return true;
+      }
+      // Desktop: intercept application picker and show rich modal
+      if (event) event.preventDefault();
+      openWorkerCallModal(rawPhone, workerName);
+      return false;
+    }
+
+    function openWorkerCallModal(rawPhone, workerName) {
+      const e164 = sanitizePhoneE164(rawPhone);
+      const display = formatPhoneDisplay(rawPhone);
+      const rawDigits = e164.replace(/\D/g, "");
+      currentModalPhoneE164 = e164;
+
+      const nameEl = document.getElementById("workerCallModalName");
+      if (nameEl) nameEl.innerText = workerName || "Verified Worker";
+
+      const phoneEl = document.getElementById("workerCallModalPhoneDisplay");
+      if (phoneEl) phoneEl.innerText = display;
+
+      const qrEl = document.getElementById("workerCallModalQR");
+      if (qrEl) {
+        qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=6&data=tel:${encodeURIComponent(e164)}`;
+      }
+
+      const waEl = document.getElementById("workerCallModalWhatsApp");
+      if (waEl) {
+        waEl.href = `https://wa.me/${rawDigits}?text=${encodeURIComponent(
+          `Hello ${workerName || 'Worker'}, I found your profile on Mazdoor Mitra and would like to discuss work.`
+        )}`;
+      }
+
+      const telEl = document.getElementById("workerCallModalTelLink");
+      if (telEl) telEl.href = `tel:${e164}`;
+
+      const copyBtnText = document.getElementById("workerCallModalCopyText");
+      if (copyBtnText) copyBtnText.innerText = "Copy";
+
+      const modal = document.getElementById("workerCallModal");
+      if (modal) modal.classList.remove("hidden");
+    }
+
+    function closeWorkerCallModal() {
+      const modal = document.getElementById("workerCallModal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    async function copyWorkerCallPhone() {
+      if (!currentModalPhoneE164) return;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(currentModalPhoneE164);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = currentModalPhoneE164;
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+        }
+        const copyBtnText = document.getElementById("workerCallModalCopyText");
+        if (copyBtnText) {
+          copyBtnText.innerText = "Copied!";
+          setTimeout(() => {
+            if (copyBtnText) copyBtnText.innerText = "Copy";
+          }, 2500);
+        }
+        if (typeof showToast === "function") {
+          showToast("Phone Copied", `${currentModalPhoneE164} copied to clipboard!`);
+        }
+      } catch (e) {
+        console.warn("Copy error:", e);
+      }
     }
 
     function handleWorkerRegisterSubmit(e) {
