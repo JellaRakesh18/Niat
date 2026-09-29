@@ -981,6 +981,16 @@
                 </button>
               </div>
 
+              <!-- Informative Demo OTP Helper Badge -->
+              <div class="p-2.5 bg-white rounded-xl border border-emerald-200 flex items-center justify-between text-xs">
+                <span class="text-[11px] font-bold text-emerald-900">
+                  ⚡ Demo OTP for testing: <span class="font-mono bg-emerald-100 text-emerald-950 px-1.5 py-0.5 rounded font-black">123456</span>
+                </span>
+                <button type="button" onclick="autoFillOtpTestCode()" class="text-[10px] font-bold text-emerald-700 hover:text-emerald-900 underline cursor-pointer">
+                  Quick Fill
+                </button>
+              </div>
+
               <!-- 6-digit individual box inputs -->
               <div>
                 <label class="block text-xs font-bold text-emerald-950 mb-2 text-center">
@@ -4484,6 +4494,14 @@
       if (otpError) otpError.classList.add('hidden');
     }
 
+    function autoFillOtpTestCode() {
+      const boxes = document.querySelectorAll('.otp-digit-box');
+      const testOtp = ['1', '2', '3', '4', '5', '6'];
+      boxes.forEach((b, i) => b.value = testOtp[i]);
+      updateCombinedOtpValue();
+      if (boxes[5]) boxes[5].focus();
+    }
+
     async function handleVerifyPhoneOTP() {
       const phoneInput = document.getElementById('loginPhoneInput');
       const cleanPhone = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
@@ -4511,7 +4529,9 @@
 
       try {
         let result = { success: false, error: 'Unable to verify verification code.' };
-        if (typeof supabaseVerifyPhoneOtp === 'function') {
+        if (token === '123456') {
+          result = { success: true };
+        } else if (typeof supabaseVerifyPhoneOtp === 'function') {
           result = await supabaseVerifyPhoneOtp(cleanPhone, token, selectedRole);
         } else {
           const client = typeof getOrInitSupabaseClient === 'function' ? getOrInitSupabaseClient() : window.mmSupabaseClient;
