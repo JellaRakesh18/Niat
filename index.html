@@ -1482,8 +1482,16 @@
         </a>
       </div>
 
-      <!-- Mobile Right Controls: Role Badge & Avatar -->
-      <div class="flex items-center space-x-2">
+      <!-- Mobile Right Controls: Live GPS Badge, Role Badge & Avatar -->
+      <div class="flex items-center space-x-1.5">
+        <button id="liveLocationBadgeMob" onclick="openLiveLocationModal()" type="button" class="inline-flex items-center space-x-1 px-2 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 transition shadow-2xs cursor-pointer select-none active:scale-95" title="Live GPS Location">
+          <span class="relative flex h-2 w-2 shrink-0">
+            <span id="liveLocationPingDotMob" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span id="liveLocationStatusDotMob" class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span class="text-brand-600 text-[10px]">📍</span>
+          <span class="truncate max-w-[85px] font-bold text-slate-800" id="liveLocationTextMob">Locating...</span>
+        </button>
         <span id="mobileUserRoleBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Worker</span>
         <div class="w-8 h-8 rounded-full bg-brand-500 text-white font-bold text-xs flex items-center justify-center shadow-xs">
           <span id="mobileUserAvatar">JR</span>
@@ -1734,11 +1742,16 @@
             </select>
           </div>
 
-          <!-- Quick Geolocation & "All India" Quick Reset Toggle -->
+          <!-- Live Geolocation Badge & "All India" Quick Reset Toggle -->
           <div class="flex items-center space-x-2 shrink-0">
-            <button onclick="detectLocation()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl font-bold transition flex items-center space-x-1 shadow-2xs" title="Detect GPS Location">
-              <i class="fa-solid fa-location-crosshairs text-brand-500"></i>
-              <span class="hidden sm:inline" data-i18n="gpsBtn">GPS</span>
+            <!-- Dynamic Live Location Badge -->
+            <button id="liveLocationBadgeDesk" onclick="openLiveLocationModal()" type="button" class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 transition shadow-2xs cursor-pointer select-none active:scale-95" title="Click to view live GPS coordinates and location diagnostics">
+              <span class="relative flex h-2.5 w-2.5 shrink-0">
+                <span id="liveLocationPingDotDesk" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span id="liveLocationStatusDotDesk" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <span class="text-brand-600">📍</span>
+              <span id="liveLocationTextDesk" class="truncate max-w-[150px] sm:max-w-[220px] font-bold">Locating...</span>
             </button>
 
             <button onclick="resetRegionFilter()" class="bg-emerald-50 hover:bg-emerald-100 text-brand-700 border border-emerald-200 px-3 py-1.5 rounded-xl font-bold transition flex items-center space-x-1.5 shadow-2xs" title="Reset to All-India">
@@ -3279,6 +3292,116 @@
           <button type="submit" class="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-bold shadow">Save Changes</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Live GPS Location & OpenStreetMap Geocoding Modal -->
+  <div id="liveLocationModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 text-slate-800 animate-in fade-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-base">
+            🛰️
+          </div>
+          <div>
+            <h3 class="font-bold text-sm tracking-tight leading-none">Live GPS & Location Sync</h3>
+            <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Real-time OpenStreetMap & Supabase</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeLiveLocationModal()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 space-y-4">
+        
+        <!-- Denied Warning Card -->
+        <div id="liveLocationDeniedCard" class="hidden p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 space-y-1.5 text-xs">
+          <div class="flex items-center space-x-2 font-bold text-rose-900">
+            <span>⚠️</span>
+            <span>Location Access is Blocked</span>
+          </div>
+          <p class="text-rose-700 text-[11px] leading-relaxed">
+            Location permissions are currently blocked in your browser. Please tap the padlock icon 🔒 in your address bar and set Location to "Allow" to enable live nearby job matching.
+          </p>
+        </div>
+
+        <!-- Detected Administrative Area -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2.5">
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+            <span>Detected Administrative Area</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+              Live GPS
+            </span>
+          </div>
+
+          <div class="space-y-1">
+            <div class="text-base font-extrabold text-slate-900 flex items-center space-x-1.5">
+              <span>📍</span>
+              <span id="liveLocationModalArea">Detecting Area...</span>
+            </div>
+            <div id="liveLocationModalMandal" class="text-xs text-slate-600 font-medium"></div>
+            <div id="liveLocationModalDistrict" class="text-xs text-slate-600 font-medium"></div>
+            <div id="liveLocationModalState" class="text-xs text-slate-600 font-medium">India</div>
+          </div>
+        </div>
+
+        <!-- Coordinates Grid -->
+        <div class="grid grid-cols-2 gap-2 text-xs font-mono">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-0.5">
+            <div class="text-[10px] uppercase font-bold text-slate-400 font-sans">Latitude</div>
+            <div id="liveLocationModalLat" class="font-bold text-slate-800">—</div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-0.5">
+            <div class="text-[10px] uppercase font-bold text-slate-400 font-sans">Longitude</div>
+            <div id="liveLocationModalLon" class="font-bold text-slate-800">—</div>
+          </div>
+        </div>
+
+        <!-- Accuracy & Sync Rows -->
+        <div class="space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-3">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500">GPS Accuracy:</span>
+            <span id="liveLocationModalAccuracy" class="font-semibold text-slate-800">High Accuracy</span>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500">Last Refreshed:</span>
+            <span id="liveLocationModalTime" class="font-semibold text-slate-800">Just now</span>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500">Supabase Cloud Sync:</span>
+            <span class="inline-flex items-center space-x-1 font-bold text-emerald-600">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span id="liveLocationModalCloud">Synchronized</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
+        <a id="liveLocationMapsLink" href="https://maps.google.com" target="_blank" rel="noreferrer" class="inline-flex items-center space-x-1 text-xs font-bold text-brand-600 hover:text-brand-800 transition">
+          <span>Open in Maps</span>
+          <span>↗</span>
+        </a>
+
+        <div class="flex items-center space-x-2">
+          <button type="button" onclick="closeLiveLocationModal()" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200 transition">
+            Close
+          </button>
+          <button type="button" onclick="refreshLiveLocation()" class="px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition flex items-center space-x-1.5 shadow-xs">
+            <span>⟳</span>
+            <span>Refresh GPS</span>
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 

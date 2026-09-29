@@ -585,3 +585,411 @@ async function supabaseVerifyPhoneOtp(rawPhone, token, selectedRole = 'worker') 
   }
 }
 
+// ==============================================================================
+// 7. REAL-TIME LIVE LOCATION TRACKING & OPENSTREETMAP NOMINATIM REVERSE GEOCODER
+// ==============================================================================
+
+const MM_LIVE_GEO_STATE = {
+  coords: null,
+  address: null,
+  status: 'locating', // 'locating', 'active', 'denied', 'error'
+  lastUpdated: null,
+  watchId: null,
+  lastGeocodedCoords: null,
+  isSyncing: false,
+  syncSuccess: false,
+  cacheKey: 'mm_live_location_cache'
+};
+
+/**
+ * Computes distance in meters using the Haversine formula
+ */
+function mmCalculateDistanceMeters(lat1, lon1, lat2, lon2) {
+  const R = 6371e3;
+  const phi1 = (lat1 * Math.PI) / 180;
+  const phi2 = (lat2 * Math.PI) / 180;
+  const deltaPhi = ((lat2 - lat1) * Math.PI) / 180;
+  const deltaLambda = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+    Math.cos(phi1) * Math.cos(phi2) * Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return R * c;
+}
+
+/**
+ * Parses OpenStreetMap Nominatim response into local area, mandal/taluk, district, and state
+ */
+function mmParseNominatimAddress(data) {
+  if (!data || !data.address) {
+    return {
+      formattedArea: 'Location Detected',
+      localArea: 'Current Location',
+      mandal: '',
+      district: '',
+      state: 'India',
+      pincode: '',
+      displayName: data?.display_name || 'India'
+    };
+  }
+
+  const addr = data.address;
+  const localArea =
+    addr.village ||
+    addr.suburb ||
+    addr.neighbourhood ||
+    addr.residential ||
+    addr.quarter ||
+    addr.hamlet ||
+    addr.town ||
+    addr.city_district ||
+    addr.city ||
+    'Local Area';
+
+  const mandal = addr.subdistrict || addr.taluk || addr.tehsil || addr.county || '';
+  const district = addr.state_district || addr.district || addr.city || '';
+  const state = addr.state || 'India';
+  const pincode = addr.postcode || '';
+
+  let formattedArea = localArea;
+  if (district && district !== localArea) {
+    formattedArea += `, ${district}`;
+  } else if (state && state !== localArea) {
+    formattedArea += `, ${state}`;
+  }
+
+  return {
+    formattedArea,
+    localArea,
+    mandal,
+    district,
+    state,
+    pincode,
+    displayName: data.display_name
+  };
+}
+
+/**
+ * Synchronizes coordinates and area name to Supabase Cloud public.workers
+ */
+async function mmSyncLocationToSupabase(coords, addressDetails) {
+  if (!mmSupabaseClient) return;
+
+  try {
+    let userPhone = null;
+    let userId = null;
+
+    if (typeof appState !== 'undefined' && appState.currentUser) {
+      userPhone = appState.currentUser.phone;
+      userId = appState.currentUser.id;
+    }
+
+    if (!userPhone) {
+      try {
+        const stored = localStorage.getItem('mm_current_user');
+        if (stored) {
+          const u = JSON.parse(stored);
+          userPhone = u.phone;
+          userId = u.id;
+        }
+      } catch (e) {}
+    }
+
+    const payload = {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      current_area: addressDetails.formattedArea,
+      last_seen_at: new Date().toISOString()
+    };
+
+    let query = null;
+    if (userPhone) {
+      const cleanPhone = String(userPhone).replace('+91', '').trim();
+      query = mmSupabaseClient
+        .from('workers')
+        .update(payload)
+        .or(`phone.eq.${cleanPhone},phone.eq.+91${cleanPhone}`);
+    } else if (userId) {
+      query = mmSupabaseClient
+        .from('workers')
+        .update(payload)
+        .eq('id', userId);
+    }
+
+    if (query) {
+      const { error } = await query;
+      if (!error) {
+        MM_LIVE_GEO_STATE.syncSuccess = true;
+        mmUpdateLiveLocationUI();
+      } else {
+        console.info("Supabase live location sync notice:", error.message);
+      }
+    }
+  } catch (err) {
+    console.warn("mmSyncLocationToSupabase error:", err);
+  }
+}
+
+/**
+ * Calls OpenStreetMap Nominatim reverse geocoder
+ */
+async function mmReverseGeocode(lat, lon, accuracy) {
+  if (MM_LIVE_GEO_STATE.isSyncing) return;
+  MM_LIVE_GEO_STATE.isSyncing = true;
+  mmUpdateLiveLocationUI();
+
+  try {
+    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`;
+    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = await res.json();
+    const address = mmParseNominatimAddress(data);
+    const now = new Date();
+    const newCoords = { latitude: lat, longitude: lon, accuracy };
+
+    MM_LIVE_GEO_STATE.coords = newCoords;
+    MM_LIVE_GEO_STATE.address = address;
+    MM_LIVE_GEO_STATE.status = 'active';
+    MM_LIVE_GEO_STATE.lastUpdated = now;
+    MM_LIVE_GEO_STATE.lastGeocodedCoords = newCoords;
+    MM_LIVE_GEO_STATE.isSyncing = false;
+    MM_LIVE_GEO_STATE.syncSuccess = true;
+
+    // Cache locally
+    try {
+      localStorage.setItem(MM_LIVE_GEO_STATE.cacheKey, JSON.stringify({
+        coords: newCoords,
+        address,
+        lastUpdated: now.toISOString()
+      }));
+    } catch (e) {}
+
+    mmUpdateLiveLocationUI();
+    mmSyncLocationToSupabase(newCoords, address);
+
+    // Update active region badge if applicable
+    const activeBadge = document.getElementById("activeRegionBadge");
+    if (activeBadge && address.localArea) {
+      activeBadge.innerText = address.localArea;
+    }
+  } catch (err) {
+    console.warn("mmReverseGeocode notice:", err);
+    MM_LIVE_GEO_STATE.status = 'active';
+    MM_LIVE_GEO_STATE.coords = { latitude: lat, longitude: lon, accuracy };
+    MM_LIVE_GEO_STATE.isSyncing = false;
+    if (!MM_LIVE_GEO_STATE.address) {
+      MM_LIVE_GEO_STATE.address = {
+        formattedArea: `${lat.toFixed(3)}°N, ${lon.toFixed(3)}°E`,
+        localArea: 'GPS Position',
+        district: '',
+        state: 'India'
+      };
+    }
+    mmUpdateLiveLocationUI();
+  }
+}
+
+/**
+ * Updates UI Badges and Modal elements
+ */
+function mmUpdateLiveLocationUI() {
+  const { coords, address, status, syncSuccess, isSyncing, lastUpdated } = MM_LIVE_GEO_STATE;
+
+  const areaText = status === 'locating'
+    ? 'Locating...'
+    : status === 'denied'
+    ? 'Location Blocked'
+    : (address?.formattedArea || 'India');
+
+  // Desktop Badge Text
+  const deskTextEl = document.getElementById("liveLocationTextDesk");
+  if (deskTextEl) deskTextEl.innerText = areaText;
+
+  // Mobile Badge Text
+  const mobTextEl = document.getElementById("liveLocationTextMob");
+  if (mobTextEl) mobTextEl.innerText = status === 'locating' ? 'Locating...' : (address?.localArea || areaText);
+
+  // Status Dots & Animations
+  const deskPing = document.getElementById("liveLocationPingDotDesk");
+  const deskDot = document.getElementById("liveLocationStatusDotDesk");
+  const mobPing = document.getElementById("liveLocationPingDotMob");
+  const mobDot = document.getElementById("liveLocationStatusDotMob");
+
+  if (status === 'active') {
+    if (deskPing) deskPing.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75";
+    if (deskDot) deskDot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500";
+    if (mobPing) mobPing.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75";
+    if (mobDot) mobDot.className = "relative inline-flex rounded-full h-2 w-2 bg-emerald-500";
+  } else if (status === 'locating') {
+    if (deskPing) deskPing.className = "hidden";
+    if (deskDot) deskDot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500 animate-pulse";
+    if (mobPing) mobPing.className = "hidden";
+    if (mobDot) mobDot.className = "relative inline-flex rounded-full h-2 w-2 bg-amber-500 animate-pulse";
+  } else if (status === 'denied' || status === 'error') {
+    if (deskPing) deskPing.className = "hidden";
+    if (deskDot) deskDot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500";
+    if (mobPing) mobPing.className = "hidden";
+    if (mobDot) mobDot.className = "relative inline-flex rounded-full h-2 w-2 bg-rose-500";
+  }
+
+  // Update Modal if open
+  const modalArea = document.getElementById("liveLocationModalArea");
+  if (modalArea) modalArea.innerText = address?.localArea || (coords ? `${coords.latitude.toFixed(4)}°, ${coords.longitude.toFixed(4)}°` : 'Detecting...');
+
+  const modalMandal = document.getElementById("liveLocationModalMandal");
+  if (modalMandal) modalMandal.innerText = address?.mandal ? `Mandal: ${address.mandal}` : '';
+
+  const modalDist = document.getElementById("liveLocationModalDistrict");
+  if (modalDist) modalDist.innerText = address?.district ? `District: ${address.district}` : '';
+
+  const modalState = document.getElementById("liveLocationModalState");
+  if (modalState) modalState.innerText = address?.state ? `State: ${address.state}${address.pincode ? ` (${address.pincode})` : ''}` : 'India';
+
+  const modalLat = document.getElementById("liveLocationModalLat");
+  if (modalLat) modalLat.innerText = coords?.latitude ? coords.latitude.toFixed(6) : '—';
+
+  const modalLon = document.getElementById("liveLocationModalLon");
+  if (modalLon) modalLon.innerText = coords?.longitude ? coords.longitude.toFixed(6) : '—';
+
+  const modalAcc = document.getElementById("liveLocationModalAccuracy");
+  if (modalAcc) modalAcc.innerText = coords?.accuracy ? `±${Math.round(coords.accuracy)} meters` : 'High Accuracy';
+
+  const modalTime = document.getElementById("liveLocationModalTime");
+  if (modalTime && lastUpdated) {
+    modalTime.innerText = new Date(lastUpdated).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+
+  const modalCloud = document.getElementById("liveLocationModalCloud");
+  if (modalCloud) {
+    modalCloud.innerText = syncSuccess ? "Synchronized" : isSyncing ? "Updating..." : "Ready";
+  }
+
+  const mapsLink = document.getElementById("liveLocationMapsLink");
+  if (mapsLink && coords?.latitude) {
+    mapsLink.href = `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`;
+  }
+
+  const deniedCard = document.getElementById("liveLocationDeniedCard");
+  if (deniedCard) {
+    if (status === 'denied') deniedCard.classList.remove("hidden");
+    else deniedCard.classList.add("hidden");
+  }
+}
+
+/**
+ * Starts continuous location tracking
+ */
+function mmStartLiveLocationTracking() {
+  if (typeof window === 'undefined' || !navigator.geolocation) {
+    MM_LIVE_GEO_STATE.status = 'error';
+    mmUpdateLiveLocationUI();
+    return;
+  }
+
+  // Read cached location
+  try {
+    const saved = localStorage.getItem(MM_LIVE_GEO_STATE.cacheKey);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      MM_LIVE_GEO_STATE.coords = parsed.coords;
+      MM_LIVE_GEO_STATE.address = parsed.address;
+      MM_LIVE_GEO_STATE.lastGeocodedCoords = parsed.coords;
+      MM_LIVE_GEO_STATE.lastUpdated = new Date(parsed.lastUpdated);
+      MM_LIVE_GEO_STATE.status = 'active';
+      mmUpdateLiveLocationUI();
+    }
+  } catch (e) {}
+
+  const geoOptions = {
+    enableHighAccuracy: true,
+    maximumAge: 10000,
+    timeout: 8000
+  };
+
+  const onPos = (pos) => {
+    const { latitude, longitude, accuracy } = pos.coords;
+
+    // Check distance threshold (100 meters)
+    if (MM_LIVE_GEO_STATE.lastGeocodedCoords) {
+      const dist = mmCalculateDistanceMeters(
+        MM_LIVE_GEO_STATE.lastGeocodedCoords.latitude,
+        MM_LIVE_GEO_STATE.lastGeocodedCoords.longitude,
+        latitude,
+        longitude
+      );
+
+      if (dist < 100) {
+        MM_LIVE_GEO_STATE.coords = { latitude, longitude, accuracy };
+        MM_LIVE_GEO_STATE.status = 'active';
+        MM_LIVE_GEO_STATE.lastUpdated = new Date();
+        mmUpdateLiveLocationUI();
+        return;
+      }
+    }
+
+    mmReverseGeocode(latitude, longitude, accuracy);
+  };
+
+  const onErr = (err) => {
+    if (err.code === err.PERMISSION_DENIED) {
+      MM_LIVE_GEO_STATE.status = 'denied';
+    } else {
+      MM_LIVE_GEO_STATE.status = 'error';
+    }
+    mmUpdateLiveLocationUI();
+  };
+
+  // Watch position
+  MM_LIVE_GEO_STATE.watchId = navigator.geolocation.watchPosition(onPos, onErr, geoOptions);
+
+  // Initial immediate fetch
+  if (!MM_LIVE_GEO_STATE.lastGeocodedCoords) {
+    navigator.geolocation.getCurrentPosition(onPos, onErr, geoOptions);
+  }
+}
+
+// Global modal triggers
+window.openLiveLocationModal = function() {
+  const modal = document.getElementById("liveLocationModal");
+  if (modal) {
+    modal.classList.remove("hidden");
+    mmUpdateLiveLocationUI();
+  }
+};
+
+window.closeLiveLocationModal = function() {
+  const modal = document.getElementById("liveLocationModal");
+  if (modal) modal.classList.add("hidden");
+};
+
+window.refreshLiveLocation = function() {
+  if (!navigator.geolocation) return;
+  MM_LIVE_GEO_STATE.status = 'locating';
+  mmUpdateLiveLocationUI();
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      mmReverseGeocode(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy);
+    },
+    (err) => {
+      if (err.code === err.PERMISSION_DENIED) MM_LIVE_GEO_STATE.status = 'denied';
+      else MM_LIVE_GEO_STATE.status = 'error';
+      mmUpdateLiveLocationUI();
+    },
+    { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+  );
+};
+
+// Auto-start on DOM ready
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mmStartLiveLocationTracking);
+  } else {
+    mmStartLiveLocationTracking();
+  }
+}
+
+

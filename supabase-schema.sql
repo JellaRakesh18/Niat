@@ -37,6 +37,14 @@ ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS gstin TEXT;
 ALTER TABLE IF EXISTS public.applications ADD COLUMN IF NOT EXISTS employer_phone TEXT;
 ALTER TABLE IF EXISTS public.applications ADD COLUMN IF NOT EXISTS employer_id TEXT;
 
+-- 2.4 MIGRATIONS FOR LIVE GEOLOCATION & REAL-TIME ADDRESS SYNC
+ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS latitude DOUBLE PRECISION;
+ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS longitude DOUBLE PRECISION;
+ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS current_area TEXT;
+ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS last_seen_at TIMESTAMP WITH TIME ZONE;
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS latitude DOUBLE PRECISION;
+ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS longitude DOUBLE PRECISION;
+
 -- ==============================================================================
 -- 3. FULL BASELINE TABLE DEFINITIONS (If Initializing from Scratch)
 -- ==============================================================================
@@ -86,6 +94,10 @@ CREATE TABLE IF NOT EXISTS public.workers (
     state TEXT NOT NULL,
     district TEXT NOT NULL,
     city TEXT NOT NULL,
+    latitude DOUBLE PRECISION,
+    longitude DOUBLE PRECISION,
+    current_area TEXT,
+    last_seen_at TIMESTAMP WITH TIME ZONE,
     verified BOOLEAN DEFAULT true,
     photo_skill_verified BOOLEAN DEFAULT true,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
