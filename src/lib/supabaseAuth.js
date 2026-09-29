@@ -3,12 +3,7 @@
  * Strict verification flow for Workers and Contractors
  */
 
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://eeocbfsgsqpymnnnzcmk.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlb2NiZnNnc3FweW1ubm56Y21rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MDcyNjAsImV4cCI6MjEwNjE4MzI2MH0.jjzrmJxFVcw0cgUgp3gfTu_9hvxE87xTthjzXMlpxmw';
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { getSupabaseClient, supabase } from './supabaseClient';
 
 /**
  * Step 1: Send SMS OTP to 10-digit Indian Mobile Number

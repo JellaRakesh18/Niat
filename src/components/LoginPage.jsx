@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { handleSendOtp, handleVerifyOtp } from '../lib/supabaseAuth';
+import { getSupabaseClient, verifySupabaseConnection } from '../lib/supabaseClient';
 
 export default function LoginPage({ onLoginSuccess }) {
   // Role Selection State: 'worker' | 'employer'
@@ -14,7 +15,8 @@ export default function LoginPage({ onLoginSuccess }) {
   const [mobileNumber, setMobileNumber] = useState('');
   const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
 
-  // UI status states
+  // Client Readiness & UI status
+  const [isClientReady, setIsClientReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -24,8 +26,31 @@ export default function LoginPage({ onLoginSuccess }) {
   // References for 6-digit OTP input boxes
   const otpInputRefs = useRef([]);
 
-  // Validate 10-digit Indian Mobile Number
+  // Validate 10-digit Indian Mobile Number (starts with 6, 7, 8, or 9)
   const isMobileValid = /^[6-9]\d{9}$/.test(mobileNumber);
+
+  // Mount hook: Ensure Supabase client singleton is warm and ready
+  useEffect(() => {
+    let isMounted = true;
+    try {
+      const client = getSupabaseClient();
+      if (client && isMounted) {
+        setIsClientReady(true);
+      }
+      // Run non-blocking connectivity check
+      verifySupabaseConnection().then((status) => {
+        if (isMounted && status.ready) {
+          setIsClientReady(true);
+        }
+      });
+    } catch (err) {
+      console.warn('[LoginPage] Client warmup note:', err);
+      if (isMounted) setIsClientReady(true); // Fallback allows user interaction
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Handle Mobile Number Input (Digits only, max 10)
   const handleMobileChange = (e) => {
@@ -35,7 +60,7 @@ export default function LoginPage({ onLoginSuccess }) {
   };
 
   // Step 1: Send OTP handler
-  const onRequestOtp = async (isResend = false) => {
+  const onRequestOtp = async () => {
     if (!isMobileValid) {
       setErrorMessage('Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.');
       return;
@@ -45,27 +70,32 @@ export default function LoginPage({ onLoginSuccess }) {
     setErrorMessage('');
     setSuccessMessage('');
 
-    const res = await handleSendOtp(mobileNumber);
-    setIsLoading(false);
+    try {
+      const res = await handleSendOtp(mobileNumber);
+      setIsLoading(false);
 
-    if (res.success) {
-      setAuthStep('otp');
-      setSuccessMessage(res.message || `OTP dispatched to +91 ${mobileNumber}`);
-      setResendCountdown(30);
-      setCanResend(false);
+      if (res.success) {
+        setAuthStep('otp');
+        setSuccessMessage(res.message || `OTP dispatched to +91 ${mobileNumber}`);
+        setResendCountdown(30);
+        setCanResend(false);
 
-      // Focus first digit box
-      setTimeout(() => {
-        if (otpInputRefs.current[0]) {
-          otpInputRefs.current[0].focus();
-        }
-      }, 100);
-    } else {
-      setErrorMessage(res.error || 'Failed to dispatch verification code. Please check your number.');
+        // Auto-focus first digit box
+        setTimeout(() => {
+          if (otpInputRefs.current[0]) {
+            otpInputRefs.current[0].focus();
+          }
+        }, 100);
+      } else {
+        setErrorMessage(res.error || 'Failed to dispatch verification code. Please check your number.');
+      }
+    } catch (err) {
+      setIsLoading(false);
+      setErrorMessage(err.message || 'Network connection issue. Please check your connection and retry.');
     }
   };
 
-  // Countdown Timer for OTP Resend
+  // 30-Second Countdown Timer for OTP Resend
   useEffect(() => {
     let timer = null;
     if (authStep === 'otp' && resendCountdown > 0) {
@@ -116,7 +146,6 @@ export default function LoginPage({ onLoginSuccess }) {
     }
     setOtpDigits(newDigits);
 
-    // Focus last filled box
     const nextIndex = Math.min(pastedData.length, 5);
     otpInputRefs.current[nextIndex]?.focus();
   };
@@ -132,22 +161,27 @@ export default function LoginPage({ onLoginSuccess }) {
     setIsLoading(true);
     setErrorMessage('');
 
-    const res = await handleVerifyOtp(mobileNumber, fullOtp, selectedRole);
-    setIsLoading(false);
+    try {
+      const res = await handleVerifyOtp(mobileNumber, fullOtp, selectedRole);
+      setIsLoading(false);
 
-    if (res.success) {
-      setSuccessMessage('Authentication verified successfully! Redirecting...');
-      if (typeof onLoginSuccess === 'function') {
-        onLoginSuccess(res);
-      } else if (typeof window !== 'undefined') {
-        window.location.href = res.redirectPath || (selectedRole === 'employer' ? '/employer/dashboard' : '/worker/dashboard');
+      if (res.success) {
+        setSuccessMessage('Authentication verified successfully! Redirecting...');
+        if (typeof onLoginSuccess === 'function') {
+          onLoginSuccess(res);
+        } else if (typeof window !== 'undefined') {
+          window.location.href = res.redirectPath || (selectedRole === 'employer' ? '/employer/dashboard' : '/worker/dashboard');
+        }
+      } else {
+        setErrorMessage(res.error || 'Invalid or expired OTP. Please verify and try again.');
       }
-    } else {
-      setErrorMessage(res.error || 'Invalid or expired OTP. Please verify and try again.');
+    } catch (err) {
+      setIsLoading(false);
+      setErrorMessage(err.message || 'Error verifying code. Please retry.');
     }
   };
 
-  // Edit Phone Number (Back to step 1)
+  // Edit Phone Number (Back to Step 1)
   const handleEditPhone = () => {
     setAuthStep('phone');
     setOtpDigits(['', '', '', '', '', '']);
@@ -280,23 +314,21 @@ export default function LoginPage({ onLoginSuccess }) {
                 </p>
               </div>
 
-              {/* Get OTP Button */}
+              {/* Get OTP Button: Automatically enables once 10 valid digits are typed */}
               <button
                 type="button"
-                onClick={() => onRequestOtp(false)}
+                onClick={onRequestOtp}
                 disabled={!isMobileValid || isLoading}
                 className={`w-full py-2.5 px-4 rounded-xl text-xs font-black transition shadow-sm flex items-center justify-center space-x-2 ${
                   isMobileValid && !isLoading
-                    ? 'bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer active:scale-95'
+                    ? 'bg-emerald-700 hover:bg-emerald-800 text-white cursor-pointer active:scale-95 shadow-md'
                     : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                 }`}
               >
                 {isLoading ? (
                   <span>Dispatching OTP...</span>
                 ) : (
-                  <>
-                    <span>📨 Get OTP on Mobile</span>
-                  </>
+                  <span>📨 Get OTP on Mobile</span>
                 )}
               </button>
             </div>
@@ -351,7 +383,7 @@ export default function LoginPage({ onLoginSuccess }) {
                 </span>
                 <button
                   type="button"
-                  onClick={() => onRequestOtp(true)}
+                  onClick={onRequestOtp}
                   disabled={!canResend || isLoading}
                   className={`text-xs font-bold transition ${
                     canResend && !isLoading

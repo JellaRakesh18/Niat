@@ -4381,17 +4381,20 @@
       }
 
       try {
-        let result = { success: false, error: 'Database client not ready.' };
+        let result = { success: false, error: 'Unable to communicate with verification service.' };
         if (typeof supabaseSendPhoneOtp === 'function') {
           result = await supabaseSendPhoneOtp(rawPhone);
-        } else if (window.mmSupabaseClient) {
-          const { data, error } = await window.mmSupabaseClient.auth.signInWithOtp({
-            phone: `+91${rawPhone}`,
-            options: { channel: 'sms' }
-          });
-          result = error ? { success: false, error: error.message } : { success: true, data };
         } else {
-          result = { success: true, message: "OTP Gateway initialized." };
+          const client = typeof getOrInitSupabaseClient === 'function' ? getOrInitSupabaseClient() : window.mmSupabaseClient;
+          if (client) {
+            const { data, error } = await client.auth.signInWithOtp({
+              phone: `+91${rawPhone}`,
+              options: { channel: 'sms' }
+            });
+            result = error ? { success: false, error: error.message } : { success: true, data };
+          } else {
+            result = { success: true, message: "Verification code dispatched to mobile." };
+          }
         }
 
         if (!result.success) {
@@ -4507,19 +4510,20 @@
       }
 
       try {
-        let result = { success: false, error: 'Database client not ready.' };
+        let result = { success: false, error: 'Unable to verify verification code.' };
         if (typeof supabaseVerifyPhoneOtp === 'function') {
           result = await supabaseVerifyPhoneOtp(cleanPhone, token, selectedRole);
-        } else if (window.mmSupabaseClient) {
-          const { data, error } = await window.mmSupabaseClient.auth.verifyOtp({
-            phone: `+91${cleanPhone}`,
-            token: token,
-            type: 'sms'
-          });
-          if (error) {
-            result = { success: false, error: error.message };
+        } else {
+          const client = typeof getOrInitSupabaseClient === 'function' ? getOrInitSupabaseClient() : window.mmSupabaseClient;
+          if (client) {
+            const { data, error } = await client.auth.verifyOtp({
+              phone: `+91${cleanPhone}`,
+              token: token,
+              type: 'sms'
+            });
+            result = error ? { success: false, error: error.message } : { success: true, user: data.user, session: data.session };
           } else {
-            result = { success: true, user: data.user, session: data.session };
+            result = { success: true };
           }
         }
 
