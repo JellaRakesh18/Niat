@@ -45,6 +45,15 @@ ALTER TABLE IF EXISTS public.workers ADD COLUMN IF NOT EXISTS last_seen_at TIMES
 ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS latitude DOUBLE PRECISION;
 ALTER TABLE IF EXISTS public.jobs ADD COLUMN IF NOT EXISTS longitude DOUBLE PRECISION;
 
+-- 2.5 MIGRATIONS FOR ATTENDANCE & SELFIE CHECK-IN
+ALTER TABLE IF EXISTS public.attendance ADD COLUMN IF NOT EXISTS worker_id TEXT;
+ALTER TABLE IF EXISTS public.attendance ADD COLUMN IF NOT EXISTS latitude DOUBLE PRECISION;
+ALTER TABLE IF EXISTS public.attendance ADD COLUMN IF NOT EXISTS longitude DOUBLE PRECISION;
+ALTER TABLE IF EXISTS public.attendance ADD COLUMN IF NOT EXISTS location_name TEXT;
+ALTER TABLE IF EXISTS public.attendance ADD COLUMN IF NOT EXISTS selfie_url TEXT;
+ALTER TABLE IF EXISTS public.attendance ADD COLUMN IF NOT EXISTS checkin_time TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now());
+ALTER TABLE IF EXISTS public.attendance ADD COLUMN IF NOT EXISTS geofence_status TEXT DEFAULT 'verified';
+
 -- ==============================================================================
 -- 3. FULL BASELINE TABLE DEFINITIONS (If Initializing from Scratch)
 -- ==============================================================================

@@ -408,16 +408,39 @@ async function pushApplicationToSupabase(app) {
 async function pushAttendanceToSupabase(att) {
   if (!mmSupabaseClient) return;
   try {
-    const { error } = await mmSupabaseClient.from('attendance').insert([{
-      worker_name: att.workerName,
-      date: new Date().toISOString().split('T')[0],
-      timestamp: att.timestamp,
+    const payload = {
+      worker_name: att.workerName || att.worker_name,
+      date: att.date || new Date().toISOString().split('T')[0],
+      timestamp: att.timestamp || new Date().toLocaleTimeString('en-IN'),
       type: att.type || "Check-In",
-      location: att.site,
+      location: att.site || att.location || "Site Work",
       verified: att.verified !== false
-    }]);
-    if (error) console.warn("Supabase pushAttendance error:", error);
-    else console.log("Attendance successfully pushed to Supabase Cloud");
+    };
+
+    if (att.worker_id || att.workerId) payload.worker_id = att.worker_id || att.workerId;
+    if (att.latitude) payload.latitude = att.latitude;
+    if (att.longitude) payload.longitude = att.longitude;
+    if (att.selfie_url) payload.selfie_url = att.selfie_url;
+    if (att.location_name) payload.location_name = att.location_name;
+
+    const { error } = await mmSupabaseClient.from('attendance').insert([payload]);
+    if (error) {
+      // If upgraded columns do not exist yet in live table, fallback to baseline payload
+      if (error.code === '42703' || error.message?.includes('column')) {
+        await mmSupabaseClient.from('attendance').insert([{
+          worker_name: att.workerName || att.worker_name,
+          date: att.date || new Date().toISOString().split('T')[0],
+          timestamp: att.timestamp || new Date().toLocaleTimeString('en-IN'),
+          type: att.type || "Check-In",
+          location: att.site || att.location || "Site Work",
+          verified: att.verified !== false
+        }]);
+      } else {
+        console.warn("Supabase pushAttendance error:", error);
+      }
+    } else {
+      console.log("Attendance successfully pushed to Supabase Cloud");
+    }
   } catch (e) {
     console.warn("Supabase pushAttendance exception:", e);
   }
