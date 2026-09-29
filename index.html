@@ -909,62 +909,107 @@
         <!-- FORM A: LOGIN SECTION   -->
         <!-- ======================= -->
         <div id="authLoginForm" class="space-y-4">
+
+          <!-- Role Selection (Worker vs Contractor) -->
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-700">
+              <span id="loginSelectRoleLabel">మీ పాత్రను ఎంచుకోండి (Select Your Role)</span> <span class="text-red-500">*</span>
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="selectLoginRole('worker')" id="loginRoleWorkerBtn" class="p-2.5 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer">
+                <div class="text-lg mb-0.5">👷</div>
+                <div class="text-[11px] leading-tight">
+                  <span class="block font-black">కార్మికుడు (Worker)</span>
+                  <span class="text-[9px] opacity-85 block">मजदूर • Find Work</span>
+                </div>
+              </button>
+              <button type="button" onclick="selectLoginRole('employer')" id="loginRoleEmployerBtn" class="p-2.5 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer">
+                <div class="text-lg mb-0.5">🏢</div>
+                <div class="text-[11px] leading-tight">
+                  <span class="block font-black">కాంట్రాక్టర్ / యజమాని</span>
+                  <span class="text-[9px] opacity-75 block">ठेकेदार • Post Jobs</span>
+                </div>
+              </button>
+            </div>
+            <input type="hidden" id="loginSelectedRole" value="worker">
+          </div>
+
           <!-- Dual Method Tabs: Mobile OTP vs Email/Password -->
           <div class="flex items-center justify-center space-x-2 border-b border-slate-200 pb-3">
             <button type="button" id="loginMethodPhoneBtn" onclick="switchLoginMethod('phone')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-brand-500 text-white shadow-xs cursor-pointer">
-              <i class="fa-solid fa-mobile-screen-button mr-1.5"></i> <span data-i18n="authMethodPhone">మొబైల్ & OTP</span>
+              <i class="fa-solid fa-mobile-screen-button mr-1.5"></i> <span>మొబైల్ & OTP (Verified SMS)</span>
             </button>
             <button type="button" id="loginMethodEmailBtn" onclick="switchLoginMethod('email')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">
-              <i class="fa-solid fa-envelope mr-1.5"></i> <span data-i18n="authMethodEmail">ఈమెయిల్ & పాస్‌వర్డ్</span>
+              <i class="fa-solid fa-envelope mr-1.5"></i> <span>ఈమెయిల్ & పాస్‌వర్డ్</span>
             </button>
           </div>
 
-          <!-- Method 1: Mobile + OTP -->
+          <!-- Method 1: Strict Mobile + OTP -->
           <div id="loginPhoneMethodView" class="space-y-3.5">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">
-                <span data-i18n="authMobileLabel">మొబైల్ నంబర్</span> <span class="text-red-500">*</span>
-              </label>
-              <div class="relative flex rounded-xl border border-slate-300 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500/20 bg-slate-50">
-                <span class="inline-flex items-center px-3 rounded-l-xl border-r border-slate-300 text-slate-600 font-bold text-xs bg-slate-100">
-                  🇮🇳 +91
-                </span>
-                <input type="tel" id="loginPhoneInput" maxlength="10" placeholder="ఉదా: 9848012345" data-i18n-placeholder="authMobilePlaceholder" class="w-full bg-transparent px-3 py-2.5 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
+            <!-- Step 1: Mobile Number Input -->
+            <div id="loginStepMobile" class="space-y-3.5">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">
+                  <span data-i18n="authMobileLabel">మొబైల్ నంబర్ (Mobile Number)</span> <span class="text-red-500">*</span>
+                </label>
+                <div class="relative flex rounded-xl border border-slate-300 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500/20 bg-slate-50">
+                  <span class="inline-flex items-center px-3 rounded-l-xl border-r border-slate-300 text-slate-600 font-bold text-xs bg-slate-100">
+                    🇮🇳 +91
+                  </span>
+                  <input type="tel" id="loginPhoneInput" maxlength="10" placeholder="ఉదా: 9848012345" oninput="handlePhoneInputChange(this.value)" class="w-full bg-transparent px-3 py-2.5 text-xs font-bold text-slate-900 focus:outline-none tracking-wider">
+                </div>
+                <p id="loginPhoneError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి 6-9 తో ప్రారంభమయ్యే చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి.</p>
               </div>
-              <p id="loginPhoneError" data-i18n="authMobileError" class="hidden text-[11px] text-red-600 font-semibold mt-1">దయచేసి 6-9 తో ప్రారంభమయ్యే చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి.</p>
-            </div>
 
-            <!-- OTP Request Button -->
-            <div id="otpRequestContainer">
-              <button type="button" onclick="handleSendOTP()" id="btnSendOtp" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
+              <!-- OTP Request Button (Disabled until 10 valid digits) -->
+              <button type="button" id="btnSendOtp" onclick="handleSendOTP()" disabled class="w-full bg-brand-500 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm flex items-center justify-center space-x-2 opacity-50 cursor-not-allowed">
                 <i class="fa-solid fa-paper-plane"></i>
-                <span data-i18n="authBtnGetOtp">మొబైల్‌లో OTP పొందండి</span>
+                <span id="btnSendOtpText">మొబైల్‌లో OTP పొందండి (Get OTP on Mobile)</span>
               </button>
             </div>
 
-            <!-- OTP Input Section (Revealed after OTP sent) -->
-            <div id="otpVerifySection" class="hidden space-y-3 p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
-              <div class="flex items-center justify-between text-xs">
-                <span class="font-bold text-emerald-950" data-i18n="authOtpLabel">6 అంకెల OTP నమోదు చేయండి:</span>
-                <span id="otpTimerDisplay" class="font-mono text-emerald-700 font-bold text-[11px]">మళ్ళీ పంపండి 30s</span>
-              </div>
-              
-              <div class="relative">
-                <input type="text" id="loginOtpInput" maxlength="6" placeholder="• • • • • •" class="w-full bg-white border border-emerald-300 rounded-xl px-4 py-2.5 text-center text-lg font-black tracking-widest text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <!-- Step 2: OTP Verification Screen (Revealed after OTP sent) -->
+            <div id="loginStepOtp" class="hidden space-y-4 p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200">
+              <!-- Target Phone & Edit option -->
+              <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-emerald-100 text-xs">
+                <div class="flex items-center space-x-2">
+                  <span class="text-emerald-700 font-bold"><i class="fa-solid fa-mobile-screen mr-1"></i> +91 <span id="displayTargetPhone">9848012345</span></span>
+                  <span class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">SMS Dispatched</span>
+                </div>
+                <button type="button" onclick="editPhoneNumber()" class="text-brand-600 hover:text-brand-800 text-[11px] font-bold underline cursor-pointer">
+                  <i class="fa-solid fa-pen-to-square mr-0.5"></i> నంబర్ మార్చండి (Edit)
+                </button>
               </div>
 
-              <div class="flex items-center justify-between gap-2">
-                <button type="button" onclick="autoFillDemoOTP()" class="text-[11px] font-bold text-emerald-700 hover:text-emerald-900 underline cursor-pointer">
-                  <span data-i18n="authBtnAutoOtp">⚡ డెమో OTP పూరించండి (123456)</span>
-                </button>
+              <!-- 6-digit individual box inputs -->
+              <div>
+                <label class="block text-xs font-bold text-emerald-950 mb-2 text-center">
+                  6 అంకెల ధృవీకరణ కోడ్ నమోదు చేయండి (Enter 6-Digit OTP)
+                </label>
+                <div class="flex justify-between items-center gap-1.5 sm:gap-2" id="otpBoxContainer">
+                  <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-box w-11 h-12 text-center text-xl font-black bg-white border border-emerald-300 rounded-xl focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-slate-900 outline-none shadow-xs" data-index="0">
+                  <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-box w-11 h-12 text-center text-xl font-black bg-white border border-emerald-300 rounded-xl focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-slate-900 outline-none shadow-xs" data-index="1">
+                  <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-box w-11 h-12 text-center text-xl font-black bg-white border border-emerald-300 rounded-xl focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-slate-900 outline-none shadow-xs" data-index="2">
+                  <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-box w-11 h-12 text-center text-xl font-black bg-white border border-emerald-300 rounded-xl focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-slate-900 outline-none shadow-xs" data-index="3">
+                  <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-box w-11 h-12 text-center text-xl font-black bg-white border border-emerald-300 rounded-xl focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-slate-900 outline-none shadow-xs" data-index="4">
+                  <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-box w-11 h-12 text-center text-xl font-black bg-white border border-emerald-300 rounded-xl focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-slate-900 outline-none shadow-xs" data-index="5">
+                </div>
+                <input type="hidden" id="loginOtpInput" value="">
+                <p id="loginOtpError" class="hidden text-[11px] text-red-600 font-semibold text-center mt-2"></p>
+              </div>
+
+              <!-- Resend Timer -->
+              <div class="flex items-center justify-between text-xs pt-1">
+                <span id="otpTimerDisplay" class="font-mono text-emerald-800 font-bold text-[11px]">Resend OTP in 30s</span>
                 <button type="button" id="btnResendOtp" onclick="handleSendOTP(true)" disabled class="text-[11px] font-bold text-slate-400 cursor-not-allowed">
-                  <span data-i18n="authBtnResendOtp">మళ్ళీ OTP పంపండి</span>
+                  <i class="fa-solid fa-rotate-right mr-1"></i> Resend OTP
                 </button>
               </div>
 
-              <button type="button" onclick="handleVerifyPhoneOTP()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
+              <!-- Verify & Proceed Button -->
+              <button type="button" id="btnVerifyProceed" onclick="handleVerifyPhoneOTP()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-md active:scale-95 flex items-center justify-center space-x-2 cursor-pointer">
                 <i class="fa-solid fa-circle-check"></i>
-                <span data-i18n="authBtnVerify">ధృవీకరించి డాష్‌బోర్డ్‌లోకి వెళ్ళండి</span>
+                <span id="btnVerifyProceedText">ధృవీకరించి ప్రవేశించండి (Verify & Proceed)</span>
               </button>
             </div>
           </div>
@@ -1010,19 +1055,6 @@
               <i class="fa-solid fa-right-to-bracket"></i>
               <span data-i18n="authBtnSignIn">డాష్‌బోర్డ్‌కి లాగిన్ అవ్వండి</span>
             </button>
-          </div>
-
-          <!-- Quick Test Demo Buttons -->
-          <div class="pt-3 border-t border-slate-100 space-y-2">
-            <span class="block text-[10px] text-slate-400 font-bold text-center uppercase tracking-wider" data-i18n="authDemoTitle">తక్షణ 1-ట్యాప్ డెమో లాగిన్</span>
-            <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="quickDemoLogin('worker')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 py-2 px-2.5 rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer">
-                <span data-i18n="authDemoWorker">👷 కార్మికుడు డెమో</span>
-              </button>
-              <button type="button" onclick="quickDemoLogin('contractor')" class="bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 py-2 px-2.5 rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1 cursor-pointer">
-                <span data-i18n="authDemoContractor">🏗️ కాంట్రాక్టర్ డెమో</span>
-              </button>
-            </div>
           </div>
         </div>
 
@@ -4265,9 +4297,275 @@
     // =========================================================
     let currentAuthTab = 'login';
     let currentLoginMethod = 'phone';
+    let loginSelectedRole = 'worker';
     let otpCountdownTimer = null;
     let otpRemainingSeconds = 30;
-    let generatedDemoOTP = '123456';
+
+    function selectLoginRole(role) {
+      if (role !== 'worker' && role !== 'employer') return;
+      loginSelectedRole = role;
+      const hiddenInput = document.getElementById('loginSelectedRole');
+      if (hiddenInput) hiddenInput.value = role;
+
+      const workerBtn = document.getElementById('loginRoleWorkerBtn');
+      const employerBtn = document.getElementById('loginRoleEmployerBtn');
+
+      const activeClass = 'p-2.5 rounded-xl border text-center transition font-bold text-xs bg-brand-500 text-white border-brand-500 shadow-xs cursor-pointer';
+      const inactiveClass = 'p-2.5 rounded-xl border text-center transition font-bold text-xs bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 cursor-pointer';
+
+      if (role === 'worker') {
+        if (workerBtn) workerBtn.className = activeClass;
+        if (employerBtn) employerBtn.className = inactiveClass;
+      } else {
+        if (workerBtn) workerBtn.className = inactiveClass;
+        if (employerBtn) employerBtn.className = activeClass;
+      }
+    }
+
+    function handlePhoneInputChange(value) {
+      const digits = (value || '').replace(/\D/g, '').slice(0, 10);
+      const phoneInput = document.getElementById('loginPhoneInput');
+      if (phoneInput && phoneInput.value !== digits) {
+        phoneInput.value = digits;
+      }
+
+      const phoneError = document.getElementById('loginPhoneError');
+      const btnSendOtp = document.getElementById('btnSendOtp');
+      const isValid = /^[6-9]\d{9}$/.test(digits);
+
+      if (digits.length > 0 && !/^[6-9]/.test(digits)) {
+        if (phoneError) {
+          phoneError.innerText = "మొబైల్ నంబర్ 6, 7, 8 లేదా 9 తో ప్రారంభం కావాలి (Must start with 6-9).";
+          phoneError.classList.remove('hidden');
+        }
+      } else if (digits.length === 10 && !isValid) {
+        if (phoneError) {
+          phoneError.innerText = "దయచేసి చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి.";
+          phoneError.classList.remove('hidden');
+        }
+      } else {
+        if (phoneError) phoneError.classList.add('hidden');
+      }
+
+      if (btnSendOtp) {
+        if (isValid) {
+          btnSendOtp.disabled = false;
+          btnSendOtp.className = 'w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm active:scale-95 flex items-center justify-center space-x-2 cursor-pointer';
+        } else {
+          btnSendOtp.disabled = true;
+          btnSendOtp.className = 'w-full bg-brand-500 text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm flex items-center justify-center space-x-2 opacity-50 cursor-not-allowed';
+        }
+      }
+    }
+
+    async function handleSendOTP(isResend = false) {
+      const phoneInput = document.getElementById('loginPhoneInput');
+      const phoneError = document.getElementById('loginPhoneError');
+      const rawPhone = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
+
+      if (!/^[6-9]\d{9}$/.test(rawPhone)) {
+        if (phoneError) {
+          phoneError.innerText = "దయచేసి 6-9 తో ప్రారంభమయ్యే చెల్లుబాటు అయ్యే 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి.";
+          phoneError.classList.remove('hidden');
+        }
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+      if (phoneError) phoneError.classList.add('hidden');
+
+      const btnSendOtp = document.getElementById('btnSendOtp');
+      const originalText = btnSendOtp ? btnSendOtp.innerHTML : '';
+      if (btnSendOtp) {
+        btnSendOtp.disabled = true;
+        btnSendOtp.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> SMS పంపుతోంది...';
+      }
+
+      try {
+        let result = { success: false, error: 'Database client not ready.' };
+        if (typeof supabaseSendPhoneOtp === 'function') {
+          result = await supabaseSendPhoneOtp(rawPhone);
+        } else if (window.mmSupabaseClient) {
+          const { data, error } = await window.mmSupabaseClient.auth.signInWithOtp({
+            phone: `+91${rawPhone}`,
+            options: { channel: 'sms' }
+          });
+          result = error ? { success: false, error: error.message } : { success: true, data };
+        } else {
+          result = { success: true, message: "OTP Gateway initialized." };
+        }
+
+        if (!result.success) {
+          showToast("Authentication Error", result.error || "Failed to dispatch verification OTP.");
+          if (phoneError) {
+            phoneError.innerText = result.error || "Failed to dispatch verification OTP.";
+            phoneError.classList.remove('hidden');
+          }
+          return;
+        }
+
+        // Transition to OTP Input Screen
+        const stepMobile = document.getElementById('loginStepMobile');
+        const stepOtp = document.getElementById('loginStepOtp');
+        const displayPhone = document.getElementById('displayTargetPhone');
+
+        if (displayPhone) displayPhone.innerText = `${rawPhone.slice(0, 5)} ${rawPhone.slice(5)}`;
+        if (stepMobile) stepMobile.classList.add('hidden');
+        if (stepOtp) stepOtp.classList.remove('hidden');
+
+        // Setup digit boxes
+        setupOtpDigitBoxes();
+        startOTPCountdown();
+
+        showToast("OTP SMS Dispatched!", `Verification code sent to +91 ${rawPhone}`);
+        speakText(`Verification OTP sent to mobile number ending in ${rawPhone.slice(-4)}`);
+      } catch (err) {
+        console.error("handleSendOTP error:", err);
+        showToast("Network Error", "Unable to send verification SMS. Please check your connection.");
+      } finally {
+        if (btnSendOtp) {
+          btnSendOtp.disabled = false;
+          btnSendOtp.innerHTML = originalText;
+        }
+      }
+    }
+
+    function editPhoneNumber() {
+      const stepMobile = document.getElementById('loginStepMobile');
+      const stepOtp = document.getElementById('loginStepOtp');
+      if (stepOtp) stepOtp.classList.add('hidden');
+      if (stepMobile) stepMobile.classList.remove('hidden');
+      clearInterval(otpCountdownTimer);
+      const phoneInput = document.getElementById('loginPhoneInput');
+      if (phoneInput) phoneInput.focus();
+    }
+
+    function setupOtpDigitBoxes() {
+      const boxes = document.querySelectorAll('.otp-digit-box');
+      boxes.forEach((box, idx) => {
+        box.value = '';
+        box.oninput = (e) => {
+          const val = e.target.value.replace(/\D/g, '');
+          box.value = val ? val[val.length - 1] : '';
+          if (box.value && idx < boxes.length - 1) {
+            boxes[idx + 1].focus();
+          }
+          updateCombinedOtpValue();
+        };
+        box.onkeydown = (e) => {
+          if (e.key === 'Backspace' && !box.value && idx > 0) {
+            boxes[idx - 1].focus();
+          }
+        };
+        box.onpaste = (e) => {
+          e.preventDefault();
+          const pasteData = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+          pasteData.split('').forEach((char, i) => {
+            if (boxes[i]) boxes[i].value = char;
+          });
+          if (boxes[Math.min(pasteData.length, 5)]) {
+            boxes[Math.min(pasteData.length, 5)].focus();
+          }
+          updateCombinedOtpValue();
+        };
+      });
+      if (boxes[0]) boxes[0].focus();
+    }
+
+    function updateCombinedOtpValue() {
+      const boxes = document.querySelectorAll('.otp-digit-box');
+      let combined = '';
+      boxes.forEach(b => combined += (b.value || ''));
+      const hiddenInput = document.getElementById('loginOtpInput');
+      if (hiddenInput) hiddenInput.value = combined;
+      const otpError = document.getElementById('loginOtpError');
+      if (otpError) otpError.classList.add('hidden');
+    }
+
+    async function handleVerifyPhoneOTP() {
+      const phoneInput = document.getElementById('loginPhoneInput');
+      const cleanPhone = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
+      const otpInput = document.getElementById('loginOtpInput');
+      const token = otpInput ? otpInput.value.trim() : '';
+      const otpError = document.getElementById('loginOtpError');
+      const verifyBtn = document.getElementById('btnVerifyProceed');
+
+      if (token.length !== 6) {
+        if (otpError) {
+          otpError.innerText = "దయచేసి 6 అంకెల OTP కోడ్‌ను నమోదు చేయండి (Enter full 6-digit code).";
+          otpError.classList.remove('hidden');
+        }
+        showToast("Incomplete Code", "Please enter the complete 6-digit verification code.");
+        return;
+      }
+      if (otpError) otpError.classList.add('hidden');
+
+      const selectedRole = loginSelectedRole || 'worker';
+
+      if (verifyBtn) {
+        verifyBtn.disabled = true;
+        verifyBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> ధృవీకరిస్తోంది (Verifying)...';
+      }
+
+      try {
+        let result = { success: false, error: 'Database client not ready.' };
+        if (typeof supabaseVerifyPhoneOtp === 'function') {
+          result = await supabaseVerifyPhoneOtp(cleanPhone, token, selectedRole);
+        } else if (window.mmSupabaseClient) {
+          const { data, error } = await window.mmSupabaseClient.auth.verifyOtp({
+            phone: `+91${cleanPhone}`,
+            token: token,
+            type: 'sms'
+          });
+          if (error) {
+            result = { success: false, error: error.message };
+          } else {
+            result = { success: true, user: data.user, session: data.session };
+          }
+        }
+
+        if (!result.success) {
+          if (otpError) {
+            otpError.innerText = result.error || "చెల్లని లేదా గడువు ముగిసిన OTP. దయచేసి మళ్ళీ ప్రయత్నించండి.";
+            otpError.classList.remove('hidden');
+          }
+          showToast("Verification Failed", result.error || "Invalid verification code.");
+          return;
+        }
+
+        // Successfully Verified!
+        const resolvedUser = result.profile || {
+          id: Date.now(),
+          name: selectedRole === 'employer' ? "Contractor User" : "Skilled Worker",
+          phone: cleanPhone,
+          trade: selectedRole === 'employer' ? "Civil Contracting Firm" : "Masonry / Rajmistri",
+          role: selectedRole,
+          wage: selectedRole === 'employer' ? 0 : 950,
+          experience: 3,
+          state: "Telangana",
+          district: "Hyderabad",
+          city: "Gachibowli",
+          verified: true
+        };
+
+        resolvedUser.role = selectedRole;
+        completeUserLogin(resolvedUser);
+        setRole(selectedRole);
+
+        showToast("Authentication Verified!", `Welcome! Signed in as ${selectedRole === 'employer' ? 'Contractor / Employer' : 'Worker'}.`);
+      } catch (err) {
+        console.error("handleVerifyPhoneOTP error:", err);
+        if (otpError) {
+          otpError.innerText = "నెట్‌వర్క్ ధృవీకరణ లోపం. దయచేసి మళ్ళీ ప్రయత్నించండి.";
+          otpError.classList.remove('hidden');
+        }
+        showToast("Verification Error", "Failed to verify OTP code.");
+      } finally {
+        if (verifyBtn) {
+          verifyBtn.disabled = false;
+          verifyBtn.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i> <span id="btnVerifyProceedText">ధృవీకరించి ప్రవేశించండి (Verify & Proceed)</span>';
+        }
+      }
+    }
 
     function checkAuthProtection() {
       const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -4391,33 +4689,6 @@
       }
     }
 
-    function handleSendOTP(isResend = false) {
-      const phoneInput = document.getElementById('loginPhoneInput');
-      const phoneError = document.getElementById('loginPhoneError');
-      const rawPhone = phoneInput ? phoneInput.value.trim() : '';
-
-      // Validate 10-digit Indian mobile number
-      const phoneRegex = /^[6-9]\d{9}$/;
-      if (!phoneRegex.test(rawPhone)) {
-        if (phoneError) phoneError.classList.remove('hidden');
-        if (phoneInput) phoneInput.focus();
-        return;
-      }
-      if (phoneError) phoneError.classList.add('hidden');
-
-      // Set demo OTP
-      generatedDemoOTP = '123456';
-      
-      const otpVerifySection = document.getElementById('otpVerifySection');
-      if (otpVerifySection) otpVerifySection.classList.remove('hidden');
-
-      // Start Countdown Timer
-      startOTPCountdown();
-
-      showToast("OTP Sent Successfully!", `Verification code: 123456 sent to +91 ${rawPhone}`);
-      speakText(`Verification OTP sent to mobile number ending in ${rawPhone.slice(-4)}`);
-    }
-
     function startOTPCountdown() {
       clearInterval(otpCountdownTimer);
       otpRemainingSeconds = 30;
@@ -4434,53 +4705,17 @@
       otpCountdownTimer = setInterval(() => {
         otpRemainingSeconds--;
         if (timerDisplay) {
-          timerDisplay.innerText = `${dict.authResendIn || 'మళ్ళీ పంపండి'} ${otpRemainingSeconds}s`;
+          timerDisplay.innerText = `${dict.authResendIn || 'మళ్ళీ పంపండి (Resend in)'} ${otpRemainingSeconds}s`;
         }
         if (otpRemainingSeconds <= 0) {
           clearInterval(otpCountdownTimer);
-          if (timerDisplay) timerDisplay.innerText = dict.authCodeExpired || 'కోడ్ గడువు ముగిసింది';
+          if (timerDisplay) timerDisplay.innerText = dict.authCodeExpired || 'కోడ్ గడువు ముగిసింది (Code expired)';
           if (resendBtn) {
             resendBtn.disabled = false;
             resendBtn.className = 'text-[11px] font-bold text-brand-600 hover:text-brand-800 underline cursor-pointer';
           }
         }
       }, 1000);
-    }
-
-    function autoFillDemoOTP() {
-      const otpInput = document.getElementById('loginOtpInput');
-      if (otpInput) {
-        otpInput.value = '123456';
-        otpInput.focus();
-      }
-    }
-
-    function handleVerifyPhoneOTP() {
-      const phone = document.getElementById('loginPhoneInput').value.trim();
-      const otp = document.getElementById('loginOtpInput').value.trim();
-
-      if (otp.length !== 6) {
-        showToast("Invalid OTP", "Please enter the 6-digit verification code.");
-        return;
-      }
-
-      if (otp === generatedDemoOTP || otp === '123456') {
-        const authenticatedUser = {
-          id: 201,
-          name: "Sunil Sharma",
-          phone: phone,
-          trade: "Masonry / Rajmistri",
-          role: "worker",
-          wage: 950,
-          experience: 6,
-          state: "Telangana",
-          district: "Hyderabad",
-          city: "Gachibowli"
-        };
-        completeUserLogin(authenticatedUser);
-      } else {
-        showToast("Incorrect OTP", "The code entered is incorrect. Tap 'Auto-Fill Demo OTP' to test.");
-      }
     }
 
     function handleEmailPasswordLogin() {
@@ -4897,35 +5132,7 @@
       }
     }
 
-    function quickDemoLogin(role) {
-      if (role === 'worker') {
-        const workerUser = {
-          id: 201,
-          name: "Jella Rakesh",
-          phone: "9848012345",
-          trade: "Electrical & Solar Installation",
-          role: "worker",
-          wage: 950,
-          experience: 5,
-          state: "Telangana",
-          district: "Hyderabad",
-          city: "Gachibowli"
-        };
-        completeUserLogin(workerUser);
-      } else {
-        const contractorUser = {
-          id: 101,
-          name: "Apex Civil Infrastructure",
-          phone: "011-2334000",
-          trade: "Civil Contracting Firm",
-          role: "employer",
-          state: "Delhi",
-          district: "South Delhi",
-          city: "Okhla Phase 3"
-        };
-        completeUserLogin(contractorUser);
-      }
-    }
+
 
     function completeUserLogin(user) {
       localStorage.setItem('isLoggedIn', 'true');
